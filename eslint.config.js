@@ -8,6 +8,7 @@ export default tseslint.config(
   {
     ignores: [
       'dist',
+      '.cache', // caches locais, logs e cópias de checkout limpo (não é código do projeto)
       'node_modules',
       'public/mockServiceWorker.js',
       'src/routeTree.gen.ts',

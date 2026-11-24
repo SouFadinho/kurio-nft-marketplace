@@ -46,6 +46,9 @@ for (const width of WIDTHS) {
 }
 
 test.describe('troca de navegação por breakpoint', () => {
+  // Páginas pesadas com reset do seed a cada teste: sob pressão de memória (checkout limpo do CP3,
+  // 2 GB livres) estes testes levaram até 37 s contra 4–6 s normais. Mesmo limite do overflow.
+  test.describe.configure({ timeout: 90_000 })
   for (const width of [390, 768]) {
     test(`${width}px: navegação inferior visível, header desktop oculto`, async ({ page }) => {
       await page.setViewportSize({ width, height: 900 })
