@@ -124,4 +124,7 @@ Sem mudança em relação ao CP2: artes originais, galeria de 4 vistas, imagens 
 - Pendências do CP1: PEND-01, 02, 03, 04 e 06.
 
 ## 12. Commit e checkout limpo
-Ver a mensagem final deste checkpoint.
+- `ce20494`: CP3. **Checkout limpo: 198 passed / 1 failed / 2 skipped.** A falha foi estouro do tempo-limite (30 s) num teste de navegação do projeto responsive: 37,5 s contra 4–6 s normais, com a máquina a 2,1 GB de RAM livres; a página estava correta (`clean-checkout-ce20494-1-FAILED-timeout.log`).
+- `2b2aa83`: tempo-limite de 90 s para esses testes (o mesmo dos testes de overflow do projeto) e ESLint ignorando `.cache/` (o lint varria as cópias de checkout limpo).
+- **Checkout limpo do `2b2aa83`** (`git clone` + `npm ci` + typecheck + lint + build + `test:e2e`): **199 passed / 0 failed / 2 skipped**, 0 vulnerabilidades, 8,3 min (`clean-checkout-2b2aa83.log`).
+- Observação: sob pouca memória livre, a suíte fica ~2× mais lenta. Avaliar `workers` menores na CI (CP7).

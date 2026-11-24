@@ -1,0 +1,22 @@
+# Checkout limpo do commit 2b2aa83 (git clone em D:\emprego\.cache\clean-cp3b)
+## npm ci
+added 469 packages, and audited 476 packages in 4m
+found 0 vulnerabilities
+## typecheck
+
+> kurio-nft-marketplace@0.1.0 typecheck
+> tsc -b --noEmit
+
+## lint
+
+> kurio-nft-marketplace@0.1.0 lint
+> eslint .
+
+## build
+
+✓ built in 8.79s
+## test:e2e
+  ok 197 [responsive] › e2e\layout.responsive.spec.ts:34:3 › sem overflow horizontal em 1440px (23.1s)
+
+  2 skipped
+  199 passed (8.3m)
