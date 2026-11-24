@@ -141,4 +141,4 @@ Todas `PENDENTE` (TELA-01..09). Rotas temporárias da PoC: `/`, `/login`, `/nft/
 | DEL-02, 03 (deploy) | PENDENTE (requer autorização) |
 | DEL-04, 05 (README, ARCHITECTURE) | PENDENTE |
 | DEL-06 (scripts) | VALIDADO: `dev`, `build`, `preview`, `typecheck`, `lint`, `test:e2e`, `audit:lighthouse` (`dev` não exercitado por teste automatizado) |
-| DEL-07 (checkout limpo) | IMPLEMENTADO, NÃO VALIDADO (falta `npm ci` em uma pasta limpa) |
+| DEL-07 (checkout limpo) | VALIDADO (CP1): `git clone` + `npm ci` + typecheck + lint + build + `test:e2e` = 43/43 (`clean-checkout.log`). Ressalva: os navegadores do Playwright vieram do cache em D: (`npx playwright install chromium` é um passo de setup a documentar no README) |

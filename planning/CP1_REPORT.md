@@ -47,7 +47,8 @@ Data: 2026-11-24. Todos os resultados abaixo vêm de execuções reais. Os logs 
 | `npm run test:e2e` (suíte completa) | **43 passed · 0 failed · 0 skipped**, em **3 rodadas seguidas** | `e2e-full-run-{1,2,3}.log` |
 | Repetição do teste de reconexão | **40/40** (20× desktop + 20× mobile) | `reconnect-repeat-20x.log` |
 | Controles negativos (portão e heartbeat desligados) | **2/2 falharam, como esperado** | `negative-controls.log` |
-| `LH_RUNS=1 npm run audit:lighthouse` | OK: 4 execuções, HTML + JSON + resumo | `lighthouse-smoke-*-NAO-OFICIAL.*` |
+| `LH_RUNS=1 npm run audit:lighthouse` | OK: 4 execuções, HTML + JSON + resumo; 2ª validação após corrigir o vazamento do preview → porta liberada | `lighthouse-smoke-*-NAO-OFICIAL.*` |
+| **Checkout limpo** (`git clone` do commit `91380dc` + `npm ci` + typecheck + lint + build + `test:e2e`) | **OK: 43/43**. A 1ª tentativa de E2E falhou: porta 4173 ocupada pelo preview vazado do script Lighthouse (achado 5.8) | `clean-checkout.log` |
 
 ### 3.1 Contagem de testes (por rodada completa)
 | Projeto | Aprovados | Reprovados | Ignorados |
@@ -113,6 +114,10 @@ Uma sonda mostrou que fechar o WebSocket do MSW antes de abrir dispara apenas `c
 
 ### 5.6 shadcn CLI 4.23 e o pacote `cn`
 O CLI gerou `import { cn } from "cn"` e instalou o pacote `cn@0.5.2`. Verifiquei que é **oficial** (mantenedor shadcn, repositório `shadcn-ui/cn`). **Decisão:** manter o utilitário `@/lib/utils` (clsx + tailwind-merge), estável e já presente; `cn` e `@radix-ui/react-slot` (sem uso) foram removidos; `radix-ui` fixado em 1.8.1.
+
+### 5.8 Vazamento do servidor de preview no script Lighthouse
+O script encerrava o processo `npm` antes do `taskkill /T`, deixando `cmd` → `vite preview` órfãos na porta 4173. Isso foi descoberto quando o E2E do checkout limpo falhou com "port already used". **Correção:** no Windows, `taskkill /T /F` na árvore primeiro. Revalidado: a porta fica livre depois do script.
+Observação da 2ª validação (não oficial, 1 medição): a Performance mobile da Início caiu de 85 para **56** entre duas execuções únicas, o que mostra alta variância na máquina local. Isso reforça a mediana de 3 medições exigida e o risco R-25.
 
 ### 5.7 Outras correções
 - `erasableSyntaxOnly` proíbe parameter properties → construtor do `EventGuard` ajustado.

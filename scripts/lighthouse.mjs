@@ -155,13 +155,17 @@ async function main() {
     await writeFile(path.join(OUT, 'summary.md'), md)
     console.log(`\n${md}`)
   } finally {
-    preview.kill()
+    // No Windows, encerrar a ÁRVORE antes do processo raiz: se o `npm` morrer primeiro,
+    // `cmd` → `vite preview` ficam órfãos e o taskkill /T não os encontra (vazamento
+    // observado no CP1: a porta 4173 continuou ocupada).
     if (process.platform === 'win32' && preview.pid) {
       try {
         execSync(`taskkill /pid ${preview.pid} /T /F`, { stdio: 'ignore' })
       } catch {
         /* já encerrado */
       }
+    } else {
+      preview.kill()
     }
   }
 }
