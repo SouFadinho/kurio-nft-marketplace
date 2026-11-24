@@ -114,4 +114,6 @@ Comparei proporção, alinhamento, densidade, hierarquia, tipografia e espaçame
 - Revalidação do HEAD em checkout limpo: feita para o commit deste checkpoint (ver §12).
 
 ## 12. Commit e checkout limpo
-Ver a mensagem final do checkpoint (hash do commit e resultado do checkout limpo).
+- Commit do CP2: `6ad49e0`.
+- **Checkout limpo do `6ad49e0`** (`git clone` + `npm ci` + typecheck + lint + build + `test:e2e`): **126 passed**, 0 vulnerabilidades (`evidence/cp2-tests/clean-checkout-6ad49e0.log`). Isso atende a PEND-05 para este checkpoint.
+- O commit seguinte contém só esta documentação de evidência.

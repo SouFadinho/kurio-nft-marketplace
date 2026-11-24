@@ -29,7 +29,7 @@ Abreviação: `T<n>` = teste `<n>.` de `e2e/poc.spec.ts`.
 | PEND-02 | Timeout após a criação do pedido e recuperação por retry | CP5 · E2E-07 |
 | PEND-03 | Consistência da persistência do mock entre abas | CP6 |
 | PEND-04 | Impacto do MSW na performance inicial (R-25) | CP8 |
-| PEND-05 | Revalidação integral do HEAD a cada checkpoint (o checkout limpo do CP1 foi feito no `91380dc`) | todo CP · CP9 |
+| PEND-05 | Revalidação integral do HEAD a cada checkpoint. CP1: `91380dc`. **CP2: `6ad49e0` validado em checkout limpo (126/126)** | todo CP · CP9 |
 | PEND-06 | Disco C: sem espaço; caches e temporários seguem em `D:\emprego\.cache` (R-23) | candidato |
 
 ## 0. Critérios eliminatórios
