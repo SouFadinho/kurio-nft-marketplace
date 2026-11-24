@@ -14,10 +14,12 @@ export const USERS = {
 } as const
 
 type OrderStatus = 'confirmed' | 'rejected'
+export type NftPatch = { price?: string; available?: number; editions?: Array<{ id: string; available: number }> }
 
 interface MockControl {
   scenario(): string
-  updateNft(id: string, patch: { price?: string; available?: number }): unknown
+  release(route: string): void
+  updateNft(id: string, patch: NftPatch): unknown
   emitStaleNftUpdate(id: string, price: string): unknown
   settleOrder(id: string, status: OrderStatus): unknown
   orders(): Array<{ id: string; userId: string; status: string; version: number }>
@@ -40,12 +42,13 @@ export function mock(page: Page) {
   // Após navegação/reload, o controle só existe depois que o MSW reinicia.
   const ready = () => page.waitForFunction(() => window.__kurioMock !== undefined)
   return {
-    updateNft: async (id: string, patch: { price?: string; available?: number }) =>
+    updateNft: async (id: string, patch: NftPatch) =>
       (await ready(), page.evaluate(([i, p]) => window.__kurioMock.updateNft(i, p), [id, patch] as const)),
     emitStaleNftUpdate: async (id: string, price: string) =>
       (await ready(), page.evaluate(([i, p]) => window.__kurioMock.emitStaleNftUpdate(i, p), [id, price] as const)),
     settleOrder: async (id: string, status: OrderStatus) =>
       (await ready(), page.evaluate(([i, s]) => window.__kurioMock.settleOrder(i, s), [id, status] as const)),
+    release: async (route: string) => (await ready(), page.evaluate((r) => window.__kurioMock.release(r), route)),
     orders: async () => (await ready(), page.evaluate(() => window.__kurioMock.orders())),
     connections: async () => (await ready(), page.evaluate(() => window.__kurioMock.realtime.connections())),
     stats: async () => (await ready(), page.evaluate(() => window.__kurioMock.realtime.stats())),

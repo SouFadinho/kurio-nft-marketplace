@@ -67,7 +67,9 @@ export function RealtimeProvider({ children }: { children: ReactNode }) {
         connects: d.connects + 1,
         reconnections: d.reconnections + (isReconnect ? 1 : 0),
       }))
-      if (isReconnect) void reconcile()
+      // Reconciliação também na PRIMEIRA conexão: dados buscados antes de o socket se autenticar
+      // podem ter perdido eventos emitidos nesse intervalo (corrida encontrada no CP3, teste 7b).
+      if (isReconnect || queryClient.getQueryCache().getAll().some((q) => q.state.dataUpdatedAt > 0)) void reconcile()
     })
     socket.on('disconnect', () => diagnostics.update({ state: 'disconnected' }))
     socket.on('connect_error', (error) => {

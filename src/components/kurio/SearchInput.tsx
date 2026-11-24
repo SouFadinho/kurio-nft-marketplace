@@ -11,8 +11,9 @@ import { cn } from '@/lib/utils'
 export const SearchInput = forwardRef<
   HTMLInputElement,
   Omit<ComponentProps<'input'>, 'type'> & { label: string; variant?: 'filled' | 'outline'; onClear?: () => void }
->(function SearchInput({ label, variant = 'filled', onClear, className, value, ...props }, ref) {
-  const id = useId()
+>(function SearchInput({ label, variant = 'filled', onClear, className, value, id: idProp, ...props }, ref) {
+  const autoId = useId()
+  const id = idProp ?? autoId
   const hasValue = typeof value === 'string' ? value.length > 0 : false
   return (
     <div className={cn('relative flex items-center', className)}>

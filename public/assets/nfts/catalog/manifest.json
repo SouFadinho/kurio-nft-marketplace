@@ -1,0 +1,290 @@
+[
+  {
+    "file": "emerald-ape-original",
+    "character": "emerald-ape",
+    "background": "original",
+    "flip": false,
+    "gallery": true,
+    "backgroundCoverage": 0
+  },
+  {
+    "file": "sage-nomad-original",
+    "character": "sage-nomad",
+    "background": "original",
+    "flip": false,
+    "gallery": true,
+    "backgroundCoverage": 0
+  },
+  {
+    "file": "ivory-baron-ceu-esp",
+    "character": "ivory-baron",
+    "background": "ceu",
+    "flip": true,
+    "gallery": true,
+    "backgroundCoverage": 0.38
+  },
+  {
+    "file": "violet-nomad-lilas-esp",
+    "character": "violet-nomad",
+    "background": "lilas",
+    "flip": true,
+    "gallery": true,
+    "backgroundCoverage": 0.36
+  },
+  {
+    "file": "violet-nomad-original",
+    "character": "violet-nomad",
+    "background": "original",
+    "flip": false,
+    "gallery": true,
+    "backgroundCoverage": 0
+  },
+  {
+    "file": "ivory-baron-original",
+    "character": "ivory-baron",
+    "background": "original",
+    "flip": false,
+    "gallery": true,
+    "backgroundCoverage": 0
+  },
+  {
+    "file": "golden-beat-original",
+    "character": "golden-beat",
+    "background": "original",
+    "flip": false,
+    "gallery": true,
+    "backgroundCoverage": 0
+  },
+  {
+    "file": "golden-beat-pessego-esp",
+    "character": "golden-beat",
+    "background": "pessego",
+    "flip": true,
+    "gallery": true,
+    "backgroundCoverage": 0.305
+  },
+  {
+    "file": "golden-beat-menta",
+    "character": "golden-beat",
+    "background": "menta",
+    "flip": false,
+    "gallery": true,
+    "backgroundCoverage": 0.305
+  },
+  {
+    "file": "emerald-ape-pessego-esp",
+    "character": "emerald-ape",
+    "background": "pessego",
+    "flip": true,
+    "gallery": true,
+    "backgroundCoverage": 0.509
+  },
+  {
+    "file": "sage-nomad-ceu-esp",
+    "character": "sage-nomad",
+    "background": "ceu",
+    "flip": true,
+    "gallery": true,
+    "backgroundCoverage": 0.384
+  },
+  {
+    "file": "ivory-baron-lilas",
+    "character": "ivory-baron",
+    "background": "lilas",
+    "flip": false,
+    "gallery": true,
+    "backgroundCoverage": 0.38
+  },
+  {
+    "file": "golden-beat-ceu-esp",
+    "character": "golden-beat",
+    "background": "ceu",
+    "flip": true,
+    "gallery": true,
+    "backgroundCoverage": 0.305
+  },
+  {
+    "file": "emerald-ape-ceu",
+    "character": "emerald-ape",
+    "background": "ceu",
+    "flip": false,
+    "gallery": true,
+    "backgroundCoverage": 0.509
+  },
+  {
+    "file": "sage-nomad-salvia",
+    "character": "sage-nomad",
+    "background": "salvia",
+    "flip": false,
+    "gallery": true,
+    "backgroundCoverage": 0.384
+  },
+  {
+    "file": "ivory-baron-creme-esp",
+    "character": "ivory-baron",
+    "background": "creme",
+    "flip": true,
+    "gallery": true,
+    "backgroundCoverage": 0.38
+  },
+  {
+    "file": "golden-beat-lilas",
+    "character": "golden-beat",
+    "background": "lilas",
+    "flip": false,
+    "gallery": true,
+    "backgroundCoverage": 0.305
+  },
+  {
+    "file": "emerald-ape-salvia-esp",
+    "character": "emerald-ape",
+    "background": "salvia",
+    "flip": true,
+    "gallery": true,
+    "backgroundCoverage": 0.509
+  },
+  {
+    "file": "violet-nomad-pessego",
+    "character": "violet-nomad",
+    "background": "pessego",
+    "flip": false,
+    "gallery": true,
+    "backgroundCoverage": 0.36
+  },
+  {
+    "file": "ivory-baron-areia-esp",
+    "character": "ivory-baron",
+    "background": "areia",
+    "flip": true,
+    "gallery": true,
+    "backgroundCoverage": 0.38
+  },
+  {
+    "file": "golden-beat-areia-esp",
+    "character": "golden-beat",
+    "background": "areia",
+    "flip": true,
+    "gallery": true,
+    "backgroundCoverage": 0.305
+  },
+  {
+    "file": "emerald-ape-lilas-esp",
+    "character": "emerald-ape",
+    "background": "lilas",
+    "flip": true,
+    "gallery": true,
+    "backgroundCoverage": 0.509
+  },
+  {
+    "file": "sage-nomad-areia-esp",
+    "character": "sage-nomad",
+    "background": "areia",
+    "flip": true,
+    "gallery": true,
+    "backgroundCoverage": 0.384
+  },
+  {
+    "file": "ivory-baron-pessego",
+    "character": "ivory-baron",
+    "background": "pessego",
+    "flip": false,
+    "gallery": true,
+    "backgroundCoverage": 0.38
+  },
+  {
+    "file": "golden-beat-salvia-esp",
+    "character": "golden-beat",
+    "background": "salvia",
+    "flip": true,
+    "gallery": true,
+    "backgroundCoverage": 0.305
+  },
+  {
+    "file": "emerald-ape-areia",
+    "character": "emerald-ape",
+    "background": "areia",
+    "flip": false,
+    "gallery": true,
+    "backgroundCoverage": 0.509
+  },
+  {
+    "file": "violet-nomad-ceu",
+    "character": "violet-nomad",
+    "background": "ceu",
+    "flip": false,
+    "gallery": true,
+    "backgroundCoverage": 0.36
+  },
+  {
+    "file": "ivory-baron-salvia-esp",
+    "character": "ivory-baron",
+    "background": "salvia",
+    "flip": true,
+    "gallery": true,
+    "backgroundCoverage": 0.38
+  },
+  {
+    "file": "golden-beat-creme-esp",
+    "character": "golden-beat",
+    "background": "creme",
+    "flip": true,
+    "gallery": true,
+    "backgroundCoverage": 0.305
+  },
+  {
+    "file": "emerald-ape-menta-esp",
+    "character": "emerald-ape",
+    "background": "menta",
+    "flip": true,
+    "gallery": true,
+    "backgroundCoverage": 0.509
+  },
+  {
+    "file": "sage-nomad-menta-esp",
+    "character": "sage-nomad",
+    "background": "menta",
+    "flip": true,
+    "gallery": true,
+    "backgroundCoverage": 0.384
+  },
+  {
+    "file": "ivory-baron-menta",
+    "character": "ivory-baron",
+    "background": "menta",
+    "flip": false,
+    "gallery": true,
+    "backgroundCoverage": 0.38
+  },
+  {
+    "file": "golden-beat-pessego",
+    "character": "golden-beat",
+    "background": "pessego",
+    "flip": false,
+    "gallery": true,
+    "backgroundCoverage": 0.305
+  },
+  {
+    "file": "emerald-ape-creme-esp",
+    "character": "emerald-ape",
+    "background": "creme",
+    "flip": true,
+    "gallery": true,
+    "backgroundCoverage": 0.509
+  },
+  {
+    "file": "violet-nomad-menta-esp",
+    "character": "violet-nomad",
+    "background": "menta",
+    "flip": true,
+    "gallery": true,
+    "backgroundCoverage": 0.36
+  },
+  {
+    "file": "golden-beat-lilas-esp",
+    "character": "golden-beat",
+    "background": "lilas",
+    "flip": true,
+    "gallery": true,
+    "backgroundCoverage": 0.305
+  }
+]

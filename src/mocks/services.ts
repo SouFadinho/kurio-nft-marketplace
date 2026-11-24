@@ -4,19 +4,44 @@
  * Assim, REST e tempo real nunca divergem (MOCK-10).
  */
 import type { NftUpdatedEvent, Order, OrderUpdatedEvent } from '@/api/contracts'
-import { db, type DbOrder } from './db'
+import { db, type DbNft, type DbOrder } from './db'
+import { availableOf } from './catalog-model'
 import { broadcast, emitToUser, makeEvent } from './realtime/server'
 
 const timers = new Map<string, number>()
 
-export function updateNft(id: string, patch: { price?: string; available?: number }) {
+export interface NftPatch {
+  price?: string
+  /** Disponibilidade TOTAL: ajustada na maior edição; as demais são reduzidas se necessário. */
+  available?: number
+  /** Disponibilidade por edição (tem precedência sobre `available`). */
+  editions?: Array<{ id: string; available: number }>
+}
+
+const editionsData = (n: DbNft) => n.editions.map((e) => ({ id: e.id, available: e.available }))
+
+export function updateNft(id: string, patch: NftPatch) {
   const nft = db.commit((s) => {
     const found = s.nfts.find((n) => n.id === id)
     if (!found) return null
     if (patch.price !== undefined) found.price = patch.price
-    if (patch.available !== undefined) found.available = patch.available
+    if (patch.editions) {
+      for (const e of patch.editions) {
+        const target = found.editions.find((x) => x.id === e.id)
+        if (target) target.available = Math.max(0, Math.trunc(e.available))
+      }
+    } else if (patch.available !== undefined) {
+      // Mantém a soma igual a `available`: reduz as primeiras edições se preciso e ajusta a última.
+      let rest = Math.max(0, Math.trunc(patch.available))
+      const last = found.editions[found.editions.length - 1]!
+      for (const e of found.editions.slice(0, -1)) {
+        e.available = Math.min(e.available, rest)
+        rest -= e.available
+      }
+      last.available = rest
+    }
     found.version += 1
-    return { ...found }
+    return structuredClone(found)
   })
   if (!nft) throw new Error(`NFT inexistente: ${id}`)
 
@@ -24,7 +49,7 @@ export function updateNft(id: string, patch: { price?: string; available?: numbe
     type: 'nft.updated',
     resource: { type: 'nft', id: nft.id },
     version: nft.version,
-    data: { price: nft.price, available: nft.available },
+    data: { price: nft.price, available: availableOf(nft), editions: editionsData(nft) },
   })
   broadcast(event)
   return event
@@ -38,7 +63,7 @@ export function emitStaleNftUpdate(id: string, fakePrice: string) {
     type: 'nft.updated',
     resource: { type: 'nft', id },
     version: Math.max(1, nft.version - 1),
-    data: { price: fakePrice, available: nft.available },
+    data: { price: fakePrice, available: availableOf(nft), editions: editionsData(nft) },
   })
   broadcast(event)
   return event

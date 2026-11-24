@@ -22,7 +22,10 @@ export function EmptyState({
   action,
   icon,
   className,
+  headingLevel: Heading = 'h2',
 }: {
+  /** Use h1 quando o estado vazio for o conteúdo principal da página (ex.: 404). */
+  headingLevel?: 'h1' | 'h2'
   title: string
   description?: string
   action?: ReactNode
@@ -34,7 +37,7 @@ export function EmptyState({
       <span className="grid size-12 place-items-center rounded-full bg-surface text-price" aria-hidden>
         {icon ?? <SearchX className="size-5" />}
       </span>
-      <h2 className="text-title-2">{title}</h2>
+      <Heading className="text-title-2">{title}</Heading>
       {description && <p className="max-w-md text-muted-foreground">{description}</p>}
       {action}
     </div>
@@ -42,12 +45,14 @@ export function EmptyState({
 }
 
 export function ErrorState({
+  headingLevel: Heading = 'h2',
   title = 'Não foi possível carregar',
   message,
   onRetry,
   retrying = false,
   className,
 }: {
+  headingLevel?: 'h1' | 'h2'
   title?: string
   message?: string
   onRetry?: () => void
@@ -57,7 +62,7 @@ export function ErrorState({
   return (
     <div role="alert" className={cn('flex flex-col items-center gap-3 rounded-lg bg-destructive-surface px-6 py-10 text-center', className)}>
       <AlertTriangle className="size-6 text-destructive" aria-hidden />
-      <h2 className="text-title-2">{title}</h2>
+      <Heading className="text-title-2">{title}</Heading>
       {message && <p className="max-w-md text-muted-foreground">{message}</p>}
       {onRetry && (
         <Button variant="outline" onClick={onRetry} disabled={retrying}>

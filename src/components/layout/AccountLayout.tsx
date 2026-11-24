@@ -75,7 +75,7 @@ export function AccountLayout({ active, title, children }: { active: AccountNavK
         <aside aria-label="Menu da conta" className="min-w-0 lg:sticky lg:top-[calc(var(--spacing-header)+2rem)] lg:self-start">
           <nav aria-label="Conta" className="rounded-sm lg:bg-surface lg:p-4">
             <h2 className="mb-3 hidden text-title-3 font-bold lg:block">Meu perfil</h2>
-            <ul className="-mx-4 flex gap-1 overflow-x-auto px-4 pb-1 [scrollbar-width:none] lg:mx-0 lg:flex-col lg:overflow-visible lg:px-0">
+            <ul className="flex flex-wrap gap-1 lg:flex-col lg:flex-nowrap">
               {items}
               <li className="shrink-0">
                 <button type="button" onClick={onLogout} disabled={logout.isPending} className={cn(itemBase, 'w-full text-muted-foreground hover:text-foreground')}>

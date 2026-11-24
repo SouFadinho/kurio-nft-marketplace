@@ -195,7 +195,7 @@ test.describe('componentes', () => {
 })
 
 test.describe('acessibilidade automatizada (axe, WCAG 2.1 A/AA)', () => {
-  for (const route of ['/', '/demo/componentes', '/demo/conta', '/demo/checkout', '/criadores', '/rota-inexistente']) {
+  for (const route of ['/', '/mercado', '/nft/nft-001', '/nft/nao-existe', '/demo/componentes', '/demo/conta', '/demo/checkout', '/criadores', '/rota-inexistente']) {
     test(`sem violações em ${route}`, async ({ page }) => {
       await openApp(page, route)
       await page.waitForLoadState('networkidle')

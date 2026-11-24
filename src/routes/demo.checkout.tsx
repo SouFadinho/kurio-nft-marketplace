@@ -27,7 +27,7 @@ function Summary() {
       <h2 className="text-title-3 font-bold">Resumo da carteira</h2>
       <form className="flex" onSubmit={(e) => (e.preventDefault(), demoAction())}>
         <label htmlFor="coupon" className="sr-only">Código promocional</label>
-        <Input id="coupon" placeholder="Digite o código promocional…" className="rounded-r-none lg:rounded-r-none" />
+        <Input id="coupon" placeholder="Digite o código promocional…" className="rounded-r-none px-3 text-caption lg:rounded-r-none" />
         <Button type="submit" className="h-12 rounded-l-none lg:h-10">Aplicar</Button>
       </form>
       <p role="status" className="sr-only">Carregando valores da cotação…</p>

@@ -330,7 +330,7 @@ function ComponentGallery() {
               getKey={(n) => n.id}
               renderItem={(n, i) => (
                 <NFTCard
-                  nft={{ ...n, previousPrice: n.id === 'nft-003' ? '2.29' : undefined }}
+                  nft={n}
                   priority={i < 2}
                   favorite={favorites.has(n.id)}
                   onToggleFavorite={(next) => toggleFavorite(n.id, next)}

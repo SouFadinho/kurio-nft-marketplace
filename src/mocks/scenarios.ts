@@ -3,10 +3,17 @@
  * Um cenário é DADO, não código espalhado: os handlers consultam a configuração ativa.
  * Selecionado por `?scenario=<nome>` (com `&reset=1` para restaurar o seed) ou por
  * `window.__kurioMock.reset(nome)`.
- *
- * No CP1 existem só os cenários usados pela prova de conceito; a lista completa
- * (TECHNICAL_ARCHITECTURE §7.8) entra a partir do CP3.
  */
+
+/** Rotas que podem receber falhas ou latência específicas. */
+export type RouteKey = 'nfts.list' | 'nfts.detail' | 'highlights' | 'favorites.read' | 'favorites.write'
+
+export interface FailureRule {
+  kind: 'http-503' | 'http-500' | 'network'
+  /** Quantas requisições falham antes de voltar ao normal (Infinity = sempre). */
+  times: number
+}
+
 export interface ScenarioConfig {
   /** Latência fixa (ms) aplicada a todas as respostas REST. Fixa = reproduzível. */
   latencyMs: number
@@ -14,12 +21,41 @@ export interface ScenarioConfig {
   settlement: 'auto' | 'manual'
   settleDelayMs: number
   settleResult: 'confirmed' | 'rejected'
+  /** Latência adicional por rota, calculada a partir da URL (respostas fora de ordem). */
+  routeLatency?: Partial<Record<RouteKey, (url: URL) => number>>
+  failures?: Partial<Record<RouteKey, FailureRule>>
+  /** Catálogo sem nenhum NFT (resultado vazio). */
+  emptyCatalog?: boolean
+  /** Imagens de NFT respondem 404 (falha ao carregar imagem). */
+  brokenImages?: boolean
+  /** Respostas destas rotas ficam RETIDAS até `__kurioMock.release(rota)` (testes determinísticos de carregamento). */
+  holdRoutes?: RouteKey[]
 }
 
+const base = { latencyMs: 120, settlement: 'auto', settleDelayMs: 1_500, settleResult: 'confirmed' } as const satisfies ScenarioConfig
+
 export const SCENARIOS = {
-  default: { latencyMs: 120, settlement: 'auto', settleDelayMs: 1_500, settleResult: 'confirmed' },
-  'payment-rejected': { latencyMs: 120, settlement: 'auto', settleDelayMs: 1_500, settleResult: 'rejected' },
+  default: base,
+  'payment-rejected': { ...base, settleResult: 'rejected' },
   'manual-settlement': { latencyMs: 0, settlement: 'manual', settleDelayMs: 0, settleResult: 'confirmed' },
+  /** Carregamento lento: evidencia skeletons. */
+  slow: { ...base, latencyMs: 1_500 },
+  /** Busca: termos curtos respondem MAIS devagar que termos longos (respostas fora de ordem). */
+  'out-of-order': {
+    ...base,
+    latencyMs: 0,
+    routeLatency: { 'nfts.list': (url) => Math.max(0, 1_600 - (url.searchParams.get('q')?.length ?? 0) * 400) },
+  },
+  // 3 falhas = a tentativa inicial + os 2 retries automáticos do TanStack Query para erros
+  // transitórios. Assim o estado de erro aparece e o botão "Tentar novamente" recupera.
+  'catalog-error': { ...base, failures: { 'nfts.list': { kind: 'http-503', times: 3 } } },
+  'catalog-offline': { ...base, failures: { 'nfts.list': { kind: 'network', times: 3 } } },
+  'detail-error': { ...base, failures: { 'nfts.detail': { kind: 'http-500', times: 3 } } },
+  /** A listagem só responde quando o teste liberar: skeletons sem depender de tempo. */
+  'hold-catalog': { ...base, holdRoutes: ['nfts.list'] },
+  empty: { ...base, emptyCatalog: true },
+  'broken-images': { ...base, brokenImages: true },
+  'favorite-fail': { ...base, failures: { 'favorites.write': { kind: 'http-503', times: Infinity } } },
 } satisfies Record<string, ScenarioConfig>
 
 export type ScenarioName = keyof typeof SCENARIOS

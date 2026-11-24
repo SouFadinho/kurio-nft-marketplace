@@ -11,6 +11,7 @@
  */
 import { setupWorker } from 'msw/browser'
 import { db } from './db'
+import { releaseRoute, resetFailures } from './failures'
 import { restHandlers } from './handlers'
 import { realtimeControl, realtimeHandler } from './realtime/server'
 import { isScenarioName, type ScenarioName } from './scenarios'
@@ -33,9 +34,12 @@ const control = {
   async reset(scenario: ScenarioName = 'default') {
     clearTimers()
     realtimeControl.resetStats()
+    resetFailures()
     await db.reset(scenario)
   },
   scenario: () => db.get().scenario,
+  /** Libera respostas retidas pelo cenário (ex.: 'nfts.list' em hold-catalog). */
+  release: releaseRoute,
   updateNft,
   emitStaleNftUpdate,
   settleOrder,

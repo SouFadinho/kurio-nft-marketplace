@@ -11,6 +11,8 @@ import { digest, hashPassword, randomHex } from '../crypto'
 import { apiError, bearer, requireSession } from '../session'
 import { realtimeControl } from '../realtime/server'
 import { scheduleSettlement } from '../services'
+import { availableOf } from '../catalog-model'
+import { catalogHandlers } from './catalog'
 
 const SESSION_TTL_MS = 2 * 60 * 60 * 1000
 
@@ -23,6 +25,7 @@ function publicOrder(order: DbOrder): Order {
 }
 
 export const restHandlers = [
+  ...catalogHandlers,
   // ---------- Sessão ----------
   http.post('/api/auth/login', async ({ request }) => {
     await latency()
@@ -66,20 +69,6 @@ export const restHandlers = [
     return new HttpResponse(null, { status: 204 })
   }),
 
-  // ---------- NFTs ----------
-  http.get('/api/nfts', async () => {
-    await latency()
-    const items = db.get().nfts
-    return HttpResponse.json({ items, total: items.length })
-  }),
-
-  http.get('/api/nfts/:id', async ({ params }) => {
-    await latency()
-    const nft = db.get().nfts.find((n) => n.id === params.id)
-    if (!nft) return apiError(404, { code: 'NOT_FOUND', message: 'NFT não encontrado.' })
-    return HttpResponse.json(nft)
-  }),
-
   // ---------- Pedidos ----------
   http.post('/api/orders', async ({ request }) => {
     await latency()
@@ -107,7 +96,7 @@ export const restHandlers = [
     for (const item of parsed.data.items) {
       const nft = nfts.find((n) => n.id === item.nftId)
       if (!nft) return apiError(404, { code: 'NOT_FOUND', message: `NFT ${item.nftId} não encontrado.` })
-      if (item.quantity > nft.available) {
+      if (item.quantity > availableOf(nft)) {
         return apiError(409, { code: 'OUT_OF_STOCK', message: `${nft.name} não tem disponibilidade suficiente.` })
       }
       const lineTotal = mulEth(parseEth(nft.price), item.quantity)

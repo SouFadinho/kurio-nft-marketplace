@@ -5,18 +5,24 @@ import { expect, test, type Page } from '@playwright/test'
 import { openApp } from './support'
 
 const WIDTHS = [360, 390, 600, 768, 900, 1024, 1280, 1440]
-const ROUTES = ['/', '/mercado', '/criadores', '/demo/componentes', '/demo/conta', '/demo/checkout', '/rota-inexistente']
+const ROUTES = ['/', '/mercado', '/mercado?category=musica&network=solana', '/nft/nft-001', '/nft/nao-existe', '/criadores', '/demo/componentes', '/demo/conta', '/demo/checkout', '/rota-inexistente']
 
 async function horizontalOverflow(page: Page) {
   return page.evaluate(() => {
     const doc = document.documentElement
+    // Culpados só são calculados quando HÁ overflow real (diagnóstico; caro em páginas grandes).
+    if (doc.scrollWidth <= doc.clientWidth) return { scroll: doc.scrollWidth, client: doc.clientWidth, offenders: [] as string[] }
     const offenders = [...document.querySelectorAll<HTMLElement>('body *')]
       .filter((el) => {
         const r = el.getBoundingClientRect()
         return r.width > 0 && (r.right > doc.clientWidth + 1 || r.left < -1) && getComputedStyle(el).position !== 'fixed'
       })
-      // Ignora descendentes de contêineres com rolagem horizontal intencional.
-      .filter((el) => !el.closest('[class*="overflow-x-auto"]'))
+      // Ignora elementos recortados por um ancestral (overflow hidden/clip/auto/scroll):
+      // eles não causam rolagem horizontal; o scrollWidth acima é a medida principal.
+      .filter((el) => {
+        for (let a = el.parentElement; a && a !== document.body; a = a.parentElement) if (getComputedStyle(a).overflowX !== 'visible') return false
+        return true
+      })
       .slice(0, 5)
       .map((el) => `${el.tagName.toLowerCase()}.${String(el.className).slice(0, 60)}`)
     return { scroll: doc.scrollWidth, client: doc.clientWidth, offenders }
@@ -25,6 +31,7 @@ async function horizontalOverflow(page: Page) {
 
 for (const width of WIDTHS) {
   test(`sem overflow horizontal em ${width}px`, async ({ page }) => {
+    test.setTimeout(90_000)
     await page.setViewportSize({ width, height: 900 })
     await openApp(page, '/')
     for (const route of ROUTES) {
