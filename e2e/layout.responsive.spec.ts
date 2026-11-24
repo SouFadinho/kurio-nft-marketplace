@@ -1,7 +1,8 @@
 /**
  * CP2: responsividade da estrutura global (CHALLENGE §8: 390, 768, 1440 e larguras intermediárias).
  */
-import { expect, test, type Page } from '@playwright/test'
+import { type Page } from '@playwright/test'
+import { expect, test } from './fixtures'
 import { openApp } from './support'
 
 const WIDTHS = [360, 390, 600, 768, 900, 1024, 1280, 1440]

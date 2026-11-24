@@ -106,8 +106,7 @@ Todas `PENDENTE` (TELA-01..09). Desde o CP2:
 
 | ID | Status | Evidência / observação |
 |---|---|---|
-| CAT-01..05 | PENDENTE | — |
-| CAT-04 (parcial: acesso direto e inexistente) | VALIDADO (PoC) | T11 |
+| CAT-01..05 | VALIDADO (CP3) | ver §11 |
 | CART-01..05 | PENDENTE | — |
 | CART-06 (precisão ETH) | VALIDADO | unit `lib/eth` |
 | PAY-01..03, PAY-07 | PENDENTE | — |
@@ -123,16 +122,19 @@ Todas `PENDENTE` (TELA-01..09). Desde o CP2:
 | ACC-06, ACC-07 | PENDENTE | — |
 | ACC-08 (senha não em claro) | IMPLEMENTADO, NÃO VALIDADO | PBKDF2 no mock; sem teste automatizado |
 | INT-01, 02, 03, 04, 08, 10 | VALIDADO (PoC) | T1, T2, T11, lint |
-| INT-05, 07, 09, 11, 12 | PENDENTE / IMPLEMENTADO, NÃO VALIDADO | INT-07: `signal` repassado ao Axios, sem teste de corrida ainda |
+| INT-05 (estados) | VALIDADO (catálogo e detalhe, CP3) | §11 |
+| INT-07 (respostas obsoletas) | VALIDADO (CP3) | `out-of-order` + `stale-in-flight` (§11) |
+| INT-11 (otimista + rollback) | VALIDADO (favoritos, CP3) | `favorite-fail` |
+| INT-09, INT-12 | PENDENTE / IMPLEMENTADO, NÃO VALIDADO | idempotência no CP5; documentação de cache no CP9 |
 | INT-06 (invalidação após eventos) | VALIDADO (PoC) | T3/4, T7/8 |
 | API-01 | IMPLEMENTADO, NÃO VALIDADO (parcial) | auth, nfts, orders; faltam favoritos, carrinho, cotação, perfil, carteiras |
 | API-02 | IMPLEMENTADO, NÃO VALIDADO (parcial) | 401, 404, 409, 422 nos handlers |
 | API-03 | VALIDADO (mesma tentativa) / IMPLEMENTADO, NÃO VALIDADO (conflito) | T2b |
 | MOCK-01, 02, 07, 08, 09, 10 | VALIDADO | lint, T3/4 (REST e evento coerentes após reload), suíte no build de produção |
 | MOCK-03 (persistência e reset) | VALIDADO (PoC) | T3/4 (reload), T "reset integral" |
-| MOCK-04, 06 | IMPLEMENTADO, NÃO VALIDADO (3 cenários) | `default`, `manual-settlement`, `payment-rejected` |
+| MOCK-04, 06 | VALIDADO parcialmente (15 cenários; faltam os de cupom, cadastro, sessão expirada e pagamento) | `slow`, `hold-catalog`, `out-of-order`, `stale-in-flight`, `catalog-error`, `catalog-offline`, `detail-error`, `empty`, `broken-images`, `favorite-fail`… |
 | MOCK-05 (2 usuários) | VALIDADO | T6 |
-| RT-01 (nft.updated) | VALIDADO (lista + detalhe) · carrinho PENDENTE | T3/4 |
+| RT-01 (nft.updated) | VALIDADO (catálogo, detalhe com edições e estoque) · carrinho PENDENTE (CP5) | T3/4 + §11 |
 | RT-02 (order.updated) | VALIDADO | T5, T5b |
 | RT-03, RT-04 | VALIDADO | T9 + unitários |
 | RT-05 | VALIDADO | T7/8 |
@@ -156,9 +158,13 @@ Todas `PENDENTE` (TELA-01..09). Desde o CP2:
 | A11Y-05 (contraste e não depender só de cor) | VALIDADO: 19 pares de token por teste + axe `color-contrast`; estados com indicador extra |
 | A11Y-06 (feedback acessível) | IMPLEMENTADO, NÃO VALIDADO para mutations reais (toast em região `aria-live` validado no componente) |
 | A11Y-07 (sem overflow, zoom) | VALIDADO para overflow (8 larguras). Zoom de 200% não testado ainda (CP8) |
-| E2E-01..12 | PENDENTE (a infraestrutura de teste está VALIDADA) |
+| E2E-01 | VALIDADO (CP3) |
+| E2E-02 | VALIDADO (CP3) |
+| E2E-04 | VALIDADO parcialmente (favoritos, falha e rollback; troca de usuário no CP4) |
+| E2E-12 | VALIDADO parcialmente (skeleton, erro, retry no catálogo e detalhe; carrinho no CP5) |
+| E2E-03, 05–11 | PENDENTE (CP4–CP7) |
 | TEST-01 (Chromium desktop + mobile) | VALIDADO (configuração) |
-| TEST-02 (visual) | PENDENTE |
+| TEST-02 (visual) | IMPLEMENTADO: baselines de Início e Detalhe (desktop+mobile, Windows). Carrinho e Pagamento no CP5; baselines Linux no CP7 |
 | TEST-03 (estado isolado) | VALIDADO: contexto novo + `?reset=1` por teste; 3 rodadas paralelas sem interferência |
 | TEST-04 (HTML + traces) | IMPLEMENTADO, NÃO VALIDADO (`trace: retain-on-failure`; relatório HTML gerado) |
 | TEST-05 | VALIDADO (os testes acionam o servidor simulado; a UI muda via socket ou Axios) |
@@ -168,3 +174,20 @@ Todas `PENDENTE` (TELA-01..09). Desde o CP2:
 | DEL-04, 05 (README, ARCHITECTURE) | PENDENTE |
 | DEL-06 (scripts) | VALIDADO: `dev`, `build`, `preview`, `typecheck`, `lint`, `test:e2e`, `audit:lighthouse` (`dev` não exercitado por teste automatizado) |
 | DEL-07 (checkout limpo) | VALIDADO (CP1): `git clone` + `npm ci` + typecheck + lint + build + `test:e2e` = 43/43 (`clean-checkout.log`). Ressalva: os navegadores do Playwright vieram do cache em D: (`npx playwright install chromium` é um passo de setup a documentar no README) |
+
+## 11. CP3: catálogo e detalhe (evidências em `planning/evidence/cp3/` e `planning/evidence/cp3-tests/`)
+
+| ID | Requisito | Teste (arquivo › caso) | Status |
+|---|---|---|---|
+| TELA-01 | Início: destaques, catálogo, busca, filtros, ordenação, navegação | catalog.spec › todos; comparações `comparacao-inicio-*` | VALIDADO (funcional) · fidelidade: ver CP3_REPORT §6 |
+| TELA-02 | Detalhe: galeria, informações, edição, quantidade, favoritos, compra | nft-detail.spec › todos; `comparacao-detalhe-*` | VALIDADO (funcional) · compra e carrinho: contrato sem sucesso simulado até o CP5 |
+| CAT-01 | URL com busca/filtros/ordem/página; refresh e histórico | catalog › paginação + histórico + refresh; link compartilhável | VALIDADO |
+| CAT-02 | Filtros combináveis; mudar filtro reinicia a página | catalog › filtros combinados; mudar um filtro volta para a página 1 | VALIDADO |
+| CAT-03 | Consultas refletem parâmetros; vazio, falha, fora de ordem | catalog › busca sem resultados, erro HTTP, erro de conexão, respostas fora de ordem, resposta REST antiga após evento | VALIDADO |
+| CAT-04 | Acesso direto, inexistente, edição indisponível, limite de quantidade | nft-detail › acesso direto, 404, edição esgotada, quantidade | VALIDADO |
+| CAT-05 | Favoritos persistem para o usuário autenticado | catalog › visitante → login → favorito persiste após refresh | VALIDADO |
+| — | Parâmetros inválidos e página além do fim | catalog › parâmetros inválidos; unit › catalog-search | VALIDADO |
+| — | Imagem que falha ao carregar | catalog › fallback no mesmo espaço | VALIDADO |
+| — | Teclado (filtros, drawer, edições) | catalog › teclado; nft-detail › setas | VALIDADO |
+| — | Responsividade (8 larguras, novas rotas) | layout.responsive | VALIDADO |
+| — | Acessibilidade (axe, novas rotas) | design-system › axe em /, /mercado, /nft/nft-001, /nft/nao-existe | VALIDADO |

@@ -68,6 +68,13 @@ const findNft = (id: unknown) => db.get().nfts.find((n) => n.id === id)
 export const catalogHandlers = [
   http.get('/api/nfts', async ({ request }) => {
     const url = new URL(request.url)
+    if (db.scenario().snapshotBeforeHold) {
+      const q = parseList(url)
+      if (q instanceof Response) return q
+      const body = listNfts(structuredClone(db.get().nfts), q) // lido agora, entregue depois
+      await routeDelay('nfts.list', url)
+      return HttpResponse.json(body)
+    }
     await routeDelay('nfts.list', url)
     const failure = maybeFail('nfts.list')
     if (failure) return failure

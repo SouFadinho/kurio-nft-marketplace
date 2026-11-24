@@ -1,0 +1,12 @@
+[WebServer] [PLUGIN_TIMINGS] JavaScript callbacks ran for 1.5s of this 10.0s build (15%).
+[WebServer] 1 callback is listed without a time. Its calls overlapped, so the time inside one call includes work from other calls. To find its cost, profile the build with `node --cpu-prof`:
+[WebServer]   - plugin @tailwindcss/vite:generate:build transform (2 calls)
+[WebServer] See https://rolldown.rs/reference/InputOptions.checks#bundlertimings for more details.
+[WebServer] 
+
+
+Running 2 tests using 2 workers
+
+[1/2] [mobile-chromium] › e2e\catalog.spec.ts:211:3 › catálogo: tempo real e favoritos › resposta REST antiga que chega DEPOIS do evento não regride o preço
+[2/2] [desktop-chromium] › e2e\catalog.spec.ts:211:3 › catálogo: tempo real e favoritos › resposta REST antiga que chega DEPOIS do evento não regride o preço
+  2 passed (25.4s)

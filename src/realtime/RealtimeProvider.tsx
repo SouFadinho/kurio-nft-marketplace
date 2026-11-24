@@ -16,7 +16,7 @@ import { NftUpdatedEvent, OrderUpdatedEvent, REALTIME_EVENTS } from '@/api/contr
 import { queryKeys } from '@/api/queryKeys'
 import { useClientSession } from '@/features/auth/queries'
 import { EventGuard, type GuardDecision } from './eventGuard'
-import { applyNftUpdated, applyOrderUpdated } from './applyEvent'
+import { applyNftUpdated, applyOrderUpdated, reapplyNewerNftEvents, type LatestNftEvents } from './applyEvent'
 import { diagnostics } from './diagnostics'
 
 function count(decision: GuardDecision, type: string) {
@@ -37,6 +37,19 @@ export function RealtimeProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     const guard = new EventGuard()
+    const latestNft: LatestNftEvents = new Map()
+    // Resposta REST de NFT que chegou DEPOIS de um evento mais novo: reaplica o evento.
+    // Guarda de reentrância: a própria reaplicação grava no cache e notificaria esta assinatura.
+    let reapplying = false
+    const unsubscribeCache = queryClient.getQueryCache().subscribe((e) => {
+      if (reapplying || latestNft.size === 0 || e.type !== 'updated' || e.action.type !== 'success' || e.query.queryKey[0] !== 'nfts') return
+      reapplying = true
+      try {
+        reapplyNewerNftEvents(queryClient, latestNft)
+      } finally {
+        reapplying = false
+      }
+    })
     diagnostics.reset(userId)
     diagnostics.update({ state: 'connecting' })
 
@@ -83,7 +96,7 @@ export function RealtimeProvider({ children }: { children: ReactNode }) {
     socket.on(REALTIME_EVENTS.nftUpdated, (raw: unknown) => {
       const parsed = NftUpdatedEvent.safeParse(raw)
       if (!parsed.success) return
-      count(applyNftUpdated(queryClient, guard, parsed.data), parsed.data.type)
+      count(applyNftUpdated(queryClient, guard, parsed.data, latestNft), parsed.data.type)
     })
 
     socket.on(REALTIME_EVENTS.orderUpdated, (raw: unknown) => {
@@ -99,6 +112,7 @@ export function RealtimeProvider({ children }: { children: ReactNode }) {
     })
 
     return () => {
+      unsubscribeCache()
       socket.removeAllListeners()
       socket.disconnect()
       diagnostics.update({ state: 'idle' })

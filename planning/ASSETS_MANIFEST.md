@@ -27,6 +27,18 @@ Para reduzir a pixelização (pedido do candidato no CP2), as artes passaram por
 
 O registro de máquina de cada arquivo (região, upscaler, status) está em `public/assets/nfts/manifest.json`.
 
+## CP3: uma arte por NFT (variação do traço "Fundo")
+Pedido da revisão do CP2: não reutilizar a mesma arte em NFTs diferentes e melhorar as artes escuras.
+Gerado por `scripts/assets/build-variants.mjs` a partir dos 5 personagens acima, **sem novo upscale**:
+- **Técnica:** máscara do fundo por crescimento de região a partir das bordas superior e laterais (a inferior é evitada porque roupas claras tocam o rodapé), recoloração preservando o degradê (luminância relativa) e espelhamento horizontal.
+  - O personagem **não é alterado**; isso foi conferido em folha de contato.
+  - Uma primeira versão vazava a recoloração para os personagens: o `blur` do sharp devolvia a máscara com 3 canais. Corrigido com `extractChannel(0)` e uma verificação de tamanho.
+- **Tom das artes escuras** (ajuste aprovado): Ivory Baron (gamma 1,6, brilho 1,3) e Violet Nomad (gamma 1,12, brilho 1,1). O Ivory continua escuro por natureza (pelo preto, como na referência).
+- **Preservados sem alteração** (pedido): Emerald Ape e Sage Nomad, nas versões "original".
+- **Resultado:** 36 artes únicas (`public/assets/nfts/catalog/<personagem>-<fundo>[-esp].webp`, 512×512) e 36 recortes de detalhe para a galeria (`*-detalhe.webp`, 1,45× no rosto). O registro de cada arquivo está em `catalog/manifest.json`; a especificação vem do próprio catálogo do mock (`src/mocks/fixtures/catalog.ts`).
+- **Status:** variações DERIVADAS, não artes originais do Figma. Os NFTs que no Figma têm o mesmo personagem (ex.: Golden Beat, Frequency e Signal) aparecem com fundos diferentes.
+- Banners e o "Diário da Cunhagem" usam artes do mesmo conjunto (são conteúdo editorial, não NFTs).
+
 ## Assets faltantes (necessários para fidelidade total)
 | Asset | Onde aparece | Especificação necessária |
 |---|---|---|

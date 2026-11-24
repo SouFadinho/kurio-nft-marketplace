@@ -30,6 +30,8 @@ export interface ScenarioConfig {
   brokenImages?: boolean
   /** Respostas destas rotas ficam RETIDAS até `__kurioMock.release(rota)` (testes determinísticos de carregamento). */
   holdRoutes?: RouteKey[]
+  /** A listagem lê o banco ANTES de ser retida: simula uma resposta já em trânsito (dados antigos). */
+  snapshotBeforeHold?: boolean
 }
 
 const base = { latencyMs: 120, settlement: 'auto', settleDelayMs: 1_500, settleResult: 'confirmed' } as const satisfies ScenarioConfig
@@ -53,6 +55,8 @@ export const SCENARIOS = {
   'detail-error': { ...base, failures: { 'nfts.detail': { kind: 'http-500', times: 3 } } },
   /** A listagem só responde quando o teste liberar: skeletons sem depender de tempo. */
   'hold-catalog': { ...base, holdRoutes: ['nfts.list'] },
+  /** Corrida REST × evento: a resposta antiga chega DEPOIS do nft.updated (teste da correção do CP3). */
+  'stale-in-flight': { ...base, holdRoutes: ['nfts.list'], snapshotBeforeHold: true },
   empty: { ...base, emptyCatalog: true },
   'broken-images': { ...base, brokenImages: true },
   'favorite-fail': { ...base, failures: { 'favorites.write': { kind: 'http-503', times: Infinity } } },

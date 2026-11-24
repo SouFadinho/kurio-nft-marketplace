@@ -3,7 +3,8 @@
  * Integração real: TanStack Router (URL) → TanStack Query → Axios → MSW; tempo real via
  * socket.io-client. Roda nos projetos desktop (1440) e mobile (390).
  */
-import { expect, test, type Page } from '@playwright/test'
+import { type Page } from '@playwright/test'
+import { expect, test } from './fixtures'
 import { mock, openApp, USERS } from './support'
 
 const isMobile = (page: Page) => (page.viewportSize()?.width ?? 1440) < 1024
@@ -206,6 +207,16 @@ test.describe('catálogo: tempo real e favoritos', () => {
     await expect(card.locator('[data-value]')).toHaveText('2.05 ETH')
     await mock(page).updateNft('nft-002', { available: 0 })
     await expect(card.getByText('Esgotado')).toBeVisible()
+  })
+
+  test('resposta REST antiga que chega DEPOIS do evento não regride o preço', async ({ page }) => {
+    // Determinístico: a listagem é lida (1.69) e retida; o evento (2.05, v2) chega antes dela.
+    await openApp(page, '/', 'stale-in-flight')
+    await expect(page.getByTestId('nft-card-skeleton').first()).toBeVisible()
+    await mock(page).updateNft('nft-002', { price: '2.05' })
+    await mock(page).release('nfts.list')
+    const card = page.locator('[data-testid="nft-card"][data-nft-id="nft-002"]')
+    await expect(card.locator('[data-value]')).toHaveText('2.05 ETH')
   })
 
   test('visitante ao favoritar vai ao login e volta; favorito persiste após refresh', async ({ page }) => {

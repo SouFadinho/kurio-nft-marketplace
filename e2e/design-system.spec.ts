@@ -2,7 +2,7 @@
  * CP2: design system e estrutura global. Roda nos projetos desktop (1440) e mobile (390).
  */
 import AxeBuilder from '@axe-core/playwright'
-import { expect, test } from '@playwright/test'
+import { expect, test } from './fixtures'
 import { openApp } from './support'
 
 const isMobile = (name: string) => name.startsWith('mobile')

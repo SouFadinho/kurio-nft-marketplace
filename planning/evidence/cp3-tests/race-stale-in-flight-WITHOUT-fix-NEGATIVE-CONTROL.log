@@ -1,0 +1,88 @@
+
+Running 2 tests using 2 workers
+
+[1/2] [desktop-chromium] › e2e\catalog.spec.ts:211:3 › catálogo: tempo real e favoritos › resposta REST antiga que chega DEPOIS do evento não regride o preço
+[2/2] [mobile-chromium] › e2e\catalog.spec.ts:211:3 › catálogo: tempo real e favoritos › resposta REST antiga que chega DEPOIS do evento não regride o preço
+  1) [mobile-chromium] › e2e\catalog.spec.ts:211:3 › catálogo: tempo real e favoritos › resposta REST antiga que chega DEPOIS do evento não regride o preço 
+
+    Error: expect(locator).toHaveText(expected) failed
+
+    Locator:  locator('[data-testid="nft-card"][data-nft-id="nft-002"]').locator('[data-value]')
+    Expected: "2.05 ETH"
+    Received: "1.69 ETH"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveText" locator('[data-testid="nft-card"][data-nft-id="nft-002"]').locator('[data-value]') with timeout 5000ms
+      - waiting for locator('[data-testid="nft-card"][data-nft-id="nft-002"]').locator('[data-value]')
+        11 × locator resolved to <span data-value="1.69" class="font-bold text-price tabular-nums text-body">1.69 ETH</span>
+           - unexpected value "1.69 ETH"
+
+
+      216 |     await mock(page).release('nfts.list')
+      217 |     const card = page.locator('[data-testid="nft-card"][data-nft-id="nft-002"]')
+    > 218 |     await expect(card.locator('[data-value]')).toHaveText('2.05 ETH')
+          |                                                ^
+      219 |   })
+      220 |
+      221 |   test('visitante ao favoritar vai ao login e volta; favorito persiste após refresh', async ({ page }) => {
+        at D:\emprego\e2e\catalog.spec.ts:218:48
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\catalog-catálogo-tempo-rea-942f3--evento-não-regride-o-preço-mobile-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\catalog-catálogo-tempo-rea-942f3--evento-não-regride-o-preço-mobile-chromium\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\catalog-catálogo-tempo-rea-942f3--evento-não-regride-o-preço-mobile-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\catalog-catálogo-tempo-rea-942f3--evento-não-regride-o-preço-mobile-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+  2) [desktop-chromium] › e2e\catalog.spec.ts:211:3 › catálogo: tempo real e favoritos › resposta REST antiga que chega DEPOIS do evento não regride o preço 
+
+    Error: expect(locator).toHaveText(expected) failed
+
+    Locator:  locator('[data-testid="nft-card"][data-nft-id="nft-002"]').locator('[data-value]')
+    Expected: "2.05 ETH"
+    Received: "1.69 ETH"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveText" locator('[data-testid="nft-card"][data-nft-id="nft-002"]').locator('[data-value]') with timeout 5000ms
+      - waiting for locator('[data-testid="nft-card"][data-nft-id="nft-002"]').locator('[data-value]')
+        12 × locator resolved to <span data-value="1.69" class="font-bold text-price tabular-nums text-body">1.69 ETH</span>
+           - unexpected value "1.69 ETH"
+
+
+      216 |     await mock(page).release('nfts.list')
+      217 |     const card = page.locator('[data-testid="nft-card"][data-nft-id="nft-002"]')
+    > 218 |     await expect(card.locator('[data-value]')).toHaveText('2.05 ETH')
+          |                                                ^
+      219 |   })
+      220 |
+      221 |   test('visitante ao favoritar vai ao login e volta; favorito persiste após refresh', async ({ page }) => {
+        at D:\emprego\e2e\catalog.spec.ts:218:48
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\catalog-catálogo-tempo-rea-942f3--evento-não-regride-o-preço-desktop-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\catalog-catálogo-tempo-rea-942f3--evento-não-regride-o-preço-desktop-chromium\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\catalog-catálogo-tempo-rea-942f3--evento-não-regride-o-preço-desktop-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\catalog-catálogo-tempo-rea-942f3--evento-não-regride-o-preço-desktop-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+  2 failed
+    [desktop-chromium] › e2e\catalog.spec.ts:211:3 › catálogo: tempo real e favoritos › resposta REST antiga que chega DEPOIS do evento não regride o preço 
+    [mobile-chromium] › e2e\catalog.spec.ts:211:3 › catálogo: tempo real e favoritos › resposta REST antiga que chega DEPOIS do evento não regride o preço 

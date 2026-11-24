@@ -3,7 +3,8 @@
  * Integração real: Router (loader + notFound) → Query → Axios → MSW; tempo real via
  * socket.io-client. Roda nos projetos desktop (1440) e mobile (390).
  */
-import { expect, test, type Page } from '@playwright/test'
+import { type Page } from '@playwright/test'
+import { expect, test } from './fixtures'
 import { mock, openApp } from './support'
 
 const isMobile = (page: Page) => (page.viewportSize()?.width ?? 1440) < 1024

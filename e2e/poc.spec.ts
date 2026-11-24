@@ -3,7 +3,7 @@
  * Roda contra o build de produção (vite build + preview) com MSW ativo.
  * Cada `test` é independente: contexto de navegador novo + `?reset=1` restaura o seed.
  */
-import { expect, test } from '@playwright/test'
+import { expect, test } from './fixtures'
 import { createOrder, login, mock, openApp, POC, USERS } from './support'
 
 test.describe('PoC CP1 — REST (Axios → MSW) + TanStack Query', () => {
@@ -181,10 +181,13 @@ test.describe('PoC CP1 — Socket.IO (socket.io-client → MSW ws.link + @mswjs/
     await mock(page).settleOrder(orderId, 'confirmed')
     await expect(page.getByTestId('order-status')).toHaveAttribute('data-status', 'pending')
 
+    // Adaptado no CP3: a primeira conexão também reconcilia (correção de corrida), então o
+    // total varia; o que importa é a reconexão gerar UMA reconciliação a mais.
+    const before = Number(await page.getByTestId('rt-reconciliations').textContent())
     await mock(page).setOnline(true)
     await expect(page.getByTestId('rt-state')).toHaveText('conectado')
     await expect(page.getByTestId('rt-reconnections')).toHaveText('1')
-    await expect(page.getByTestId('rt-reconciliations')).toHaveText('1')
+    await expect(page.getByTestId('rt-reconciliations')).toHaveText(String(before + 1))
     // Estado recuperado pelo REST, não por evento.
     await expect(page.getByTestId('order-status')).toHaveAttribute('data-status', 'confirmed')
     await expect(page.getByTestId('rt-applied')).toHaveText('0')
