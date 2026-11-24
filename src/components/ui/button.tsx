@@ -1,54 +1,57 @@
-import * as React from "react"
-import { cva, type VariantProps } from "class-variance-authority"
-import { cn } from "@/lib/utils"
-import { Slot } from "radix-ui"
+import * as React from 'react'
+import { cva, type VariantProps } from 'class-variance-authority'
+import { Slot } from 'radix-ui'
+import { cn } from '@/lib/utils'
 
+/**
+ * Botão do KURIO (base shadcn/ui, personalizado conforme o Figma).
+ * - `default`: laranja sólido, cantos de 4px (CTAs desktop: "Comprar", "Aplicar", "Entrar").
+ * - `gradient`: pílula com gradiente medido #D28A4C → #B77743 (CTAs mobile: "Comprar NFT").
+ * - `outline`: contorno e texto laranja ("Favoritar").
+ * - `secondary`: superfície elevada; `ghost`: sem fundo; `icon-round`: círculo de superfície ("voltar").
+ * Tamanhos `lg` e `icon-lg` garantem área de toque ≥ 44px no mobile.
+ */
 const buttonVariants = cva(
-  "inline-flex shrink-0 items-center justify-center gap-2 rounded-md text-sm font-medium whitespace-nowrap transition-all outline-none focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+  [
+    'inline-flex shrink-0 items-center justify-center gap-2 whitespace-nowrap font-mono font-semibold select-none',
+    'transition-[background-color,color,border-color,box-shadow,transform] duration-[var(--duration-fast)] ease-[var(--ease-standard)]',
+    'outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring',
+    'disabled:pointer-events-none disabled:opacity-45 aria-disabled:pointer-events-none aria-disabled:opacity-45',
+    "[&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+  ].join(' '),
   {
     variants: {
       variant: {
-        default: "bg-primary text-primary-foreground hover:bg-primary/90",
-        destructive:
-          "bg-destructive text-white hover:bg-destructive/90 focus-visible:ring-destructive/20 dark:bg-destructive/60 dark:focus-visible:ring-destructive/40",
-        outline:
-          "border bg-background shadow-xs hover:bg-accent hover:text-accent-foreground dark:border-input dark:bg-input/30 dark:hover:bg-input/50",
-        secondary:
-          "bg-secondary text-secondary-foreground hover:bg-secondary/80",
-        ghost:
-          "hover:bg-accent hover:text-accent-foreground dark:hover:bg-accent/50",
-        link: "text-primary underline-offset-4 hover:underline",
+        default: 'rounded-xs bg-primary text-primary-foreground hover:bg-primary-hover active:bg-primary-active',
+        gradient: 'rounded-full bg-primary-gradient text-primary-foreground shadow-raised hover:brightness-110 active:brightness-95',
+        outline: 'rounded-xs border border-primary bg-transparent text-price hover:bg-primary/10 active:bg-primary/20',
+        secondary: 'rounded-xs bg-surface-2 text-foreground hover:bg-surface-3 active:bg-surface-3/80',
+        ghost: 'rounded-xs text-foreground hover:bg-surface-2 active:bg-surface-3',
+        'icon-round': 'rounded-full bg-surface-2 text-muted-foreground hover:bg-surface-3 hover:text-foreground',
+        link: 'h-auto rounded-xs p-0 text-price underline-offset-4 hover:underline',
+        destructive: 'rounded-xs bg-destructive-surface text-destructive hover:bg-destructive-surface/70',
       },
       size: {
-        default: "h-9 px-4 py-2 has-[>svg]:px-3",
-        xs: "h-6 gap-1 rounded-md px-2 text-xs has-[>svg]:px-1.5 [&_svg:not([class*='size-'])]:size-3",
-        sm: "h-8 gap-1.5 rounded-md px-3 has-[>svg]:px-2.5",
-        lg: "h-10 rounded-md px-6 has-[>svg]:px-4",
-        icon: "size-9",
-        "icon-xs": "size-6 rounded-md [&_svg:not([class*='size-'])]:size-3",
-        "icon-sm": "size-8",
-        "icon-lg": "size-10",
+        sm: 'h-8 px-3 text-caption',
+        md: 'h-10 px-4 text-body',
+        lg: 'h-12 px-6 text-body',
+        icon: 'size-10',
+        'icon-sm': 'size-8',
+        'icon-lg': 'size-11',
       },
     },
-    defaultVariants: {
-      variant: "default",
-      size: "default",
-    },
-  }
+    defaultVariants: { variant: 'default', size: 'md' },
+  },
 )
 
 function Button({
   className,
-  variant = "default",
-  size = "default",
+  variant = 'default',
+  size = 'md',
   asChild = false,
   ...props
-}: React.ComponentProps<"button"> &
-  VariantProps<typeof buttonVariants> & {
-    asChild?: boolean
-  }) {
-  const Comp = asChild ? Slot.Root : "button"
-
+}: React.ComponentProps<'button'> & VariantProps<typeof buttonVariants> & { asChild?: boolean }) {
+  const Comp = asChild ? Slot.Root : 'button'
   return (
     <Comp
       data-slot="button"

@@ -55,17 +55,27 @@ export function mock(page: Page) {
   }
 }
 
-/** Abre a aplicação com um cenário conhecido e o db restaurado do seed. */
+/** Rota da prova de conceito do CP1 (fora da navegação pública desde o CP2). */
+export const POC = '/demo/poc'
+
+/**
+ * Abre a aplicação com um cenário conhecido e o db restaurado do seed.
+ * Nas páginas da PoC, espera o socket conectar (painel de diagnóstico); nas demais, espera
+ * a camada de mocks estar ativa.
+ */
 export async function openApp(page: Page, path = '/', scenario = 'default') {
   const sep = path.includes('?') ? '&' : '?'
   await page.goto(`${path}${sep}scenario=${scenario}&reset=1`)
-  await expect(page.getByTestId('rt-state')).toHaveText('conectado')
+  await page.waitForFunction(() => window.__kurioMock !== undefined)
+  // O App é importado DEPOIS do MSW (main.tsx): espera a aplicação estar renderizada.
+  await page.locator('main#conteudo').waitFor()
+  if (path.startsWith(POC)) await expect(page.getByTestId('rt-state')).toHaveText('conectado')
 }
 
 export async function login(page: Page, user: (typeof USERS)[keyof typeof USERS]) {
-  await page.getByRole('link', { name: 'Entrar' }).click()
-  await page.getByLabel('E-mail').fill(user.email)
-  await page.getByLabel('Senha').fill(user.password)
+  await page.getByTestId('poc-login').click()
+  await page.getByLabel('E-mail', { exact: true }).fill(user.email)
+  await page.getByLabel('Senha', { exact: true }).fill(user.password)
   await page.getByRole('button', { name: 'Entrar' }).click()
   await expect(page.getByTestId('session-user')).toContainText(user.name)
   await expect(page.getByTestId('rt-state')).toHaveText('conectado')

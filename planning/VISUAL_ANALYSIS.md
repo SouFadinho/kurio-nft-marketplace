@@ -1,5 +1,7 @@
 # VISUAL_ANALYSIS — KURIO
 
+> **CP2:** tokens definitivos em [DESIGN_SYSTEM.md](DESIGN_SYSTEM.md). Atualizações: fonte adotada = Roboto Mono (substituta, identificação visual); fim do gradiente medido = `#B77743` (não `#A56C3D`); breakpoints mobile < 768, tablet 768–1023, desktop ≥ 1024; borda de input `#82603F` por acessibilidade. Comparações lado a lado em `planning/evidence/cp2/comparacao-*.png`.
+
 > **CP0.1:** Figma oficial (somente visualização): https://www.figma.com/design/Ff0SksUi7UFtPWUO8kyNtw/Frontend-Challenge?node-id=0-1. A exportação de assets e a confirmação de fonte e espaçamentos serão tentadas no CP2, pelos mecanismos do viewer.
 > Decisões aprovadas: preservar a **paleta medida** (§3); usar uma fonte mono semelhante caso a original não seja identificada (substituição documentada); não reproduzir as inconsistências matemáticas (§10); perfil, carteiras e confirmação mobile **derivados** do design system; páginas fora do escopo coerentes, sem simular função; login social visível, com aviso de indisponibilidade.
 > Larguras obrigatórias de avaliação: **390, 768 e 1440 px** (o §8 abaixo usava 1024 como breakpoint; isso foi substituído por `<768` mobile, `768–1279` tablet e `≥1280` desktop).

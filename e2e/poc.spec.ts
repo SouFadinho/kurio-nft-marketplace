@@ -4,12 +4,12 @@
  * Cada `test` é independente: contexto de navegador novo + `?reset=1` restaura o seed.
  */
 import { expect, test } from '@playwright/test'
-import { createOrder, login, mock, openApp, USERS } from './support'
+import { createOrder, login, mock, openApp, POC, USERS } from './support'
 
 test.describe('PoC CP1 — REST (Axios → MSW) + TanStack Query', () => {
   test('1. GET /api/nfts é respondido pelo service worker do MSW e renderizado via Query', async ({ page }) => {
     const response = page.waitForResponse((r) => new URL(r.url()).pathname === '/api/nfts')
-    await openApp(page)
+    await openApp(page, POC)
     const res = await response
     expect(res.status()).toBe(200)
     expect(res.fromServiceWorker()).toBe(true)
@@ -19,7 +19,7 @@ test.describe('PoC CP1 — REST (Axios → MSW) + TanStack Query', () => {
   })
 
   test('2. login (mutation) + criação de pedido (mutation idempotente) + consulta do pedido', async ({ page }) => {
-    await openApp(page, '/', 'manual-settlement')
+    await openApp(page, POC, 'manual-settlement')
     await login(page, USERS.ana)
     const orderId = await createOrder(page)
     await page.getByTestId('order-link').click()
@@ -29,7 +29,7 @@ test.describe('PoC CP1 — REST (Axios → MSW) + TanStack Query', () => {
   })
 
   test('2b. clique repetido não duplica o pedido (mesma Idempotency-Key)', async ({ page }) => {
-    await openApp(page, '/', 'manual-settlement')
+    await openApp(page, POC, 'manual-settlement')
     await login(page, USERS.ana)
     await page.getByTestId('buy').dblclick()
     await expect(page.getByTestId('order-link')).toBeVisible()
@@ -39,7 +39,7 @@ test.describe('PoC CP1 — REST (Axios → MSW) + TanStack Query', () => {
 
 test.describe('PoC CP1 — Socket.IO (socket.io-client → MSW ws.link + @mswjs/socket.io-binding)', () => {
   test('3/4. nft.updated atualiza lista e detalhe; o REST reflete a mesma mudança após refresh', async ({ page }) => {
-    await openApp(page)
+    await openApp(page, POC)
     await mock(page).updateNft('nft-001', { price: '2.5' })
     await expect(page.getByTestId('nft-price-nft-001')).toHaveText('2.50 ETH')
     await expect(page.getByTestId('nft-version-nft-001')).toHaveText('2')
@@ -57,7 +57,7 @@ test.describe('PoC CP1 — Socket.IO (socket.io-client → MSW ws.link + @mswjs/
   })
 
   test('5. order.updated (privado) leva o pedido de pendente a confirmado, sem polling', async ({ page }) => {
-    await openApp(page, '/', 'manual-settlement')
+    await openApp(page, POC, 'manual-settlement')
     await login(page, USERS.ana)
     const orderId = await createOrder(page)
     await page.getByTestId('order-link').click()
@@ -70,7 +70,7 @@ test.describe('PoC CP1 — Socket.IO (socket.io-client → MSW ws.link + @mswjs/
   })
 
   test('5b. pedido recusado é terminal e não mostra confirmação', async ({ page }) => {
-    await openApp(page, '/', 'manual-settlement')
+    await openApp(page, POC, 'manual-settlement')
     await login(page, USERS.ana)
     const orderId = await createOrder(page)
     await page.getByTestId('order-link').click()
@@ -81,7 +81,7 @@ test.describe('PoC CP1 — Socket.IO (socket.io-client → MSW ws.link + @mswjs/
   })
 
   test('6. handshake autenticado e isolamento: eventos e dados de Ana não chegam a Bruno', async ({ page }) => {
-    await openApp(page, '/', 'manual-settlement')
+    await openApp(page, POC, 'manual-settlement')
     await login(page, USERS.ana)
     await expect.poll(async () => (await mock(page).connections()).map((c) => `${c.state}:${c.userId}`)).toEqual([`authenticated:${USERS.ana.id}`])
     const anaOrder = await createOrder(page)
@@ -99,12 +99,12 @@ test.describe('PoC CP1 — Socket.IO (socket.io-client → MSW ws.link + @mswjs/
     await expect(page.getByTestId('rt-applied')).toHaveText('0')
 
     // REST também isola: Bruno não enxerga o pedido de Ana.
-    await page.goto(`/pedidos/${anaOrder}`)
+    await page.goto(`${POC}/pedidos/${anaOrder}`)
     await expect(page.getByRole('alert')).toHaveText('Pedido não encontrado.')
   })
 
   test('6b. token inválido no handshake é recusado (CONNECT_ERROR) e a sessão cai para anônima', async ({ page }) => {
-    await openApp(page)
+    await openApp(page, POC)
     expect(await mock(page).connections()).toEqual([expect.objectContaining({ state: 'anonymous', userId: null })])
 
     // Sessão forjada no cliente: token que o servidor simulado não emitiu.
@@ -115,7 +115,7 @@ test.describe('PoC CP1 — Socket.IO (socket.io-client → MSW ws.link + @mswjs/
 
     await expect.poll(() => mock(page).stats().then((s) => s.rejected)).toBe(1)
     // O REST também recusa (401) → sessão local limpa → novo socket anônimo.
-    await expect(page.getByRole('link', { name: 'Entrar' })).toBeVisible()
+    await expect(page.getByTestId('poc-login')).toBeVisible()
     await expect(page.getByTestId('rt-state')).toHaveText('conectado')
     const conns = await mock(page).connections()
     expect(conns.every((c) => c.state === 'anonymous' && c.userId === null)).toBe(true)
@@ -123,7 +123,7 @@ test.describe('PoC CP1 — Socket.IO (socket.io-client → MSW ws.link + @mswjs/
   })
 
   test('6c. protocolo: nenhum ACK nem evento antes de validar o CONNECT (sem corrida no handshake)', async ({ page }) => {
-    await openApp(page)
+    await openApp(page, POC)
     // Cliente WebSocket bruto falando o protocolo Engine.IO/Socket.IO "na mão",
     // para observar exatamente o que o servidor simulado envia e quando.
     const frames = await page.evaluate(async () => {
@@ -167,7 +167,7 @@ test.describe('PoC CP1 — Socket.IO (socket.io-client → MSW ws.link + @mswjs/
   })
 
   test('7/8. desconexão com pedido pendente → reconexão → reconciliação pelo REST', async ({ page }) => {
-    await openApp(page, '/', 'manual-settlement')
+    await openApp(page, POC, 'manual-settlement')
     await login(page, USERS.ana)
     const orderId = await createOrder(page)
     await page.getByTestId('order-link').click()
@@ -191,17 +191,17 @@ test.describe('PoC CP1 — Socket.IO (socket.io-client → MSW ws.link + @mswjs/
   })
 
   test('7b. refresh com pedido pendente recupera o estado; liquidação automática persiste', async ({ page }) => {
-    await openApp(page) // cenário default: liquida automaticamente em 1,5 s
+    await openApp(page, POC) // cenário default: liquida automaticamente em 1,5 s
     await login(page, USERS.ana)
     const orderId = await createOrder(page)
-    await page.goto(`/pedidos/${orderId}`)
+    await page.goto(`${POC}/pedidos/${orderId}`)
     await page.reload()
     await expect(page.getByTestId('order-status')).toHaveAttribute('data-status', 'confirmed', { timeout: 10_000 })
     expect(await mock(page).orders()).toHaveLength(1)
   })
 
   test('9. eventos duplicados e antigos são descartados sem regredir o estado', async ({ page }) => {
-    await openApp(page)
+    await openApp(page, POC)
     await mock(page).updateNft('nft-001', { price: '2.5' })
     await expect(page.getByTestId('nft-price-nft-001')).toHaveText('2.50 ETH')
 
@@ -218,7 +218,7 @@ test.describe('PoC CP1 — Socket.IO (socket.io-client → MSW ws.link + @mswjs/
   test('heartbeat: a conexão sobrevive além do ping timeout do binding (30 s)', async ({ page }) => {
     test.slow()
     await page.clock.install()
-    await openApp(page)
+    await openApp(page, POC)
     await page.clock.runFor(65_000)
     await expect(page.getByTestId('rt-state')).toHaveText('conectado')
     await expect(page.getByTestId('rt-reconnections')).toHaveText('0')
@@ -227,47 +227,47 @@ test.describe('PoC CP1 — Socket.IO (socket.io-client → MSW ws.link + @mswjs/
 
 test.describe('PoC CP1 — cenários', () => {
   test('reset integral: ?reset=1 restaura catálogo, pedidos e sessões do seed', async ({ page }) => {
-    await openApp(page, '/', 'manual-settlement')
+    await openApp(page, POC, 'manual-settlement')
     await login(page, USERS.ana)
     await createOrder(page)
     await mock(page).updateNft('nft-001', { price: '5' })
     await expect(page.getByTestId('nft-price-nft-001')).toHaveText('5.00 ETH')
 
-    await openApp(page, '/', 'default')
+    await openApp(page, POC, 'default')
     await expect(page.getByTestId('nft-price-nft-001')).toHaveText('1.19 ETH')
     await expect(page.getByTestId('nft-version-nft-001')).toHaveText('1')
     expect(await mock(page).orders()).toEqual([])
     expect(await page.evaluate(() => window.__kurioMock.scenario())).toBe('default')
     // A sessão de Ana não existe mais no servidor: o token antigo recebe 401 e o cliente volta a visitante.
-    await expect(page.getByRole('link', { name: 'Entrar' })).toBeVisible()
+    await expect(page.getByTestId('poc-login')).toBeVisible()
   })
 })
 
 test.describe('PoC CP1 — rotas no build de produção', () => {
   test('11. acesso direto, refresh, NFT inexistente, rota inexistente e rota protegida', async ({ page }) => {
-    await openApp(page, '/nft/nft-003')
+    await openApp(page, `${POC}/nft/nft-003`)
     await expect(page.getByTestId('nft-name')).toHaveText('Neon Vessel #552')
     await page.reload()
     await expect(page.getByTestId('nft-name')).toHaveText('Neon Vessel #552')
 
-    await page.goto('/nft/nao-existe')
+    await page.goto(`${POC}/nft/nao-existe`)
     await expect(page.getByRole('heading', { name: 'NFT não encontrado' })).toBeVisible()
 
     await page.goto('/rota/que/nao/existe')
     await expect(page.getByRole('heading', { name: 'Página não encontrada' })).toBeVisible()
 
-    await page.goto('/pedidos/ord_000001')
+    await page.goto(`${POC}/pedidos/ord_000001`)
     await expect(page).toHaveURL(/\/login\?redirect=/)
-    await page.getByLabel('E-mail').fill(USERS.ana.email)
-    await page.getByLabel('Senha').fill(USERS.ana.password)
+    await page.getByLabel('E-mail', { exact: true }).fill(USERS.ana.email)
+    await page.getByLabel('Senha', { exact: true }).fill(USERS.ana.password)
     await page.getByRole('button', { name: 'Entrar' }).click()
     await expect(page).toHaveURL(/\/pedidos\/ord_000001$/)
   })
 
   test('login com credenciais erradas mostra o erro da API', async ({ page }) => {
     await openApp(page, '/login')
-    await page.getByLabel('E-mail').fill(USERS.ana.email)
-    await page.getByLabel('Senha').fill('senha-errada')
+    await page.getByLabel('E-mail', { exact: true }).fill(USERS.ana.email)
+    await page.getByLabel('Senha', { exact: true }).fill('senha-errada')
     await page.getByRole('button', { name: 'Entrar' }).click()
     await expect(page.getByRole('alert')).toHaveText('E-mail ou senha inválidos.')
   })

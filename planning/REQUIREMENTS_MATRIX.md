@@ -22,6 +22,16 @@ IDs definidos em `CHALLENGE_REQUIREMENTS.md`. `D` = decisão do candidato ou té
 
 Abreviação: `T<n>` = teste `<n>.` de `e2e/poc.spec.ts`.
 
+## Pendências registradas na aprovação do CP1
+| ID | Pendência | Destino |
+|---|---|---|
+| PEND-01 | Idempotência com a mesma chave e payload diferente (409 implementado, não testado) | CP5 · E2E-07 |
+| PEND-02 | Timeout após a criação do pedido e recuperação por retry | CP5 · E2E-07 |
+| PEND-03 | Consistência da persistência do mock entre abas | CP6 |
+| PEND-04 | Impacto do MSW na performance inicial (R-25) | CP8 |
+| PEND-05 | Revalidação integral do HEAD a cada checkpoint (o checkout limpo do CP1 foi feito no `91380dc`) | todo CP · CP9 |
+| PEND-06 | Disco C: sem espaço; caches e temporários seguem em `D:\emprego\.cache` (R-23) | candidato |
+
 ## 0. Critérios eliminatórios
 
 | ID | Critério | Como é garantido | Evidência | Status |
@@ -73,18 +83,24 @@ Abreviação: `T<n>` = teste `<n>.` de `e2e/poc.spec.ts`.
 
 | ID | Critério | Pts | Status |
 |---|---|---|---|
-| AV-1 | Fidelidade visual e responsividade | 20 | PENDENTE |
+| AV-1 | Fidelidade visual e responsividade | 20 | IMPLEMENTADO, NÃO VALIDADO (design system e estrutura global prontos e comparados; telas no CP3–CP6) |
 | AV-2 | Fluxos e experiência | 20 | PENDENTE |
 | AV-3 | Integração e estado | 15 | IMPLEMENTADO, NÃO VALIDADO (base validada na PoC) |
 | AV-4 | Tempo real | 10 | IMPLEMENTADO, NÃO VALIDADO (mecanismos validados; cenário RT-08 pendente) |
 | AV-5 | Mocking | 10 | IMPLEMENTADO, NÃO VALIDADO (3 de 21 cenários) |
 | AV-6 | Testes | 10 | PENDENTE (0 de 12 grupos E2E finais) |
-| AV-7 | Acessibilidade | 5 | PENDENTE |
+| AV-7 | Acessibilidade | 5 | IMPLEMENTADO, NÃO VALIDADO (base validada no CP2; revalidar nas telas e no CP8) |
 | AV-8 | Performance | 5 | PENDENTE |
 | AV-9 | Arquitetura e documentação | 5 | IMPLEMENTADO, NÃO VALIDADO |
 
 ## 4. Telas (§3)
-Todas `PENDENTE` (TELA-01..09). Rotas temporárias da PoC: `/`, `/login`, `/nft/$nftId`, `/pedidos/$orderId`, além da página 404 (TELA-404 → VALIDADO por T11).
+Todas `PENDENTE` (TELA-01..09). Desde o CP2:
+- A PoC do CP1 foi movida para `/demo/poc` (fora da navegação), sem mudar o código validado; os 43 testes do CP1 continuam passando.
+- Rotas públicas (`/`, `/mercado`, `/carrinho`, `/favoritos`, `/nft/$nftId`, `/perfil`, `/perfil/carteiras`) existem como **placeholders temporários** dentro da estrutura global.
+- `/criadores` e `/aprenda` são páginas **definitivas** "fora desta demonstração" (TELA-X → IMPLEMENTADO, VALIDADO por teste).
+- TELA-404 continua VALIDADO.
+
+**Evidências do CP2** (`planning/evidence/cp2/`): 18 capturas de viewport (PNG), 18 de página inteira (WebP), 6 recortes por elemento e 6 comparações com o Figma. Testes em `planning/evidence/cp2-tests/`.
 
 ## 5. Requisitos funcionais, integração, API, mocking e tempo real
 
@@ -129,7 +145,17 @@ Todas `PENDENTE` (TELA-01..09). Rotas temporárias da PoC: `/`, `/login`, `/nft/
 
 | ID | Status |
 |---|---|
-| UI-01..04, A11Y-01..07 | PENDENTE |
+| UI-01 (tipografia, cores, espaçamentos, composição; shadcn adaptado) | IMPLEMENTADO, NÃO VALIDADO para as telas (CP3–CP6). Design system VALIDADO: tokens medidos, contraste por teste, comparações lado a lado com o Figma (`evidence/cp2/comparacao-*.png`) |
+| UI-02 (390/768/1440 e intermediárias) | VALIDADO para a estrutura global e os layouts: 8 larguras sem overflow + troca de navegação por breakpoint (`layout.responsive.spec.ts`, 12 testes) e capturas `evidence/cp2/*-{390,768,1440}-*`. Revalidar com as telas finais |
+| UI-03 (skeleton com shimmer, sem CLS, movimento reduzido) | VALIDADO (componente): mesmas dimensões do card (Δ ≤ 2 px), `aria-busy`, shimmer desligado com `reduced-motion`. Uso real em catálogo, detalhe e resumo: CP3/CP5 |
+| UI-04 (assets do arquivo; substituições documentadas) | IMPLEMENTADO, NÃO VALIDADO: originais indisponíveis (Figma sem login); placeholders documentados em `ASSETS_MANIFEST.md` |
+| A11Y-01 (teclado, foco visível) | VALIDADO (estrutura e componentes): skip link, nav com `aria-current`, slider por teclado, rádio por setas |
+| A11Y-02 (foco em diálogos e drawers) | VALIDADO: foco preso, Esc fecha e devolve o foco (Dialog e Drawer). **Defeito corrigido:** o vaul deixava o foco fora do drawer |
+| A11Y-03 (semântica, labels, erros associados) | VALIDADO (componentes): axe sem violações em 6 rotas × 2 viewports, com controle negativo |
+| A11Y-04 (alternativas textuais) | VALIDADO (cards): `alt` descritivo vindo da API; axe `image-alt` |
+| A11Y-05 (contraste e não depender só de cor) | VALIDADO: 19 pares de token por teste + axe `color-contrast`; estados com indicador extra |
+| A11Y-06 (feedback acessível) | IMPLEMENTADO, NÃO VALIDADO para mutations reais (toast em região `aria-live` validado no componente) |
+| A11Y-07 (sem overflow, zoom) | VALIDADO para overflow (8 larguras). Zoom de 200% não testado ainda (CP8) |
 | E2E-01..12 | PENDENTE (a infraestrutura de teste está VALIDADA) |
 | TEST-01 (Chromium desktop + mobile) | VALIDADO (configuração) |
 | TEST-02 (visual) | PENDENTE |

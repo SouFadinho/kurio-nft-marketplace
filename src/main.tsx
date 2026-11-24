@@ -1,5 +1,7 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
+// Roboto Mono variável, self-hosted (arquivos woff2 empacotados pelo Vite; sem CDN).
+import '@fontsource-variable/roboto-mono'
 import './index.css'
 
 /**

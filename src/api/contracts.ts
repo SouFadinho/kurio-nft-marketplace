@@ -30,10 +30,19 @@ export const SessionResponse = z.object({ user: User, token: z.string(), expires
 export type SessionResponse = z.infer<typeof SessionResponse>
 
 // ---------- NFTs ----------
+export const Network = z.enum(['ethereum', 'polygon', 'solana'])
+export type Network = z.infer<typeof Network>
+
 export const Nft = z.object({
   id: z.string(),
   name: z.string(),
   collection: z.string(),
+  /** URL da arte (servida localmente em /assets/nfts). */
+  image: z.string(),
+  /** Texto alternativo descritivo da arte (A11Y-04). */
+  imageAlt: z.string(),
+  network: Network,
+  rare: z.boolean(),
   price: EthAmount,
   available: z.number().int().nonnegative(),
   /** Versão do recurso: cresce a cada mudança; usada para ordenar eventos. */

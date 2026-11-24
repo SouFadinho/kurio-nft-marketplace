@@ -1,0 +1,19 @@
+
+Running 14 tests using 6 workers
+
+  ok  6 [desktop-chromium] › e2e\design-system.spec.ts:199:5 › acessibilidade automatizada (axe, WCAG 2.1 A/AA) › sem violações em /rota-inexistente (4.3s)
+  ok  1 [desktop-chromium] › e2e\design-system.spec.ts:199:5 › acessibilidade automatizada (axe, WCAG 2.1 A/AA) › sem violações em /demo/conta (5.5s)
+  ok  4 [desktop-chromium] › e2e\design-system.spec.ts:199:5 › acessibilidade automatizada (axe, WCAG 2.1 A/AA) › sem violações em / (5.3s)
+  ok  5 [desktop-chromium] › e2e\design-system.spec.ts:199:5 › acessibilidade automatizada (axe, WCAG 2.1 A/AA) › sem violações em /criadores (5.4s)
+  ok  3 [desktop-chromium] › e2e\design-system.spec.ts:199:5 › acessibilidade automatizada (axe, WCAG 2.1 A/AA) › sem violações em /demo/checkout (5.9s)
+  ok  2 [desktop-chromium] › e2e\design-system.spec.ts:199:5 › acessibilidade automatizada (axe, WCAG 2.1 A/AA) › sem violações em /demo/componentes (6.5s)
+  ok  7 [desktop-chromium] › e2e\design-system.spec.ts:211:3 › acessibilidade automatizada (axe, WCAG 2.1 A/AA) › controle negativo: o axe detecta violações injetadas (2.8s)
+  ok  8 [mobile-chromium] › e2e\design-system.spec.ts:199:5 › acessibilidade automatizada (axe, WCAG 2.1 A/AA) › sem violações em / (4.5s)
+  ok 10 [mobile-chromium] › e2e\design-system.spec.ts:199:5 › acessibilidade automatizada (axe, WCAG 2.1 A/AA) › sem violações em /demo/conta (4.8s)
+  ok 12 [mobile-chromium] › e2e\design-system.spec.ts:199:5 › acessibilidade automatizada (axe, WCAG 2.1 A/AA) › sem violações em /criadores (4.4s)
+  ok 11 [mobile-chromium] › e2e\design-system.spec.ts:199:5 › acessibilidade automatizada (axe, WCAG 2.1 A/AA) › sem violações em /demo/checkout (4.9s)
+  ok  9 [mobile-chromium] › e2e\design-system.spec.ts:199:5 › acessibilidade automatizada (axe, WCAG 2.1 A/AA) › sem violações em /demo/componentes (6.1s)
+  ok 13 [mobile-chromium] › e2e\design-system.spec.ts:199:5 › acessibilidade automatizada (axe, WCAG 2.1 A/AA) › sem violações em /rota-inexistente (3.6s)
+  ok 14 [mobile-chromium] › e2e\design-system.spec.ts:211:3 › acessibilidade automatizada (axe, WCAG 2.1 A/AA) › controle negativo: o axe detecta violações injetadas (2.3s)
+
+  14 passed (27.6s)

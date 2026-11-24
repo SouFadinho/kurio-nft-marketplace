@@ -1,0 +1,82 @@
+[
+  {
+    "id": "emerald-ape",
+    "width": 512,
+    "height": 512,
+    "nativeSize": 256,
+    "upscaler": "Real-ESRGAN ncnn-vulkan v0.2.5.0 (realesrgan-x4plus, 4x) + Lanczos3",
+    "source": "Imagem do ChatGPT 24 de nov. de 2026, 13_10_47.png",
+    "region": {
+      "left": 520,
+      "top": 89,
+      "width": 270,
+      "height": 256
+    },
+    "note": "Mobile / Detalhes do NFT, imagem principal",
+    "status": "placeholder-temporario"
+  },
+  {
+    "id": "sage-nomad",
+    "width": 512,
+    "height": 512,
+    "nativeSize": 116,
+    "upscaler": "Real-ESRGAN ncnn-vulkan v0.2.5.0 (realesrgan-x4plus, 4x) + Lanczos3",
+    "source": "Imagem do ChatGPT 24 de nov. de 2026, 13_10_47.png",
+    "region": {
+      "left": 235,
+      "top": 352,
+      "width": 116,
+      "height": 116
+    },
+    "note": "Mobile / Início, card da coluna direita",
+    "status": "placeholder-temporario"
+  },
+  {
+    "id": "violet-nomad",
+    "width": 512,
+    "height": 512,
+    "nativeSize": 72,
+    "upscaler": "Real-ESRGAN ncnn-vulkan v0.2.5.0 (realesrgan-x4plus, 4x) + Lanczos3",
+    "source": "Imagem do ChatGPT 24 de nov. de 2026, 13_10_51.png",
+    "region": {
+      "left": 58,
+      "top": 213,
+      "width": 75,
+      "height": 72
+    },
+    "note": "Mobile / Carrinho, miniatura 2",
+    "status": "placeholder-temporario"
+  },
+  {
+    "id": "ivory-baron",
+    "width": 512,
+    "height": 512,
+    "nativeSize": 72,
+    "upscaler": "Real-ESRGAN ncnn-vulkan v0.2.5.0 (realesrgan-x4plus, 4x) + Lanczos3",
+    "source": "Imagem do ChatGPT 24 de nov. de 2026, 13_10_51.png",
+    "region": {
+      "left": 58,
+      "top": 309,
+      "width": 75,
+      "height": 72
+    },
+    "note": "Mobile / Carrinho, miniatura 3",
+    "status": "placeholder-temporario"
+  },
+  {
+    "id": "golden-beat",
+    "width": 512,
+    "height": 512,
+    "nativeSize": 72,
+    "upscaler": "Real-ESRGAN ncnn-vulkan v0.2.5.0 (realesrgan-x4plus, 4x) + Lanczos3",
+    "source": "Imagem do ChatGPT 24 de nov. de 2026, 13_10_51.png",
+    "region": {
+      "left": 58,
+      "top": 404,
+      "width": 75,
+      "height": 72
+    },
+    "note": "Mobile / Carrinho, miniatura 4",
+    "status": "placeholder-temporario"
+  }
+]

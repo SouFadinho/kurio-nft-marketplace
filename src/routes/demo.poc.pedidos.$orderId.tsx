@@ -6,7 +6,7 @@ import { sessionStore } from '@/features/auth/sessionStore'
 import { useClientSession } from '@/features/auth/queries'
 import { useOrder } from '@/features/orders/queries'
 
-export const Route = createFileRoute('/pedidos/$orderId')({
+export const Route = createFileRoute('/demo/poc/pedidos/$orderId')({
   // Rota privada (ACC-02): sem sessão, vai ao login preservando o destino.
   beforeLoad: ({ location }) => {
     if (!sessionStore.get()) throw redirect({ to: '/login', search: { redirect: location.href } })
@@ -66,7 +66,7 @@ function OrderPage() {
           <span data-testid="order-total">{formatEth(order.total)}</span>
         </p>
         <p className="text-xs text-muted-foreground">Versão do recurso: v{order.version}</p>
-        <Link to="/" className="text-price underline">
+        <Link to="/demo/poc" className="text-price underline">
           Voltar
         </Link>
       </CardContent>

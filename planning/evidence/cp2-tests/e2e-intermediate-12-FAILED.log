@@ -1,0 +1,556 @@
+
+Running 124 tests using 6 workers
+
+  ok   1 [unit] › e2e\unit\eth.spec.ts:5:3 › lib/eth (bigint em wei) › soma exata onde number falha (7ms)
+  ok   2 [unit] › e2e\unit\cn.spec.ts:5:3 › lib/utils cn (tailwind-merge com tokens do KURIO) › tamanho de texto personalizado convive com cor (22ms)
+  ok   5 [unit] › e2e\unit\eth.spec.ts:20:3 › lib/eth (bigint em wei) › formatação half-up para exibição (5ms)
+  ok   3 [unit] › e2e\unit\eth.spec.ts:10:3 › lib/eth (bigint em wei) › total do carrinho desktop do Figma fecha exatamente (14ms)
+  ok   8 [unit] › e2e\unit\eventGuard.spec.ts:7:3 › realtime/EventGuard › aplica versões crescentes (7ms)
+  ok   9 [unit] › e2e\unit\eth.spec.ts:27:3 › lib/eth (bigint em wei) › rejeita entradas inválidas (8ms)
+  ok   4 [unit] › e2e\unit\eth.spec.ts:16:3 › lib/eth (bigint em wei) › 18 casas decimais preservadas (11ms)
+  ok  10 [unit] › e2e\unit\eventGuard.spec.ts:19:3 › realtime/EventGuard › descarta evento antigo ou igual à versão do cache (ex.: após reconciliação REST) (2ms)
+  ok   6 [unit] › e2e\unit\cn.spec.ts:15:3 › lib/utils cn (tailwind-merge com tokens do KURIO) › alinhamento não conflita com tamanho (21ms)
+  ok   7 [unit] › e2e\unit\cn.spec.ts:10:3 › lib/utils cn (tailwind-merge com tokens do KURIO) › dois tamanhos de texto: vence o último (22ms)
+  ok  11 [unit] › e2e\unit\eventGuard.spec.ts:13:3 › realtime/EventGuard › descarta duplicata pelo eventId (4ms)
+  ok  12 [unit] › e2e\unit\eventGuard.spec.ts:37:3 › realtime/EventGuard › memória limitada de eventIds (3ms)
+  ok  13 [unit] › e2e\unit\eventGuard.spec.ts:25:3 › realtime/EventGuard › fora de ordem: v3 chega antes de v2 → v2 descartado (3ms)
+  ok  14 [unit] › e2e\unit\eventGuard.spec.ts:31:3 › realtime/EventGuard › versões independentes por recurso (3ms)
+  ok  15 [unit] › e2e\unit\tokens.spec.ts:49:5 › tokens de cor: contraste WCAG › foreground sobre background ≥ 4.5:1 (2ms)
+  ok  16 [unit] › e2e\unit\tokens.spec.ts:49:5 › tokens de cor: contraste WCAG › foreground sobre surface ≥ 4.5:1 (3ms)
+  ok  17 [unit] › e2e\unit\tokens.spec.ts:49:5 › tokens de cor: contraste WCAG › foreground sobre surface-2 ≥ 4.5:1 (3ms)
+  ok  20 [unit] › e2e\unit\tokens.spec.ts:49:5 › tokens de cor: contraste WCAG › muted-foreground sobre background ≥ 4.5:1 (3ms)
+  ok  18 [unit] › e2e\unit\tokens.spec.ts:49:5 › tokens de cor: contraste WCAG › placeholder sobre background ≥ 4.5:1 (3ms)
+  ok  19 [unit] › e2e\unit\tokens.spec.ts:49:5 › tokens de cor: contraste WCAG › muted-foreground sobre surface ≥ 4.5:1 (3ms)
+  ok  22 [unit] › e2e\unit\tokens.spec.ts:49:5 › tokens de cor: contraste WCAG › price sobre background ≥ 4.5:1 (3ms)
+  ok  21 [unit] › e2e\unit\tokens.spec.ts:49:5 › tokens de cor: contraste WCAG › placeholder sobre surface ≥ 4.5:1 (3ms)
+  ok  24 [unit] › e2e\unit\tokens.spec.ts:49:5 › tokens de cor: contraste WCAG › price sobre surface ≥ 4.5:1 (2ms)
+  ok  25 [unit] › e2e\unit\tokens.spec.ts:49:5 › tokens de cor: contraste WCAG › primary-foreground sobre primary ≥ 4.5:1 (2ms)
+  ok  23 [unit] › e2e\unit\tokens.spec.ts:49:5 › tokens de cor: contraste WCAG › muted-foreground sobre band ≥ 4.5:1 (6ms)
+  ok  27 [unit] › e2e\unit\tokens.spec.ts:49:5 › tokens de cor: contraste WCAG › destructive sobre destructive-surface ≥ 4.5:1 (2ms)
+  ok  26 [unit] › e2e\unit\tokens.spec.ts:49:5 › tokens de cor: contraste WCAG › primary-foreground sobre primary-active ≥ 4.5:1 (4ms)
+  ok  29 [unit] › e2e\unit\tokens.spec.ts:49:5 › tokens de cor: contraste WCAG › success sobre surface ≥ 4.5:1 (3ms)
+  ok  28 [unit] › e2e\unit\tokens.spec.ts:49:5 › tokens de cor: contraste WCAG › destructive sobre surface ≥ 4.5:1 (4ms)
+  ok  30 [unit] › e2e\unit\tokens.spec.ts:49:5 › tokens de cor: contraste WCAG › input sobre background ≥ 3:1 (2ms)
+  ok  31 [unit] › e2e\unit\tokens.spec.ts:49:5 › tokens de cor: contraste WCAG › success sobre success-surface ≥ 4.5:1 (3ms)
+  ok  32 [unit] › e2e\unit\tokens.spec.ts:49:5 › tokens de cor: contraste WCAG › input sobre surface ≥ 3:1 (3ms)
+  ok  33 [unit] › e2e\unit\tokens.spec.ts:56:3 › Pagination.pageWindow › janela com reticências (7ms)
+  ok  34 [unit] › e2e\unit\tokens.spec.ts:49:5 › tokens de cor: contraste WCAG › ring sobre background ≥ 3:1 (3ms)
+  ok  40 [desktop-chromium] › e2e\design-system.spec.ts:60:3 › estrutura global › rota privada de conta exige login e preserva o destino (2.2s)
+  ok  37 [desktop-chromium] › e2e\design-system.spec.ts:36:3 › estrutura global › páginas fora do escopo são coerentes e não simulam função (2.2s)
+  ok  35 [desktop-chromium] › e2e\design-system.spec.ts:21:3 › estrutura global › navegação principal marca a página atual (aria-current, não só cor) (2.6s)
+  ok  38 [desktop-chromium] › e2e\design-system.spec.ts:49:3 › estrutura global › newsletter valida o e-mail e não finge inscrição (2.6s)
+  ok  39 [desktop-chromium] › e2e\design-system.spec.ts:42:3 › estrutura global › ação fora do escopo informa indisponibilidade (toast informativo, sem sucesso) (2.7s)
+  ok  45 [desktop-chromium] › e2e\design-system.spec.ts:123:3 › componentes › slider de preço: polegares com nome acessível e operáveis por teclado (2.4s)
+  ok  44 [desktop-chromium] › e2e\design-system.spec.ts:110:3 › componentes › seletor de quantidade respeita limites inteiros e anuncia o valor (2.7s)
+  ok  42 [desktop-chromium] › e2e\design-system.spec.ts:82:3 › componentes › diálogo: foco preso dentro, Esc fecha e devolve o foco ao gatilho (3.4s)
+  x   41 [desktop-chromium] › e2e\design-system.spec.ts:65:3 › estrutura global › fonte Roboto Mono self-hosted carregada e aplicada (1.3s)
+  x   43 [desktop-chromium] › e2e\design-system.spec.ts:97:3 › componentes › drawer de filtros: abre, mantém foco, Esc fecha e devolve o foco (3.0s)
+  ok  48 [desktop-chromium] › e2e\design-system.spec.ts:162:3 › componentes › shimmer ativo por padrão e desligado com prefers-reduced-motion (1.6s)
+  ok  46 [desktop-chromium] › e2e\design-system.spec.ts:131:3 › componentes › card de NFT: dados da API simulada, imagem com alt e espaço reservado, favoritar com aria-pressed (2.2s)
+  x   36 [desktop-chromium] › e2e\design-system.spec.ts:11:3 › estrutura global › link "Pular para o conteúdo" é o primeiro foco e leva ao <main> (6.5s)
+  x   47 [desktop-chromium] › e2e\design-system.spec.ts:148:3 › componentes › skeletons: mesmas dimensões do card, aria-busy e anúncio de carregamento (2.8s)
+  ok  51 [desktop-chromium] › e2e\design-system.spec.ts:170:3 › componentes › toast de erro é anunciado em região de notificações (3.2s)
+  ok  52 [desktop-chromium] › e2e\design-system.spec.ts:175:3 › componentes › paginação: página atual com aria-current e navegação (3.5s)
+  ok  50 [desktop-chromium] › e2e\design-system.spec.ts:195:5 › acessibilidade automatizada (axe, WCAG 2.1 A/AA) › sem violações em / (5.7s)
+  ok  54 [desktop-chromium] › e2e\design-system.spec.ts:195:5 › acessibilidade automatizada (axe, WCAG 2.1 A/AA) › sem violações em /demo/checkout (3.8s)
+  ok  58 [desktop-chromium] › e2e\poc.spec.ts:10:3 › PoC CP1 — REST (Axios → MSW) + TanStack Query › 1. GET /api/nfts é respondido pelo service worker do MSW e renderizado via Query (1.9s)
+  x   49 [desktop-chromium] › e2e\design-system.spec.ts:183:3 › componentes › carteiras: grupo de rádio operável por setas (8.4s)
+  ok  57 [desktop-chromium] › e2e\design-system.spec.ts:195:5 › acessibilidade automatizada (axe, WCAG 2.1 A/AA) › sem violações em /rota-inexistente (5.4s)
+  ok  56 [desktop-chromium] › e2e\design-system.spec.ts:195:5 › acessibilidade automatizada (axe, WCAG 2.1 A/AA) › sem violações em /criadores (6.6s)
+  ok  55 [desktop-chromium] › e2e\design-system.spec.ts:195:5 › acessibilidade automatizada (axe, WCAG 2.1 A/AA) › sem violações em /demo/conta (7.3s)
+  ok  59 [desktop-chromium] › e2e\poc.spec.ts:21:3 › PoC CP1 — REST (Axios → MSW) + TanStack Query › 2. login (mutation) + criação de pedido (mutation idempotente) + consulta do pedido (2.7s)
+  ok  53 [desktop-chromium] › e2e\design-system.spec.ts:195:5 › acessibilidade automatizada (axe, WCAG 2.1 A/AA) › sem violações em /demo/componentes (10.0s)
+  ok  60 [desktop-chromium] › e2e\poc.spec.ts:41:3 › PoC CP1 — Socket.IO (socket.io-client → MSW ws.link + @mswjs/socket.io-binding) › 3/4. nft.updated atualiza lista e detalhe; o REST reflete a mesma mudança após refresh (4.6s)
+  ok  62 [desktop-chromium] › e2e\poc.spec.ts:59:3 › PoC CP1 — Socket.IO (socket.io-client → MSW ws.link + @mswjs/socket.io-binding) › 5. order.updated (privado) leva o pedido de pendente a confirmado, sem polling (4.7s)
+  ok  63 [desktop-chromium] › e2e\poc.spec.ts:72:3 › PoC CP1 — Socket.IO (socket.io-client → MSW ws.link + @mswjs/socket.io-binding) › 5b. pedido recusado é terminal e não mostra confirmação (6.4s)
+  ok  65 [desktop-chromium] › e2e\poc.spec.ts:106:3 › PoC CP1 — Socket.IO (socket.io-client → MSW ws.link + @mswjs/socket.io-binding) › 6b. token inválido no handshake é recusado (CONNECT_ERROR) e a sessão cai para anônima (6.6s)
+  ok  64 [desktop-chromium] › e2e\poc.spec.ts:83:3 › PoC CP1 — Socket.IO (socket.io-client → MSW ws.link + @mswjs/socket.io-binding) › 6. handshake autenticado e isolamento: eventos e dados de Ana não chegam a Bruno (8.0s)
+  ok  61 [desktop-chromium] › e2e\poc.spec.ts:31:3 › PoC CP1 — REST (Axios → MSW) + TanStack Query › 2b. clique repetido não duplica o pedido (mesma Idempotency-Key) (8.7s)
+  ok  66 [desktop-chromium] › e2e\poc.spec.ts:125:3 › PoC CP1 — Socket.IO (socket.io-client → MSW ws.link + @mswjs/socket.io-binding) › 6c. protocolo: nenhum ACK nem evento antes de validar o CONNECT (sem corrida no handshake) (5.5s)
+  ok  69 [desktop-chromium] › e2e\poc.spec.ts:203:3 › PoC CP1 — Socket.IO (socket.io-client → MSW ws.link + @mswjs/socket.io-binding) › 9. eventos duplicados e antigos são descartados sem regredir o estado (3.7s)
+  ok  70 [desktop-chromium] › e2e\poc.spec.ts:218:3 › PoC CP1 — Socket.IO (socket.io-client → MSW ws.link + @mswjs/socket.io-binding) › heartbeat: a conexão sobrevive além do ping timeout do binding (30 s) (3.5s)
+  ok  67 [desktop-chromium] › e2e\poc.spec.ts:169:3 › PoC CP1 — Socket.IO (socket.io-client → MSW ws.link + @mswjs/socket.io-binding) › 7/8. desconexão com pedido pendente → reconexão → reconciliação pelo REST (7.8s)
+  ok  71 [desktop-chromium] › e2e\poc.spec.ts:229:3 › PoC CP1 — cenários › reset integral: ?reset=1 restaura catálogo, pedidos e sessões do seed (6.0s)
+  ok  68 [desktop-chromium] › e2e\poc.spec.ts:193:3 › PoC CP1 — Socket.IO (socket.io-client → MSW ws.link + @mswjs/socket.io-binding) › 7b. refresh com pedido pendente recupera o estado; liquidação automática persiste (8.3s)
+  ok  73 [desktop-chromium] › e2e\poc.spec.ts:267:3 › PoC CP1 — rotas no build de produção › login com credenciais erradas mostra o erro da API (3.7s)
+  ok  72 [desktop-chromium] › e2e\poc.spec.ts:247:3 › PoC CP1 — rotas no build de produção › 11. acesso direto, refresh, NFT inexistente, rota inexistente e rota protegida (7.4s)
+  ok  75 [mobile-chromium] › e2e\design-system.spec.ts:21:3 › estrutura global › navegação principal marca a página atual (aria-current, não só cor) (2.3s)
+  ok  76 [mobile-chromium] › e2e\design-system.spec.ts:42:3 › estrutura global › ação fora do escopo informa indisponibilidade (toast informativo, sem sucesso) (2.2s)
+  ok  78 [mobile-chromium] › e2e\design-system.spec.ts:49:3 › estrutura global › newsletter valida o e-mail e não finge inscrição (2.7s)
+  ok  81 [mobile-chromium] › e2e\design-system.spec.ts:60:3 › estrutura global › rota privada de conta exige login e preserva o destino (1.8s)
+  ok  80 [mobile-chromium] › e2e\design-system.spec.ts:82:3 › componentes › diálogo: foco preso dentro, Esc fecha e devolve o foco ao gatilho (3.2s)
+  x   77 [mobile-chromium] › e2e\design-system.spec.ts:36:3 › estrutura global › páginas fora do escopo são coerentes e não simulam função (3.1s)
+  x   79 [mobile-chromium] › e2e\design-system.spec.ts:65:3 › estrutura global › fonte Roboto Mono self-hosted carregada e aplicada (1.8s)
+  x   74 [mobile-chromium] › e2e\design-system.spec.ts:11:3 › estrutura global › link "Pular para o conteúdo" é o primeiro foco e leva ao <main> (6.8s)
+  x   82 [mobile-chromium] › e2e\design-system.spec.ts:97:3 › componentes › drawer de filtros: abre, mantém foco, Esc fecha e devolve o foco (3.1s)
+  ok  84 [mobile-chromium] › e2e\design-system.spec.ts:123:3 › componentes › slider de preço: polegares com nome acessível e operáveis por teclado (1.8s)
+  ok  83 [mobile-chromium] › e2e\design-system.spec.ts:110:3 › componentes › seletor de quantidade respeita limites inteiros e anuncia o valor (2.2s)
+  ok  85 [mobile-chromium] › e2e\design-system.spec.ts:175:3 › componentes › paginação: página atual com aria-current e navegação (2.2s)
+  ok  86 [mobile-chromium] › e2e\design-system.spec.ts:183:3 › componentes › carteiras: grupo de rádio operável por setas (2.2s)
+  ok  87 [mobile-chromium] › e2e\design-system.spec.ts:131:3 › componentes › card de NFT: dados da API simulada, imagem com alt e espaço reservado, favoritar com aria-pressed (3.6s)
+  ok  91 [mobile-chromium] › e2e\design-system.spec.ts:170:3 › componentes › toast de erro é anunciado em região de notificações (4.6s)
+  ok  90 [mobile-chromium] › e2e\design-system.spec.ts:195:5 › acessibilidade automatizada (axe, WCAG 2.1 A/AA) › sem violações em / (6.1s)
+  ok  89 [mobile-chromium] › e2e\design-system.spec.ts:162:3 › componentes › shimmer ativo por padrão e desligado com prefers-reduced-motion (5.8s)
+  ok  92 [mobile-chromium] › e2e\design-system.spec.ts:195:5 › acessibilidade automatizada (axe, WCAG 2.1 A/AA) › sem violações em /demo/componentes (7.9s)
+  ok  93 [mobile-chromium] › e2e\design-system.spec.ts:195:5 › acessibilidade automatizada (axe, WCAG 2.1 A/AA) › sem violações em /demo/conta (6.3s)
+  x   88 [mobile-chromium] › e2e\design-system.spec.ts:148:3 › componentes › skeletons: mesmas dimensões do card, aria-busy e anúncio de carregamento (7.3s)
+  ok  97 [mobile-chromium] › e2e\poc.spec.ts:10:3 › PoC CP1 — REST (Axios → MSW) + TanStack Query › 1. GET /api/nfts é respondido pelo service worker do MSW e renderizado via Query (1.6s)
+  ok  95 [mobile-chromium] › e2e\design-system.spec.ts:195:5 › acessibilidade automatizada (axe, WCAG 2.1 A/AA) › sem violações em /criadores (4.7s)
+  ok  96 [mobile-chromium] › e2e\design-system.spec.ts:195:5 › acessibilidade automatizada (axe, WCAG 2.1 A/AA) › sem violações em /rota-inexistente (5.1s)
+  ok  98 [mobile-chromium] › e2e\poc.spec.ts:21:3 › PoC CP1 — REST (Axios → MSW) + TanStack Query › 2. login (mutation) + criação de pedido (mutation idempotente) + consulta do pedido (3.0s)
+  ok  94 [mobile-chromium] › e2e\design-system.spec.ts:195:5 › acessibilidade automatizada (axe, WCAG 2.1 A/AA) › sem violações em /demo/checkout (5.8s)
+  ok  99 [mobile-chromium] › e2e\poc.spec.ts:41:3 › PoC CP1 — Socket.IO (socket.io-client → MSW ws.link + @mswjs/socket.io-binding) › 3/4. nft.updated atualiza lista e detalhe; o REST reflete a mesma mudança após refresh (3.5s)
+  ok 100 [mobile-chromium] › e2e\poc.spec.ts:31:3 › PoC CP1 — REST (Axios → MSW) + TanStack Query › 2b. clique repetido não duplica o pedido (mesma Idempotency-Key) (3.1s)
+  ok 101 [mobile-chromium] › e2e\poc.spec.ts:59:3 › PoC CP1 — Socket.IO (socket.io-client → MSW ws.link + @mswjs/socket.io-binding) › 5. order.updated (privado) leva o pedido de pendente a confirmado, sem polling (4.4s)
+  ok 102 [mobile-chromium] › e2e\poc.spec.ts:72:3 › PoC CP1 — Socket.IO (socket.io-client → MSW ws.link + @mswjs/socket.io-binding) › 5b. pedido recusado é terminal e não mostra confirmação (4.4s)
+  ok 104 [mobile-chromium] › e2e\poc.spec.ts:106:3 › PoC CP1 — Socket.IO (socket.io-client → MSW ws.link + @mswjs/socket.io-binding) › 6b. token inválido no handshake é recusado (CONNECT_ERROR) e a sessão cai para anônima (4.7s)
+  ok 105 [mobile-chromium] › e2e\poc.spec.ts:125:3 › PoC CP1 — Socket.IO (socket.io-client → MSW ws.link + @mswjs/socket.io-binding) › 6c. protocolo: nenhum ACK nem evento antes de validar o CONNECT (sem corrida no handshake) (3.6s)
+  ok 103 [mobile-chromium] › e2e\poc.spec.ts:83:3 › PoC CP1 — Socket.IO (socket.io-client → MSW ws.link + @mswjs/socket.io-binding) › 6. handshake autenticado e isolamento: eventos e dados de Ana não chegam a Bruno (7.0s)
+  ok 108 [mobile-chromium] › e2e\poc.spec.ts:203:3 › PoC CP1 — Socket.IO (socket.io-client → MSW ws.link + @mswjs/socket.io-binding) › 9. eventos duplicados e antigos são descartados sem regredir o estado (2.9s)
+  ok 106 [mobile-chromium] › e2e\poc.spec.ts:169:3 › PoC CP1 — Socket.IO (socket.io-client → MSW ws.link + @mswjs/socket.io-binding) › 7/8. desconexão com pedido pendente → reconexão → reconciliação pelo REST (5.1s)
+  ok 109 [mobile-chromium] › e2e\poc.spec.ts:218:3 › PoC CP1 — Socket.IO (socket.io-client → MSW ws.link + @mswjs/socket.io-binding) › heartbeat: a conexão sobrevive além do ping timeout do binding (30 s) (3.2s)
+  ok 107 [mobile-chromium] › e2e\poc.spec.ts:193:3 › PoC CP1 — Socket.IO (socket.io-client → MSW ws.link + @mswjs/socket.io-binding) › 7b. refresh com pedido pendente recupera o estado; liquidação automática persiste (5.7s)
+  ok 110 [mobile-chromium] › e2e\poc.spec.ts:229:3 › PoC CP1 — cenários › reset integral: ?reset=1 restaura catálogo, pedidos e sessões do seed (4.3s)
+  ok 112 [mobile-chromium] › e2e\poc.spec.ts:267:3 › PoC CP1 — rotas no build de produção › login com credenciais erradas mostra o erro da API (2.8s)
+  ok 111 [mobile-chromium] › e2e\poc.spec.ts:247:3 › PoC CP1 — rotas no build de produção › 11. acesso direto, refresh, NFT inexistente, rota inexistente e rota protegida (5.0s)
+  ok 113 [responsive] › e2e\layout.responsive.spec.ts:27:3 › sem overflow horizontal em 360px (15.0s)
+  ok 114 [responsive] › e2e\layout.responsive.spec.ts:27:3 › sem overflow horizontal em 390px (14.9s)
+  ok 115 [responsive] › e2e\layout.responsive.spec.ts:27:3 › sem overflow horizontal em 600px (15.6s)
+  ok 116 [responsive] › e2e\layout.responsive.spec.ts:27:3 › sem overflow horizontal em 768px (16.4s)
+  ok 117 [responsive] › e2e\layout.responsive.spec.ts:27:3 › sem overflow horizontal em 900px (17.2s)
+  ok 118 [responsive] › e2e\layout.responsive.spec.ts:27:3 › sem overflow horizontal em 1024px (15.7s)
+  ok 123 [responsive] › e2e\layout.responsive.spec.ts:53:5 › troca de navegação por breakpoint › 1024px: header desktop visível, navegação inferior oculta (1.6s)
+  ok 124 [responsive] › e2e\layout.responsive.spec.ts:53:5 › troca de navegação por breakpoint › 1440px: header desktop visível, navegação inferior oculta (1.9s)
+  x  121 [responsive] › e2e\layout.responsive.spec.ts:42:5 › troca de navegação por breakpoint › 390px: navegação inferior visível, header desktop oculto (8.5s)
+  x  122 [responsive] › e2e\layout.responsive.spec.ts:42:5 › troca de navegação por breakpoint › 768px: navegação inferior visível, header desktop oculto (7.2s)
+  ok 119 [responsive] › e2e\layout.responsive.spec.ts:27:3 › sem overflow horizontal em 1280px (10.9s)
+  ok 120 [responsive] › e2e\layout.responsive.spec.ts:27:3 › sem overflow horizontal em 1440px (10.9s)
+
+
+  1) [desktop-chromium] › e2e\design-system.spec.ts:11:3 › estrutura global › link "Pular para o conteúdo" é o primeiro foco e leva ao <main> 
+
+    Error: expect(locator).toBeFocused() failed
+
+    Locator:  getByRole('link', { name: 'Pular para o conteúdo' })
+    Expected: focused
+    Received: inactive
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toBeFocused" getByRole('link', { name: 'Pular para o conteúdo' }) with timeout 5000ms
+      - waiting for getByRole('link', { name: 'Pular para o conteúdo' })
+        8 × locator resolved to <a href="#conteudo" class="sr-only z-50 rounded-xs bg-primary px-4 py-2 font-semibold text-primary-foreground focus:not-sr-only focus:fixed focus:top-3 focus:left-3">Pular para o conteúdo</a>
+          - unexpected value "inactive"
+
+
+      13 |     await page.keyboard.press('Tab')
+      14 |     const skip = page.getByRole('link', { name: 'Pular para o conteúdo' })
+    > 15 |     await expect(skip).toBeFocused()
+         |                        ^
+      16 |     await expect(skip).toBeVisible()
+      17 |     await page.keyboard.press('Enter')
+      18 |     await expect(page.locator('main#conteudo')).toBeFocused()
+        at D:\emprego\e2e\design-system.spec.ts:15:24
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\design-system-estrutura-gl-9dabd-imeiro-foco-e-leva-ao-main--desktop-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\design-system-estrutura-gl-9dabd-imeiro-foco-e-leva-ao-main--desktop-chromium\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\design-system-estrutura-gl-9dabd-imeiro-foco-e-leva-ao-main--desktop-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\design-system-estrutura-gl-9dabd-imeiro-foco-e-leva-ao-main--desktop-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [desktop-chromium] › e2e\design-system.spec.ts:65:3 › estrutura global › fonte Roboto Mono self-hosted carregada e aplicada 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      70 |       family: getComputedStyle(document.body).fontFamily,
+      71 |     }))
+    > 72 |     expect(result.loaded).toBe(true)
+         |                           ^
+      73 |     expect(result.family).toContain('Roboto Mono Variable')
+      74 |   })
+      75 | })
+        at D:\emprego\e2e\design-system.spec.ts:72:27
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\design-system-estrutura-gl-513ef-hosted-carregada-e-aplicada-desktop-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\design-system-estrutura-gl-513ef-hosted-carregada-e-aplicada-desktop-chromium\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\design-system-estrutura-gl-513ef-hosted-carregada-e-aplicada-desktop-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\design-system-estrutura-gl-513ef-hosted-carregada-e-aplicada-desktop-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3) [desktop-chromium] › e2e\design-system.spec.ts:97:3 › componentes › drawer de filtros: abre, mantém foco, Esc fecha e devolve o foco 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      102 |     await expect(drawer).toBeVisible()
+      103 |     await page.keyboard.press('Tab')
+    > 104 |     expect(await drawer.evaluate((d) => d.contains(document.activeElement))).toBe(true)
+          |                                                                              ^
+      105 |     await page.keyboard.press('Escape')
+      106 |     await expect(drawer).toBeHidden()
+      107 |     await expect(trigger).toBeFocused()
+        at D:\emprego\e2e\design-system.spec.ts:104:78
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\design-system-componentes--f6040--Esc-fecha-e-devolve-o-foco-desktop-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\design-system-componentes--f6040--Esc-fecha-e-devolve-o-foco-desktop-chromium\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\design-system-componentes--f6040--Esc-fecha-e-devolve-o-foco-desktop-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\design-system-componentes--f6040--Esc-fecha-e-devolve-o-foco-desktop-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  4) [desktop-chromium] › e2e\design-system.spec.ts:148:3 › componentes › skeletons: mesmas dimensões do card, aria-busy e anúncio de carregamento 
+
+    Error: expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 2
+    Received:    3.390625
+
+      157 |     expect(cardBox && skBox).toBeTruthy()
+      158 |     expect(Math.abs(cardBox!.width - skBox!.width)).toBeLessThanOrEqual(1)
+    > 159 |     expect(Math.abs(cardBox!.height - skBox!.height)).toBeLessThanOrEqual(2)
+          |                                                       ^
+      160 |   })
+      161 |
+      162 |   test('shimmer ativo por padrão e desligado com prefers-reduced-motion', async ({ page }) => {
+        at D:\emprego\e2e\design-system.spec.ts:159:55
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\design-system-componentes--917ed-y-e-anúncio-de-carregamento-desktop-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\design-system-componentes--917ed-y-e-anúncio-de-carregamento-desktop-chromium\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\design-system-componentes--917ed-y-e-anúncio-de-carregamento-desktop-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\design-system-componentes--917ed-y-e-anúncio-de-carregamento-desktop-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  5) [desktop-chromium] › e2e\design-system.spec.ts:183:3 › componentes › carteiras: grupo de rádio operável por setas 
+
+    Error: expect(locator).toBeChecked() failed
+
+    Locator:  getByRole('radiogroup', { name: 'Carteira para pagamento' }).getByRole('radio', { name: /Principal/ })
+    Expected: checked
+    Received: unchecked
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toBeChecked" getByRole('radiogroup', { name: 'Carteira para pagamento' }).getByRole('radio', { name: /Principal/ }) with timeout 5000ms
+      - waiting for getByRole('radiogroup', { name: 'Carteira para pagamento' }).getByRole('radio', { name: /Principal/ })
+        13 × locator resolved to <button id="_r_j_" role="radio" tabindex="0" type="button" value="principal" aria-checked="false" data-state="unchecked" data-slot="radio-group-item" data-radix-collection-item="" class="aspect-square size-4 shrink-0 rounded-full border border-input text-primary shadow-xs transition-[color,box-shadow] outline-none focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 disabled:cursor-not-allowed disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-destructive/20…></button>
+           - unexpected value "unchecked"
+
+
+      187 |     await reserva.focus()
+      188 |     await page.keyboard.press('ArrowDown')
+    > 189 |     await expect(group.getByRole('radio', { name: /Principal/ })).toBeChecked()
+          |                                                                   ^
+      190 |   })
+      191 | })
+      192 |
+        at D:\emprego\e2e\design-system.spec.ts:189:67
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\design-system-componentes--964a8-de-rádio-operável-por-setas-desktop-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\design-system-componentes--964a8-de-rádio-operável-por-setas-desktop-chromium\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\design-system-componentes--964a8-de-rádio-operável-por-setas-desktop-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\design-system-componentes--964a8-de-rádio-operável-por-setas-desktop-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  6) [mobile-chromium] › e2e\design-system.spec.ts:11:3 › estrutura global › link "Pular para o conteúdo" é o primeiro foco e leva ao <main> 
+
+    Error: expect(locator).toBeFocused() failed
+
+    Locator:  getByRole('link', { name: 'Pular para o conteúdo' })
+    Expected: focused
+    Received: inactive
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toBeFocused" getByRole('link', { name: 'Pular para o conteúdo' }) with timeout 5000ms
+      - waiting for getByRole('link', { name: 'Pular para o conteúdo' })
+        13 × locator resolved to <a href="#conteudo" class="sr-only z-50 rounded-xs bg-primary px-4 py-2 font-semibold text-primary-foreground focus:not-sr-only focus:fixed focus:top-3 focus:left-3">Pular para o conteúdo</a>
+           - unexpected value "inactive"
+
+
+      13 |     await page.keyboard.press('Tab')
+      14 |     const skip = page.getByRole('link', { name: 'Pular para o conteúdo' })
+    > 15 |     await expect(skip).toBeFocused()
+         |                        ^
+      16 |     await expect(skip).toBeVisible()
+      17 |     await page.keyboard.press('Enter')
+      18 |     await expect(page.locator('main#conteudo')).toBeFocused()
+        at D:\emprego\e2e\design-system.spec.ts:15:24
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\design-system-estrutura-gl-9dabd-imeiro-foco-e-leva-ao-main--mobile-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\design-system-estrutura-gl-9dabd-imeiro-foco-e-leva-ao-main--mobile-chromium\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\design-system-estrutura-gl-9dabd-imeiro-foco-e-leva-ao-main--mobile-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\design-system-estrutura-gl-9dabd-imeiro-foco-e-leva-ao-main--mobile-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  7) [mobile-chromium] › e2e\design-system.spec.ts:36:3 › estrutura global › páginas fora do escopo são coerentes e não simulam função 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByRole('link', { name: 'Explorar o mercado' })
+    Expected: visible
+    Error: strict mode violation: getByRole('link', { name: 'Explorar o mercado' }) resolved to 2 elements:
+        1) <a data-size="md" href="/mercado" data-slot="button" data-variant="outline" class="inline-flex shrink-0 items-center justify-center gap-2 whitespace-nowrap font-mono font-semibold select-none transition-[background-color,color,border-color,box-shadow,transform] duration-[var(--duration-fast)] ease-[var(--ease-standard)] outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring disabled:pointer-events-none disabled:opacity-45 aria-disabled:pointer-events-none a…>Explorar o mercado</a> aka getByText('Explorar o mercado')
+        2) <a href="/mercado" aria-label="Explorar o mercado" class="grid size-16 place-items-center rounded-full border-[6px] border-background bg-primary-gradient text-primary-foreground shadow-fab outline-none transition-transform active:scale-95 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring">…</a> aka getByTestId('bottom-nav').getByRole('link', { name: 'Explorar o mercado' })
+
+    Call log:
+      - Expect "toBeVisible" getByRole('link', { name: 'Explorar o mercado' }) with timeout 5000ms
+      - waiting for getByRole('link', { name: 'Explorar o mercado' })
+
+
+      37 |     await openApp(page, '/aprenda')
+      38 |     await expect(page.getByRole('heading', { name: 'Conteúdo fora desta demonstração' })).toBeVisible()
+    > 39 |     await expect(page.getByRole('link', { name: 'Explorar o mercado' })).toBeVisible()
+         |                                                                          ^
+      40 |   })
+      41 |
+      42 |   test('ação fora do escopo informa indisponibilidade (toast informativo, sem sucesso)', async ({ page }) => {
+        at D:\emprego\e2e\design-system.spec.ts:39:74
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\design-system-estrutura-gl-c3bfb-rentes-e-não-simulam-função-mobile-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\design-system-estrutura-gl-c3bfb-rentes-e-não-simulam-função-mobile-chromium\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\design-system-estrutura-gl-c3bfb-rentes-e-não-simulam-função-mobile-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\design-system-estrutura-gl-c3bfb-rentes-e-não-simulam-função-mobile-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  8) [mobile-chromium] › e2e\design-system.spec.ts:65:3 › estrutura global › fonte Roboto Mono self-hosted carregada e aplicada 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      70 |       family: getComputedStyle(document.body).fontFamily,
+      71 |     }))
+    > 72 |     expect(result.loaded).toBe(true)
+         |                           ^
+      73 |     expect(result.family).toContain('Roboto Mono Variable')
+      74 |   })
+      75 | })
+        at D:\emprego\e2e\design-system.spec.ts:72:27
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\design-system-estrutura-gl-513ef-hosted-carregada-e-aplicada-mobile-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\design-system-estrutura-gl-513ef-hosted-carregada-e-aplicada-mobile-chromium\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\design-system-estrutura-gl-513ef-hosted-carregada-e-aplicada-mobile-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\design-system-estrutura-gl-513ef-hosted-carregada-e-aplicada-mobile-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  9) [mobile-chromium] › e2e\design-system.spec.ts:97:3 › componentes › drawer de filtros: abre, mantém foco, Esc fecha e devolve o foco 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      102 |     await expect(drawer).toBeVisible()
+      103 |     await page.keyboard.press('Tab')
+    > 104 |     expect(await drawer.evaluate((d) => d.contains(document.activeElement))).toBe(true)
+          |                                                                              ^
+      105 |     await page.keyboard.press('Escape')
+      106 |     await expect(drawer).toBeHidden()
+      107 |     await expect(trigger).toBeFocused()
+        at D:\emprego\e2e\design-system.spec.ts:104:78
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\design-system-componentes--f6040--Esc-fecha-e-devolve-o-foco-mobile-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\design-system-componentes--f6040--Esc-fecha-e-devolve-o-foco-mobile-chromium\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\design-system-componentes--f6040--Esc-fecha-e-devolve-o-foco-mobile-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\design-system-componentes--f6040--Esc-fecha-e-devolve-o-foco-mobile-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  10) [mobile-chromium] › e2e\design-system.spec.ts:148:3 › componentes › skeletons: mesmas dimensões do card, aria-busy e anúncio de carregamento 
+
+    Error: expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 2
+    Received:    3.390625
+
+      157 |     expect(cardBox && skBox).toBeTruthy()
+      158 |     expect(Math.abs(cardBox!.width - skBox!.width)).toBeLessThanOrEqual(1)
+    > 159 |     expect(Math.abs(cardBox!.height - skBox!.height)).toBeLessThanOrEqual(2)
+          |                                                       ^
+      160 |   })
+      161 |
+      162 |   test('shimmer ativo por padrão e desligado com prefers-reduced-motion', async ({ page }) => {
+        at D:\emprego\e2e\design-system.spec.ts:159:55
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\design-system-componentes--917ed-y-e-anúncio-de-carregamento-mobile-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\design-system-componentes--917ed-y-e-anúncio-de-carregamento-mobile-chromium\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\design-system-componentes--917ed-y-e-anúncio-de-carregamento-mobile-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\design-system-componentes--917ed-y-e-anúncio-de-carregamento-mobile-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  11) [responsive] › e2e\layout.responsive.spec.ts:42:5 › troca de navegação por breakpoint › 390px: navegação inferior visível, header desktop oculto 
+
+    Error: expect(locator).toBeHidden() failed
+
+    Locator:  getByRole('navigation', { name: 'Principal' })
+    Expected: hidden
+    Received: visible
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toBeHidden" getByRole('navigation', { name: 'Principal' }) with timeout 5000ms
+      - waiting for getByRole('navigation', { name: 'Principal' })
+        13 × locator resolved to <nav data-testid="bottom-nav" aria-label="Navegação principal" class="fixed inset-x-0 bottom-0 z-40 rounded-t-3xl bg-surface pb-[env(safe-area-inset-bottom)] shadow-[0_-12px_32px_-12px_rgb(0_0_0/0.6)] lg:hidden">…</nav>
+           - unexpected value "visible"
+
+
+      44 |       await openApp(page, '/')
+      45 |       await expect(page.getByTestId('bottom-nav')).toBeVisible()
+    > 46 |       await expect(page.getByRole('navigation', { name: 'Principal' })).toBeHidden()
+         |                                                                         ^
+      47 |       // Telas com barra de ação própria no Figma mobile não têm bottom nav.
+      48 |       await page.goto('/carrinho')
+      49 |       await expect(page.getByTestId('bottom-nav')).toHaveCount(0)
+        at D:\emprego\e2e\layout.responsive.spec.ts:46:73
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\layout.responsive-troca-de-6fc16-sível-header-desktop-oculto-responsive\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\layout.responsive-troca-de-6fc16-sível-header-desktop-oculto-responsive\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\layout.responsive-troca-de-6fc16-sível-header-desktop-oculto-responsive\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\layout.responsive-troca-de-6fc16-sível-header-desktop-oculto-responsive\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  12) [responsive] › e2e\layout.responsive.spec.ts:42:5 › troca de navegação por breakpoint › 768px: navegação inferior visível, header desktop oculto 
+
+    Error: expect(locator).toBeHidden() failed
+
+    Locator:  getByRole('navigation', { name: 'Principal' })
+    Expected: hidden
+    Received: visible
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toBeHidden" getByRole('navigation', { name: 'Principal' }) with timeout 5000ms
+      - waiting for getByRole('navigation', { name: 'Principal' })
+        13 × locator resolved to <nav data-testid="bottom-nav" aria-label="Navegação principal" class="fixed inset-x-0 bottom-0 z-40 rounded-t-3xl bg-surface pb-[env(safe-area-inset-bottom)] shadow-[0_-12px_32px_-12px_rgb(0_0_0/0.6)] lg:hidden">…</nav>
+           - unexpected value "visible"
+
+
+      44 |       await openApp(page, '/')
+      45 |       await expect(page.getByTestId('bottom-nav')).toBeVisible()
+    > 46 |       await expect(page.getByRole('navigation', { name: 'Principal' })).toBeHidden()
+         |                                                                         ^
+      47 |       // Telas com barra de ação própria no Figma mobile não têm bottom nav.
+      48 |       await page.goto('/carrinho')
+      49 |       await expect(page.getByTestId('bottom-nav')).toHaveCount(0)
+        at D:\emprego\e2e\layout.responsive.spec.ts:46:73
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\layout.responsive-troca-de-38ca5-sível-header-desktop-oculto-responsive\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\layout.responsive-troca-de-38ca5-sível-header-desktop-oculto-responsive\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\layout.responsive-troca-de-38ca5-sível-header-desktop-oculto-responsive\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\layout.responsive-troca-de-38ca5-sível-header-desktop-oculto-responsive\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  12 failed
+    [desktop-chromium] › e2e\design-system.spec.ts:11:3 › estrutura global › link "Pular para o conteúdo" é o primeiro foco e leva ao <main> 
+    [desktop-chromium] › e2e\design-system.spec.ts:65:3 › estrutura global › fonte Roboto Mono self-hosted carregada e aplicada 
+    [desktop-chromium] › e2e\design-system.spec.ts:97:3 › componentes › drawer de filtros: abre, mantém foco, Esc fecha e devolve o foco 
+    [desktop-chromium] › e2e\design-system.spec.ts:148:3 › componentes › skeletons: mesmas dimensões do card, aria-busy e anúncio de carregamento 
+    [desktop-chromium] › e2e\design-system.spec.ts:183:3 › componentes › carteiras: grupo de rádio operável por setas 
+    [mobile-chromium] › e2e\design-system.spec.ts:11:3 › estrutura global › link "Pular para o conteúdo" é o primeiro foco e leva ao <main> 
+    [mobile-chromium] › e2e\design-system.spec.ts:36:3 › estrutura global › páginas fora do escopo são coerentes e não simulam função 
+    [mobile-chromium] › e2e\design-system.spec.ts:65:3 › estrutura global › fonte Roboto Mono self-hosted carregada e aplicada 
+    [mobile-chromium] › e2e\design-system.spec.ts:97:3 › componentes › drawer de filtros: abre, mantém foco, Esc fecha e devolve o foco 
+    [mobile-chromium] › e2e\design-system.spec.ts:148:3 › componentes › skeletons: mesmas dimensões do card, aria-busy e anúncio de carregamento 
+    [responsive] › e2e\layout.responsive.spec.ts:42:5 › troca de navegação por breakpoint › 390px: navegação inferior visível, header desktop oculto 
+    [responsive] › e2e\layout.responsive.spec.ts:42:5 › troca de navegação por breakpoint › 768px: navegação inferior visível, header desktop oculto 
+  112 passed (1.9m)
