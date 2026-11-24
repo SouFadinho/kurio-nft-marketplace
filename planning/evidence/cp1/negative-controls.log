@@ -1,0 +1,84 @@
+
+Running 2 tests using 2 workers
+
+  x  1 [desktop-chromium] › e2e\poc.spec.ts:125:3 › PoC CP1 — Socket.IO (socket.io-client → MSW ws.link + @mswjs/socket.io-binding) › 6c. protocolo: nenhum ACK nem evento antes de validar o CONNECT (sem corrida no handshake) (2.0s)
+  x  2 [desktop-chromium] › e2e\poc.spec.ts:218:3 › PoC CP1 — Socket.IO (socket.io-client → MSW ws.link + @mswjs/socket.io-binding) › heartbeat: a conexão sobrevive além do ping timeout do binding (30 s) (6.0s)
+
+
+  1) [desktop-chromium] › e2e\poc.spec.ts:125:3 › PoC CP1 — Socket.IO (socket.io-client → MSW ws.link + @mswjs/socket.io-binding) › 6c. protocolo: nenhum ACK nem evento antes de validar o CONNECT (sem corrida no handshake) 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 0
+    + Received  + 1
+
+      Array [
+        "0{",
+    +   "40",
+      ]
+
+      162 |     })
+      163 |
+    > 164 |     expect(frames.pending).toEqual(['0{'])
+          |                            ^
+      165 |     expect(frames.forged).toEqual(['0{', '44'])
+      166 |     expect(frames.anon).toEqual(['0{', '40', '42'])
+      167 |   })
+        at D:\emprego\e2e\poc.spec.ts:164:28
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\poc-PoC-CP1-—-Socket-IO-so-0a5d5-T-sem-corrida-no-handshake--desktop-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\poc-PoC-CP1-—-Socket-IO-so-0a5d5-T-sem-corrida-no-handshake--desktop-chromium\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\poc-PoC-CP1-—-Socket-IO-so-0a5d5-T-sem-corrida-no-handshake--desktop-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\poc-PoC-CP1-—-Socket-IO-so-0a5d5-T-sem-corrida-no-handshake--desktop-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [desktop-chromium] › e2e\poc.spec.ts:218:3 › PoC CP1 — Socket.IO (socket.io-client → MSW ws.link + @mswjs/socket.io-binding) › heartbeat: a conexão sobrevive além do ping timeout do binding (30 s) 
+
+    Error: expect(locator).toHaveText(expected) failed
+
+    Locator:  getByTestId('rt-reconnections')
+    Expected: "0"
+    Received: "5"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveText" getByTestId('rt-reconnections') with timeout 5000ms
+      - waiting for getByTestId('rt-reconnections')
+        14 × locator resolved to <dd class="text-right" data-testid="rt-reconnections">5</dd>
+           - unexpected value "5"
+
+
+      222 |     await page.clock.runFor(65_000)
+      223 |     await expect(page.getByTestId('rt-state')).toHaveText('conectado')
+    > 224 |     await expect(page.getByTestId('rt-reconnections')).toHaveText('0')
+          |                                                        ^
+      225 |   })
+      226 | })
+      227 |
+        at D:\emprego\e2e\poc.spec.ts:224:56
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\poc-PoC-CP1-—-Socket-IO-so-d10fd-ng-timeout-do-binding-30-s--desktop-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\poc-PoC-CP1-—-Socket-IO-so-d10fd-ng-timeout-do-binding-30-s--desktop-chromium\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\poc-PoC-CP1-—-Socket-IO-so-d10fd-ng-timeout-do-binding-30-s--desktop-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\poc-PoC-CP1-—-Socket-IO-so-d10fd-ng-timeout-do-binding-30-s--desktop-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2 failed
+    [desktop-chromium] › e2e\poc.spec.ts:125:3 › PoC CP1 — Socket.IO (socket.io-client → MSW ws.link + @mswjs/socket.io-binding) › 6c. protocolo: nenhum ACK nem evento antes de validar o CONNECT (sem corrida no handshake) 
+    [desktop-chromium] › e2e\poc.spec.ts:218:3 › PoC CP1 — Socket.IO (socket.io-client → MSW ws.link + @mswjs/socket.io-binding) › heartbeat: a conexão sobrevive além do ping timeout do binding (30 s) 

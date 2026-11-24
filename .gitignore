@@ -1,0 +1,21 @@
+node_modules
+dist
+*.local
+.env.local
+.env.*.local
+
+
+# Saídas de teste e auditoria (os relatórios de entrega serão versionados explicitamente no CP8)
+playwright-report
+test-results
+blob-report
+lighthouse/reports
+lighthouse/summary.*
+
+.DS_Store
+Thumbs.db
+.vscode/*
+!.vscode/extensions.json
+
+# Caches locais (navegadores do Playwright, temporários, logs)
+.cache

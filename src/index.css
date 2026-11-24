@@ -1,0 +1,54 @@
+@import 'tailwindcss';
+@import 'tw-animate-css';
+
+/*
+ * Tokens provisórios do CP1 na convenção de nomes do shadcn/ui, preenchidos com a paleta
+ * MEDIDA nas referências (planning/VISUAL_ANALYSIS.md §3). O design system completo
+ * (tipografia, espaçamentos, variantes) é escopo do CP2.
+ * `--destructive` não aparece no Figma: é proposta própria, a validar no CP2.
+ */
+@theme inline {
+  --color-background: #140d0a;
+  --color-foreground: #f5f1eb;
+  --color-card: #241612;
+  --color-card-foreground: #f5f1eb;
+  --color-popover: #241612;
+  --color-popover-foreground: #f5f1eb;
+  --color-primary: #d28a4c;
+  --color-primary-foreground: #140d0a;
+  --color-secondary: #341e15;
+  --color-secondary-foreground: #f5f1eb;
+  --color-muted: #241612;
+  --color-muted-foreground: #cfb28c;
+  --color-accent: #341e15;
+  --color-accent-foreground: #f5f1eb;
+  --color-destructive: #e5484d;
+  --color-border: #341e15;
+  --color-input: #341e15;
+  --color-ring: #d28a4c;
+
+  /* Tokens específicos do KURIO */
+  --color-price: #e89b55;
+  --color-placeholder: #b39463;
+  --color-band: #38220f;
+
+  --font-mono: ui-monospace, 'SFMono-Regular', Menlo, Consolas, 'Liberation Mono', monospace;
+  --font-sans: var(--font-mono);
+  --radius: 0.5rem;
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  html {
+    color-scheme: dark;
+  }
+  body {
+    @apply bg-background text-foreground font-mono antialiased;
+  }
+}

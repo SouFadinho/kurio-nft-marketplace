@@ -1,0 +1,667 @@
+
+Running 15 tests using 6 workers
+
+  x   1 [desktop-chromium] › e2e\poc.spec.ts:21:3 › PoC CP1 — REST (Axios → MSW) + TanStack Query › 2. login (mutation) + criação de pedido (mutation idempotente) + consulta do pedido (6.2s)
+  x   6 [desktop-chromium] › e2e\poc.spec.ts:59:3 › PoC CP1 — Socket.IO (socket.io-client → MSW ws.link + @mswjs/socket.io-binding) › 5. order.updated (privado) leva o pedido de pendente a confirmado, sem polling (6.4s)
+  x   5 [desktop-chromium] › e2e\poc.spec.ts:72:3 › PoC CP1 — Socket.IO (socket.io-client → MSW ws.link + @mswjs/socket.io-binding) › 5b. pedido recusado é terminal e não mostra confirmação (6.3s)
+  x   4 [desktop-chromium] › e2e\poc.spec.ts:41:3 › PoC CP1 — Socket.IO (socket.io-client → MSW ws.link + @mswjs/socket.io-binding) › 3/4. nft.updated atualiza lista e detalhe; o REST reflete a mesma mudança após refresh (6.4s)
+  x   2 [desktop-chromium] › e2e\poc.spec.ts:31:3 › PoC CP1 — REST (Axios → MSW) + TanStack Query › 2b. clique repetido não duplica o pedido (mesma Idempotency-Key) (6.5s)
+  x   3 [desktop-chromium] › e2e\poc.spec.ts:10:3 › PoC CP1 — REST (Axios → MSW) + TanStack Query › 1. GET /api/nfts é respondido pelo service worker do MSW e renderizado via Query (6.7s)
+  x   7 [desktop-chromium] › e2e\poc.spec.ts:106:3 › PoC CP1 — Socket.IO (socket.io-client → MSW ws.link + @mswjs/socket.io-binding) › 6b. token inválido no handshake é recusado (CONNECT_ERROR) e a sessão cai para anônima (5.9s)
+  x   8 [desktop-chromium] › e2e\poc.spec.ts:83:3 › PoC CP1 — Socket.IO (socket.io-client → MSW ws.link + @mswjs/socket.io-binding) › 6. handshake autenticado e isolamento: eventos e dados de Ana não chegam a Bruno (6.0s)
+  x  11 [desktop-chromium] › e2e\poc.spec.ts:159:3 › PoC CP1 — Socket.IO (socket.io-client → MSW ws.link + @mswjs/socket.io-binding) › 9. eventos duplicados e antigos são descartados sem regredir o estado (6.0s)
+  x  10 [desktop-chromium] › e2e\poc.spec.ts:149:3 › PoC CP1 — Socket.IO (socket.io-client → MSW ws.link + @mswjs/socket.io-binding) › 7b. refresh com pedido pendente recupera o estado; liquidação automática persiste (5.9s)
+  x   9 [desktop-chromium] › e2e\poc.spec.ts:125:3 › PoC CP1 — Socket.IO (socket.io-client → MSW ws.link + @mswjs/socket.io-binding) › 7/8. desconexão com pedido pendente → reconexão → reconciliação pelo REST (5.9s)
+  x  12 [desktop-chromium] › e2e\poc.spec.ts:174:3 › PoC CP1 — Socket.IO (socket.io-client → MSW ws.link + @mswjs/socket.io-binding) › heartbeat: a conexão sobrevive além do ping timeout do binding (30 s) (5.5s)
+  x  13 [desktop-chromium] › e2e\poc.spec.ts:185:3 › PoC CP1 — cenários › reset integral: ?reset=1 restaura catálogo, pedidos e sessões do seed (5.9s)
+  x  14 [desktop-chromium] › e2e\poc.spec.ts:203:3 › PoC CP1 — rotas no build de produção › 11. acesso direto, refresh, NFT inexistente, rota inexistente e rota protegida (5.8s)
+  x  15 [desktop-chromium] › e2e\poc.spec.ts:223:3 › PoC CP1 — rotas no build de produção › login com credenciais erradas mostra o erro da API (5.7s)
+
+
+  1) [desktop-chromium] › e2e\poc.spec.ts:10:3 › PoC CP1 — REST (Axios → MSW) + TanStack Query › 1. GET /api/nfts é respondido pelo service worker do MSW e renderizado via Query 
+
+    Error: expect(locator).toHaveText(expected) failed
+
+    Locator:  getByTestId('rt-state')
+    Expected: "conectado"
+    Received: "desconectado"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveText" getByTestId('rt-state') with timeout 5000ms
+      - waiting for getByTestId('rt-state')
+        10 × locator resolved to <strong data-testid="rt-state">desconectado</strong>
+           - unexpected value "desconectado"
+
+
+       at support.ts:60
+
+      58 |   const sep = path.includes('?') ? '&' : '?'
+      59 |   await page.goto(`${path}${sep}scenario=${scenario}&reset=1`)
+    > 60 |   await expect(page.getByTestId('rt-state')).toHaveText('conectado')
+         |                                              ^
+      61 | }
+      62 |
+      63 | export async function login(page: Page, user: (typeof USERS)[keyof typeof USERS]) {
+        at openApp (D:\emprego\e2e\support.ts:60:46)
+        at D:\emprego\e2e\poc.spec.ts:12:5
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\poc-PoC-CP1-—-REST-Axios-→-1dadf-MSW-e-renderizado-via-Query-desktop-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\poc-PoC-CP1-—-REST-Axios-→-1dadf-MSW-e-renderizado-via-Query-desktop-chromium\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\poc-PoC-CP1-—-REST-Axios-→-1dadf-MSW-e-renderizado-via-Query-desktop-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\poc-PoC-CP1-—-REST-Axios-→-1dadf-MSW-e-renderizado-via-Query-desktop-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [desktop-chromium] › e2e\poc.spec.ts:21:3 › PoC CP1 — REST (Axios → MSW) + TanStack Query › 2. login (mutation) + criação de pedido (mutation idempotente) + consulta do pedido 
+
+    Error: expect(locator).toHaveText(expected) failed
+
+    Locator:  getByTestId('rt-state')
+    Expected: "conectado"
+    Received: "desconectado"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveText" getByTestId('rt-state') with timeout 5000ms
+      - waiting for getByTestId('rt-state')
+        9 × locator resolved to <strong data-testid="rt-state">desconectado</strong>
+          - unexpected value "desconectado"
+
+
+       at support.ts:60
+
+      58 |   const sep = path.includes('?') ? '&' : '?'
+      59 |   await page.goto(`${path}${sep}scenario=${scenario}&reset=1`)
+    > 60 |   await expect(page.getByTestId('rt-state')).toHaveText('conectado')
+         |                                              ^
+      61 | }
+      62 |
+      63 | export async function login(page: Page, user: (typeof USERS)[keyof typeof USERS]) {
+        at openApp (D:\emprego\e2e\support.ts:60:46)
+        at D:\emprego\e2e\poc.spec.ts:22:5
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\poc-PoC-CP1-—-REST-Axios-→-767df-mpotente-consulta-do-pedido-desktop-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\poc-PoC-CP1-—-REST-Axios-→-767df-mpotente-consulta-do-pedido-desktop-chromium\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\poc-PoC-CP1-—-REST-Axios-→-767df-mpotente-consulta-do-pedido-desktop-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\poc-PoC-CP1-—-REST-Axios-→-767df-mpotente-consulta-do-pedido-desktop-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3) [desktop-chromium] › e2e\poc.spec.ts:31:3 › PoC CP1 — REST (Axios → MSW) + TanStack Query › 2b. clique repetido não duplica o pedido (mesma Idempotency-Key) 
+
+    Error: expect(locator).toHaveText(expected) failed
+
+    Locator:  getByTestId('rt-state')
+    Expected: "conectado"
+    Received: "desconectado"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveText" getByTestId('rt-state') with timeout 5000ms
+      - waiting for getByTestId('rt-state')
+        9 × locator resolved to <strong data-testid="rt-state">desconectado</strong>
+          - unexpected value "desconectado"
+
+
+       at support.ts:60
+
+      58 |   const sep = path.includes('?') ? '&' : '?'
+      59 |   await page.goto(`${path}${sep}scenario=${scenario}&reset=1`)
+    > 60 |   await expect(page.getByTestId('rt-state')).toHaveText('conectado')
+         |                                              ^
+      61 | }
+      62 |
+      63 | export async function login(page: Page, user: (typeof USERS)[keyof typeof USERS]) {
+        at openApp (D:\emprego\e2e\support.ts:60:46)
+        at D:\emprego\e2e\poc.spec.ts:32:5
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\poc-PoC-CP1-—-REST-Axios-→-4ca30-dido-mesma-Idempotency-Key--desktop-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\poc-PoC-CP1-—-REST-Axios-→-4ca30-dido-mesma-Idempotency-Key--desktop-chromium\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\poc-PoC-CP1-—-REST-Axios-→-4ca30-dido-mesma-Idempotency-Key--desktop-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\poc-PoC-CP1-—-REST-Axios-→-4ca30-dido-mesma-Idempotency-Key--desktop-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  4) [desktop-chromium] › e2e\poc.spec.ts:41:3 › PoC CP1 — Socket.IO (socket.io-client → MSW ws.link + @mswjs/socket.io-binding) › 3/4. nft.updated atualiza lista e detalhe; o REST reflete a mesma mudança após refresh 
+
+    Error: expect(locator).toHaveText(expected) failed
+
+    Locator:  getByTestId('rt-state')
+    Expected: "conectado"
+    Received: "desconectado"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveText" getByTestId('rt-state') with timeout 5000ms
+      - waiting for getByTestId('rt-state')
+        9 × locator resolved to <strong data-testid="rt-state">desconectado</strong>
+          - unexpected value "desconectado"
+
+
+       at support.ts:60
+
+      58 |   const sep = path.includes('?') ? '&' : '?'
+      59 |   await page.goto(`${path}${sep}scenario=${scenario}&reset=1`)
+    > 60 |   await expect(page.getByTestId('rt-state')).toHaveText('conectado')
+         |                                              ^
+      61 | }
+      62 |
+      63 | export async function login(page: Page, user: (typeof USERS)[keyof typeof USERS]) {
+        at openApp (D:\emprego\e2e\support.ts:60:46)
+        at D:\emprego\e2e\poc.spec.ts:42:5
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\poc-PoC-CP1-—-Socket-IO-so-1c772--mesma-mudança-após-refresh-desktop-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\poc-PoC-CP1-—-Socket-IO-so-1c772--mesma-mudança-após-refresh-desktop-chromium\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\poc-PoC-CP1-—-Socket-IO-so-1c772--mesma-mudança-após-refresh-desktop-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\poc-PoC-CP1-—-Socket-IO-so-1c772--mesma-mudança-após-refresh-desktop-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  5) [desktop-chromium] › e2e\poc.spec.ts:59:3 › PoC CP1 — Socket.IO (socket.io-client → MSW ws.link + @mswjs/socket.io-binding) › 5. order.updated (privado) leva o pedido de pendente a confirmado, sem polling 
+
+    Error: expect(locator).toHaveText(expected) failed
+
+    Locator:  getByTestId('rt-state')
+    Expected: "conectado"
+    Received: "desconectado"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveText" getByTestId('rt-state') with timeout 5000ms
+      - waiting for getByTestId('rt-state')
+        10 × locator resolved to <strong data-testid="rt-state">desconectado</strong>
+           - unexpected value "desconectado"
+
+
+       at support.ts:60
+
+      58 |   const sep = path.includes('?') ? '&' : '?'
+      59 |   await page.goto(`${path}${sep}scenario=${scenario}&reset=1`)
+    > 60 |   await expect(page.getByTestId('rt-state')).toHaveText('conectado')
+         |                                              ^
+      61 | }
+      62 |
+      63 | export async function login(page: Page, user: (typeof USERS)[keyof typeof USERS]) {
+        at openApp (D:\emprego\e2e\support.ts:60:46)
+        at D:\emprego\e2e\poc.spec.ts:60:5
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\poc-PoC-CP1-—-Socket-IO-so-a52a0-te-a-confirmado-sem-polling-desktop-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\poc-PoC-CP1-—-Socket-IO-so-a52a0-te-a-confirmado-sem-polling-desktop-chromium\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\poc-PoC-CP1-—-Socket-IO-so-a52a0-te-a-confirmado-sem-polling-desktop-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\poc-PoC-CP1-—-Socket-IO-so-a52a0-te-a-confirmado-sem-polling-desktop-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  6) [desktop-chromium] › e2e\poc.spec.ts:72:3 › PoC CP1 — Socket.IO (socket.io-client → MSW ws.link + @mswjs/socket.io-binding) › 5b. pedido recusado é terminal e não mostra confirmação 
+
+    Error: expect(locator).toHaveText(expected) failed
+
+    Locator:  getByTestId('rt-state')
+    Expected: "conectado"
+    Received: "desconectado"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveText" getByTestId('rt-state') with timeout 5000ms
+      - waiting for getByTestId('rt-state')
+        9 × locator resolved to <strong data-testid="rt-state">desconectado</strong>
+          - unexpected value "desconectado"
+
+
+       at support.ts:60
+
+      58 |   const sep = path.includes('?') ? '&' : '?'
+      59 |   await page.goto(`${path}${sep}scenario=${scenario}&reset=1`)
+    > 60 |   await expect(page.getByTestId('rt-state')).toHaveText('conectado')
+         |                                              ^
+      61 | }
+      62 |
+      63 | export async function login(page: Page, user: (typeof USERS)[keyof typeof USERS]) {
+        at openApp (D:\emprego\e2e\support.ts:60:46)
+        at D:\emprego\e2e\poc.spec.ts:73:5
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\poc-PoC-CP1-—-Socket-IO-so-d9d07-al-e-não-mostra-confirmação-desktop-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\poc-PoC-CP1-—-Socket-IO-so-d9d07-al-e-não-mostra-confirmação-desktop-chromium\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\poc-PoC-CP1-—-Socket-IO-so-d9d07-al-e-não-mostra-confirmação-desktop-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\poc-PoC-CP1-—-Socket-IO-so-d9d07-al-e-não-mostra-confirmação-desktop-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  7) [desktop-chromium] › e2e\poc.spec.ts:83:3 › PoC CP1 — Socket.IO (socket.io-client → MSW ws.link + @mswjs/socket.io-binding) › 6. handshake autenticado e isolamento: eventos e dados de Ana não chegam a Bruno 
+
+    Error: expect(locator).toHaveText(expected) failed
+
+    Locator:  getByTestId('rt-state')
+    Expected: "conectado"
+    Received: "desconectado"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveText" getByTestId('rt-state') with timeout 5000ms
+      - waiting for getByTestId('rt-state')
+        10 × locator resolved to <strong data-testid="rt-state">desconectado</strong>
+           - unexpected value "desconectado"
+
+
+       at support.ts:60
+
+      58 |   const sep = path.includes('?') ? '&' : '?'
+      59 |   await page.goto(`${path}${sep}scenario=${scenario}&reset=1`)
+    > 60 |   await expect(page.getByTestId('rt-state')).toHaveText('conectado')
+         |                                              ^
+      61 | }
+      62 |
+      63 | export async function login(page: Page, user: (typeof USERS)[keyof typeof USERS]) {
+        at openApp (D:\emprego\e2e\support.ts:60:46)
+        at D:\emprego\e2e\poc.spec.ts:84:5
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\poc-PoC-CP1-—-Socket-IO-so-62dc9-s-de-Ana-não-chegam-a-Bruno-desktop-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\poc-PoC-CP1-—-Socket-IO-so-62dc9-s-de-Ana-não-chegam-a-Bruno-desktop-chromium\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\poc-PoC-CP1-—-Socket-IO-so-62dc9-s-de-Ana-não-chegam-a-Bruno-desktop-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\poc-PoC-CP1-—-Socket-IO-so-62dc9-s-de-Ana-não-chegam-a-Bruno-desktop-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  8) [desktop-chromium] › e2e\poc.spec.ts:106:3 › PoC CP1 — Socket.IO (socket.io-client → MSW ws.link + @mswjs/socket.io-binding) › 6b. token inválido no handshake é recusado (CONNECT_ERROR) e a sessão cai para anônima 
+
+    Error: expect(locator).toHaveText(expected) failed
+
+    Locator:  getByTestId('rt-state')
+    Expected: "conectado"
+    Received: "desconectado"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveText" getByTestId('rt-state') with timeout 5000ms
+      - waiting for getByTestId('rt-state')
+        8 × locator resolved to <strong data-testid="rt-state">desconectado</strong>
+          - unexpected value "desconectado"
+
+
+       at support.ts:60
+
+      58 |   const sep = path.includes('?') ? '&' : '?'
+      59 |   await page.goto(`${path}${sep}scenario=${scenario}&reset=1`)
+    > 60 |   await expect(page.getByTestId('rt-state')).toHaveText('conectado')
+         |                                              ^
+      61 | }
+      62 |
+      63 | export async function login(page: Page, user: (typeof USERS)[keyof typeof USERS]) {
+        at openApp (D:\emprego\e2e\support.ts:60:46)
+        at D:\emprego\e2e\poc.spec.ts:107:5
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\poc-PoC-CP1-—-Socket-IO-so-6d8e7-e-a-sessão-cai-para-anônima-desktop-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\poc-PoC-CP1-—-Socket-IO-so-6d8e7-e-a-sessão-cai-para-anônima-desktop-chromium\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\poc-PoC-CP1-—-Socket-IO-so-6d8e7-e-a-sessão-cai-para-anônima-desktop-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\poc-PoC-CP1-—-Socket-IO-so-6d8e7-e-a-sessão-cai-para-anônima-desktop-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  9) [desktop-chromium] › e2e\poc.spec.ts:125:3 › PoC CP1 — Socket.IO (socket.io-client → MSW ws.link + @mswjs/socket.io-binding) › 7/8. desconexão com pedido pendente → reconexão → reconciliação pelo REST 
+
+    Error: expect(locator).toHaveText(expected) failed
+
+    Locator:  getByTestId('rt-state')
+    Expected: "conectado"
+    Received: "desconectado"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveText" getByTestId('rt-state') with timeout 5000ms
+      - waiting for getByTestId('rt-state')
+        9 × locator resolved to <strong data-testid="rt-state">desconectado</strong>
+          - unexpected value "desconectado"
+
+
+       at support.ts:60
+
+      58 |   const sep = path.includes('?') ? '&' : '?'
+      59 |   await page.goto(`${path}${sep}scenario=${scenario}&reset=1`)
+    > 60 |   await expect(page.getByTestId('rt-state')).toHaveText('conectado')
+         |                                              ^
+      61 | }
+      62 |
+      63 | export async function login(page: Page, user: (typeof USERS)[keyof typeof USERS]) {
+        at openApp (D:\emprego\e2e\support.ts:60:46)
+        at D:\emprego\e2e\poc.spec.ts:126:5
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\poc-PoC-CP1-—-Socket-IO-so-42be5-o-→-reconciliação-pelo-REST-desktop-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\poc-PoC-CP1-—-Socket-IO-so-42be5-o-→-reconciliação-pelo-REST-desktop-chromium\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\poc-PoC-CP1-—-Socket-IO-so-42be5-o-→-reconciliação-pelo-REST-desktop-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\poc-PoC-CP1-—-Socket-IO-so-42be5-o-→-reconciliação-pelo-REST-desktop-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  10) [desktop-chromium] › e2e\poc.spec.ts:149:3 › PoC CP1 — Socket.IO (socket.io-client → MSW ws.link + @mswjs/socket.io-binding) › 7b. refresh com pedido pendente recupera o estado; liquidação automática persiste 
+
+    Error: expect(locator).toHaveText(expected) failed
+
+    Locator:  getByTestId('rt-state')
+    Expected: "conectado"
+    Received: "desconectado"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveText" getByTestId('rt-state') with timeout 5000ms
+      - waiting for getByTestId('rt-state')
+        10 × locator resolved to <strong data-testid="rt-state">desconectado</strong>
+           - unexpected value "desconectado"
+
+
+       at support.ts:60
+
+      58 |   const sep = path.includes('?') ? '&' : '?'
+      59 |   await page.goto(`${path}${sep}scenario=${scenario}&reset=1`)
+    > 60 |   await expect(page.getByTestId('rt-state')).toHaveText('conectado')
+         |                                              ^
+      61 | }
+      62 |
+      63 | export async function login(page: Page, user: (typeof USERS)[keyof typeof USERS]) {
+        at openApp (D:\emprego\e2e\support.ts:60:46)
+        at D:\emprego\e2e\poc.spec.ts:150:5
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\poc-PoC-CP1-—-Socket-IO-so-c679a-uidação-automática-persiste-desktop-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\poc-PoC-CP1-—-Socket-IO-so-c679a-uidação-automática-persiste-desktop-chromium\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\poc-PoC-CP1-—-Socket-IO-so-c679a-uidação-automática-persiste-desktop-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\poc-PoC-CP1-—-Socket-IO-so-c679a-uidação-automática-persiste-desktop-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  11) [desktop-chromium] › e2e\poc.spec.ts:159:3 › PoC CP1 — Socket.IO (socket.io-client → MSW ws.link + @mswjs/socket.io-binding) › 9. eventos duplicados e antigos são descartados sem regredir o estado 
+
+    Error: expect(locator).toHaveText(expected) failed
+
+    Locator:  getByTestId('rt-state')
+    Expected: "conectado"
+    Received: "desconectado"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveText" getByTestId('rt-state') with timeout 5000ms
+      - waiting for getByTestId('rt-state')
+        10 × locator resolved to <strong data-testid="rt-state">desconectado</strong>
+           - unexpected value "desconectado"
+
+
+       at support.ts:60
+
+      58 |   const sep = path.includes('?') ? '&' : '?'
+      59 |   await page.goto(`${path}${sep}scenario=${scenario}&reset=1`)
+    > 60 |   await expect(page.getByTestId('rt-state')).toHaveText('conectado')
+         |                                              ^
+      61 | }
+      62 |
+      63 | export async function login(page: Page, user: (typeof USERS)[keyof typeof USERS]) {
+        at openApp (D:\emprego\e2e\support.ts:60:46)
+        at D:\emprego\e2e\poc.spec.ts:160:5
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\poc-PoC-CP1-—-Socket-IO-so-79ce8-tados-sem-regredir-o-estado-desktop-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\poc-PoC-CP1-—-Socket-IO-so-79ce8-tados-sem-regredir-o-estado-desktop-chromium\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\poc-PoC-CP1-—-Socket-IO-so-79ce8-tados-sem-regredir-o-estado-desktop-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\poc-PoC-CP1-—-Socket-IO-so-79ce8-tados-sem-regredir-o-estado-desktop-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  12) [desktop-chromium] › e2e\poc.spec.ts:174:3 › PoC CP1 — Socket.IO (socket.io-client → MSW ws.link + @mswjs/socket.io-binding) › heartbeat: a conexão sobrevive além do ping timeout do binding (30 s) 
+
+    Error: expect(locator).toHaveText(expected) failed
+
+    Locator:  getByTestId('rt-state')
+    Expected: "conectado"
+    Received: "desconectado"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveText" getByTestId('rt-state') with timeout 5000ms
+      - waiting for getByTestId('rt-state')
+        10 × locator resolved to <strong data-testid="rt-state">desconectado</strong>
+           - unexpected value "desconectado"
+
+
+       at support.ts:60
+
+      58 |   const sep = path.includes('?') ? '&' : '?'
+      59 |   await page.goto(`${path}${sep}scenario=${scenario}&reset=1`)
+    > 60 |   await expect(page.getByTestId('rt-state')).toHaveText('conectado')
+         |                                              ^
+      61 | }
+      62 |
+      63 | export async function login(page: Page, user: (typeof USERS)[keyof typeof USERS]) {
+        at openApp (D:\emprego\e2e\support.ts:60:46)
+        at D:\emprego\e2e\poc.spec.ts:177:5
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\poc-PoC-CP1-—-Socket-IO-so-d10fd-ng-timeout-do-binding-30-s--desktop-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\poc-PoC-CP1-—-Socket-IO-so-d10fd-ng-timeout-do-binding-30-s--desktop-chromium\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\poc-PoC-CP1-—-Socket-IO-so-d10fd-ng-timeout-do-binding-30-s--desktop-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\poc-PoC-CP1-—-Socket-IO-so-d10fd-ng-timeout-do-binding-30-s--desktop-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  13) [desktop-chromium] › e2e\poc.spec.ts:185:3 › PoC CP1 — cenários › reset integral: ?reset=1 restaura catálogo, pedidos e sessões do seed 
+
+    Error: expect(locator).toHaveText(expected) failed
+
+    Locator:  getByTestId('rt-state')
+    Expected: "conectado"
+    Received: "desconectado"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveText" getByTestId('rt-state') with timeout 5000ms
+      - waiting for getByTestId('rt-state')
+        9 × locator resolved to <strong data-testid="rt-state">desconectado</strong>
+          - unexpected value "desconectado"
+
+
+       at support.ts:60
+
+      58 |   const sep = path.includes('?') ? '&' : '?'
+      59 |   await page.goto(`${path}${sep}scenario=${scenario}&reset=1`)
+    > 60 |   await expect(page.getByTestId('rt-state')).toHaveText('conectado')
+         |                                              ^
+      61 | }
+      62 |
+      63 | export async function login(page: Page, user: (typeof USERS)[keyof typeof USERS]) {
+        at openApp (D:\emprego\e2e\support.ts:60:46)
+        at D:\emprego\e2e\poc.spec.ts:186:5
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\poc-PoC-CP1-—-cenários-res-0c4a6-o-pedidos-e-sessões-do-seed-desktop-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\poc-PoC-CP1-—-cenários-res-0c4a6-o-pedidos-e-sessões-do-seed-desktop-chromium\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\poc-PoC-CP1-—-cenários-res-0c4a6-o-pedidos-e-sessões-do-seed-desktop-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\poc-PoC-CP1-—-cenários-res-0c4a6-o-pedidos-e-sessões-do-seed-desktop-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  14) [desktop-chromium] › e2e\poc.spec.ts:203:3 › PoC CP1 — rotas no build de produção › 11. acesso direto, refresh, NFT inexistente, rota inexistente e rota protegida 
+
+    Error: expect(locator).toHaveText(expected) failed
+
+    Locator:  getByTestId('rt-state')
+    Expected: "conectado"
+    Received: "desconectado"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveText" getByTestId('rt-state') with timeout 5000ms
+      - waiting for getByTestId('rt-state')
+        8 × locator resolved to <strong data-testid="rt-state">desconectado</strong>
+          - unexpected value "desconectado"
+
+
+       at support.ts:60
+
+      58 |   const sep = path.includes('?') ? '&' : '?'
+      59 |   await page.goto(`${path}${sep}scenario=${scenario}&reset=1`)
+    > 60 |   await expect(page.getByTestId('rt-state')).toHaveText('conectado')
+         |                                              ^
+      61 | }
+      62 |
+      63 | export async function login(page: Page, user: (typeof USERS)[keyof typeof USERS]) {
+        at openApp (D:\emprego\e2e\support.ts:60:46)
+        at D:\emprego\e2e\poc.spec.ts:204:5
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\poc-PoC-CP1-—-rotas-no-bui-3916d-nexistente-e-rota-protegida-desktop-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\poc-PoC-CP1-—-rotas-no-bui-3916d-nexistente-e-rota-protegida-desktop-chromium\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\poc-PoC-CP1-—-rotas-no-bui-3916d-nexistente-e-rota-protegida-desktop-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\poc-PoC-CP1-—-rotas-no-bui-3916d-nexistente-e-rota-protegida-desktop-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  15) [desktop-chromium] › e2e\poc.spec.ts:223:3 › PoC CP1 — rotas no build de produção › login com credenciais erradas mostra o erro da API 
+
+    Error: expect(locator).toHaveText(expected) failed
+
+    Locator:  getByTestId('rt-state')
+    Expected: "conectado"
+    Received: "desconectado"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveText" getByTestId('rt-state') with timeout 5000ms
+      - waiting for getByTestId('rt-state')
+        11 × locator resolved to <strong data-testid="rt-state">desconectado</strong>
+           - unexpected value "desconectado"
+
+
+       at support.ts:60
+
+      58 |   const sep = path.includes('?') ? '&' : '?'
+      59 |   await page.goto(`${path}${sep}scenario=${scenario}&reset=1`)
+    > 60 |   await expect(page.getByTestId('rt-state')).toHaveText('conectado')
+         |                                              ^
+      61 | }
+      62 |
+      63 | export async function login(page: Page, user: (typeof USERS)[keyof typeof USERS]) {
+        at openApp (D:\emprego\e2e\support.ts:60:46)
+        at D:\emprego\e2e\poc.spec.ts:224:5
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\poc-PoC-CP1-—-rotas-no-bui-7727d-rradas-mostra-o-erro-da-API-desktop-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\poc-PoC-CP1-—-rotas-no-bui-7727d-rradas-mostra-o-erro-da-API-desktop-chromium\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\poc-PoC-CP1-—-rotas-no-bui-7727d-rradas-mostra-o-erro-da-API-desktop-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\poc-PoC-CP1-—-rotas-no-bui-7727d-rradas-mostra-o-erro-da-API-desktop-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  15 failed
+    [desktop-chromium] › e2e\poc.spec.ts:10:3 › PoC CP1 — REST (Axios → MSW) + TanStack Query › 1. GET /api/nfts é respondido pelo service worker do MSW e renderizado via Query 
+    [desktop-chromium] › e2e\poc.spec.ts:21:3 › PoC CP1 — REST (Axios → MSW) + TanStack Query › 2. login (mutation) + criação de pedido (mutation idempotente) + consulta do pedido 
+    [desktop-chromium] › e2e\poc.spec.ts:31:3 › PoC CP1 — REST (Axios → MSW) + TanStack Query › 2b. clique repetido não duplica o pedido (mesma Idempotency-Key) 
+    [desktop-chromium] › e2e\poc.spec.ts:41:3 › PoC CP1 — Socket.IO (socket.io-client → MSW ws.link + @mswjs/socket.io-binding) › 3/4. nft.updated atualiza lista e detalhe; o REST reflete a mesma mudança após refresh 
+    [desktop-chromium] › e2e\poc.spec.ts:59:3 › PoC CP1 — Socket.IO (socket.io-client → MSW ws.link + @mswjs/socket.io-binding) › 5. order.updated (privado) leva o pedido de pendente a confirmado, sem polling 
+    [desktop-chromium] › e2e\poc.spec.ts:72:3 › PoC CP1 — Socket.IO (socket.io-client → MSW ws.link + @mswjs/socket.io-binding) › 5b. pedido recusado é terminal e não mostra confirmação 
+    [desktop-chromium] › e2e\poc.spec.ts:83:3 › PoC CP1 — Socket.IO (socket.io-client → MSW ws.link + @mswjs/socket.io-binding) › 6. handshake autenticado e isolamento: eventos e dados de Ana não chegam a Bruno 
+    [desktop-chromium] › e2e\poc.spec.ts:106:3 › PoC CP1 — Socket.IO (socket.io-client → MSW ws.link + @mswjs/socket.io-binding) › 6b. token inválido no handshake é recusado (CONNECT_ERROR) e a sessão cai para anônima 
+    [desktop-chromium] › e2e\poc.spec.ts:125:3 › PoC CP1 — Socket.IO (socket.io-client → MSW ws.link + @mswjs/socket.io-binding) › 7/8. desconexão com pedido pendente → reconexão → reconciliação pelo REST 
+    [desktop-chromium] › e2e\poc.spec.ts:149:3 › PoC CP1 — Socket.IO (socket.io-client → MSW ws.link + @mswjs/socket.io-binding) › 7b. refresh com pedido pendente recupera o estado; liquidação automática persiste 
+    [desktop-chromium] › e2e\poc.spec.ts:159:3 › PoC CP1 — Socket.IO (socket.io-client → MSW ws.link + @mswjs/socket.io-binding) › 9. eventos duplicados e antigos são descartados sem regredir o estado 
+    [desktop-chromium] › e2e\poc.spec.ts:174:3 › PoC CP1 — Socket.IO (socket.io-client → MSW ws.link + @mswjs/socket.io-binding) › heartbeat: a conexão sobrevive além do ping timeout do binding (30 s) 
+    [desktop-chromium] › e2e\poc.spec.ts:185:3 › PoC CP1 — cenários › reset integral: ?reset=1 restaura catálogo, pedidos e sessões do seed 
+    [desktop-chromium] › e2e\poc.spec.ts:203:3 › PoC CP1 — rotas no build de produção › 11. acesso direto, refresh, NFT inexistente, rota inexistente e rota protegida 
+    [desktop-chromium] › e2e\poc.spec.ts:223:3 › PoC CP1 — rotas no build de produção › login com credenciais erradas mostra o erro da API 
+EXIT=1
