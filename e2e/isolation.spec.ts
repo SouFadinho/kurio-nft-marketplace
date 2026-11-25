@@ -119,6 +119,10 @@ test.describe('isolamento entre usuários', () => {
     await openApp(page, '/')
     await signIn(page, USERS.ana)
     await expect(page.getByRole('button', { name: 'Favoritar Sage Nomad #009' })).toBeVisible()
+    // CP9.2: depois do login, a reconciliação do socket novo pode refazer consultas privadas em
+    // segundo plano (até 2 s depois). Espera a rede assentar: a premissa do teste é que o 401
+    // chegue pela ação de favoritar, não por uma requisição em segundo plano.
+    await page.waitForLoadState('networkidle')
     // Expira e clica no MESMO tick: sem isso, qualquer outra requisição privada em segundo plano
     // pode receber o 401 antes e abrir o login antes do clique (corrida do teste, não do app).
     await page.waitForFunction(() => window.__kurioMock !== undefined)

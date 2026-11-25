@@ -101,7 +101,12 @@ export function RealtimeProvider({ children }: { children: ReactNode }) {
       const firstFetchInFlight = queryClient
         .getQueryCache()
         .getAll()
-        .filter((q) => q.state.fetchStatus === 'fetching' && q.state.data === undefined && reconcilable(q.queryKey))
+        // Só dados públicos de NFT (preço e estoque, onde um nft.updated perdido deixaria o valor
+        // errado na tela). Dados privados em primeira busca não são refeitos em segundo plano: a
+        // janela é de milissegundos no login, o carrinho tem guarda de versão e reconciliação ao
+        // voltar à aba, e uma requisição privada extra disputaria o 401 de expiração com a ação do
+        // usuário (isolation.spec › expiração durante ação de favoritar).
+        .filter((q) => q.state.fetchStatus === 'fetching' && q.state.data === undefined && q.queryKey[0] === 'nfts')
       refetchWhenSettled(firstFetchInFlight)
       // Só as queries ativas (montadas) são refeitas; as demais ficam marcadas como stale.
       await Promise.all([
