@@ -42,7 +42,7 @@ for (let run = 1; run <= Number(runsArg); run++) {
   await cdp.send('Profiler.start')
   const t0 = Date.now()
   await page.goto(`http://localhost:4173${target}`)
-  await page.waitForFunction(() => [...document.images].some((i) => i.src.includes('/assets/nfts/') && i.complete && i.naturalWidth > 0 && i.getBoundingClientRect().top < innerHeight), null, { timeout: 60_000 })
+  await page.waitForFunction(() => [...globalThis.document.images].some((i) => i.src.includes("/assets/nfts/") && i.complete && i.naturalWidth > 0 && i.getBoundingClientRect().top < globalThis.innerHeight), null, { timeout: 60_000 })
   const elapsed = Date.now() - t0
   const { profile } = await cdp.send('Profiler.stop')
   fs.writeFileSync(path.join(out, `run-${run}.cpuprofile`), JSON.stringify(profile))

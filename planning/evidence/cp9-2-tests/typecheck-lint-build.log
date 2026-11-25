@@ -1,0 +1,6 @@
+typecheck exit 0
+lint exit 0
+dist/assets/vendor-BwIPlYHb.js                                   291.66 kB │ gzip: 92.58 kB
+
+[32m✓ built in 1.46s[39m
+build exit 0
