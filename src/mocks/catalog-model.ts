@@ -108,12 +108,20 @@ function filters(q: ListQuery): Record<'text' | 'category' | 'network' | 'price'
   }
 }
 
+// CP9.2 (perfil de CPU): `localeCompare` cria um colador ICU; na ordenação padrão ("recentes") isso
+// custava ~35 ms (CPU 4×) em toda listagem da abertura. Datas ISO ordenam corretamente por
+// comparação simples de strings (mesma ordem). O colador pt-BR dos nomes é criado só quando uma
+// ordenação por nome é usada.
+let nameCollator: Intl.Collator | undefined
+const byName = (a: DbNft, b: DbNft) => (nameCollator ??= new Intl.Collator('pt-BR')).compare(a.name, b.name)
+const newestFirst = (a: DbNft, b: DbNft) => (a.listedAt < b.listedAt ? 1 : a.listedAt > b.listedAt ? -1 : 0)
+
 const SORTERS: Record<CatalogSort, (a: DbNft, b: DbNft) => number> = {
-  recent: (a, b) => b.listedAt.localeCompare(a.listedAt),
-  'price-asc': (a, b) => Number(parseEth(a.price) - parseEth(b.price)) || a.name.localeCompare(b.name, 'pt-BR'),
-  'price-desc': (a, b) => Number(parseEth(b.price) - parseEth(a.price)) || a.name.localeCompare(b.name, 'pt-BR'),
-  popular: (a, b) => b.popularity - a.popularity || a.name.localeCompare(b.name, 'pt-BR'),
-  name: (a, b) => a.name.localeCompare(b.name, 'pt-BR'),
+  recent: newestFirst,
+  'price-asc': (a, b) => Number(parseEth(a.price) - parseEth(b.price)) || byName(a, b),
+  'price-desc': (a, b) => Number(parseEth(b.price) - parseEth(a.price)) || byName(a, b),
+  popular: (a, b) => b.popularity - a.popularity || byName(a, b),
+  name: byName,
 }
 
 export function listNfts(all: DbNft[], q: ListQuery): NftList {
