@@ -1,0 +1,180 @@
+
+Running 70 tests using 4 workers
+
+[1/70] [desktop-chromium] › e2e\a11y.spec.ts:94:3 › toque, reflow e notificações › mobile: alvos de toque com pelo menos 24×24 px (WCAG 2.5.8) nas telas principais
+[2/70] [desktop-chromium] › e2e\a11y.spec.ts:77:3 › auditoria das telas (axe WCAG 2.2 A/AA + estrutura) › Confirmação (pendente, confirmado, recusado) e Meus pedidos
+[3/70] [desktop-chromium] › e2e\a11y.spec.ts:49:3 › auditoria das telas (axe WCAG 2.2 A/AA + estrutura) › públicas: Início, Mercado, Detalhe, Login, Cadastro
+[4/70] [desktop-chromium] › e2e\a11y.spec.ts:57:3 › auditoria das telas (axe WCAG 2.2 A/AA + estrutura) › privadas: Perfil, Carteiras, Favoritos, Carrinho, Pagamento
+[5/70] [desktop-chromium] › e2e\a11y.spec.ts:136:3 › toque, reflow e notificações › reflow a 320 px (equivalente a 400% de zoom em 1280 px): sem rolagem horizontal
+[6/70] [desktop-chromium] › e2e\a11y.spec.ts:149:3 › toque, reflow e notificações › VIS-05: barra fixa do mobile não esconde o fim da página (detalhe, carrinho, pagamento)
+[7/70] [desktop-chromium] › e2e\a11y.spec.ts:171:3 › toque, reflow e notificações › notificação não cobre a ação fixa nem o total do mobile
+[8/70] [desktop-chromium] › e2e\a11y.spec.ts:49:3 › auditoria das telas (axe WCAG 2.2 A/AA + estrutura) › públicas: Início, Mercado, Detalhe, Login, Cadastro
+[9/70] [desktop-chromium] › e2e\a11y.spec.ts:57:3 › auditoria das telas (axe WCAG 2.2 A/AA + estrutura) › privadas: Perfil, Carteiras, Favoritos, Carrinho, Pagamento
+[10/70] [desktop-chromium] › e2e\a11y.spec.ts:77:3 › auditoria das telas (axe WCAG 2.2 A/AA + estrutura) › Confirmação (pendente, confirmado, recusado) e Meus pedidos
+[11/70] [desktop-chromium] › e2e\a11y.spec.ts:94:3 › toque, reflow e notificações › mobile: alvos de toque com pelo menos 24×24 px (WCAG 2.5.8) nas telas principais
+[12/70] [desktop-chromium] › e2e\a11y.spec.ts:136:3 › toque, reflow e notificações › reflow a 320 px (equivalente a 400% de zoom em 1280 px): sem rolagem horizontal
+[13/70] [desktop-chromium] › e2e\a11y.spec.ts:149:3 › toque, reflow e notificações › VIS-05: barra fixa do mobile não esconde o fim da página (detalhe, carrinho, pagamento)
+[14/70] [desktop-chromium] › e2e\a11y.spec.ts:171:3 › toque, reflow e notificações › notificação não cobre a ação fixa nem o total do mobile
+[15/70] [desktop-chromium] › e2e\a11y.spec.ts:49:3 › auditoria das telas (axe WCAG 2.2 A/AA + estrutura) › públicas: Início, Mercado, Detalhe, Login, Cadastro
+[16/70] [desktop-chromium] › e2e\a11y.spec.ts:57:3 › auditoria das telas (axe WCAG 2.2 A/AA + estrutura) › privadas: Perfil, Carteiras, Favoritos, Carrinho, Pagamento
+[17/70] [desktop-chromium] › e2e\a11y.spec.ts:77:3 › auditoria das telas (axe WCAG 2.2 A/AA + estrutura) › Confirmação (pendente, confirmado, recusado) e Meus pedidos
+[18/70] [desktop-chromium] › e2e\a11y.spec.ts:94:3 › toque, reflow e notificações › mobile: alvos de toque com pelo menos 24×24 px (WCAG 2.5.8) nas telas principais
+[19/70] [desktop-chromium] › e2e\a11y.spec.ts:136:3 › toque, reflow e notificações › reflow a 320 px (equivalente a 400% de zoom em 1280 px): sem rolagem horizontal
+[20/70] [desktop-chromium] › e2e\a11y.spec.ts:149:3 › toque, reflow e notificações › VIS-05: barra fixa do mobile não esconde o fim da página (detalhe, carrinho, pagamento)
+[21/70] [desktop-chromium] › e2e\a11y.spec.ts:171:3 › toque, reflow e notificações › notificação não cobre a ação fixa nem o total do mobile
+[22/70] [desktop-chromium] › e2e\a11y.spec.ts:49:3 › auditoria das telas (axe WCAG 2.2 A/AA + estrutura) › públicas: Início, Mercado, Detalhe, Login, Cadastro
+[23/70] [desktop-chromium] › e2e\a11y.spec.ts:57:3 › auditoria das telas (axe WCAG 2.2 A/AA + estrutura) › privadas: Perfil, Carteiras, Favoritos, Carrinho, Pagamento
+[24/70] [desktop-chromium] › e2e\a11y.spec.ts:77:3 › auditoria das telas (axe WCAG 2.2 A/AA + estrutura) › Confirmação (pendente, confirmado, recusado) e Meus pedidos
+[25/70] [desktop-chromium] › e2e\a11y.spec.ts:94:3 › toque, reflow e notificações › mobile: alvos de toque com pelo menos 24×24 px (WCAG 2.5.8) nas telas principais
+[26/70] [desktop-chromium] › e2e\a11y.spec.ts:136:3 › toque, reflow e notificações › reflow a 320 px (equivalente a 400% de zoom em 1280 px): sem rolagem horizontal
+[27/70] [desktop-chromium] › e2e\a11y.spec.ts:149:3 › toque, reflow e notificações › VIS-05: barra fixa do mobile não esconde o fim da página (detalhe, carrinho, pagamento)
+[28/70] [desktop-chromium] › e2e\a11y.spec.ts:171:3 › toque, reflow e notificações › notificação não cobre a ação fixa nem o total do mobile
+[29/70] [desktop-chromium] › e2e\a11y.spec.ts:49:3 › auditoria das telas (axe WCAG 2.2 A/AA + estrutura) › públicas: Início, Mercado, Detalhe, Login, Cadastro
+[30/70] [desktop-chromium] › e2e\a11y.spec.ts:57:3 › auditoria das telas (axe WCAG 2.2 A/AA + estrutura) › privadas: Perfil, Carteiras, Favoritos, Carrinho, Pagamento
+[31/70] [desktop-chromium] › e2e\a11y.spec.ts:77:3 › auditoria das telas (axe WCAG 2.2 A/AA + estrutura) › Confirmação (pendente, confirmado, recusado) e Meus pedidos
+[32/70] [desktop-chromium] › e2e\a11y.spec.ts:94:3 › toque, reflow e notificações › mobile: alvos de toque com pelo menos 24×24 px (WCAG 2.5.8) nas telas principais
+[33/70] [desktop-chromium] › e2e\a11y.spec.ts:136:3 › toque, reflow e notificações › reflow a 320 px (equivalente a 400% de zoom em 1280 px): sem rolagem horizontal
+[34/70] [desktop-chromium] › e2e\a11y.spec.ts:149:3 › toque, reflow e notificações › VIS-05: barra fixa do mobile não esconde o fim da página (detalhe, carrinho, pagamento)
+[35/70] [desktop-chromium] › e2e\a11y.spec.ts:171:3 › toque, reflow e notificações › notificação não cobre a ação fixa nem o total do mobile
+[36/70] [mobile-chromium] › e2e\a11y.spec.ts:49:3 › auditoria das telas (axe WCAG 2.2 A/AA + estrutura) › públicas: Início, Mercado, Detalhe, Login, Cadastro
+  1) [desktop-chromium] › e2e\a11y.spec.ts:49:3 › auditoria das telas (axe WCAG 2.2 A/AA + estrutura) › públicas: Início, Mercado, Detalhe, Login, Cadastro 
+
+    Test timeout of 30000ms exceeded.
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\a11y-auditoria-das-telas-a-22c18-cado-Detalhe-Login-Cadastro-desktop-chromium-repeat4\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\a11y-auditoria-das-telas-a-22c18-cado-Detalhe-Login-Cadastro-desktop-chromium-repeat4\test-failed-2.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\a11y-auditoria-das-telas-a-22c18-cado-Detalhe-Login-Cadastro-desktop-chromium-repeat4\error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\a11y-auditoria-das-telas-a-22c18-cado-Detalhe-Login-Cadastro-desktop-chromium-repeat4\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\a11y-auditoria-das-telas-a-22c18-cado-Detalhe-Login-Cadastro-desktop-chromium-repeat4\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+  2) [desktop-chromium] › e2e\a11y.spec.ts:57:3 › auditoria das telas (axe WCAG 2.2 A/AA + estrutura) › privadas: Perfil, Carteiras, Favoritos, Carrinho, Pagamento 
+
+    Test timeout of 30000ms exceeded.
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\a11y-auditoria-das-telas-a-69c1a-avoritos-Carrinho-Pagamento-desktop-chromium-repeat4\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\a11y-auditoria-das-telas-a-69c1a-avoritos-Carrinho-Pagamento-desktop-chromium-repeat4\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\a11y-auditoria-das-telas-a-69c1a-avoritos-Carrinho-Pagamento-desktop-chromium-repeat4\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\a11y-auditoria-das-telas-a-69c1a-avoritos-Carrinho-Pagamento-desktop-chromium-repeat4\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[37/70] [mobile-chromium] › e2e\a11y.spec.ts:57:3 › auditoria das telas (axe WCAG 2.2 A/AA + estrutura) › privadas: Perfil, Carteiras, Favoritos, Carrinho, Pagamento
+  3) [desktop-chromium] › e2e\a11y.spec.ts:77:3 › auditoria das telas (axe WCAG 2.2 A/AA + estrutura) › Confirmação (pendente, confirmado, recusado) e Meus pedidos 
+
+    Test timeout of 30000ms exceeded.
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\a11y-auditoria-das-telas-a-5a4d1-ado-recusado-e-Meus-pedidos-desktop-chromium-repeat4\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\a11y-auditoria-das-telas-a-5a4d1-ado-recusado-e-Meus-pedidos-desktop-chromium-repeat4\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\a11y-auditoria-das-telas-a-5a4d1-ado-recusado-e-Meus-pedidos-desktop-chromium-repeat4\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\a11y-auditoria-das-telas-a-5a4d1-ado-recusado-e-Meus-pedidos-desktop-chromium-repeat4\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[38/70] [mobile-chromium] › e2e\a11y.spec.ts:77:3 › auditoria das telas (axe WCAG 2.2 A/AA + estrutura) › Confirmação (pendente, confirmado, recusado) e Meus pedidos
+[39/70] [mobile-chromium] › e2e\a11y.spec.ts:94:3 › toque, reflow e notificações › mobile: alvos de toque com pelo menos 24×24 px (WCAG 2.5.8) nas telas principais
+[40/70] [mobile-chromium] › e2e\a11y.spec.ts:136:3 › toque, reflow e notificações › reflow a 320 px (equivalente a 400% de zoom em 1280 px): sem rolagem horizontal
+[41/70] [mobile-chromium] › e2e\a11y.spec.ts:149:3 › toque, reflow e notificações › VIS-05: barra fixa do mobile não esconde o fim da página (detalhe, carrinho, pagamento)
+[42/70] [mobile-chromium] › e2e\a11y.spec.ts:171:3 › toque, reflow e notificações › notificação não cobre a ação fixa nem o total do mobile
+[43/70] [mobile-chromium] › e2e\a11y.spec.ts:57:3 › auditoria das telas (axe WCAG 2.2 A/AA + estrutura) › privadas: Perfil, Carteiras, Favoritos, Carrinho, Pagamento
+[44/70] [mobile-chromium] › e2e\a11y.spec.ts:49:3 › auditoria das telas (axe WCAG 2.2 A/AA + estrutura) › públicas: Início, Mercado, Detalhe, Login, Cadastro
+  4) [mobile-chromium] › e2e\a11y.spec.ts:77:3 › auditoria das telas (axe WCAG 2.2 A/AA + estrutura) › Confirmação (pendente, confirmado, recusado) e Meus pedidos 
+
+    Test timeout of 30000ms exceeded.
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\a11y-auditoria-das-telas-a-5a4d1-ado-recusado-e-Meus-pedidos-mobile-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\a11y-auditoria-das-telas-a-5a4d1-ado-recusado-e-Meus-pedidos-mobile-chromium\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\a11y-auditoria-das-telas-a-5a4d1-ado-recusado-e-Meus-pedidos-mobile-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\a11y-auditoria-das-telas-a-5a4d1-ado-recusado-e-Meus-pedidos-mobile-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+  5) [mobile-chromium] › e2e\a11y.spec.ts:57:3 › auditoria das telas (axe WCAG 2.2 A/AA + estrutura) › privadas: Perfil, Carteiras, Favoritos, Carrinho, Pagamento 
+
+    Test timeout of 30000ms exceeded.
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\a11y-auditoria-das-telas-a-69c1a-avoritos-Carrinho-Pagamento-mobile-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\a11y-auditoria-das-telas-a-69c1a-avoritos-Carrinho-Pagamento-mobile-chromium\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\a11y-auditoria-das-telas-a-69c1a-avoritos-Carrinho-Pagamento-mobile-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\a11y-auditoria-das-telas-a-69c1a-avoritos-Carrinho-Pagamento-mobile-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[45/70] [mobile-chromium] › e2e\a11y.spec.ts:94:3 › toque, reflow e notificações › mobile: alvos de toque com pelo menos 24×24 px (WCAG 2.5.8) nas telas principais
+[46/70] [mobile-chromium] › e2e\a11y.spec.ts:77:3 › auditoria das telas (axe WCAG 2.2 A/AA + estrutura) › Confirmação (pendente, confirmado, recusado) e Meus pedidos
+[47/70] [mobile-chromium] › e2e\a11y.spec.ts:136:3 › toque, reflow e notificações › reflow a 320 px (equivalente a 400% de zoom em 1280 px): sem rolagem horizontal
+[48/70] [mobile-chromium] › e2e\a11y.spec.ts:149:3 › toque, reflow e notificações › VIS-05: barra fixa do mobile não esconde o fim da página (detalhe, carrinho, pagamento)
+[49/70] [mobile-chromium] › e2e\a11y.spec.ts:171:3 › toque, reflow e notificações › notificação não cobre a ação fixa nem o total do mobile
+[50/70] [mobile-chromium] › e2e\a11y.spec.ts:49:3 › auditoria das telas (axe WCAG 2.2 A/AA + estrutura) › públicas: Início, Mercado, Detalhe, Login, Cadastro
+[51/70] [mobile-chromium] › e2e\a11y.spec.ts:57:3 › auditoria das telas (axe WCAG 2.2 A/AA + estrutura) › privadas: Perfil, Carteiras, Favoritos, Carrinho, Pagamento
+[52/70] [mobile-chromium] › e2e\a11y.spec.ts:77:3 › auditoria das telas (axe WCAG 2.2 A/AA + estrutura) › Confirmação (pendente, confirmado, recusado) e Meus pedidos
+[53/70] [mobile-chromium] › e2e\a11y.spec.ts:94:3 › toque, reflow e notificações › mobile: alvos de toque com pelo menos 24×24 px (WCAG 2.5.8) nas telas principais
+[54/70] [mobile-chromium] › e2e\a11y.spec.ts:136:3 › toque, reflow e notificações › reflow a 320 px (equivalente a 400% de zoom em 1280 px): sem rolagem horizontal
+[55/70] [mobile-chromium] › e2e\a11y.spec.ts:149:3 › toque, reflow e notificações › VIS-05: barra fixa do mobile não esconde o fim da página (detalhe, carrinho, pagamento)
+[56/70] [mobile-chromium] › e2e\a11y.spec.ts:171:3 › toque, reflow e notificações › notificação não cobre a ação fixa nem o total do mobile
+[57/70] [mobile-chromium] › e2e\a11y.spec.ts:57:3 › auditoria das telas (axe WCAG 2.2 A/AA + estrutura) › privadas: Perfil, Carteiras, Favoritos, Carrinho, Pagamento
+[58/70] [mobile-chromium] › e2e\a11y.spec.ts:49:3 › auditoria das telas (axe WCAG 2.2 A/AA + estrutura) › públicas: Início, Mercado, Detalhe, Login, Cadastro
+[59/70] [mobile-chromium] › e2e\a11y.spec.ts:77:3 › auditoria das telas (axe WCAG 2.2 A/AA + estrutura) › Confirmação (pendente, confirmado, recusado) e Meus pedidos
+[60/70] [mobile-chromium] › e2e\a11y.spec.ts:94:3 › toque, reflow e notificações › mobile: alvos de toque com pelo menos 24×24 px (WCAG 2.5.8) nas telas principais
+[61/70] [mobile-chromium] › e2e\a11y.spec.ts:136:3 › toque, reflow e notificações › reflow a 320 px (equivalente a 400% de zoom em 1280 px): sem rolagem horizontal
+[62/70] [mobile-chromium] › e2e\a11y.spec.ts:149:3 › toque, reflow e notificações › VIS-05: barra fixa do mobile não esconde o fim da página (detalhe, carrinho, pagamento)
+[63/70] [mobile-chromium] › e2e\a11y.spec.ts:171:3 › toque, reflow e notificações › notificação não cobre a ação fixa nem o total do mobile
+[64/70] [mobile-chromium] › e2e\a11y.spec.ts:49:3 › auditoria das telas (axe WCAG 2.2 A/AA + estrutura) › públicas: Início, Mercado, Detalhe, Login, Cadastro
+[65/70] [mobile-chromium] › e2e\a11y.spec.ts:57:3 › auditoria das telas (axe WCAG 2.2 A/AA + estrutura) › privadas: Perfil, Carteiras, Favoritos, Carrinho, Pagamento
+[66/70] [mobile-chromium] › e2e\a11y.spec.ts:77:3 › auditoria das telas (axe WCAG 2.2 A/AA + estrutura) › Confirmação (pendente, confirmado, recusado) e Meus pedidos
+[67/70] [mobile-chromium] › e2e\a11y.spec.ts:94:3 › toque, reflow e notificações › mobile: alvos de toque com pelo menos 24×24 px (WCAG 2.5.8) nas telas principais
+[68/70] [mobile-chromium] › e2e\a11y.spec.ts:136:3 › toque, reflow e notificações › reflow a 320 px (equivalente a 400% de zoom em 1280 px): sem rolagem horizontal
+[69/70] [mobile-chromium] › e2e\a11y.spec.ts:149:3 › toque, reflow e notificações › VIS-05: barra fixa do mobile não esconde o fim da página (detalhe, carrinho, pagamento)
+[70/70] [mobile-chromium] › e2e\a11y.spec.ts:171:3 › toque, reflow e notificações › notificação não cobre a ação fixa nem o total do mobile
+  5 failed
+    [desktop-chromium] › e2e\a11y.spec.ts:49:3 › auditoria das telas (axe WCAG 2.2 A/AA + estrutura) › públicas: Início, Mercado, Detalhe, Login, Cadastro 
+    [desktop-chromium] › e2e\a11y.spec.ts:57:3 › auditoria das telas (axe WCAG 2.2 A/AA + estrutura) › privadas: Perfil, Carteiras, Favoritos, Carrinho, Pagamento 
+    [desktop-chromium] › e2e\a11y.spec.ts:77:3 › auditoria das telas (axe WCAG 2.2 A/AA + estrutura) › Confirmação (pendente, confirmado, recusado) e Meus pedidos 
+    [mobile-chromium] › e2e\a11y.spec.ts:57:3 › auditoria das telas (axe WCAG 2.2 A/AA + estrutura) › privadas: Perfil, Carteiras, Favoritos, Carrinho, Pagamento 
+    [mobile-chromium] › e2e\a11y.spec.ts:77:3 › auditoria das telas (axe WCAG 2.2 A/AA + estrutura) › Confirmação (pendente, confirmado, recusado) e Meus pedidos 
+  15 skipped
+  50 passed (5.4m)
