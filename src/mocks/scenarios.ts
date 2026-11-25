@@ -25,6 +25,7 @@ export type RouteKey =
   | 'quote'
   | 'wallet.connect'
   | 'orders.create'
+  | 'orders.read'
 
 export interface FailureRule {
   /**
@@ -107,6 +108,11 @@ export const SCENARIOS = {
   'order-timeout': { ...base, settlement: 'manual', failures: { 'orders.create': { kind: 'timeout-after-commit', times: 1 } } },
   /** Criação lenta (1,5 s) e liquidação manual: estado "enviando" observável e cliques repetidos. */
   'slow-order': { ...base, settlement: 'manual', routeLatency: { 'orders.create': () => 1_500 } },
+  // ---------- CP6: pedidos ----------
+  /** Leitura do pedido retida até o teste liberar (carregamento da tela do pedido). */
+  'hold-order-read': { ...base, settlement: 'manual', holdRoutes: ['orders.read'] },
+  /** Leitura do pedido falha até `recover('orders.read')` (erro + recuperação). */
+  'order-read-error': { ...base, settlement: 'manual', failures: { 'orders.read': { kind: 'http-503', times: Infinity } } },
 } satisfies Record<string, ScenarioConfig>
 
 export type ScenarioName = keyof typeof SCENARIOS

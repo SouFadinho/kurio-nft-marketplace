@@ -28,6 +28,7 @@ import { toSocketIo } from '@mswjs/socket.io-binding'
 import type { NftUpdatedEvent, OrderUpdatedEvent, RealtimeEvent } from '@/api/contracts'
 import { db } from '../db'
 import { resolveSession } from '../session'
+import { isLeader, onBus, publish, rpc } from '../cluster'
 
 type SocketIo = ReturnType<typeof toSocketIo>
 type RawClient = Parameters<typeof toSocketIo>[0]['client']
@@ -102,7 +103,7 @@ export const realtimeHandler = ws.link(socketUrl()).addEventListener('connection
   const conn: Connection = { id: client.id, state: 'pending', token: null, userId: null, io: toSocketIo(connection), client }
   connections.set(conn.id, conn)
 
-  client.addEventListener('message', (event) => {
+  client.addEventListener('message', async (event) => {
     if (conn.state !== 'pending') return
     const packet = parseConnectPacket(event.data)
     if (!packet) return
@@ -113,7 +114,10 @@ export const realtimeHandler = ws.link(socketUrl()).addEventListener('connection
       rawSend(`40${JSON.stringify({ sid: conn.id })}`)
       return
     }
-    const session = resolveSession(packet.token)
+    // O banco de sessões é do líder do cluster (PEND-03): seguidoras consultam por RPC.
+    const token = packet.token
+    const session = isLeader() ? resolveSession(token) : await rpc<{ userId: string } | null>('resolveSession', token).catch(() => null)
+    if (conn.state !== 'pending') return
     if (!session) {
       conn.state = 'rejected'
       stats.rejected += 1
@@ -140,16 +144,32 @@ function send(conn: Connection, event: RealtimeEvent) {
   conn.io.client.emit(event.type, event)
 }
 
-/** Evento público (ex.: nft.updated): conexões já aceitas (anônimas ou autenticadas). */
-export function broadcast(event: RealtimeEvent) {
-  lastEmitted = { event, target: 'all' }
-  for (const conn of connections.values()) if (isOpen(conn)) send(conn, event)
+/** Entrega às conexões DESTA aba. Público: anônimas e autenticadas; privado: só as do dono. */
+function deliver(target: 'all' | string, event: RealtimeEvent) {
+  lastEmitted = { event, target }
+  for (const conn of connections.values()) {
+    if (target === 'all' ? isOpen(conn) : conn.state === 'authenticated' && conn.userId === target) send(conn, event)
+  }
 }
 
-/** Evento privado (ex.: order.updated): só conexões AUTENTICADAS do dono. */
+// Eventos de domínio publicados pelo líder chegam ao servidor simulado de cada aba (PEND-03).
+onBus('event', ({ target, event }: { target: string; event: RealtimeEvent }) => deliver(target, event))
+onBus('drop-token', (token: string) => closeToken(token))
+
+/** Evento público (ex.: nft.updated): conexões já aceitas (anônimas ou autenticadas), em todas as abas. */
+export function broadcast(event: RealtimeEvent) {
+  deliver('all', event)
+  publish('event', { target: 'all', event })
+}
+
+/** Evento privado (ex.: order.updated): só conexões AUTENTICADAS do dono, em todas as abas. */
 export function emitToUser(userId: string, event: RealtimeEvent) {
-  lastEmitted = { event, target: userId }
-  for (const conn of connections.values()) if (conn.state === 'authenticated' && conn.userId === userId) send(conn, event)
+  deliver(userId, event)
+  publish('event', { target: userId, event })
+}
+
+function closeToken(token: string) {
+  for (const conn of [...connections.values()]) if (conn.token === token) conn.client.close()
 }
 
 export const realtimeControl = {
@@ -162,17 +182,17 @@ export const realtimeControl = {
     if (!value) for (const conn of [...connections.values()]) conn.client.close()
   },
 
-  /** Revoga conexões de um token (logout ou sessão expirada). */
+  /** Revoga conexões de um token (logout ou sessão expirada), em todas as abas. */
   dropToken(token: string) {
-    for (const conn of [...connections.values()]) if (conn.token === token) conn.client.close()
+    closeToken(token)
+    publish('drop-token', token)
   },
 
-  /** Reenvia exatamente o último evento (mesmo eventId): teste de duplicata. */
+  /** Reenvia exatamente o último evento recebido por ESTA aba (mesmo eventId): teste de duplicata. */
   replayLast() {
     if (!lastEmitted) return null
     const { event, target } = lastEmitted
-    if (target === 'all') broadcast(event)
-    else emitToUser(target, event)
+    deliver(target, event)
     return event
   },
 

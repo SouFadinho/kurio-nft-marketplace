@@ -11,8 +11,8 @@ import { buildCatalog, type CatalogNft } from './fixtures/catalog'
 import { hashPassword } from './crypto'
 import { SCENARIOS, type ScenarioConfig, type ScenarioName } from './scenarios'
 
-// v5 (CP5): carrinhos, cupons, cotações e conexões de carteira; estados anteriores são descartados.
-const STORAGE_KEY = 'kurio:mock:db:v5'
+// v6 (CP6): reserva com prazo, snapshot do recibo e relógio controlável; estados anteriores são descartados.
+const STORAGE_KEY = 'kurio:mock:db:v6'
 
 export interface DbUser {
   id: string
@@ -47,7 +47,9 @@ export interface DbNft extends CatalogNft {
 }
 
 export interface DbState {
-  schema: 5
+  schema: 6
+  /** Avanço do relógio simulado (ms), controlado pelos testes (`advanceClock`). Compartilhado entre abas. */
+  clockOffsetMs: number
   scenario: ScenarioName
   seq: number
   users: DbUser[]
@@ -128,7 +130,8 @@ async function seed(scenario: ScenarioName): Promise<DbState> {
     }),
   )
   return {
-    schema: 5,
+    schema: 6,
+    clockOffsetMs: 0,
     scenario,
     seq: 0,
     users,
@@ -154,7 +157,7 @@ export const db = {
       try {
         const raw = localStorage.getItem(STORAGE_KEY)
         const parsed = raw ? (JSON.parse(raw) as DbState) : null
-        if (parsed?.schema === 5) {
+        if (parsed?.schema === 6) {
           state = parsed
           if (options.scenario) state.scenario = options.scenario
           persist()
@@ -192,4 +195,12 @@ export const db = {
   nextId(prefix: string): string {
     return db.commit((s) => `${prefix}_${String(++s.seq).padStart(6, '0')}`)
   },
+}
+
+/**
+ * Relógio da simulação: tempo real + avanço controlado pelos testes. Usado nas regras que
+ * dependem de prazo (reserva de estoque), para testar expiração sem esperar minutos (CP6).
+ */
+export function now(): number {
+  return Date.now() + (state?.clockOffsetMs ?? 0)
 }

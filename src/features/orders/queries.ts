@@ -1,7 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { http } from '@/api/http'
 import { queryKeys } from '@/api/queryKeys'
-import { Order, type CreateOrderRequest } from '@/api/contracts'
+import { ExplorerTx, Order, OrderList, type CreateOrderRequest } from '@/api/contracts'
 import { useClientSession } from '@/features/auth/queries'
 
 export function useOrder(orderId: string) {
@@ -42,5 +42,24 @@ export function useCreateOrder() {
       // exact: a lista; sem prefixo, para não refazer a leitura do pedido recém-gravado no cache.
       void queryClient.invalidateQueries({ queryKey: queryKeys.me.orders(session.userId), exact: true })
     },
+  })
+}
+
+/** Histórico de pedidos do usuário (mais recentes primeiro; ordem dada pela API). */
+export function useOrders() {
+  const session = useClientSession()
+  return useQuery({
+    queryKey: queryKeys.me.orders(session?.userId ?? 'anonymous'),
+    enabled: !!session,
+    queryFn: async ({ signal }) => OrderList.parse((await http.get('/orders', { signal })).data).items,
+  })
+}
+
+/** Explorador SIMULADO: dados públicos de uma transação confirmada (demonstração). */
+export function useExplorerTx(hash: string) {
+  return useQuery({
+    queryKey: ['explorer', hash],
+    queryFn: async ({ signal }) => ExplorerTx.parse((await http.get(`/explorer/tx/${encodeURIComponent(hash)}`, { signal })).data),
+    staleTime: Infinity,
   })
 }

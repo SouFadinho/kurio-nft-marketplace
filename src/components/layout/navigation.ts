@@ -54,6 +54,8 @@ export const BENEFITS = [
 export const ACCOUNT_NAV = [
   { key: 'profile', label: 'Dados do perfil', to: '/perfil', icon: 'user' },
   { key: 'wallets', label: 'Carteiras', to: '/perfil/carteiras', icon: 'wallet' },
+  // CP6: histórico de pedidos (sem frame no Figma; derivado do menu de conta).
+  { key: 'orders', label: 'Meus pedidos', to: '/pedidos', icon: 'receipt' },
   { key: 'activity', label: 'Atividade', unavailable: true, icon: 'activity' },
   { key: 'wishlist', label: 'Lista de interesse', to: '/favoritos', icon: 'heart' },
   { key: 'offers', label: 'Ofertas', unavailable: true, icon: 'tag' },

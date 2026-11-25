@@ -14,6 +14,7 @@ const released = new Set<RouteKey>()
 export function resetFailures() {
   used.clear()
   released.clear()
+  heldOnDemand.clear()
   for (const waiters of held.values()) waiters.forEach((w) => w())
   held.clear()
 }
@@ -23,9 +24,24 @@ export function recoverRoute(route: RouteKey) {
   used.set(route, Infinity)
 }
 
-/** Libera as respostas retidas de uma rota (cenários com `holdRoutes`). */
+/** Rotas retidas sob demanda (CP6: `__kurioMock.hold(rota)`), além das do cenário. */
+const heldOnDemand = new Set<RouteKey>()
+
+/** Começa a reter as respostas de uma rota até `releaseRoute` (testes de corrida determinísticos). */
+export function holdRoute(route: RouteKey) {
+  released.delete(route)
+  heldOnDemand.add(route)
+}
+
+/** A rota está retendo respostas agora? (handlers usam para fotografar o estado ANTES de reter). */
+export function isHeld(route: RouteKey) {
+  return (heldOnDemand.has(route) || !!db.scenario().holdRoutes?.includes(route)) && !released.has(route)
+}
+
+/** Libera as respostas retidas de uma rota (cenários com `holdRoutes` ou `holdRoute`). */
 export function releaseRoute(route: RouteKey) {
   released.add(route)
+  heldOnDemand.delete(route)
   held.get(route)?.forEach((w) => w())
   held.delete(route)
 }
@@ -34,7 +50,7 @@ export function releaseRoute(route: RouteKey) {
 export async function routeDelay(route: RouteKey, url: URL) {
   const scenario = db.scenario()
   const extra = scenario.routeLatency?.[route]?.(url) ?? 0
-  if (scenario.holdRoutes?.includes(route) && !released.has(route)) {
+  if (isHeld(route)) {
     await new Promise<void>((resolve) => held.set(route, [...(held.get(route) ?? []), resolve]))
   }
   await delay(scenario.latencyMs + extra)

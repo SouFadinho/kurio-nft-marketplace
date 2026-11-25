@@ -26,10 +26,12 @@ import { Route as DemoComponentesRouteImport } from './routes/demo.componentes'
 import { Route as DemoContaRouteImport } from './routes/demo.conta'
 import { Route as DemoPocRouteImport } from './routes/demo.poc'
 import { Route as NftNftIdRouteImport } from './routes/nft.$nftId'
+import { Route as PedidosIndexRouteImport } from './routes/pedidos.index'
 import { Route as PedidosOrderIdRouteImport } from './routes/pedidos.$orderId'
 import { Route as PerfilIndexRouteImport } from './routes/perfil.index'
 import { Route as PerfilCarteirasRouteImport } from './routes/perfil.carteiras'
 import { Route as DemoPocIndexRouteImport } from './routes/demo.poc.index'
+import { Route as ExploradorTxHashRouteImport } from './routes/explorador.tx.$hash'
 import { Route as DemoPocNftNftIdRouteImport } from './routes/demo.poc.nft.$nftId'
 import { Route as DemoPocPedidosOrderIdRouteImport } from './routes/demo.poc.pedidos.$orderId'
 
@@ -118,6 +120,11 @@ const NftNftIdRoute = NftNftIdRouteImport.update({
   path: '/nft/$nftId',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PedidosIndexRoute = PedidosIndexRouteImport.update({
+  id: '/pedidos/',
+  path: '/pedidos/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PedidosOrderIdRoute = PedidosOrderIdRouteImport.update({
   id: '/pedidos/$orderId',
   path: '/pedidos/$orderId',
@@ -137,6 +144,11 @@ const DemoPocIndexRoute = DemoPocIndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => DemoPocRoute,
+} as any)
+const ExploradorTxHashRoute = ExploradorTxHashRouteImport.update({
+  id: '/explorador/tx/$hash',
+  path: '/explorador/tx/$hash',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const DemoPocNftNftIdRoute = DemoPocNftNftIdRouteImport.update({
   id: '/nft/$nftId',
@@ -169,7 +181,9 @@ export interface FileRoutesByFullPath {
   '/pedidos/$orderId': typeof PedidosOrderIdRoute
   '/perfil/carteiras': typeof PerfilCarteirasRoute
   '/demo/': typeof DemoIndexRoute
+  '/pedidos/': typeof PedidosIndexRoute
   '/perfil/': typeof PerfilIndexRoute
+  '/explorador/tx/$hash': typeof ExploradorTxHashRoute
   '/demo/poc/': typeof DemoPocIndexRoute
   '/demo/poc/nft/$nftId': typeof DemoPocNftNftIdRoute
   '/demo/poc/pedidos/$orderId': typeof DemoPocPedidosOrderIdRoute
@@ -191,7 +205,9 @@ export interface FileRoutesByTo {
   '/pedidos/$orderId': typeof PedidosOrderIdRoute
   '/perfil/carteiras': typeof PerfilCarteirasRoute
   '/demo': typeof DemoIndexRoute
+  '/pedidos': typeof PedidosIndexRoute
   '/perfil': typeof PerfilIndexRoute
+  '/explorador/tx/$hash': typeof ExploradorTxHashRoute
   '/demo/poc': typeof DemoPocIndexRoute
   '/demo/poc/nft/$nftId': typeof DemoPocNftNftIdRoute
   '/demo/poc/pedidos/$orderId': typeof DemoPocPedidosOrderIdRoute
@@ -217,7 +233,9 @@ export interface FileRoutesById {
   '/pedidos/$orderId': typeof PedidosOrderIdRoute
   '/perfil/carteiras': typeof PerfilCarteirasRoute
   '/demo/': typeof DemoIndexRoute
+  '/pedidos/': typeof PedidosIndexRoute
   '/perfil/': typeof PerfilIndexRoute
+  '/explorador/tx/$hash': typeof ExploradorTxHashRoute
   '/demo/poc/': typeof DemoPocIndexRoute
   '/demo/poc/nft/$nftId': typeof DemoPocNftNftIdRoute
   '/demo/poc/pedidos/$orderId': typeof DemoPocPedidosOrderIdRoute
@@ -244,7 +262,9 @@ export interface FileRouteTypes {
     | '/pedidos/$orderId'
     | '/perfil/carteiras'
     | '/demo/'
+    | '/pedidos/'
     | '/perfil/'
+    | '/explorador/tx/$hash'
     | '/demo/poc/'
     | '/demo/poc/nft/$nftId'
     | '/demo/poc/pedidos/$orderId'
@@ -266,7 +286,9 @@ export interface FileRouteTypes {
     | '/pedidos/$orderId'
     | '/perfil/carteiras'
     | '/demo'
+    | '/pedidos'
     | '/perfil'
+    | '/explorador/tx/$hash'
     | '/demo/poc'
     | '/demo/poc/nft/$nftId'
     | '/demo/poc/pedidos/$orderId'
@@ -291,7 +313,9 @@ export interface FileRouteTypes {
     | '/pedidos/$orderId'
     | '/perfil/carteiras'
     | '/demo/'
+    | '/pedidos/'
     | '/perfil/'
+    | '/explorador/tx/$hash'
     | '/demo/poc/'
     | '/demo/poc/nft/$nftId'
     | '/demo/poc/pedidos/$orderId'
@@ -311,6 +335,8 @@ export interface RootRouteChildren {
   PerfilRoute: typeof PerfilRouteWithChildren
   NftNftIdRoute: typeof NftNftIdRoute
   PedidosOrderIdRoute: typeof PedidosOrderIdRoute
+  PedidosIndexRoute: typeof PedidosIndexRoute
+  ExploradorTxHashRoute: typeof ExploradorTxHashRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -434,6 +460,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof NftNftIdRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/pedidos/': {
+      id: '/pedidos/'
+      path: '/pedidos'
+      fullPath: '/pedidos/'
+      preLoaderRoute: typeof PedidosIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/pedidos/$orderId': {
       id: '/pedidos/$orderId'
       path: '/pedidos/$orderId'
@@ -461,6 +494,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/demo/poc/'
       preLoaderRoute: typeof DemoPocIndexRouteImport
       parentRoute: typeof DemoPocRoute
+    }
+    '/explorador/tx/$hash': {
+      id: '/explorador/tx/$hash'
+      path: '/explorador/tx/$hash'
+      fullPath: '/explorador/tx/$hash'
+      preLoaderRoute: typeof ExploradorTxHashRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/demo/poc/nft/$nftId': {
       id: '/demo/poc/nft/$nftId'
@@ -539,6 +579,8 @@ const rootRouteChildren: RootRouteChildren = {
   PerfilRoute: PerfilRouteWithChildren,
   NftNftIdRoute: NftNftIdRoute,
   PedidosOrderIdRoute: PedidosOrderIdRoute,
+  PedidosIndexRoute: PedidosIndexRoute,
+  ExploradorTxHashRoute: ExploradorTxHashRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

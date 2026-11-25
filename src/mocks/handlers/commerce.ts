@@ -32,11 +32,11 @@ import {
   type Quote,
   type WalletConnection,
 } from '@/api/contracts'
-import { db, type DbCart, type DbNft, type DbOrder, type DbState } from '../db'
-import { maybeFail, routeDelay, takeAfterCommitFailure } from '../failures'
+import { db, now, type DbCart, type DbNft, type DbOrder, type DbState } from '../db'
+import { isHeld, maybeFail, routeDelay, takeAfterCommitFailure } from '../failures'
 import { priceCart, type Pricing } from '../pricing'
 import { mergeCartLines } from '../cart-model'
-import { scheduleSettlement, updateNft } from '../services'
+import { RESERVATION_TTL_MS, scheduleSettlement, updateNft } from '../services'
 import { apiError, bearer, requireSession } from '../session'
 import type { DbSession } from '../db'
 
@@ -164,12 +164,16 @@ function toQuote(id: string, cartVersion: number, network: Network, pricing: Pri
 export const commerceHandlers = [
   // ---------- Carrinho ----------
   http.get('/api/cart', async ({ request }) => {
+    // Teste de corrida (R-44): com a rota retida, o carrinho é FOTOGRAFADO antes de reter (uma
+    // leitura que saiu antes de uma escrita e chega depois dela).
+    const early = ownerOf(request)
+    const snapshot = isHeld('cart.read') && !(early instanceof Response) ? publicCart(early) : undefined
     await routeDelay('cart.read', new URL(request.url))
     const owner = ownerOf(request)
     if (owner instanceof Response) return owner
     const failure = maybeFail('cart.read')
     if (failure) return failure
-    return HttpResponse.json(publicCart(owner))
+    return HttpResponse.json(snapshot ?? publicCart(owner))
   }),
 
   http.post('/api/cart/items', async ({ request }) => {
@@ -355,12 +359,17 @@ export async function createCheckoutOrder(
 
   // Carteira: cadastrada (do próprio usuário) ou informada para esta compra.
   let address: string
+  let walletLabel: string
   if (body.wallet.kind === 'saved') {
     const walletId = body.wallet.walletId
     const wallet = (s.wallets[session.userId] ?? []).find((w) => w.id === walletId)
     if (!wallet) return apiError(422, { code: 'VALIDATION_ERROR', message: 'Carteira não encontrada.', details: { wallet: 'Selecione uma das suas carteiras.' } })
     address = wallet.address
-  } else address = body.wallet.address
+    walletLabel = wallet.ens ? `${wallet.nickname} (${wallet.ens}.eth)` : wallet.nickname
+  } else {
+    address = body.wallet.address
+    walletLabel = 'Carteira informada no pagamento'
+  }
   if (!networksForAddress(address).includes(body.network)) {
     return apiError(422, { code: 'VALIDATION_ERROR', message: 'Rede incompatível com a carteira.', details: { network: 'Rede incompatível com a carteira.' } })
   }
@@ -375,7 +384,11 @@ export async function createCheckoutOrder(
     userId: session.userId,
     status: 'pending',
     version: 1,
-    lines: current.pricing.lines.map((l) => ({ nftId: l.nftId, editionId: l.editionId, name: l.name, unitPrice: l.unitPrice, quantity: l.quantity, lineTotal: l.lineTotal })),
+    // Snapshot (CP6): tudo o que o recibo mostra é copiado agora; nada é lido do catálogo depois.
+    lines: current.pricing.lines.map((l) => {
+      const cartLine = current.cart.lines.find((c) => c.id === l.lineId)
+      return { nftId: l.nftId, editionId: l.editionId, editionLabel: cartLine?.editionLabel, image: cartLine?.image, imageAlt: cartLine?.imageAlt, name: l.name, unitPrice: l.unitPrice, quantity: l.quantity, lineTotal: l.lineTotal }
+    }),
     total: current.pricing.total,
     txHash: null,
     createdAt: new Date().toISOString(),
@@ -387,7 +400,12 @@ export async function createCheckoutOrder(
       networkFee: current.pricing.networkFee,
       couponCode: current.cart.coupon?.code ?? null,
       walletAddress: address,
+      walletLabel,
+      provider: connection.provider,
     },
+    settledAt: null,
+    failureReason: null,
+    reservedUntil: new Date(now() + RESERVATION_TTL_MS).toISOString(),
     idempotencyKey: idempotency.key,
     requestHash: idempotency.requestHash,
     settleAt: scenario.settlement === 'auto' ? Date.now() + scenario.settleDelayMs : null,

@@ -3,7 +3,7 @@
  */
 import { type Page } from '@playwright/test'
 import { expect, test } from './fixtures'
-import { USERS, openApp, seedCart, signIn, summaryValue } from './support'
+import { USERS, mock, openApp, placeOrder, seedCart, signIn, summaryValue } from './support'
 
 const WIDTHS = [360, 390, 600, 768, 900, 1024, 1280, 1440]
 const ROUTES = ['/', '/mercado', '/mercado?category=musica&network=solana', '/nft/nft-001', '/nft/nao-existe', '/criadores', '/demo/componentes', '/demo/conta', '/demo/checkout', '/rota-inexistente', '/login', '/cadastro']
@@ -104,6 +104,34 @@ for (const width of WIDTHS) {
       return { text: Math.ceil(ctx.measureText(el.placeholder).width), room: Math.floor(el.clientWidth - parseFloat(style.paddingLeft) - parseFloat(style.paddingRight)) }
     })
     expect.soft(fit.text, `placeholder do cupom cortado em ${width}px (texto ${fit.text}px, espaço ${fit.room}px)`).toBeLessThanOrEqual(fit.room)
+  })
+}
+
+// CP6: pedido pendente, recibo confirmado, pedido recusado, histórico e explorador simulado.
+for (const width of WIDTHS) {
+  test(`pedidos e recibo sem overflow em ${width}px`, async ({ page }) => {
+    test.setTimeout(90_000)
+    await page.setViewportSize({ width, height: 900 })
+    const check = async (name: string) => {
+      const result = await horizontalOverflow(page)
+      expect.soft(result.scroll, name + ' @' + width + 'px: scrollWidth ' + result.scroll + ' > ' + result.client + ' (' + result.offenders.join(', ') + ')').toBeLessThanOrEqual(result.client)
+      expect.soft(result.offenders, name + ' @' + width + 'px').toEqual([])
+    }
+    const rejected = await placeOrder(page)
+    await check('pendente')
+    await mock(page).settleOrder(rejected, 'rejected')
+    await expect(page.getByTestId('order-status')).toHaveAttribute('data-status', 'rejected')
+    await check('recusado')
+    const confirmed = await placeOrder(page, { open: false })
+    await mock(page).settleOrder(confirmed, 'confirmed')
+    await expect(page.getByTestId('order-status')).toHaveAttribute('data-status', 'confirmed')
+    await check('recibo')
+    await page.getByRole('link', { name: 'Ver no explorador simulado' }).click()
+    await expect(page.getByRole('note')).toBeVisible()
+    await check('explorador')
+    await page.goto('/pedidos')
+    await expect(page.getByTestId('order-row')).toHaveCount(2)
+    await check('historico')
   })
 }
 

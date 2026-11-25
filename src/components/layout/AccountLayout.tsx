@@ -10,7 +10,7 @@
  */
 import type { ReactNode } from 'react'
 import { Link, useNavigate } from '@tanstack/react-router'
-import { Activity, Download, Heart, LifeBuoy, LogOut, Tag, UserRound, Wallet, type LucideIcon } from 'lucide-react'
+import { Activity, Download, Heart, LifeBuoy, LogOut, ReceiptText, Tag, UserRound, Wallet, type LucideIcon } from 'lucide-react'
 import { Container, UnavailableAction } from '@/components/kurio/basics'
 import { useLogout } from '@/features/auth/queries'
 import { cn } from '@/lib/utils'
@@ -20,6 +20,7 @@ import { ACCOUNT_NAV, type AccountNavKey } from './navigation'
 const ICONS: Record<(typeof ACCOUNT_NAV)[number]['icon'], LucideIcon> = {
   user: UserRound,
   wallet: Wallet,
+  receipt: ReceiptText,
   activity: Activity,
   heart: Heart,
   tag: Tag,

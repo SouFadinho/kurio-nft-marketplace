@@ -4,7 +4,7 @@
  * autorização são decididos aqui.
  */
 import { delay, http, HttpResponse } from 'msw'
-import { CheckoutRequest, CreateOrderRequest, type Order } from '@/api/contracts'
+import { CheckoutRequest, CreateOrderRequest, type ExplorerTx, type Order } from '@/api/contracts'
 import { addEth, mulEth, parseEth, toEthString } from '@/lib/eth'
 import { db, type DbOrder } from '../db'
 import { digest } from '../crypto'
@@ -14,7 +14,7 @@ import { availableOf } from '../catalog-model'
 import { catalogHandlers } from './catalog'
 import { accountHandlers } from './account'
 import { commerceHandlers, createCheckoutOrder } from './commerce'
-import { routeDelay } from '../failures'
+import { isHeld, maybeFail, routeDelay } from '../failures'
 
 const latency = () => delay(db.scenario().latencyMs)
 
@@ -92,10 +92,15 @@ export const restHandlers = [
   }),
 
   http.get('/api/orders/:id', async ({ request, params }) => {
-    await latency()
+    // Teste de corrida (R-42): com a rota retida, a resposta é FOTOGRAFADA antes de reter, como
+    // uma leitura que já saiu do servidor e chega atrasada ao cliente.
+    const snapshot = isHeld('orders.read') ? structuredClone(db.get().orders.find((o) => o.id === params.id)) : undefined
+    await routeDelay('orders.read', new URL(request.url))
     const session = requireSession(request)
     if (session instanceof Response) return session
-    const order = db.get().orders.find((o) => o.id === params.id)
+    const failure = maybeFail('orders.read')
+    if (failure) return failure
+    const order = snapshot ?? db.get().orders.find((o) => o.id === params.id)
     // Pedido de outro usuário responde 404 (não revela que existe) — ELIM-04.
     if (!order || order.userId !== session.userId) return apiError(404, { code: 'NOT_FOUND', message: 'Pedido não encontrado.' })
     return HttpResponse.json(publicOrder(order))
@@ -105,6 +110,26 @@ export const restHandlers = [
     await latency()
     const session = requireSession(request)
     if (session instanceof Response) return session
-    return HttpResponse.json({ items: db.get().orders.filter((o) => o.userId === session.userId).map(publicOrder) })
+    // Mais recentes primeiro (histórico de pedidos, CP6).
+    const items = db.get().orders.filter((o) => o.userId === session.userId).sort((a, b) => b.createdAt.localeCompare(a.createdAt) || b.id.localeCompare(a.id))
+    return HttpResponse.json({ items: items.map(publicOrder) })
+  }),
+
+  // Explorador SIMULADO (demonstração): só transações confirmadas, sem dados do comprador.
+  http.get('/api/explorer/tx/:hash', async ({ params }) => {
+    await latency()
+    const order = db.get().orders.find((o) => o.status === 'confirmed' && o.txHash === params.hash)
+    if (!order) return apiError(404, { code: 'NOT_FOUND', message: 'Transação não encontrada neste explorador simulado.' })
+    const tx: ExplorerTx = {
+      hash: order.txHash!,
+      status: 'confirmed',
+      network: order.pricing?.network ?? 'ethereum',
+      blockNumber: 19_000_000 + (parseInt(order.txHash!.slice(-6), 16) % 900_000),
+      from: order.pricing?.walletAddress ?? '0x0000000000000000000000000000000000000000',
+      value: order.total,
+      confirmedAt: order.settledAt ?? order.createdAt,
+      demo: true,
+    }
+    return HttpResponse.json(tx)
   }),
 ]

@@ -1,0 +1,5 @@
+
+Running 1 test using 1 worker
+
+[1/1] [desktop-chromium] › e2e\races.spec.ts:77:3 › R-44: primeira adição do visitante › leitura do carrinho vazio retida, POST grava, leitura antiga liberada: o carrinho continua com o item
+  1 passed (13.1s)

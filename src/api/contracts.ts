@@ -246,12 +246,19 @@ export type WalletInput = z.infer<typeof WalletInput>
 export const OrderStatus = z.enum(['pending', 'confirmed', 'rejected'])
 export type OrderStatus = z.infer<typeof OrderStatus>
 export const TERMINAL_ORDER_STATUSES: readonly OrderStatus[] = ['confirmed', 'rejected']
+/** Motivo da recusa: pagamento recusado pela rede ou reserva de estoque vencida (R-40). */
+export const OrderFailureReason = z.enum(['payment_rejected', 'reservation_expired'])
+export type OrderFailureReason = z.infer<typeof OrderFailureReason>
 
 export const OrderLine = z.object({
   nftId: z.string(),
   /** CP5: edição comprada (pedidos da PoC do CP1 não têm). */
   editionId: z.string().optional(),
   name: z.string(),
+  /** CP6: snapshot de exibição gravado na criação (o recibo nunca lê o catálogo). */
+  editionLabel: z.string().optional(),
+  image: z.string().optional(),
+  imageAlt: z.string().optional(),
   unitPrice: EthAmount,
   quantity: z.number().int().positive(),
   lineTotal: EthAmount,
@@ -266,6 +273,9 @@ export const OrderPricing = z.object({
   networkFee: EthAmount,
   couponCode: z.string().nullable(),
   walletAddress: z.string(),
+  /** CP6: carteira como estava na compra (apelido e provedor da conexão). */
+  walletLabel: z.string().optional(),
+  provider: WalletType.optional(),
 })
 export type OrderPricing = z.infer<typeof OrderPricing>
 
@@ -279,8 +289,28 @@ export const Order = z.object({
   txHash: z.string().nullable(),
   createdAt: z.string(),
   pricing: OrderPricing.nullable().optional(),
+  /** CP6: momento da liquidação (confirmação ou recusa) e motivo da recusa. */
+  settledAt: z.string().nullable().optional(),
+  failureReason: OrderFailureReason.nullable().optional(),
+  /** CP6: prazo da reserva de estoque de um pedido pendente (R-40). */
+  reservedUntil: z.string().nullable().optional(),
 })
 export type Order = z.infer<typeof Order>
+
+export const OrderList = z.object({ items: z.array(Order) })
+
+/** Explorador SIMULADO (demonstração): dados públicos de uma transação confirmada. */
+export const ExplorerTx = z.object({
+  hash: z.string(),
+  status: z.literal('confirmed'),
+  network: Network,
+  blockNumber: z.number().int().positive(),
+  from: z.string(),
+  value: EthAmount,
+  confirmedAt: z.string(),
+  demo: z.literal(true),
+})
+export type ExplorerTx = z.infer<typeof ExplorerTx>
 
 /** Pedido direto por itens (PoC do CP1, em /demo/poc). O checkout usa `CheckoutRequest`. */
 export const CreateOrderRequest = z.object({
@@ -507,7 +537,13 @@ export type NftUpdatedEvent = z.infer<typeof NftUpdatedEvent>
 export const OrderUpdatedEvent = EventEnvelope(
   'order.updated',
   'order',
-  z.object({ status: OrderStatus, txHash: z.string().nullable() }),
+  z.object({
+    status: OrderStatus,
+    txHash: z.string().nullable(),
+    /** CP6: momento da liquidação e motivo da recusa (o recibo não espera o REST para mostrá-los). */
+    settledAt: z.string().nullable().optional(),
+    failureReason: OrderFailureReason.nullable().optional(),
+  }),
 )
 export type OrderUpdatedEvent = z.infer<typeof OrderUpdatedEvent>
 

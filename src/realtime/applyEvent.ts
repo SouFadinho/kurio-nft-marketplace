@@ -109,7 +109,14 @@ export function applyOrderUpdated(qc: QueryClient, guard: EventGuard, userId: st
   if (decision !== 'apply') return decision
 
   if (cached) {
-    qc.setQueryData<Order>(key, { ...cached, status: event.data.status, txHash: event.data.txHash, version: event.version })
+    qc.setQueryData<Order>(key, {
+      ...cached,
+      status: event.data.status,
+      txHash: event.data.txHash,
+      settledAt: event.data.settledAt ?? cached.settledAt,
+      failureReason: event.data.failureReason ?? cached.failureReason,
+      version: event.version,
+    })
   } else {
     // Pedido ainda não está no cache: buscar o estado completo pelo REST.
     void qc.invalidateQueries({ queryKey: key })

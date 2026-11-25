@@ -129,7 +129,7 @@ test.describe('cadastro', () => {
 })
 
 test.describe('sessão e rotas protegidas', () => {
-  for (const path of ['/perfil', '/perfil/carteiras', '/favoritos']) {
+  for (const path of ['/perfil', '/perfil/carteiras', '/favoritos', '/pedidos']) {
     test(`${path} exige login e volta para a rota após entrar`, async ({ page }) => {
       await openApp(page, path)
       await expect(page).toHaveURL(new RegExp(`/login\\?redirect=${encodeURIComponent(path)}`))

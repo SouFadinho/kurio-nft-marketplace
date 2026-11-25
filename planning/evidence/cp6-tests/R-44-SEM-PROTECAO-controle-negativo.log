@@ -1,0 +1,46 @@
+
+Running 1 test using 1 worker
+
+[1/1] [desktop-chromium] › e2e\races.spec.ts:77:3 › R-44: primeira adição do visitante › leitura do carrinho vazio retida, POST grava, leitura antiga liberada: o carrinho continua com o item
+  1) [desktop-chromium] › e2e\races.spec.ts:77:3 › R-44: primeira adição do visitante › leitura do carrinho vazio retida, POST grava, leitura antiga liberada: o carrinho continua com o item 
+
+    Error: expect(locator).toHaveAccessibleName(expected) failed
+
+    Locator:  getByRole('banner').getByRole('link', { name: /^Carrinho/ })
+    Expected: "Carrinho, 1 itens"
+    Received: "Carrinho"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveAccessibleName" getByRole('banner').getByRole('link', { name: /^Carrinho/ }) with timeout 5000ms
+      - waiting for getByRole('banner').getByRole('link', { name: /^Carrinho/ })
+        14 × locator resolved to <a data-size="icon" href="/carrinho" data-slot="button" data-variant="ghost" aria-label="Carrinho" class="inline-flex shrink-0 items-center justify-center gap-2 whitespace-nowrap font-mono font-semibold select-none transition-[background-color,color,border-color,box-shadow,transform] duration-[var(--duration-fast)] ease-[var(--ease-standard)] outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring disabled:pointer-events-none disabled:opacity-45 aria-disable…>…</a>
+           - unexpected value "Carrinho"
+
+
+      91 |     await expect.poll(() => fate.length).toBeGreaterThan(0)
+      92 |     await page.waitForTimeout(300)
+    > 93 |     await expect(badge).toHaveAccessibleName('Carrinho, 1 itens')
+         |                         ^
+      94 |     test.info().annotations.push({ type: 'leitura antiga', description: fate.join(', ') })
+      95 |   })
+      96 | })
+        at D:\emprego\e2e\races.spec.ts:93:25
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\races-R-44-primeira-adição-065d0-arrinho-continua-com-o-item-desktop-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\races-R-44-primeira-adição-065d0-arrinho-continua-com-o-item-desktop-chromium\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\races-R-44-primeira-adição-065d0-arrinho-continua-com-o-item-desktop-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\races-R-44-primeira-adição-065d0-arrinho-continua-com-o-item-desktop-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+  1 failed
+    [desktop-chromium] › e2e\races.spec.ts:77:3 › R-44: primeira adição do visitante › leitura do carrinho vazio retida, POST grava, leitura antiga liberada: o carrinho continua com o item 

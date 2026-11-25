@@ -112,7 +112,21 @@ export function RealtimeProvider({ children }: { children: ReactNode }) {
       count(applyOrderUpdated(queryClient, guard, userId, parsed.data), parsed.data.type)
     })
 
+    // CP6 (PEND-03): aba suspensa ou em segundo plano pode ter perdido eventos (o navegador congela
+    // timers e a conexão pode ter caído sem o cliente perceber). Ao voltar a ficar visível ou ser
+    // restaurada do bfcache, reconcilia pelo REST e reconecta o socket se preciso.
+    const onResume = () => {
+      if (document.visibilityState !== 'visible') return
+      if (!socket.connected) socket.connect()
+      void reconcile()
+    }
+    const onPageShow = (e: PageTransitionEvent) => e.persisted && onResume()
+    document.addEventListener('visibilitychange', onResume)
+    window.addEventListener('pageshow', onPageShow)
+
     return () => {
+      document.removeEventListener('visibilitychange', onResume)
+      window.removeEventListener('pageshow', onPageShow)
       unsubscribeCache()
       socket.removeAllListeners()
       socket.disconnect()

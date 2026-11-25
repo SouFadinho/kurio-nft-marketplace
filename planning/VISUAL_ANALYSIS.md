@@ -169,3 +169,13 @@ Lista e detalhe de **pedidos** e status em tempo real; páginas Mercado, Criador
 6. **Pagamento mobile**: o Figma mobile não tem os dados do colecionador; aqui eles aparecem antes das carteiras (exigidos pelo CP5 e presentes no desktop). "Trocar carteira" virou "Gerenciar carteiras" (leva a /perfil/carteiras).
 7. **Conexão**: botão "Conectar <provedor>" e estado "Conectada via …" (o Figma não mostra o passo de conexão); aviso de que a conexão é simulada.
 8. **Alerta de valores alterados** e **situação do pedido** (`/pedidos/:id`): sem referência no Figma; derivados dos tokens. O recibo final é do CP6.
+
+## 14. Decisões visuais do CP6 (sem frame no Figma)
+
+Confirmação, pedido pendente/recusado, histórico e explorador não têm referência no Figma. Foram derivados do design system existente:
+1. **Recibo**: mesmo cartão de superfície do resumo do carrinho; título com ícone e cor de estado (sucesso, aviso, erro) além do texto (não depende só da cor); dados em lista de definição; itens com miniatura, edição e "quantidade × preço" em monoespaçada; total em destaque laranja como no resumo do Figma.
+2. **Pendente**: prazo da reserva visível e botão "Atualizar status" (o estado também chega sozinho pelo socket).
+3. **Recusado / reserva expirada**: mensagem explícita de que nada foi cobrado e link para o carrinho (os itens continuam lá).
+4. **Histórico**: linhas em cartão com id, selo de status, data, itens e total; item "Meus pedidos" no menu de conta (ícone de recibo).
+5. **Explorador simulado**: aviso permanente "ambiente de demonstração" em destaque de alerta; só dados públicos.
+6. Registrado para a revisão visual final (matriz §12): VIS-10 (formulário de pagamento desktop mais próximo do Figma), VIS-11 (altura dos cards do carrinho mobile), VIS-12 (CTA fixo não pode esconder o total), VIS-13 (manter requisitos funcionais e de acessibilidade nesses ajustes).

@@ -1,0 +1,88 @@
+
+Running 2 tests using 2 workers
+
+[1/2] [mobile-chromium] › e2e\races.spec.ts:20:3 › R-42: leitura REST antiga depois de evento novo (pedido) › versão N retida, evento N+1 aplicado, resposta N liberada: o estado continua em N+1
+[2/2] [desktop-chromium] › e2e\races.spec.ts:20:3 › R-42: leitura REST antiga depois de evento novo (pedido) › versão N retida, evento N+1 aplicado, resposta N liberada: o estado continua em N+1
+  1) [mobile-chromium] › e2e\races.spec.ts:20:3 › R-42: leitura REST antiga depois de evento novo (pedido) › versão N retida, evento N+1 aplicado, resposta N liberada: o estado continua em N+1 
+
+    Error: expect(locator).toHaveAttribute(expected) failed
+
+    Locator:  getByTestId('order-status')
+    Expected: "confirmed"
+    Received: "pending"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveAttribute" getByTestId('order-status') with timeout 5000ms
+      - waiting for getByTestId('order-status')
+        14 × locator resolved to <p class="text-body" aria-live="polite" data-status="pending" data-testid="order-status">Aguardando a confirmação da rede…</p>
+           - unexpected value "pending"
+
+
+      37 |     expect([body.status, body.version]).toEqual(['pending', 1])
+      38 |     // 6. O estado permanece na versão mais nova.
+    > 39 |     await expect(status).toHaveAttribute('data-status', 'confirmed')
+         |                          ^
+      40 |     await page.waitForTimeout(300) // margem para qualquer re-render tardio
+      41 |     await expect(status).toHaveAttribute('data-status', 'confirmed')
+      42 |     await expect(page.getByRole('heading', { level: 1, name: 'Compra confirmada' })).toBeVisible()
+        at D:\emprego\e2e\races.spec.ts:39:26
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\races-R-42-leitura-REST-an-4148d-da-o-estado-continua-em-N-1-mobile-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\races-R-42-leitura-REST-an-4148d-da-o-estado-continua-em-N-1-mobile-chromium\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\races-R-42-leitura-REST-an-4148d-da-o-estado-continua-em-N-1-mobile-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\races-R-42-leitura-REST-an-4148d-da-o-estado-continua-em-N-1-mobile-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+  2) [desktop-chromium] › e2e\races.spec.ts:20:3 › R-42: leitura REST antiga depois de evento novo (pedido) › versão N retida, evento N+1 aplicado, resposta N liberada: o estado continua em N+1 
+
+    Error: expect(locator).toHaveAttribute(expected) failed
+
+    Locator:  getByTestId('order-status')
+    Expected: "confirmed"
+    Received: "pending"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveAttribute" getByTestId('order-status') with timeout 5000ms
+      - waiting for getByTestId('order-status')
+        14 × locator resolved to <p class="text-body" aria-live="polite" data-status="pending" data-testid="order-status">Aguardando a confirmação da rede…</p>
+           - unexpected value "pending"
+
+
+      37 |     expect([body.status, body.version]).toEqual(['pending', 1])
+      38 |     // 6. O estado permanece na versão mais nova.
+    > 39 |     await expect(status).toHaveAttribute('data-status', 'confirmed')
+         |                          ^
+      40 |     await page.waitForTimeout(300) // margem para qualquer re-render tardio
+      41 |     await expect(status).toHaveAttribute('data-status', 'confirmed')
+      42 |     await expect(page.getByRole('heading', { level: 1, name: 'Compra confirmada' })).toBeVisible()
+        at D:\emprego\e2e\races.spec.ts:39:26
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\races-R-42-leitura-REST-an-4148d-da-o-estado-continua-em-N-1-desktop-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\races-R-42-leitura-REST-an-4148d-da-o-estado-continua-em-N-1-desktop-chromium\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\races-R-42-leitura-REST-an-4148d-da-o-estado-continua-em-N-1-desktop-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\races-R-42-leitura-REST-an-4148d-da-o-estado-continua-em-N-1-desktop-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+  2 failed
+    [desktop-chromium] › e2e\races.spec.ts:20:3 › R-42: leitura REST antiga depois de evento novo (pedido) › versão N retida, evento N+1 aplicado, resposta N liberada: o estado continua em N+1 
+    [mobile-chromium] › e2e\races.spec.ts:20:3 › R-42: leitura REST antiga depois de evento novo (pedido) › versão N retida, evento N+1 aplicado, resposta N liberada: o estado continua em N+1 

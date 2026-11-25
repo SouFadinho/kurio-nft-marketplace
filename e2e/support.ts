@@ -20,12 +20,17 @@ interface MockControl {
   scenario(): string
   release(route: string): void
   recover(route: string): void
+  hold(route: string): void
+  advanceClock(ms: number, sweep?: boolean): number
+  available(nftId: string, editionId: string): number | null
+  emitOrderEvent(orderId: string, status: OrderStatus | 'pending', version: number): unknown
+  role(): 'leader' | 'follower'
   expireSessions(): number
   expireQuotes(): number
   updateNft(id: string, patch: NftPatch): unknown
   emitStaleNftUpdate(id: string, price: string): unknown
   settleOrder(id: string, status: OrderStatus): unknown
-  orders(): Array<{ id: string; userId: string; status: string; version: number }>
+  orders(): Array<{ id: string; userId: string; status: string; version: number; failureReason: string | null }>
   realtime: {
     connections(): Array<{ id: string; state: string; userId: string | null }>
     stats(): { accepted: number; anonymous: number; rejected: number }
@@ -55,6 +60,12 @@ export function mock(page: Page) {
     expireQuotes: async () => (await ready(), page.evaluate(() => window.__kurioMock.expireQuotes())),
     release: async (route: string) => (await ready(), page.evaluate((r) => window.__kurioMock.release(r), route)),
     recover: async (route: string) => (await ready(), page.evaluate((r) => window.__kurioMock.recover(r), route)),
+    hold: async (route: string) => (await ready(), page.evaluate((r) => window.__kurioMock.hold(r), route)),
+    advanceClock: async (ms: number, sweep = true) => (await ready(), page.evaluate(([m, sw]) => window.__kurioMock.advanceClock(m, sw), [ms, sweep] as const)),
+    available: async (nftId: string, editionId: string) => (await ready(), page.evaluate(([n, e]) => window.__kurioMock.available(n, e), [nftId, editionId] as const)),
+    emitOrderEvent: async (orderId: string, status: OrderStatus | 'pending', version: number) =>
+      (await ready(), page.evaluate(([o, st, v]) => window.__kurioMock.emitOrderEvent(o, st, v), [orderId, status, version] as const)),
+    role: async () => (await ready(), page.evaluate(() => window.__kurioMock.role())),
     orders: async () => (await ready(), page.evaluate(() => window.__kurioMock.orders())),
     connections: async () => (await ready(), page.evaluate(() => window.__kurioMock.realtime.connections())),
     stats: async () => (await ready(), page.evaluate(() => window.__kurioMock.realtime.stats())),
@@ -163,4 +174,35 @@ export async function cartQuantity(page: Page) {
     const cart = (await res.json()) as { lines: Array<{ quantity: number }> }
     return cart.lines.reduce((sum, l) => sum + l.quantity, 0)
   })
+}
+
+export const EMERALD_LINE = { nftId: 'nft-001', editionId: 'ed-10', quantity: 1 }
+
+/**
+ * Compra real pelo checkout (carrinho → pagamento → pedido criado) e devolve o id do pedido.
+ * Padrão: `slow-order` (liquidação MANUAL), para o teste decidir quando o pedido é liquidado.
+ */
+export async function placeOrder(
+  page: Page,
+  { scenario = 'slow-order', items = [EMERALD_LINE], user = USERS.ana as { email: string; password: string }, open = true } = {},
+): Promise<string> {
+  if (open) await openApp(page, '/', scenario)
+  if (!(await page.evaluate(() => sessionStorage.getItem('kurio:session')))) await signIn(page, user)
+  await seedCart(page, items)
+  await page.goto('/pagamento')
+  await expect(summaryValue(page, 'quote-total')).toBeVisible()
+  await page.getByRole('button', { name: 'Conectar MetaMask' }).click()
+  await expect(page.getByRole('status').filter({ hasText: 'Conectada via MetaMask' })).toBeVisible()
+  await page.getByRole('button', { name: 'Confirmar compra' }).filter({ visible: true }).click()
+  await expect(page).toHaveURL(/\/pedidos\/ord_\d+$/)
+  return /ord_\d+/.exec(page.url())![0]
+}
+
+/** Lê um pedido pela API com a sessão da aba (status HTTP + corpo). */
+export async function readOrder(page: Page, orderId: string) {
+  return page.evaluate(async (id) => {
+    const token = (JSON.parse(sessionStorage.getItem('kurio:session') ?? 'null') as { token?: string } | null)?.token
+    const res = await fetch(`/api/orders/${id}`, { headers: token ? { Authorization: `Bearer ${token}` } : {} })
+    return { status: res.status, body: (await res.json()) as Record<string, unknown> }
+  }, orderId)
 }

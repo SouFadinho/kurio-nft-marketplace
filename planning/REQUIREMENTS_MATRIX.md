@@ -27,7 +27,7 @@ Abreviação: `T<n>` = teste `<n>.` de `e2e/poc.spec.ts`.
 |---|---|---|
 | PEND-01 | ~~Idempotência com a mesma chave e payload diferente~~ **RESOLVIDO (CP5)**: checkout.spec › API mesma chave + mesmo conteúdo = mesmo pedido (200); conteúdo diferente = 409 `IDEMPOTENCY_KEY_REUSED` | — |
 | PEND-02 | ~~Timeout após a criação do pedido e recuperação por retry~~ **RESOLVIDO (CP5)**: cenários `order-timeout` e `order-lost-response`; o retry (inclusive pelo botão principal) recupera o MESMO pedido, 1 pedido no servidor | — |
-| PEND-03 | Consistência da persistência do mock entre abas | CP6 |
+| PEND-03 | ~~Consistência da persistência do mock entre abas~~ **RESOLVIDO (CP6)**: cluster de abas com líder único (Web Lock), RPC por BroadcastChannel e eventos entregues pelo Socket.IO de cada aba (tabs.spec, 6 casos × 2) | — |
 | PEND-04 | Impacto do MSW na performance inicial (R-25) | CP8 |
 | PEND-05 | Revalidação integral do HEAD a cada checkpoint. CP1: `91380dc`. **CP2: `6ad49e0` validado em checkout limpo (126/126)** · **CP3: `2b2aa83` validado em checkout limpo (199 passed / 2 skipped)** · **CP4: `ea6f60b` validado em checkout limpo (295 passed / 5 skipped)** · **CP5: `18291bf` validado em checkout limpo (376 passed / 5 skipped)** | todo CP · CP9 |
 | PEND-06 | Disco C: sem espaço; caches e temporários seguem em `D:\emprego\.cache` (R-23) | candidato |
@@ -84,11 +84,11 @@ Abreviação: `T<n>` = teste `<n>.` de `e2e/poc.spec.ts`.
 | ID | Critério | Pts | Status |
 |---|---|---|---|
 | AV-1 | Fidelidade visual e responsividade | 20 | IMPLEMENTADO, NÃO VALIDADO (design system e estrutura global prontos e comparados; telas no CP3–CP6) |
-| AV-2 | Fluxos e experiência | 20 | PENDENTE |
+| AV-2 | Fluxos e experiência | 20 | VALIDADO funcionalmente (CP3–CP6: catálogo, detalhe, conta, carrinho, pagamento, pedido e recibo); revisão visual final pendente |
 | AV-3 | Integração e estado | 15 | IMPLEMENTADO, NÃO VALIDADO (base validada na PoC) |
 | AV-4 | Tempo real | 10 | VALIDADO (CP5): catálogo, detalhe, carrinho e pagamento; RT-08 coberto |
 | AV-5 | Mocking | 10 | IMPLEMENTADO, NÃO VALIDADO (3 de 21 cenários) |
-| AV-6 | Testes | 10 | PENDENTE (0 de 12 grupos E2E finais) |
+| AV-6 | Testes | 10 | IMPLEMENTADO: 12 grupos E2E cobertos (ver §6); baselines Linux e CI no CP7 |
 | AV-7 | Acessibilidade | 5 | IMPLEMENTADO, NÃO VALIDADO (base validada no CP2; revalidar nas telas e no CP8) |
 | AV-8 | Performance | 5 | PENDENTE |
 | AV-9 | Arquitetura e documentação | 5 | IMPLEMENTADO, NÃO VALIDADO |
@@ -118,9 +118,9 @@ Todas `PENDENTE` (TELA-01..09). Desde o CP2:
 | PAY-03 (revalidar antes de confirmar; mudança exige nova confirmação) | VALIDADO (CP5) | checkout.spec › consistência financeira (preço, socket offline, estoque, cotação expirada) |
 | PAY-07 (falha preserva itens; após confirmação, remover só o comprado) | VALIDADO (CP5) | checkout.spec › falha antes de gravar; recusado preserva carrinho e devolve estoque; confirmado tira só os itens comprados |
 | PAY-04 (duplicidade) | VALIDADO (CP5) | checkout.spec › cliques repetidos; timeout e resposta perdida → mesmo pedido |
-| PAY-05 (pendente/confirmado/recusado + recuperação) | VALIDADO (PoC) | T5, T5b, T7/8, T7b |
-| PAY-06 (confirmação só se confirmada) | VALIDADO (PoC) | T5b |
-| PAY-08 (snapshot + tx simulado) | IMPLEMENTADO PARCIALMENTE (CP5) | o pedido do checkout grava linhas, edição, subtotal, desconto, taxa, rede, cupom e carteira (`pricing`); o pedido mostra o total aceito. Recibo imutável e explorer simulado: CP6 |
+| PAY-05 (pendente/confirmado/recusado + recuperação) | VALIDADO (CP6, fluxo real) | orders.spec, recovery.spec (refresh, nova aba, offline confirmado/recusado, timeout, resposta perdida, sessão expirada) |
+| PAY-06 (confirmação só se confirmada) | VALIDADO (CP6) | orders.spec (pendente sem "Compra confirmada"); recovery.spec (offline: nada presumido); races.spec (terminal não regride) |
+| PAY-08 (snapshot + tx simulado) | VALIDADO (CP6) | orders.spec › recibo (hash, data, itens, edição, preços, valores, rede, carteira) e imutabilidade (preço, estoque, carteira e perfil alterados depois); explorador simulado |
 | ACC-01 (login/logout/sessão/cadastro) | VALIDADO (CP4) | auth.spec › login, cadastro, logout (§13) |
 | ACC-02 (rotas privadas) | VALIDADO (CP4) | auth.spec › /perfil, /perfil/carteiras, /favoritos com retorno |
 | ACC-03 (sessão após refresh) | VALIDADO (CP4) | auth.spec › sessão sobrevive ao refresh |
@@ -150,7 +150,7 @@ Todas `PENDENTE` (TELA-01..09). Desde o CP2:
 | RT-06 | VALIDADO | T6, T6b, T6c |
 | RT-07 (listeners liberados) | VALIDADO (PoC) | T6: a conexão de Ana desaparece do servidor após logout |
 | RT-08 | VALIDADO (CP5) | checkout.spec › preço muda durante a revisão; estoque acaba; mudança não vista (socket offline) recusada pela API |
-| RT-09 | VALIDADO (PoC) | T7/8, T7b, T5b (terminal) |
+| RT-09 | VALIDADO (CP6, fluxo real) | races.spec (duplicado, antigo, terminal); unit › orders-events (4 casos) |
 
 ## 6. UI, acessibilidade, testes, Lighthouse e entrega
 
@@ -175,10 +175,10 @@ Todas `PENDENTE` (TELA-01..09). Desde o CP2:
 | E2E-11 | VALIDADO (CP4 + CP5: modal de login, validação de formulários, carrinho e pagamento por teclado, axe em /carrinho e /pagamento) |
 | E2E-12 | VALIDADO (catálogo, detalhe; CP5: erro e retry do carrinho, cotação em andamento, falha de escrita) |
 | E2E-05 | VALIDADO (CP5): cart.spec |
-| E2E-06 | VALIDADO PARCIALMENTE (CP5): do carrinho ao pedido criado e confirmado pela rede simulada; o recibo final é do CP6 |
+| E2E-06 | VALIDADO (CP6): orders.spec › compra completa até o recibo definitivo |
 | E2E-07 | VALIDADO (CP5): checkout.spec › idempotência e falhas (recusa, clique repetido, timeout, resposta perdida) |
 | E2E-09 | VALIDADO (CP5): checkout.spec › consistência financeira em tempo real |
-| E2E-10 | VALIDADO PARCIALMENTE: eventos duplicados/antigos no carrinho (CP5) e retomada de pedido pendente na PoC; tela de pedido final no CP6 |
+| E2E-10 | VALIDADO (CP6): races.spec (eventos duplicados, antigos, terminais; REST antigo após evento novo) e recovery.spec (desconexão, retomada de pedido pendente) |
 | TEST-01 (Chromium desktop + mobile) | VALIDADO (configuração) |
 | TEST-02 (visual) | IMPLEMENTADO: baselines de Início, Detalhe, Carrinho e Pagamento (desktop+mobile, Windows; CP5). Baselines Linux no CP7 |
 | TEST-03 (estado isolado) | VALIDADO: contexto novo + `?reset=1` por teste; 3 rodadas paralelas sem interferência |
@@ -220,6 +220,10 @@ Todas `PENDENTE` (TELA-01..09). Desde o CP2:
 | VIS-07 | (registrado no CP5) Aproximar a tela de Carteiras do formulário original do Figma (hoje: resumo + "Editar"), preservando os rótulos acessíveis | revisão visual final |
 | VIS-08 | (registrado no CP5) Posição do modal de login/cadastro no desktop (Figma: perto do topo do hero; hoje: centralizado) | revisão visual final |
 | VIS-09 | (CP5) Carrinho mobile: linha "Total + Remover" e título "Resumo da carteira" não existem no Figma | revisão visual final |
+| VIS-10 | (registrado no CP6) Aproximar o formulário de pagamento desktop do Figma | revisão visual final |
+| VIS-11 | (registrado no CP6) Revisar a altura dos cards do carrinho mobile | revisão visual final |
+| VIS-12 | (registrado no CP6) Garantir que o CTA fixo do mobile não impeça a visualização do total | revisão visual final |
+| VIS-13 | (registrado no CP6) Preservar requisitos funcionais e de acessibilidade durante VIS-10..12 (rodar a suíte completa após os ajustes) | revisão visual final |
 
 ## 13. CP4: autenticação, perfil e carteiras (evidências em `planning/evidence/cp4/` e `planning/evidence/cp4-tests/`)
 
@@ -278,3 +282,23 @@ Todos os casos rodam em `desktop-chromium` (1440) e `mobile-chromium` (390), com
 | — | Teclado, foco e axe | cart.spec › acessibilidade; checkout.spec › acessibilidade | VALIDADO |
 | — | Responsividade (8 larguras) + placeholder do cupom sem corte | layout.responsive › carrinho e pagamento | VALIDADO |
 | — | Recibo imutável, tela de confirmação final, recuperação avançada | — | PENDENTE (CP6) |
+
+## 15. CP6: pedidos, confirmação, recuperação e tempo real (evidências em `planning/evidence/cp6/` e `planning/evidence/cp6-tests/`)
+
+| ID | Requisito | Teste (arquivo › caso) | Status |
+|---|---|---|---|
+| TELA-05 | Confirmação / recibo definitivo (sem frame no Figma; derivado do design system) | orders.spec › compra completa; capturas `recibo-confirmado-*` | VALIDADO |
+| — | Recibo: id, status, hash simulado, data e hora, NFTs, edições, quantidades, preços congelados, subtotal, desconto, taxa, total, rede, carteira, explorador simulado, ações | orders.spec › compra completa | VALIDADO |
+| — | Recibo imutável (preço, estoque, carteira e perfil mudam depois) | orders.spec › recibo imutável | VALIDADO |
+| — | Histórico de pedidos (privado, mais recentes primeiro, tempo real) | orders.spec › histórico; responsivo | VALIDADO |
+| — | Pedido de outro usuário: tela e API "não encontrado" | orders.spec › outro usuário; tabs.spec › isolamento | VALIDADO |
+| — | Recusa: sem confirmação, carrinho preservado, reserva liberada uma vez | orders.spec › recusa | VALIDADO |
+| R-40 | Reserva com prazo (10 min, relógio controlável); vencimento libera uma vez; confirmação atrasada não confirma | orders.spec › reserva vence; confirmação após o prazo | VALIDADO |
+| — | Confirmação remove só o comprado; itens adicionados depois permanecem | orders.spec › itens adicionados depois | VALIDADO |
+| — | Recuperação: refresh, nova aba/URL direta, offline confirmado e recusado, timeout, resposta perdida, sessão expirada, novo login | recovery.spec (7 casos × 2) | VALIDADO |
+| R-42 | REST antigo após evento novo (pedido): teste determinístico + controle negativo | races.spec › R-42; `R-42-SEM-PROTECAO-controle-negativo.log` (falha sem a proteção) | VALIDADO |
+| R-44 | Primeira adição do visitante: teste determinístico + controles | races.spec › R-44; `R-44-SEM-PROTECAO-*.log` (falha), `R-44-SO-GUARDA-DE-VERSAO.log` (passa) | VALIDADO |
+| — | Eventos duplicados, antigos, fora de ordem e terminais | races.spec; unit › orders-events | VALIDADO |
+| PEND-03 | Várias abas: catálogo/estoque, carrinho concorrente sem perda, idempotência, isolamento, failover, reconciliação | tabs.spec (6 casos × 2) | VALIDADO |
+| — | Carregamento, erro e recuperação da tela do pedido | orders.spec › carregamento, erro e recuperação | VALIDADO |
+| — | Responsividade (8 larguras) e acessibilidade da confirmação | layout.responsive › pedidos e recibo; orders.spec › axe | VALIDADO |

@@ -4,7 +4,7 @@
  * Assim, REST e tempo real nunca divergem (MOCK-10).
  */
 import type { NftUpdatedEvent, Order, OrderUpdatedEvent } from '@/api/contracts'
-import { db, type DbNft, type DbOrder } from './db'
+import { db, now, type DbNft, type DbOrder } from './db'
 import { availableOf } from './catalog-model'
 import { broadcast, emitToUser, makeEvent } from './realtime/server'
 
@@ -75,7 +75,7 @@ export function orderEvent(order: Order) {
     resource: { type: 'order', id: order.id },
     version: order.version,
     userId: order.userId,
-    data: { status: order.status, txHash: order.txHash },
+    data: { status: order.status, txHash: order.txHash, settledAt: order.settledAt ?? null, failureReason: order.failureReason ?? null },
   })
 }
 
@@ -86,16 +86,32 @@ function fakeTxHash(orderId: string) {
   return `0x${h.toString(16).padStart(40, '0')}`
 }
 
-/** Liquida um pedido pendente. Pedidos terminais nunca mudam (RT-09). */
-export function settleOrder(orderId: string, status: 'confirmed' | 'rejected') {
+/**
+ * Prazo da reserva de estoque de um pedido pendente (R-40). Política: a reserva nasce na
+ * criação e vale 10 minutos no relógio da simulação; confirmação consolida, recusa ou
+ * vencimento devolvem o estoque UMA vez (só na transição pendente → terminal).
+ */
+export const RESERVATION_TTL_MS = 10 * 60_000
+
+const reservationExpired = (o: DbOrder) => !!o.reservedUntil && now() >= Date.parse(o.reservedUntil)
+
+/**
+ * Liquida um pedido pendente. Pedidos terminais nunca mudam (RT-09). Uma confirmação que
+ * chega DEPOIS do vencimento da reserva não confirma: o pedido é recusado por reserva vencida.
+ */
+export function settleOrder(orderId: string, requested: 'confirmed' | 'rejected') {
   const order = db.commit((s) => {
     const found = s.orders.find((o) => o.id === orderId)
     if (!found || found.status !== 'pending') return null
+    const expired = reservationExpired(found)
+    const status = expired ? 'rejected' : requested
     found.status = status
     found.version += 1
     found.txHash = status === 'confirmed' ? fakeTxHash(found.id) : null
     found.settleAt = null
-    return { ...found }
+    found.settledAt = new Date(now()).toISOString()
+    found.failureReason = status === 'confirmed' ? null : expired ? 'reservation_expired' : 'payment_rejected'
+    return structuredClone(found)
   })
   timers.delete(orderId)
   if (!order) return null
@@ -139,6 +155,13 @@ export function scheduleSettlement(order: DbOrder) {
   const { settleResult } = db.scenario()
   const wait = Math.max(0, order.settleAt - Date.now())
   timers.set(order.id, window.setTimeout(() => settleOrder(order.id, settleResult), wait))
+}
+
+/** Vence as reservas de pedidos pendentes cujo prazo passou (varredura do líder do cluster). */
+export function expireReservations() {
+  const due = db.get().orders.filter((o) => o.status === 'pending' && reservationExpired(o)).map((o) => o.id)
+  for (const id of due) settleOrder(id, 'rejected')
+  return due.length
 }
 
 /** Após refresh, reagenda liquidações pendentes persistidas (recuperação de pedido pendente). */

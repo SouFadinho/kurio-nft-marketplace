@@ -53,7 +53,7 @@ test.describe('fluxo principal', () => {
     await expect(page).toHaveURL(/\/pedidos\/ord_\d+$/)
     await expect(page.getByTestId('order-status')).toHaveAttribute('data-status', 'pending')
     await expect(page.getByRole('heading', { name: 'Pedido recebido' })).toBeVisible()
-    await expect(page.getByText('Pagamento confirmado')).toHaveCount(0)
+    await expect(page.getByText('Compra confirmada')).toHaveCount(0)
     await expect(page.getByTestId('order-total')).toHaveText('1.206 ETH')
     // PAY-07: enquanto pendente, o carrinho continua com os itens; só a confirmação os remove.
     expect(await cartQuantity(page)).toBe(1)
@@ -61,7 +61,7 @@ test.describe('fluxo principal', () => {
     const [order] = await mock(page).orders()
     await mock(page).settleOrder(order!.id, 'confirmed')
     await expect(page.getByTestId('order-status')).toHaveAttribute('data-status', 'confirmed')
-    await expect(page.getByRole('heading', { name: 'Pagamento confirmado' })).toBeVisible()
+    await expect(page.getByRole('heading', { name: 'Compra confirmada' })).toBeVisible()
     await expect.poll(() => cartQuantity(page)).toBe(0)
   })
 
@@ -74,7 +74,7 @@ test.describe('fluxo principal', () => {
     await expect(page).toHaveURL(/\/pedidos\/ord_\d+$/)
     await expect(page.getByTestId('order-status')).toHaveAttribute('data-status', 'rejected')
     await expect(page.getByRole('heading', { name: 'Pagamento recusado' })).toBeVisible()
-    await expect(page.getByText('Pagamento confirmado')).toHaveCount(0)
+    await expect(page.getByText('Compra confirmada')).toHaveCount(0)
     expect(await cartQuantity(page)).toBe(1)
     await expect.poll(available).toBe(4)
   })
