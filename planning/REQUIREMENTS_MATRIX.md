@@ -162,11 +162,11 @@ Todas `PENDENTE` (TELA-01..09). Desde o CP2:
 | UI-04 (assets do arquivo; substituições documentadas) | IMPLEMENTADO, NÃO VALIDADO: originais indisponíveis (Figma sem login); placeholders documentados em `ASSETS_MANIFEST.md` |
 | A11Y-01 (teclado, foco visível) | VALIDADO (estrutura e componentes): skip link, nav com `aria-current`, slider por teclado, rádio por setas |
 | A11Y-02 (foco em diálogos e drawers) | VALIDADO: foco preso, Esc fecha e devolve o foco (Dialog e Drawer). **Defeito corrigido:** o vaul deixava o foco fora do drawer |
-| A11Y-03 (semântica, labels, erros associados) | VALIDADO (componentes): axe sem violações em 6 rotas × 2 viewports, com controle negativo |
+| A11Y-03 (semântica, labels, erros associados) | VALIDADO: axe WCAG 2.2 A/AA sem violações nas 12 telas (9 obrigatórias + Mercado, Favoritos, Meus pedidos; pedido pendente, confirmado e recusado) × desktop e mobile, + um `h1` por tela, títulos sem saltos, controles nomeados (`a11y.spec`, CP8). Defeitos corrigidos no CP8: `label-content-name-mismatch` em "Tornar principal" e modal de login sem `h1` |
 | A11Y-04 (alternativas textuais) | VALIDADO (cards): `alt` descritivo vindo da API; axe `image-alt` |
 | A11Y-05 (contraste e não depender só de cor) | VALIDADO: 19 pares de token por teste + axe `color-contrast`; estados com indicador extra |
 | A11Y-06 (feedback acessível) | VALIDADO para as mutations da conta (CP4): erros em `role=alert` e associados ao campo, sucesso após a API (toast `aria-live` + `role=status`) |
-| A11Y-07 (sem overflow, zoom) | VALIDADO para overflow (8 larguras). Zoom de 200% não testado ainda (CP8) |
+| A11Y-07 (sem overflow, zoom) | VALIDADO (CP8): reflow a 320 px (equivale a 400% de zoom em 1280 px) sem rolagem horizontal em 8 rotas; alvos de toque ≥ 24 px (WCAG 2.5.8, com a exceção de espaçamento) no mobile · `a11y.spec`. Zoom de texto isolado (200% só de fonte) não testado |
 | E2E-01 | VALIDADO (CP3) |
 | E2E-02 | VALIDADO (CP3) |
 | E2E-03 | VALIDADO (CP4): auth.spec |
@@ -180,11 +180,11 @@ Todas `PENDENTE` (TELA-01..09). Desde o CP2:
 | E2E-09 | VALIDADO (CP5): checkout.spec › consistência financeira em tempo real |
 | E2E-10 | VALIDADO (CP6): races.spec (eventos duplicados, antigos, terminais; REST antigo após evento novo) e recovery.spec (desconexão, retomada de pedido pendente) |
 | TEST-01 (Chromium desktop + mobile) | VALIDADO (configuração) |
-| TEST-02 (visual) | IMPLEMENTADO: baselines de Início, Detalhe, Carrinho e Pagamento (desktop+mobile, Windows; CP5). Baselines Linux no CP7 |
+| TEST-02 (visual) | VALIDADO no Windows: 8 baselines; CP8 atualizou 6 (Início ×2, Carrinho mobile, Pagamento ×2, Detalhe mobile) após inspeção, com antes/depois/diff em `evidence/cp8-baselines/`. Baselines Linux ainda não geradas (teste ignorado no Linux com motivo). Limitação de sensibilidade: R-47 |
 | TEST-03 (estado isolado) | VALIDADO: contexto novo + `?reset=1` por teste; 3 rodadas paralelas sem interferência |
 | TEST-04 (HTML + traces) | IMPLEMENTADO, NÃO VALIDADO (`trace: retain-on-failure`; relatório HTML gerado) |
 | TEST-05 | VALIDADO (os testes acionam o servidor simulado; a UI muda via socket ou Axios) |
-| LH-01..06 | IMPLEMENTADO, NÃO VALIDADO: script validado em modo não oficial (1 medição) · auditoria oficial no CP8 |
+| LH-01..06 | MEDIDO (CP8), METAS PARCIALMENTE ATINGIDAS: 12 auditorias oficiais (`planning/evidence/cp8-perf/oficial/`). A11y 100, BP 96, SEO 92 em todas (metas atingidas). Performance desktop 97–98 (atingida); mobile 54 (Início) e 64 (Detalhe), **abaixo de 90 (não atingida)**. Repetição completa registrada em `cp8-perf/repeticao/` (Início mobile 70). Ver CP8_REPORT §5 |
 | DEL-01 (lockfile) | VALIDADO (`package-lock.json` gerado com `npm install`, sem force/legacy-peer-deps) |
 | DEL-02, 03 (deploy) | PENDENTE (requer autorização) |
 | DEL-04, 05 (README, ARCHITECTURE) | PENDENTE |
@@ -211,22 +211,22 @@ Todas `PENDENTE` (TELA-01..09). Desde o CP2:
 ## 12. Revisão visual final (registrada na aprovação do CP3; executar antes da entrega)
 | ID | Item | Destino |
 |---|---|---|
-| VIS-01 | Reduzir a altura do hero mobile para aproximá-lo do Figma (~235 px → ~180 px) | revisão visual final |
-| VIS-02 | Revisar o espaçamento entre hero e catálogo no desktop | revisão visual final |
-| VIS-03 | Melhorar a variedade visual das artes | revisão visual final |
-| VIS-04 | Revisar as miniaturas da galeria (hoje 2 vistas; Figma mostra 4) | revisão visual final |
-| VIS-05 | Garantir que a barra fixa de compra (mobile) não oculte conteúdo | revisão visual final |
-| VIS-06 | Melhorar a variedade visual dos NFTs relacionados | revisão visual final |
-| VIS-07 | (registrado no CP5) Aproximar a tela de Carteiras do formulário original do Figma (hoje: resumo + "Editar"), preservando os rótulos acessíveis | revisão visual final |
-| VIS-08 | (registrado no CP5) Posição do modal de login/cadastro no desktop (Figma: perto do topo do hero; hoje: centralizado) | revisão visual final |
-| VIS-09 | (CP5) Carrinho mobile: linha "Total + Remover" e título "Resumo da carteira" não existem no Figma | revisão visual final |
-| VIS-10 | (registrado no CP6) Aproximar o formulário de pagamento desktop do Figma | revisão visual final |
-| VIS-11 | (registrado no CP6) Revisar a altura dos cards do carrinho mobile | revisão visual final |
-| VIS-12 | (registrado no CP6) Garantir que o CTA fixo do mobile não impeça a visualização do total | revisão visual final |
-| VIS-13 | (registrado no CP6) Preservar requisitos funcionais e de acessibilidade durante VIS-10..12 (rodar a suíte completa após os ajustes) | revisão visual final |
-| VIS-14 | (CP7) Hierarquia visual do recibo (título, total e hash; densidade da lista de dados no mobile) | CP8 |
-| VIS-15 | (CP7) Toasts não podem encobrir ações (CTA fixo do mobile, botões de quantidade) | CP8 |
-| VIS-16 | (CP7) Espaçamentos e tipografia: revisão geral contra as capturas do Figma na mesma escala | CP8 |
+| VIS-01 | Reduzir a altura do hero mobile para aproximá-lo do Figma (~235 px → ~180 px) | CP8 · FEITO: hero mobile ≈ 190 px (antes ≈ 235 px; Figma ≈ 180 px). `comparacao-inicio-mobile` |
+| VIS-02 | Revisar o espaçamento entre hero e catálogo no desktop | CP8 · FEITO: espaçamento vertical da Início no desktop 56 → 40 px. `comparacao-inicio-desktop` |
+| VIS-03 | Melhorar a variedade visual das artes | CP8 · LIMITAÇÃO (não feito): sem artes oficiais novas; o enunciado proíbe inventar assets. Mantidas as artes do manifesto (`ASSETS_MANIFEST.md`) |
+| VIS-04 | Revisar as miniaturas da galeria (hoje 2 vistas; Figma mostra 4) | CP8 · LIMITAÇÃO (não feito): a galeria continua com 2 vistas reais; 4 miniaturas exigiriam recortes derivados apresentados como vistas novas |
+| VIS-05 | Garantir que a barra fixa de compra (mobile) não oculte conteúdo | CP8 · FEITO E TESTADO: o fim da página fica acima da barra fixa (detalhe, carrinho, pagamento) · `a11y.spec › VIS-05`. **Defeito encontrado pelo teste novo** (rodapé do detalhe 28 px sob a barra de compra) e corrigido no `index.css` |
+| VIS-06 | Melhorar a variedade visual dos NFTs relacionados | CP8 · LIMITAÇÃO (não feito): mesma causa de VIS-03 |
+| VIS-07 | (registrado no CP5) Aproximar a tela de Carteiras do formulário original do Figma (hoje: resumo + "Editar"), preservando os rótulos acessíveis | CP8 · FEITO: carteira principal como formulário persistente (campos do Figma, rótulos preservados); a secundária segue como resumo + Editar. `comparacao-carteiras-desktop` |
+| VIS-08 | (registrado no CP5) Posição do modal de login/cadastro no desktop (Figma: perto do topo do hero; hoje: centralizado) | CP8 · FEITO: modal ancorado a 144 px do topo no desktop (Figma: perto do topo do hero). `comparacao-login-desktop` |
+| VIS-09 | (CP5) Carrinho mobile: linha "Total + Remover" e título "Resumo da carteira" não existem no Figma | CP8 · PARCIAL: linha "Total + Remover" removida (lixeira no canto do card, total da linha só no desktop). O título "Resumo da carteira" foi mantido (estrutura de títulos) |
+| VIS-10 | (registrado no CP6) Aproximar o formulário de pagamento desktop do Figma | CP8 · FEITO: grade de 2 colunas (nome de exibição, nome de usuário, rede, e-mail), carteiras lado a lado, observação por último. Validação inalterada. `comparacao-pagamento-desktop` |
+| VIS-11 | (registrado no CP6) Revisar a altura dos cards do carrinho mobile | CP8 · FEITO: card do carrinho mobile com a altura da imagem (≈ 82 px; antes ≈ 130 px). `comparacao-carrinho-mobile` |
+| VIS-12 | (registrado no CP6) Garantir que o CTA fixo do mobile não impeça a visualização do total | CP8 · FEITO E TESTADO: total na barra fixa ao lado do CTA (carrinho e pagamento) · `data-testid="mobile-total"` |
+| VIS-13 | (registrado no CP6) Preservar requisitos funcionais e de acessibilidade durante VIS-10..12 (rodar a suíte completa após os ajustes) | CP8 · FEITO: axe em 12 telas × 2 viewports, suíte completa no fim do CP8 (CP8_REPORT §6) |
+| VIS-14 | (CP7) Hierarquia visual do recibo (título, total e hash; densidade da lista de dados no mobile) | CP8 · FEITO: estado em painel com cor + ícone + texto; total maior. `comparacao-recibo-desktop` |
+| VIS-15 | (CP7) Toasts não podem encobrir ações (CTA fixo do mobile, botões de quantidade) | CP8 · FEITO E TESTADO: toasts no topo, abaixo do header · `a11y.spec › notificação não cobre a ação fixa` |
+| VIS-16 | (CP7) Espaçamentos e tipografia: revisão geral contra as capturas do Figma na mesma escala | CP8 · PARCIAL: ajustes pontuais (nome no card do carrinho, espaçamentos da Início, recibo). Sem revisão tipográfica global além disso |
 
 ## 13. CP4: autenticação, perfil e carteiras (evidências em `planning/evidence/cp4/` e `planning/evidence/cp4-tests/`)
 

@@ -162,3 +162,24 @@ export function CouponForm({ cart, className }: { cart: Cart; className?: string
     </form>
   )
 }
+
+/**
+ * CP8 (VIS-12): total na barra de ação fixa do mobile. A barra cobre o fim da página enquanto
+ * a pessoa rola; com o total ao lado do botão, o valor que será pago nunca fica escondido.
+ */
+export function MobileTotal({ value, loading }: { value: string | undefined; loading: boolean }) {
+  return (
+    <div className="flex min-w-0 shrink-0 flex-col" aria-live="polite">
+      <span className="text-[0.6875rem] text-muted-foreground">Total</span>
+      {value ? (
+        <span className="font-mono text-body font-bold text-price tabular-nums" data-testid="mobile-total" data-value={value}>
+          {formatEth(value)}
+        </span>
+      ) : loading ? (
+        <Skeleton className="h-5 w-20 rounded-xs" />
+      ) : (
+        <span aria-hidden>—</span>
+      )}
+    </div>
+  )
+}

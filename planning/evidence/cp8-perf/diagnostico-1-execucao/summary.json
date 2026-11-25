@@ -1,0 +1,142 @@
+{
+  "env": {
+    "date": "2026-11-25T11:44:10.198Z",
+    "node": "v26.13.1",
+    "os": "Windows_NT 10.0.26300 x64",
+    "cpu": "12th Gen Intel(R) Core(TM) i5-1235U",
+    "lighthouse": "13.6.0",
+    "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/159.0.0.0 Safari/537.36",
+    "runsPerCombination": 1,
+    "scenario": "default (mocks MSW ativos, build de produção, vite preview)"
+  },
+  "targets": {
+    "performance": 90,
+    "accessibility": 95,
+    "best-practices": 95,
+    "seo": 90
+  },
+  "groups": [
+    {
+      "page": "inicio",
+      "profile": "mobile",
+      "runs": 1,
+      "median": {
+        "performance": 72,
+        "accessibility": 100,
+        "best-practices": 96,
+        "seo": 92
+      },
+      "medianLcpMs": 4926.275350000001,
+      "medianCls": 0,
+      "medianTbtMs": 414
+    },
+    {
+      "page": "inicio",
+      "profile": "desktop",
+      "runs": 1,
+      "median": {
+        "performance": 98,
+        "accessibility": 100,
+        "best-practices": 96,
+        "seo": 92
+      },
+      "medianLcpMs": 1165.4954000000002,
+      "medianCls": 0.010025966227369985,
+      "medianTbtMs": 16
+    },
+    {
+      "page": "detalhe",
+      "profile": "mobile",
+      "runs": 1,
+      "median": {
+        "performance": 65,
+        "accessibility": 100,
+        "best-practices": 96,
+        "seo": 92
+      },
+      "medianLcpMs": 4719.5865,
+      "medianCls": 0,
+      "medianTbtMs": 594.5
+    },
+    {
+      "page": "detalhe",
+      "profile": "desktop",
+      "runs": 1,
+      "median": {
+        "performance": 98,
+        "accessibility": 100,
+        "best-practices": 96,
+        "seo": 92
+      },
+      "medianLcpMs": 1080.11785,
+      "medianCls": 0,
+      "medianTbtMs": 38
+    }
+  ],
+  "results": [
+    {
+      "page": "inicio",
+      "profile": "mobile",
+      "run": 1,
+      "scores": {
+        "performance": 72,
+        "accessibility": 100,
+        "best-practices": 96,
+        "seo": 92
+      },
+      "lcpMs": 4926.275350000001,
+      "cls": 0,
+      "tbtMs": 414,
+      "lighthouseVersion": "13.6.0",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/159.0.0.0 Safari/537.36"
+    },
+    {
+      "page": "inicio",
+      "profile": "desktop",
+      "run": 1,
+      "scores": {
+        "performance": 98,
+        "accessibility": 100,
+        "best-practices": 96,
+        "seo": 92
+      },
+      "lcpMs": 1165.4954000000002,
+      "cls": 0.010025966227369985,
+      "tbtMs": 16,
+      "lighthouseVersion": "13.6.0",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/159.0.0.0 Safari/537.36"
+    },
+    {
+      "page": "detalhe",
+      "profile": "mobile",
+      "run": 1,
+      "scores": {
+        "performance": 65,
+        "accessibility": 100,
+        "best-practices": 96,
+        "seo": 92
+      },
+      "lcpMs": 4719.5865,
+      "cls": 0,
+      "tbtMs": 594.5,
+      "lighthouseVersion": "13.6.0",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/159.0.0.0 Safari/537.36"
+    },
+    {
+      "page": "detalhe",
+      "profile": "desktop",
+      "run": 1,
+      "scores": {
+        "performance": 98,
+        "accessibility": 100,
+        "best-practices": 96,
+        "seo": 92
+      },
+      "lcpMs": 1080.11785,
+      "cls": 0,
+      "tbtMs": 38,
+      "lighthouseVersion": "13.6.0",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/159.0.0.0 Safari/537.36"
+    }
+  ]
+}

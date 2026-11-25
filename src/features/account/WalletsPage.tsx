@@ -70,12 +70,22 @@ export function WalletsPage() {
     </section>
   )
 
+  // CP8 (VIS-07): como no Figma, a carteira PRINCIPAL aparece como formulário aberto (editar e
+  // salvar direto; sem carteira, é o formulário de cadastro). A secundária fica resumida abaixo,
+  // com "Editar", "Tornar principal" ou "Adicionar".
   return (
-    <div className="flex flex-col gap-6">
-      <p className="text-caption text-muted-foreground">
-        Estas carteiras ficam disponíveis no pagamento. Carteiras e rede são simuladas: nenhuma carteira real é conectada.
-      </p>
-      {slot(primary, 'Carteira principal', 'Você ainda não cadastrou uma carteira.', 'wallet-primary-title')}
+    <div className="flex flex-col gap-10">
+      <section aria-labelledby="wallet-primary-title" className="flex flex-col gap-4">
+        <div className="flex flex-col gap-1">
+          <h2 id="wallet-primary-title" className="text-title-3 font-bold">
+            Carteira principal
+          </h2>
+          <p className="text-caption text-muted-foreground">
+            Estas carteiras ficam disponíveis no pagamento e para receber os NFTs comprados. Carteiras e rede são simuladas: nenhuma carteira real é conectada.
+          </p>
+        </div>
+        <WalletForm key={primary ? `${primary.id}:${primary.version}` : 'nova-principal'} wallet={primary} persistent />
+      </section>
       {primary && slot(secondary, 'Carteira secundária', 'Você ainda não adicionou uma carteira secundária.', 'wallet-secondary-title')}
     </div>
   )
@@ -122,7 +132,7 @@ function WalletSummary({ wallet, onEdit, disabled }: { wallet: Wallet; onEdit: (
           Editar
         </Button>
         {!wallet.primary && (
-          <Button type="button" size="sm" onClick={makePrimary} disabled={disabled || setPrimary.isPending} aria-label={`Tornar ${wallet.nickname} a carteira principal`}>
+          <Button type="button" size="sm" onClick={makePrimary} disabled={disabled || setPrimary.isPending} aria-label={`Tornar principal a carteira ${wallet.nickname}`}>
             {setPrimary.isPending ? 'Trocando…' : 'Tornar principal'}
           </Button>
         )}
@@ -131,7 +141,7 @@ function WalletSummary({ wallet, onEdit, disabled }: { wallet: Wallet; onEdit: (
   )
 }
 
-function WalletForm({ wallet, onDone }: { wallet?: Wallet; onDone: () => void }) {
+function WalletForm({ wallet, onDone, persistent = false }: { wallet?: Wallet; onDone?: () => void; persistent?: boolean }) {
   const save = useSaveWallet()
   const formRef = useRef<HTMLFormElement>(null)
   const [errors, setErrors] = useState<FieldErrors>({})
@@ -161,7 +171,7 @@ function WalletForm({ wallet, onDone }: { wallet?: Wallet; onDone: () => void })
     save.mutateAsync({ id: wallet?.id, input: parsed.data }).then(
       (saved) => {
         toast.success(wallet ? `Carteira ${saved.nickname} atualizada` : `Carteira ${saved.nickname} adicionada`)
-        onDone()
+        onDone?.()
       },
       (err: unknown) => {
         if (err instanceof ApiError && err.details) {
@@ -173,7 +183,7 @@ function WalletForm({ wallet, onDone }: { wallet?: Wallet; onDone: () => void })
     )
   }
 
-  const title = wallet ? `Editar ${wallet.nickname}` : 'Nova carteira'
+  const title = persistent ? 'Dados da carteira principal' : wallet ? `Editar ${wallet.nickname}` : 'Nova carteira'
   return (
     <form ref={formRef} onSubmit={onSubmit} noValidate className="flex flex-col gap-4" aria-label={title}>
       {formError && <FormAlert>{formError}</FormAlert>}
@@ -227,9 +237,11 @@ function WalletForm({ wallet, onDone }: { wallet?: Wallet; onDone: () => void })
         <Button type="submit" disabled={save.isPending}>
           {save.isPending ? 'Salvando…' : 'Salvar carteira'}
         </Button>
-        <Button type="button" variant="ghost" onClick={onDone} disabled={save.isPending}>
-          Cancelar
-        </Button>
+        {!persistent && (
+          <Button type="button" variant="ghost" onClick={onDone} disabled={save.isPending}>
+            Cancelar
+          </Button>
+        )}
       </div>
     </form>
   )

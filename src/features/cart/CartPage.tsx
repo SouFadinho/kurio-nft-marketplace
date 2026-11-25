@@ -25,7 +25,7 @@ import { apiErrorMessage } from '@/components/kurio/form'
 import { CheckoutLayout } from '@/components/layout/CheckoutLayout'
 import { formatEth } from '@/lib/eth'
 import { cn } from '@/lib/utils'
-import { CouponForm, SummaryRows } from './QuoteSummary'
+import { CouponForm, MobileTotal, SummaryRows } from './QuoteSummary'
 import { cartHasIssues, useCart, useQuote, useRemoveCartLine, useUpdateCartLine } from './queries'
 import { NFTCard } from '@/components/kurio/NFTCard'
 import { SectionHeading } from '@/components/kurio/SectionHeading'
@@ -133,7 +133,12 @@ export function CartPage() {
           </Link>
         </section>
       }
-      mobileAction={checkoutButton('w-full', 'gradient')}
+      mobileAction={
+        <div className="flex items-center gap-4">
+          <MobileTotal value={quote.data?.total} loading={quote.isFetching} />
+          {checkoutButton('min-w-0 flex-1', 'gradient')}
+        </div>
+      }
       below={<AlsoViewed exclude={data.lines.map((l) => l.nftId)} />}
     />
   )
@@ -209,44 +214,40 @@ function CartRow({ line, lineTotal }: { line: CartLine; lineTotal: string | unde
       aria-busy={busy}
     >
       <div className="flex items-stretch lg:grid lg:grid-cols-[minmax(0,1fr)_110px_120px_110px_40px] lg:items-center lg:gap-4 lg:px-3 lg:py-2">
-        <div className="flex min-w-0 items-center gap-3">
+        <div className="flex min-w-0 flex-1 items-center gap-3 lg:order-1">
           <div className="size-20 shrink-0 overflow-hidden bg-surface-2 lg:size-12 lg:rounded-xs">
             <NftImage src={line.image} alt={line.imageAlt} />
           </div>
           <div className="flex min-w-0 flex-col gap-0.5 py-2 lg:py-0">
-            <Link to="/nft/$nftId" params={{ nftId: line.nftId }} className="truncate text-body font-bold hover:underline lg:text-caption">
+            <Link to="/nft/$nftId" params={{ nftId: line.nftId }} className="truncate text-[0.9375rem] font-bold hover:underline lg:text-caption">
               {line.name}
             </Link>
             <span className="text-caption text-muted-foreground">Edição: {line.editionLabel}</span>
             <PriceDisplay value={line.unitPrice} size="lg" label="Preço unitário" className="lg:hidden" />
           </div>
         </div>
-        <PriceDisplay value={line.unitPrice} label="Preço unitário" className="hidden text-caption lg:inline-flex" />
-        <div className="ml-auto flex items-center gap-1 self-center pr-3 lg:ml-0 lg:pr-0">
-          <QuantitySelector value={line.quantity} onChange={(q) => void setQuantity(q)} max={max} itemName={line.name} disabled={busy} className="gap-2" />
+        <PriceDisplay value={line.unitPrice} label="Preço unitário" className="hidden text-caption lg:order-2 lg:inline-flex" />
+        {/* CP8 (VIS-09/11): no mobile, lixeira e quantidade numa coluna à direita (card com a altura
+            da arte, como no Figma); no desktop o wrapper some (display: contents) e cada controle
+            ocupa a própria coluna da tabela (order). */}
+        <div className="flex shrink-0 flex-col items-end justify-between gap-1 py-1.5 pr-2 lg:contents">
+          <Button
+            type="button"
+            variant="ghost"
+            size="icon"
+            className="size-8 text-muted-foreground hover:text-foreground lg:order-5 lg:size-10"
+            aria-label={`Remover ${line.name} do carrinho`}
+            onClick={onRemove}
+            disabled={busy}
+          >
+            <Trash2 aria-hidden />
+          </Button>
+          <QuantitySelector value={line.quantity} onChange={(q) => void setQuantity(q)} max={max} itemName={line.name} disabled={busy} className="gap-2 lg:order-3" />
         </div>
-        <span className="hidden font-mono text-caption font-bold text-price tabular-nums lg:block" data-testid="line-total">
+        {/* Total da linha só no desktop (o Figma mobile mostra o preço unitário; o total fica no resumo). */}
+        <span className="hidden font-mono text-caption font-bold text-price tabular-nums lg:order-4 lg:block" data-testid="line-total">
           {lineTotal ? formatEth(lineTotal) : <span aria-label="Total da linha indisponível">—</span>}
         </span>
-        <Button
-          type="button"
-          variant="ghost"
-          size="icon"
-          className="hidden text-muted-foreground hover:text-foreground lg:inline-flex"
-          aria-label={`Remover ${line.name} do carrinho`}
-          onClick={onRemove}
-          disabled={busy}
-        >
-          <Trash2 aria-hidden />
-        </Button>
-      </div>
-      <div className="flex flex-wrap items-center justify-between gap-2 border-t border-border/60 px-3 py-1.5 lg:hidden">
-        <span className="font-mono text-caption tabular-nums">
-          Total: <strong className="text-price">{lineTotal ? formatEth(lineTotal) : '—'}</strong>
-        </span>
-        <Button type="button" variant="ghost" size="sm" className="text-muted-foreground" aria-label={`Remover ${line.name} do carrinho`} onClick={onRemove} disabled={busy}>
-          <Trash2 aria-hidden /> Remover
-        </Button>
       </div>
       {(line.issue || priceChanged) && (
         <div role={line.issue ? 'alert' : 'status'} className={cn('flex flex-wrap items-center gap-2 px-3 py-2 text-caption', line.issue ? 'bg-destructive-surface text-destructive' : 'bg-primary/10 text-price')}>

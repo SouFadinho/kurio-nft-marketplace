@@ -2,6 +2,22 @@
 @import 'tw-animate-css';
 
 /*
+ * CP8 (CLS medido: 0,30 no Detalhe desktop): fallback com as MESMAS métricas da Roboto Mono.
+ * Enquanto a fonte self-hosted carrega (font-display: swap), o texto usava Consolas (0,55 em por
+ * caractere) e quebrava linhas diferente da Roboto Mono (0,60 em): a troca empurrava o conteúdo.
+ * Courier New / Liberation Mono / Cousine têm 0,60 em; os overrides alinham ascendente e
+ * descendente (Roboto Mono: 1,048 / 0,271 em). Nada muda depois que a fonte real carrega.
+ */
+@font-face {
+  font-family: 'Roboto Mono Fallback';
+  src: local('Courier New'), local('CourierNewPSMT'), local('Liberation Mono'), local('Cousine');
+  size-adjust: 100%;
+  ascent-override: 104.8%;
+  descent-override: 27.1%;
+  line-gap-override: 0%;
+}
+
+/*
  * KURIO — Design tokens (CP2)
  * ---------------------------------------------------------------------------
  * Origem das cores: amostragem de pixels das capturas do Figma (planning/VISUAL_ANALYSIS.md §3).
@@ -52,7 +68,7 @@
 
   /* ---------- Tipografia ---------- */
   /* Roboto Mono (variável, self-hosted): substituta documentada da fonte não confirmada do Figma. */
-  --font-mono: 'Roboto Mono Variable', ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace;
+  --font-mono: 'Roboto Mono Variable', 'Roboto Mono Fallback', ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace;
   --font-sans: var(--font-mono);
 
   --text-display: 2.5rem; /* hero desktop */
@@ -173,5 +189,13 @@
   .skeleton {
     animation: none !important;
     background-image: none;
+  }
+}
+
+/* CP8 (VIS-05): no mobile, a barra de compra fixa do detalhe (~124 px) é mais alta que a navegação
+   inferior que o rodapé reserva; sem isto o fim do rodapé ficava sob a barra (a11y.spec › VIS-05). */
+@media (width < 64rem) {
+  body:has([data-testid='mobile-buy-bar']) [data-testid='site-footer'] {
+    padding-bottom: calc(9rem + env(safe-area-inset-bottom));
   }
 }

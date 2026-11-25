@@ -30,7 +30,8 @@ const SOCIALS = [
 ] as const
 
 function FooterLinkItem({ link }: { link: FooterLink }) {
-  const cls = 'text-caption text-foreground/80 transition-colors hover:text-price'
+  // CP8: alvo de toque de 24 px no mobile (WCAG 2.5.8); no desktop vale a exceção de espaçamento.
+  const cls = 'inline-flex min-h-6 items-center lg:min-h-0 text-caption text-foreground/80 transition-colors hover:text-price'
   if (link.unavailable || !link.to) return <UnavailableAction label={link.label} className={cls} />
   return (
     <Link to={link.to} className={cls}>

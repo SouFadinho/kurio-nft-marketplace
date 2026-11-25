@@ -141,7 +141,7 @@ test.describe('sessão e rotas protegidas', () => {
   test('expiração: volta ao login com aviso e retoma a rota de origem', async ({ page }) => {
     await openApp(page, '/')
     await signIn(page, USERS.ana, '/perfil/carteiras')
-    await expect(page.getByText('Principal', { exact: true }).first()).toBeVisible()
+    await expect(page.getByRole('form', { name: 'Dados da carteira principal' }).getByLabel('Apelido da carteira')).toHaveValue('Principal')
     await mock(page).expireSessions()
     // Próxima requisição privada (mudar de aba da conta) recebe 401 SESSION_EXPIRED.
     await page.getByRole('navigation', { name: 'Conta' }).getByRole('link', { name: 'Dados do perfil' }).click()

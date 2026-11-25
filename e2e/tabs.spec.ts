@@ -105,6 +105,8 @@ test.describe('consistência entre abas', () => {
   test('aba desconectada perde eventos e reconcilia pelo REST ao reconectar', async ({ page, context }) => {
     await openApp(page, '/')
     const other = await secondTab(context)
+    // Pré-condição explícita (CP8: o socket é carregado sob demanda): a outra aba já conectada.
+    await expect.poll(async () => (await mock(other).connections()).filter((c) => c.state === 'anonymous').length).toBe(1)
     await mock(other).setOnline(false) // só o transporte da outra aba
     await mock(page).updateNft('nft-002', { price: '3.10' })
     await expect(price(page, 'nft-002')).toHaveText('3.10 ETH')

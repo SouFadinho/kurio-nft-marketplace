@@ -1,6 +1,7 @@
 /**
  * Apresentação de login/cadastro (TELA-06 / TELA-07):
- * - Desktop (≥ lg): modal sobre a Home, como no Figma, com as abas "Entrar | Criar conta".
+ * - Desktop (≥ lg): modal sobre a Home, como no Figma, com as abas "Entrar | Criar conta". CP8
+ *   (VIS-08): ancorado perto do topo do hero como no Figma (~160 px), não centralizado na vertical.
  *   O Radix Dialog prende o foco, fecha com Esc e deixa o fundo inerte. Ao fechar, volta para
  *   a rota de origem (ou Início, se a origem for privada) e devolve o foco ao botão "Entrar"
  *   do header.
@@ -46,7 +47,7 @@ export function AuthScreen({ mode, redirect, expired = false }: { mode: AuthMode
       <>
         <HomeContent search={EMPTY_SEARCH} />
         <Dialog open onOpenChange={(open) => !open && close()}>
-          <DialogContent className="max-h-[calc(100dvh-2rem)] gap-5 overflow-y-auto sm:max-w-[31rem]" overlayClassName="bg-black/45 backdrop-blur-none" aria-describedby="auth-description">
+          <DialogContent className="max-h-[calc(100dvh-2rem)] gap-5 overflow-y-auto sm:max-w-[31rem] lg:top-36 lg:max-h-[calc(100dvh-10rem)] lg:translate-y-0" overlayClassName="bg-black/45 backdrop-blur-none" aria-describedby="auth-description">
             <nav aria-label="Acesso à conta" className="flex items-center gap-3 pr-10 text-body font-semibold">
               <AuthTab to="/login" active={mode === 'login'} redirect={redirect}>
                 Entrar
@@ -56,7 +57,10 @@ export function AuthScreen({ mode, redirect, expired = false }: { mode: AuthMode
                 Criar conta
               </AuthTab>
             </nav>
-            <DialogTitle className="sr-only">{COPY[mode].title}</DialogTitle>
+            {/* CP8: /login e /cadastro são páginas; no desktop o modal é o conteúdo principal, então o título é o h1. */}
+            <DialogTitle asChild>
+              <h1 className="sr-only">{COPY[mode].title}</h1>
+            </DialogTitle>
             <DialogDescription id="auth-description" className="-mt-2 text-caption">
               {COPY[mode].description}
             </DialogDescription>

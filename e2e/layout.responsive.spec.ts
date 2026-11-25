@@ -57,7 +57,7 @@ for (const width of WIDTHS) {
       if (step === 'form') await page.getByRole('button', { name: 'Adicionar carteira' }).click()
       else if (step === '/perfil/carteiras') {
         await page.getByRole('navigation', { name: 'Conta' }).getByRole('link', { name: 'Carteiras' }).click()
-        await expect(page.getByRole('region', { name: 'Carteira principal' })).toContainText('Cofre')
+        await expect(page.getByRole('form', { name: 'Dados da carteira principal' }).getByLabel('Apelido da carteira')).toHaveValue('Cofre')
       }
       const result = await horizontalOverflow(page)
       expect.soft(result.scroll, `${step} @${width}px: scrollWidth ${result.scroll} > ${result.client} (${result.offenders.join(', ')})`).toBeLessThanOrEqual(result.client)

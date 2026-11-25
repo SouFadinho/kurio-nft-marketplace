@@ -11,13 +11,15 @@
  */
 import { useEffect, type ReactNode } from 'react'
 import { useQueryClient } from '@tanstack/react-query'
-import { io } from 'socket.io-client'
+import type { io as ioFactory } from 'socket.io-client'
 import { CartUpdatedEvent, NftUpdatedEvent, OrderUpdatedEvent, REALTIME_EVENTS } from '@/api/contracts'
 import { queryKeys } from '@/api/queryKeys'
 import { useClientSession } from '@/features/auth/queries'
 import { EventGuard, type GuardDecision } from './eventGuard'
 import { applyCartUpdated, applyNftUpdated, applyOrderUpdated, reapplyNewerNftEvents, type LatestNftEvents } from './applyEvent'
 import { diagnostics } from './diagnostics'
+
+type IoFactory = typeof ioFactory
 
 function count(decision: GuardDecision, type: string) {
   diagnostics.update((d) => ({
@@ -53,6 +55,7 @@ export function RealtimeProvider({ children }: { children: ReactNode }) {
     diagnostics.reset(userId)
     diagnostics.update({ state: 'connecting' })
 
+    const connect = (io: IoFactory) => {
     const socket = io(window.location.origin, {
       transports: ['websocket'],
       auth: token ? { token } : {},
@@ -133,9 +136,23 @@ export function RealtimeProvider({ children }: { children: ReactNode }) {
     return () => {
       document.removeEventListener('visibilitychange', onResume)
       window.removeEventListener('pageshow', onPageShow)
-      unsubscribeCache()
       socket.removeAllListeners()
       socket.disconnect()
+    }
+    }
+
+    // CP8 (performance): o socket.io-client é carregado sob demanda, depois da primeira renderização.
+    // Assim o App pode ser baixado em paralelo com a camada de mocks (main.tsx) sem capturar o
+    // WebSocket nativo antes de o MSW instalar a interceptação (motivo da ordem descrita no CP1).
+    let disposed = false
+    let teardown: (() => void) | undefined
+    void import('socket.io-client').then(({ io }) => {
+      if (!disposed) teardown = connect(io)
+    })
+    return () => {
+      disposed = true
+      teardown?.()
+      unsubscribeCache()
       diagnostics.update({ state: 'idle' })
     }
   }, [queryClient, token, userId])

@@ -8,7 +8,6 @@
  */
 import type { Network, Order, Wallet, WalletConnection } from '@/api/contracts'
 import { buildCatalog, type CatalogNft } from './fixtures/catalog'
-import { hashPassword } from './crypto'
 import { SCENARIOS, type ScenarioConfig, type ScenarioName } from './scenarios'
 
 // v6 (CP6): reserva com prazo, snapshot do recibo e relógio controlável; estados anteriores são descartados.
@@ -105,10 +104,15 @@ export const SEED_COUPONS: DbCoupon[] = [
   { code: 'NATAL2024', label: 'Natal 2024 (15%)', percentOff: 15, expiresAt: '2024-12-31T23:59:59.000Z' },
 ]
 
-/** Usuários fictícios (MOCK-05). As senhas estão documentadas no README; aqui só existem como hash. */
+/**
+ * Usuários fictícios (MOCK-05). As senhas NÃO estão no código: só o hash PBKDF2-SHA256
+ * (100 mil iterações, salt "salt-<id>") calculado offline (CP8: evita ~200 mil iterações a cada
+ * seed na inicialização). As senhas de demonstração estão no README e um teste unitário confere
+ * que estes hashes correspondem a elas.
+ */
 export const SEED_USERS = [
-  { id: 'usr_ana', email: 'ana@kurio.test', displayName: 'Ana Colecionadora', username: 'ana.coleciona', walletNickname: 'Principal', password: 'Kurio#Ana2026' },
-  { id: 'usr_bruno', email: 'bruno@kurio.test', displayName: 'Bruno Curador', username: 'bruno.curador', walletNickname: 'Cofre', password: 'Kurio#Bruno2026' },
+  { id: 'usr_ana', email: 'ana@kurio.test', displayName: 'Ana Colecionadora', username: 'ana.coleciona', walletNickname: 'Principal', passwordHash: 'f8dfd22994a881f67d74ec697b3b20751e69c7fbb20f687a8f11942d740de8ae' },
+  { id: 'usr_bruno', email: 'bruno@kurio.test', displayName: 'Bruno Curador', username: 'bruno.curador', walletNickname: 'Cofre', passwordHash: 'e2b4221f505b33e96a312dbae415f177ac70dfeeeb821afba4d797bbf92f99eb' },
 ] as const
 
 /** Carteiras fictícias. As de Ana reproduzem o Figma (Mobile / Pagamento: "Principal" e "Reserva · nova.kurio.eth · Rede Polygon"). */
@@ -123,12 +127,7 @@ const SEED_WALLETS: Record<string, Wallet[]> = {
 let state: DbState | null = null
 
 async function seed(scenario: ScenarioName): Promise<DbState> {
-  const users: DbUser[] = await Promise.all(
-    SEED_USERS.map(async (u) => {
-      const salt = `salt-${u.id}`
-      return { id: u.id, email: u.email, displayName: u.displayName, username: u.username, walletNickname: u.walletNickname, avatarUrl: null, version: 1, salt, passwordHash: await hashPassword(u.password, salt) }
-    }),
-  )
+  const users: DbUser[] = SEED_USERS.map((u) => ({ id: u.id, email: u.email, displayName: u.displayName, username: u.username, walletNickname: u.walletNickname, avatarUrl: null, version: 1, salt: `salt-${u.id}`, passwordHash: u.passwordHash }))
   return {
     schema: 6,
     clockOffsetMs: 0,

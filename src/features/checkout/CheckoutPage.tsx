@@ -48,9 +48,8 @@ import { CheckoutLayout } from '@/components/layout/CheckoutLayout'
 import { useProfile, useWallets, sortWallets } from '@/features/account/queries'
 import { useClientSession } from '@/features/auth/queries'
 import { cartHasIssues, useCart, useQuote } from '@/features/cart/queries'
-import { CouponForm, SummaryRows } from '@/features/cart/QuoteSummary'
+import { CouponForm, MobileTotal, SummaryRows } from '@/features/cart/QuoteSummary'
 import { formatEth } from '@/lib/eth'
-import { cn } from '@/lib/utils'
 import { clearAttempt, clearDraft, loadDraft, saveDraft, useConnectWallet, useCreateCheckoutOrder, useDisconnectWallet, useRecoverAttempt, type CheckoutDraft } from './queries'
 
 const CRUMBS = [{ label: 'Início', to: '/' as const }, { label: 'Mercado', to: '/mercado' as const }, { label: 'Pagamento' }]
@@ -332,6 +331,10 @@ function CheckoutForm({ userId, cart, profile, wallets }: { userId: string; cart
         </p>
       )}
 
+      {/* CP8 (VIS-10): estrutura mais próxima do Figma desktop. "Perfil do colecionador" em grade de
+          2 colunas (nome de exibição · nome de usuário · rede · e-mail), carteiras lado a lado,
+          "Usar outra carteira?" em linha e a observação por último, como no Figma. Validação,
+          carteiras cadastradas e conexão simulada são as mesmas. */}
       <section aria-labelledby="buyer-title" className="flex flex-col gap-4">
         <h2 id="buyer-title" className="text-title-3 font-bold">
           Perfil do colecionador
@@ -340,21 +343,24 @@ function CheckoutForm({ userId, cart, profile, wallets }: { userId: string; cart
           <Field label="Nome de exibição" error={errors.displayName} required>
             {(p) => <Input {...p} value={draft.displayName} onChange={(e) => update({ displayName: e.target.value })} autoComplete="name" />}
           </Field>
+          <Field label="Nome de usuário" hint="Do seu perfil (não muda no pedido).">
+            {(p) => <Input {...p} value={profile.username} readOnly aria-readonly className="text-muted-foreground" />}
+          </Field>
+          <Field label="Rede" error={errors.network} hint={networkOptions.length > 1 ? 'A taxa de rede muda conforme a rede.' : 'Única rede compatível com este endereço.'} required>
+            {(p) => (
+              <select {...p} value={draft.network} onChange={(e) => changeNetwork(e.target.value as Network)} className={selectClass}>
+                {networkOptions.map((n) => (
+                  <option key={n} value={n}>
+                    {NETWORK_LABEL[n]}
+                  </option>
+                ))}
+              </select>
+            )}
+          </Field>
           <Field label="E-mail" error={errors.email} required>
             {(p) => <Input {...p} type="email" inputMode="email" value={draft.email} onChange={(e) => update({ email: e.target.value })} autoComplete="email" />}
           </Field>
         </div>
-        <Field label="Observação do colecionador (opcional)" error={errors.note} hint="Até 280 caracteres.">
-          {(p) => (
-            <textarea
-              {...p}
-              value={draft.note}
-              onChange={(e) => update({ note: e.target.value })}
-              rows={3}
-              className="w-full rounded-md border border-input bg-transparent px-4 py-3 font-mono text-body text-foreground outline-none hover:border-muted-foreground focus-visible:border-primary aria-invalid:border-destructive lg:rounded-xs lg:px-3 lg:text-caption"
-            />
-          )}
-        </Field>
       </section>
 
       <section aria-labelledby="wallet-title" className="flex flex-col gap-4">
@@ -366,13 +372,13 @@ function CheckoutForm({ userId, cart, profile, wallets }: { userId: string; cart
             Gerenciar carteiras
           </Link>
         </div>
-        <RadioGroup value={draft.wallet} onValueChange={changeWallet} aria-labelledby="wallet-title" aria-describedby={errors.wallet ? 'wallet-error' : undefined} className="gap-3">
+        <RadioGroup value={draft.wallet} onValueChange={changeWallet} aria-labelledby="wallet-title" aria-describedby={errors.wallet ? 'wallet-error' : undefined} className="grid gap-3 md:grid-cols-2">
           {wallets.map((w) => (
             <WalletCard key={w.id} value={`saved:${w.id}`} name={w.nickname} address={w.address} ens={w.ens ? `${w.ens}.eth` : undefined} network={w.network} />
           ))}
-          <div className="flex items-center gap-3 rounded-lg bg-surface p-4 has-[[data-state=checked]]:ring-1 has-[[data-state=checked]]:ring-primary">
+          <div className="flex items-center gap-3 px-1 py-1 md:col-span-2">
             <RadioGroupItem id="wallet-external" value="external" />
-            <label htmlFor="wallet-external" className="cursor-pointer text-body">
+            <label htmlFor="wallet-external" className="cursor-pointer py-1 text-caption">
               Usar outra carteira
             </label>
           </div>
@@ -427,18 +433,19 @@ function CheckoutForm({ userId, cart, profile, wallets }: { userId: string; cart
             </Field>
           </div>
         )}
-        <Field label="Rede" error={errors.network} hint={networkOptions.length > 1 ? 'A taxa de rede muda conforme a rede.' : 'Única rede compatível com este endereço.'} required>
+      </section>
+
+        <Field label="Observação do colecionador (opcional)" error={errors.note} hint="Até 280 caracteres." className="md:max-w-[calc(50%-0.5rem)]">
           {(p) => (
-            <select {...p} value={draft.network} onChange={(e) => changeNetwork(e.target.value as Network)} className={cn(selectClass, 'md:max-w-xs')}>
-              {networkOptions.map((n) => (
-                <option key={n} value={n}>
-                  {NETWORK_LABEL[n]}
-                </option>
-              ))}
-            </select>
+            <textarea
+              {...p}
+              value={draft.note}
+              onChange={(e) => update({ note: e.target.value })}
+              rows={3}
+              className="w-full rounded-md border border-input bg-transparent px-4 py-3 font-mono text-body text-foreground outline-none hover:border-muted-foreground focus-visible:border-primary aria-invalid:border-destructive lg:rounded-xs lg:px-3 lg:text-caption"
+            />
           )}
         </Field>
-      </section>
     </form>
   )
 
@@ -511,7 +518,13 @@ function CheckoutForm({ userId, cart, profile, wallets }: { userId: string; cart
     </div>
   )
 
-  return <CheckoutLayout title={TITLE} crumbs={CRUMBS} backTo="/carrinho" main={main} summary={summary} mobileAction={confirmButton('w-full', 'gradient')} />
+  return <CheckoutLayout title={TITLE} crumbs={CRUMBS} backTo="/carrinho" main={main} summary={summary} mobileAction={
+        <div className="flex items-center gap-4">
+          <MobileTotal value={accepted?.total} loading={!accepted && quote.isFetching} />
+          {confirmButton('min-w-0 flex-1', 'gradient')}
+        </div>
+      }
+    />
 }
 
 function ConnectionStatus({ conn, provider, onConnect, onDisconnect }: { conn: Connection; provider: WalletType; onConnect: () => void; onDisconnect: () => void }) {

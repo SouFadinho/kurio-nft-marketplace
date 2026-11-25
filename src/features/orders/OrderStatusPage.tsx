@@ -33,7 +33,7 @@ export const formatDateTime = (iso: string) =>
   new Intl.DateTimeFormat('pt-BR', { dateStyle: 'short', timeStyle: 'short', timeZone: 'America/Sao_Paulo' }).format(new Date(iso))
 
 export function statusView(order: Order) {
-  if (order.status === 'confirmed') return { icon: CheckCircle2, title: 'Compra confirmada', text: 'A rede (simulada) confirmou o pagamento. Este é o seu recibo.', tone: 'text-success', label: 'Confirmado' }
+  if (order.status === 'confirmed') return { icon: CheckCircle2, title: 'Compra confirmada', text: 'A rede (simulada) confirmou o pagamento. Este é o seu recibo.', tone: 'text-success', panel: 'bg-success-surface border-success/40', label: 'Confirmado' }
   if (order.status === 'rejected') {
     const expired = order.failureReason === 'reservation_expired'
     return {
@@ -43,10 +43,11 @@ export function statusView(order: Order) {
         ? 'A rede não confirmou dentro do prazo da reserva. Nenhum valor foi cobrado e os itens voltaram ao estoque.'
         : 'A rede (simulada) recusou o pagamento. Nenhum valor foi cobrado.',
       tone: 'text-destructive',
+      panel: 'bg-destructive-surface border-destructive/40',
       label: expired ? 'Reserva expirada' : 'Recusado',
     }
   }
-  return { icon: Clock, title: 'Pedido recebido', text: 'Aguardando a confirmação da rede…', tone: 'text-warning', label: 'Pendente' }
+  return { icon: Clock, title: 'Pedido recebido', text: 'Aguardando a confirmação da rede…', tone: 'text-warning', panel: 'bg-warning/10 border-warning/40', label: 'Pendente' }
 }
 
 export function OrderStatusPage({ orderId }: { orderId: string }) {
@@ -86,7 +87,8 @@ function Receipt({ order: o, refreshing, onRefresh }: { order: Order; refreshing
   const p = o.pricing
   return (
     <article className="flex flex-col gap-6 rounded-sm bg-surface p-5 lg:p-8" aria-labelledby="order-title" data-testid="receipt">
-      <header className="flex flex-col gap-2">
+      {/* CP8 (VIS-14): estado em painel com cor, ícone e texto (não depende só da cor). */}
+      <header className={cn('flex flex-col gap-2 rounded-sm border p-4 lg:p-5', s.panel)}>
         <p className="text-caption text-muted-foreground">Pedido {o.id}</p>
         <h1 id="order-title" className={cn('flex items-center gap-2 text-title-2 font-bold', s.tone)}>
           <Icon className="size-6 shrink-0" aria-hidden />
@@ -201,7 +203,7 @@ function Receipt({ order: o, refreshing, onRefresh }: { order: Order; refreshing
               </div>
             </>
           )}
-          <div className="flex justify-between gap-3 border-t border-border-strong pt-3 text-body font-bold">
+          <div className="flex items-baseline justify-between gap-3 border-t border-border-strong pt-3 text-title-3 font-bold lg:text-title-2">
             <dt>Total</dt>
             <dd className="font-mono text-price" data-testid="order-total">
               {formatEth(o.total)}

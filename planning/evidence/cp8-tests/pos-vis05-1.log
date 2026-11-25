@@ -1,0 +1,104 @@
+
+Running 42 tests using 4 workers
+
+[1/42] [desktop-chromium] › e2e\a11y.spec.ts:76:3 › auditoria das telas (axe WCAG 2.2 A/AA + estrutura) › Confirmação (pendente, confirmado, recusado) e Meus pedidos
+[2/42] [desktop-chromium] › e2e\a11y.spec.ts:56:3 › auditoria das telas (axe WCAG 2.2 A/AA + estrutura) › privadas: Perfil, Carteiras, Favoritos, Carrinho, Pagamento
+[3/42] [desktop-chromium] › e2e\a11y.spec.ts:48:3 › auditoria das telas (axe WCAG 2.2 A/AA + estrutura) › públicas: Início, Mercado, Detalhe, Login, Cadastro
+[4/42] [desktop-chromium] › e2e\a11y.spec.ts:93:3 › toque, reflow e notificações › mobile: alvos de toque com pelo menos 24×24 px (WCAG 2.5.8) nas telas principais
+[5/42] [desktop-chromium] › e2e\a11y.spec.ts:135:3 › toque, reflow e notificações › reflow a 320 px (equivalente a 400% de zoom em 1280 px): sem rolagem horizontal
+[6/42] [desktop-chromium] › e2e\a11y.spec.ts:148:3 › toque, reflow e notificações › VIS-05: barra fixa do mobile não esconde o fim da página (detalhe, carrinho, pagamento)
+[7/42] [desktop-chromium] › e2e\a11y.spec.ts:170:3 › toque, reflow e notificações › notificação não cobre a ação fixa nem o total do mobile
+[8/42] [desktop-chromium] › e2e\nft-detail.spec.ts:16:3 › detalhe do NFT › acesso direto e refresh mostram o NFT com os dados do Figma
+[9/42] [desktop-chromium] › e2e\nft-detail.spec.ts:26:3 › detalhe do NFT › NFT inexistente mostra 404 com caminho de volta
+[10/42] [desktop-chromium] › e2e\nft-detail.spec.ts:33:3 › detalhe do NFT › seleção de edição vai para a URL; edição esgotada fica indisponível
+[11/42] [desktop-chromium] › e2e\nft-detail.spec.ts:43:3 › detalhe do NFT › quantidade é inteira e limitada ao estoque da edição
+[12/42] [desktop-chromium] › e2e\nft-detail.spec.ts:52:3 › detalhe do NFT › nft.updated via Socket.IO: preço e estoque mudam na tela e são anunciados
+[13/42] [desktop-chromium] › e2e\nft-detail.spec.ts:75:3 › detalhe do NFT › adicionar ao carrinho grava na API; comprar leva ao pagamento (visitante passa pelo login)
+[14/42] [desktop-chromium] › e2e\nft-detail.spec.ts:86:3 › detalhe do NFT › falha ao carregar o detalhe: erro e "Tentar novamente" recupera
+[15/42] [desktop-chromium] › e2e\nft-detail.spec.ts:95:3 › detalhe do NFT › do catálogo filtrado ao detalhe e de volta: filtros preservados
+[16/42] [desktop-chromium] › e2e\nft-detail.spec.ts:105:3 › detalhe do NFT › mobile: barra de compra fixa e sem navegação inferior; desktop: ações em linha
+[17/42] [desktop-chromium] › e2e\nft-detail.spec.ts:117:3 › detalhe do NFT › edições operáveis por teclado (setas)
+[18/42] [desktop-chromium] › e2e\visual.spec.ts:67:3 › baseline visual: inicio
+[19/42] [desktop-chromium] › e2e\visual.spec.ts:67:3 › baseline visual: detalhe
+[20/42] [desktop-chromium] › e2e\visual.spec.ts:67:3 › baseline visual: carrinho
+[21/42] [desktop-chromium] › e2e\visual.spec.ts:67:3 › baseline visual: pagamento
+[22/42] [mobile-chromium] › e2e\a11y.spec.ts:48:3 › auditoria das telas (axe WCAG 2.2 A/AA + estrutura) › públicas: Início, Mercado, Detalhe, Login, Cadastro
+[23/42] [mobile-chromium] › e2e\a11y.spec.ts:56:3 › auditoria das telas (axe WCAG 2.2 A/AA + estrutura) › privadas: Perfil, Carteiras, Favoritos, Carrinho, Pagamento
+[24/42] [mobile-chromium] › e2e\a11y.spec.ts:76:3 › auditoria das telas (axe WCAG 2.2 A/AA + estrutura) › Confirmação (pendente, confirmado, recusado) e Meus pedidos
+[25/42] [mobile-chromium] › e2e\a11y.spec.ts:93:3 › toque, reflow e notificações › mobile: alvos de toque com pelo menos 24×24 px (WCAG 2.5.8) nas telas principais
+[26/42] [mobile-chromium] › e2e\a11y.spec.ts:135:3 › toque, reflow e notificações › reflow a 320 px (equivalente a 400% de zoom em 1280 px): sem rolagem horizontal
+[27/42] [mobile-chromium] › e2e\a11y.spec.ts:148:3 › toque, reflow e notificações › VIS-05: barra fixa do mobile não esconde o fim da página (detalhe, carrinho, pagamento)
+[28/42] [mobile-chromium] › e2e\a11y.spec.ts:170:3 › toque, reflow e notificações › notificação não cobre a ação fixa nem o total do mobile
+[29/42] [mobile-chromium] › e2e\nft-detail.spec.ts:16:3 › detalhe do NFT › acesso direto e refresh mostram o NFT com os dados do Figma
+[30/42] [mobile-chromium] › e2e\nft-detail.spec.ts:26:3 › detalhe do NFT › NFT inexistente mostra 404 com caminho de volta
+[31/42] [mobile-chromium] › e2e\nft-detail.spec.ts:33:3 › detalhe do NFT › seleção de edição vai para a URL; edição esgotada fica indisponível
+[32/42] [mobile-chromium] › e2e\nft-detail.spec.ts:43:3 › detalhe do NFT › quantidade é inteira e limitada ao estoque da edição
+[33/42] [mobile-chromium] › e2e\nft-detail.spec.ts:52:3 › detalhe do NFT › nft.updated via Socket.IO: preço e estoque mudam na tela e são anunciados
+[34/42] [mobile-chromium] › e2e\nft-detail.spec.ts:75:3 › detalhe do NFT › adicionar ao carrinho grava na API; comprar leva ao pagamento (visitante passa pelo login)
+[35/42] [mobile-chromium] › e2e\nft-detail.spec.ts:86:3 › detalhe do NFT › falha ao carregar o detalhe: erro e "Tentar novamente" recupera
+[36/42] [mobile-chromium] › e2e\nft-detail.spec.ts:95:3 › detalhe do NFT › do catálogo filtrado ao detalhe e de volta: filtros preservados
+[37/42] [mobile-chromium] › e2e\nft-detail.spec.ts:105:3 › detalhe do NFT › mobile: barra de compra fixa e sem navegação inferior; desktop: ações em linha
+[38/42] [mobile-chromium] › e2e\nft-detail.spec.ts:117:3 › detalhe do NFT › edições operáveis por teclado (setas)
+[39/42] [mobile-chromium] › e2e\visual.spec.ts:67:3 › baseline visual: inicio
+[40/42] [mobile-chromium] › e2e\visual.spec.ts:67:3 › baseline visual: detalhe
+[41/42] [mobile-chromium] › e2e\visual.spec.ts:67:3 › baseline visual: carrinho
+[42/42] [mobile-chromium] › e2e\visual.spec.ts:67:3 › baseline visual: pagamento
+  1) [mobile-chromium] › e2e\visual.spec.ts:67:3 › baseline visual: detalhe ────────────────────────
+
+    Error: expect(page).toHaveScreenshot(expected) failed
+
+      Expected an image 390px by 2938px, received 390px by 2986px. 18720 pixels (ratio 0.02 of all image pixels) are different.
+
+      Snapshot: detalhe.png
+
+    Call log:
+      - Expect "toHaveScreenshot(detalhe.png)" with timeout 5000ms
+        - verifying given screenshot expectation
+      - taking page screenshot
+        - disabled all CSS animations
+      - waiting for fonts to load...
+      - fonts loaded
+      - Expected an image 390px by 2938px, received 390px by 2986px. 18720 pixels (ratio 0.02 of all image pixels) are different.
+      - waiting 100ms before taking screenshot
+      - taking page screenshot
+        - disabled all CSS animations
+      - waiting for fonts to load...
+      - fonts loaded
+      - captured a stable screenshot
+      - Expected an image 390px by 2938px, received 390px by 2986px. 18720 pixels (ratio 0.02 of all image pixels) are different.
+
+
+      81 |     } else await openApp(page, path)
+      82 |     await settle(page)
+    > 83 |     await expect(page).toHaveScreenshot(`${name}.png`, { fullPage: true, animations: 'disabled', caret: 'hide', maxDiffPixelRatio: 0.01 })
+         |                        ^
+      84 |   })
+      85 | }
+      86 |
+        at D:\emprego\e2e\visual.spec.ts:83:24
+
+    attachment #1: detalhe (image/png) ─────────────────────────────────────────────────────────────
+    Expected: e2e\visual.spec.ts-snapshots\detalhe-mobile-chromium-win32.png
+    Received: test-results\visual-baseline-visual-detalhe-mobile-chromium\detalhe-actual.png
+    Diff:     test-results\visual-baseline-visual-detalhe-mobile-chromium\detalhe-diff.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\visual-baseline-visual-detalhe-mobile-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\visual-baseline-visual-detalhe-mobile-chromium\error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\visual-baseline-visual-detalhe-mobile-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\visual-baseline-visual-detalhe-mobile-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+  1 failed
+    [mobile-chromium] › e2e\visual.spec.ts:67:3 › baseline visual: detalhe ─────────────────────────
+  3 skipped
+  38 passed (1.5m)

@@ -85,7 +85,7 @@ test.describe('isolamento entre usuários', () => {
     await expect(page).toHaveURL(/\/perfil\/carteiras$/)
     await watchForbidden(page, ['Reserva', 'nova.kurio', '0xA91F7c2D3e4F5a6B7c8D9e0F1a2B3c4D5e6FE82C'])
     await mock(page).release('me.wallets.read')
-    await expect(page.getByRole('region', { name: 'Carteira principal' })).toContainText('Cofre')
+    await expect(page.getByRole('form', { name: 'Dados da carteira principal' }).getByLabel('Apelido da carteira')).toHaveValue('Cofre')
     expect(await leaks(page)).toEqual([])
   })
 

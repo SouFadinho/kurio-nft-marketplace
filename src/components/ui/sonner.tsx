@@ -5,15 +5,17 @@ import { Toaster as Sonner, type ToasterProps } from 'sonner'
  * Toasts (base shadcn/ui + sonner). Tema fixo escuro (o KURIO não tem tema claro), por isso
  * sem `next-themes`. O sonner usa uma região `aria-live` para anunciar as mensagens
  * (feedback acessível de mutations e de tempo real: A11Y-06).
- * No mobile, fica acima da navegação inferior.
+ * CP8 (VIS-15): no TOPO, logo abaixo do header (desktop) ou da barra superior (mobile). Embaixo,
+ * os toasts encobriam a ação fixa do mobile ("Conectar e finalizar", "Confirmar compra", total) e
+ * botões do resumo; no topo, ficam longe das ações principais.
  */
 function Toaster(props: ToasterProps) {
   return (
     <Sonner
       theme="dark"
-      position="bottom-center"
-      offset={{ bottom: 24 }}
-      mobileOffset={{ bottom: 'calc(var(--spacing-bottom-nav) + env(safe-area-inset-bottom) + 12px)' }}
+      position="top-center"
+      offset={{ top: 'calc(var(--spacing-header) + 12px)' }}
+      mobileOffset={{ top: 'calc(4rem + env(safe-area-inset-top) + 8px)' }}
       containerAriaLabel="Notificações"
       icons={{
         success: <CircleCheckIcon className="size-4 text-success" />,

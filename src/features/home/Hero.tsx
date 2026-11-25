@@ -79,14 +79,15 @@ export function Hero() {
 
       {/* ---------- Mobile / tablet ---------- */}
       <div
-        className="relative overflow-hidden rounded-2xl p-4 pb-8 lg:hidden"
+        className="relative overflow-hidden rounded-2xl px-4 pt-3 pb-6 lg:hidden"
         style={{ background: 'radial-gradient(120% 140% at 15% 20%, #6b4529 0%, #4a2f1e 45%, #2f1e15 100%)' }}
       >
         {/* Círculos decorativos do Figma (puramente visuais). */}
         <span aria-hidden className="pointer-events-none absolute -top-16 left-1/3 size-72 rounded-full border border-white/5 bg-white/[0.03]" />
         <span aria-hidden className="pointer-events-none absolute top-10 -left-20 size-64 rounded-full bg-white/[0.03]" />
-        <div className="relative grid grid-cols-[minmax(0,1fr)_38%] items-center gap-3 md:grid-cols-[minmax(0,1fr)_30%]">
-          <div className="flex flex-col gap-1.5">
+        {/* CP8 (VIS-01): ~235 → ~180 px no mobile, como no Figma (menos respiro, arte quadrada). */}
+        <div className="relative grid grid-cols-[minmax(0,1fr)_34%] items-center gap-3 md:grid-cols-[minmax(0,1fr)_26%]">
+          <div className="flex flex-col gap-1">
             <p className="text-caption text-foreground">{HERO.eyebrow}</p>
             <p className="text-display-sm text-foreground uppercase" aria-hidden>
               {HERO.mobile.titleLines.map((l) => (
@@ -97,11 +98,11 @@ export function Hero() {
             </p>
             <h1 className="sr-only">{HERO.mobile.titleLines.join(' ')}</h1>
             <p className="text-caption text-muted-foreground">{HERO.mobile.text}</p>
-            <Link to="/mercado" className="mt-1 inline-flex min-h-9 w-fit items-center gap-2 text-caption font-bold text-price uppercase outline-none focus-visible:outline-2 focus-visible:outline-ring">
+            <Link to="/mercado" className="inline-flex min-h-8 w-fit items-center gap-2 text-caption font-bold text-price uppercase outline-none focus-visible:outline-2 focus-visible:outline-ring">
               {HERO.cta} <ArrowRight className="size-4" aria-hidden />
             </Link>
           </div>
-          <div className="relative aspect-[4/5] w-full">
+          <div className="relative aspect-square w-full">
             <div className="absolute inset-0 overflow-hidden rounded-xl bg-surface-2">
               {current ? <NftImage src={current.image} alt={current.imageAlt} priority /> : <div className="skeleton size-full" aria-hidden />}
             </div>
