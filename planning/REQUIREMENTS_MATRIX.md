@@ -13,6 +13,8 @@ IDs definidos em `CHALLENGE_REQUIREMENTS.md`. `D` = decisão do candidato ou té
 
 **Escopo da validação no CP1:** mecanismos provados na **prova de conceito**, cuja interface é temporária. Quando as telas definitivas forem construídas, a validação é repetida pelos testes do CP7 (coluna "Revalidar").
 
+**CP9.1 (25/11/2026):** repositório público (https://github.com/SouFadinho/kurio-nft-marketplace), deploy na Vercel, CI real com baselines Linux e Lighthouse independente. Os identificadores de commit citados antes desta data são os anteriores à troca de autoria (`planning/MAPA_DE_COMMITS.md`).
+
 **Revisão integral no CP9 (25/11/2026):** cada requisito de `CHALLENGE.md` foi confrontado com o código e as evidências; os status antigos (§1, §3, §4, §5, §6) foram atualizados. Evidência final: `planning/evidence/cp9-tests/` (checkout limpo, suíte completa, auditoria de dependências) e `planning/evidence/cp9-perf/` (Lighthouse final). "VALIDADO" significa teste executado e aprovado; não significa conformidade plena com o Figma nem com a WCAG.
 
 **Evidências do CP1** (`planning/evidence/cp1/`):
@@ -43,7 +45,7 @@ Abreviação: `T<n>` = teste `<n>.` de `e2e/poc.spec.ts`.
 | ELIM-03 | Compra confirmada só com resposta da simulação | A UI renderiza "confirmado" só com `status === 'confirmed'` vindo do REST/evento | T5, T5b, T7/8 | VALIDADO (CP7): criação retida sem confirmação; offline/terminal/recusa (ELIMINATORY_AUDIT.md) |
 | ELIM-04 | Sem exposição de dados entre usuários | Query keys por `userId`; cache limpo no login/logout; socket por sessão; mock filtra por dono; cliente descarta evento alheio | T6, T6b, T6c; CP4: isolation.spec (respostas atrasadas, socket, API 404) | VALIDADO (CP7): isolation, orders, tabs, hardening (ELIMINATORY_AUDIT.md) |
 | ELIM-05 | Sem eventos simulados na UI | Eventos só nascem em `src/mocks`; lint proíbe importar `src/mocks` fora de `main.tsx` | `lint.log` + sonda de lint (relatório CP1 §4) + T3/4..T9 | VALIDADO (CP7): eventos só pelo socket.io-client; barramento entre abas interno ao mock (ELIMINATORY_AUDIT.md) |
-| ELIM-06 | Testes E2E executáveis | `npm run test:e2e` | `cp9-tests/checkout-limpo-*.log` | VALIDADO localmente em checkout limpo (CP9). CI (GitHub Actions) preparado, **não executado** (sem repositório remoto) |
+| ELIM-06 | Testes E2E executáveis | `npm run test:e2e` | checkout limpo (CP9) e GitHub Actions (CP9.1) | VALIDADO: checkout limpo local e **CI real** no GitHub Actions (Ubuntu 24.04; runs em `CP9_1_REPORT.md`) |
 
 ## 1. Stack obrigatória
 
@@ -60,7 +62,7 @@ Abreviação: `T<n>` = teste `<n>.` de `e2e/poc.spec.ts`.
 | shadcn/ui (CLI 4.23.0, radix-ui 1.8.1) | Button, Dialog, Drawer, RadioGroup, Select, Tabs, Skeleton, Sonner… adaptados à identidade | design-system.spec (foco, drawer, axe) e telas | VALIDADO |
 | MSW 2.15.0 + @mswjs/socket.io-binding 0.2.0 | REST + Socket.IO | toda a suíte, contra o build de produção | VALIDADO |
 | Playwright 1.65.1 | E2E | `e2e-full-run-*.log` | VALIDADO |
-| Lighthouse 13.6.0 | auditoria versionada (`scripts/lighthouse.mjs`) | 12 auditorias oficiais no CP8 e no CP9 (`cp8-perf/`, `cp9-perf/`) | VALIDADO (ferramenta). Meta de Performance mobile **não atingida** |
+| Lighthouse 13.6.0 | auditoria versionada (`scripts/lighthouse.mjs`), local e no job `lighthouse` da CI | 12 execuções por rodada; local (CP8, CP9, CP9.2) e independente na CI (CP9.1, 2 rodadas) | VALIDADO |
 
 ## 2. Validações críticas pedidas no CP1
 
@@ -90,9 +92,9 @@ Abreviação: `T<n>` = teste `<n>.` de `e2e/poc.spec.ts`.
 | AV-3 | Integração e estado | 15 | VALIDADO: Router, Query, Axios e contratos (§1, §5); política de cache documentada em `ARCHITECTURE.md` |
 | AV-4 | Tempo real | 10 | VALIDADO: eventos, duplicatas/antigos, reconexão e reconciliação, várias abas (races, recovery, tabs) |
 | AV-5 | Mocking | 10 | VALIDADO: 29 cenários determinísticos em `src/mocks/scenarios.ts`, persistência, reset integral, controle do servidor simulado |
-| AV-6 | Testes | 10 | VALIDADO localmente: 12 grupos E2E + regressão visual + a11y; CI preparado e não executado; baselines Linux não geradas |
+| AV-6 | Testes | 10 | VALIDADO: 12 grupos E2E, regressão visual (baselines Windows e **Linux**), a11y; suíte local 478/0/9; CI real no GitHub Actions |
 | AV-7 | Acessibilidade | 5 | VALIDADO por testes automatizados (axe em 12 telas × 2 viewports, teclado, foco, reflow, alvos de toque). Sem leitor de tela real; sem declaração de conformidade WCAG |
-| AV-8 | Performance | 5 | MEDIDO: desktop ≥ 90; **mobile abaixo de 90** (causas medidas e documentadas: CP8_REPORT §5, CP9_REPORT) |
+| AV-8 | Performance | 5 | MEDIDO: CI independente mobile 91–93, desktop 98–100 (metas atingidas); rodada oficial local mobile 70/65 (variação ambiental documentada); `CP9_1_REPORT.md`, `CP9_2_REPORT.md` |
 | AV-9 | Arquitetura e documentação | 5 | DOCUMENTADO (CP9): `README.md`, `ARCHITECTURE.md`, `API_CONTRACTS.md`, `TECHNICAL_HANDOFF.md`; checkout limpo reproduzível |
 
 ## 4. Telas (§3)
@@ -193,13 +195,13 @@ As rotas internas `/demo/*` (PoC do CP1 e galeria do CP2) existem apenas no buil
 | E2E-09 | VALIDADO (CP5): checkout.spec › consistência financeira em tempo real |
 | E2E-10 | VALIDADO (CP6): races.spec (eventos duplicados, antigos, terminais; REST antigo após evento novo) e recovery.spec (desconexão, retomada de pedido pendente) |
 | TEST-01 (Chromium desktop + mobile) | VALIDADO (configuração) |
-| TEST-02 (visual) | VALIDADO no Windows: 8 baselines; CP8 atualizou 6 (Início ×2, Carrinho mobile, Pagamento ×2, Detalhe mobile) após inspeção, com antes/depois/diff em `evidence/cp8-baselines/`. Baselines Linux ainda não geradas (teste ignorado no Linux com motivo). Limitação de sensibilidade: R-47 |
+| TEST-02 (visual) | VALIDADO em Windows e Linux: 8 baselines de cada plataforma; as Linux foram geradas no container oficial pela CI, inspecionadas e comparadas com as Windows (`evidence/cp9-1/baselines-linux-x-windows.png`). Limitação de sensibilidade: R-47 |
 | TEST-03 (estado isolado) | VALIDADO: contexto novo + `?reset=1` por teste; 3 rodadas paralelas sem interferência |
 | TEST-04 (HTML + traces) | VALIDADO (configuração): `reporter` HTML e `trace: retain-on-failure`; relatórios gerados nas rodadas locais |
 | TEST-05 | VALIDADO (os testes acionam o servidor simulado; a UI muda via socket ou Axios) |
-| LH-01..06 | MEDIDO, METAS PARCIALMENTE ATINGIDAS. Rodada oficial final (CP9, `a5aff5b`, `cp9-perf/oficial/`): A11y 100, BP 96, SEO 92 nos 4 perfis (atingidas); Performance desktop 97/98 (atingida); **Performance mobile 55 (Início) e 64 (Detalhe), não atingida**. LCP, CLS e TBT registrados; ambiente, versões e condições em `summary.md`. Rodadas anteriores preservadas (`cp8-perf/`, `cp9-perf/`) |
+| LH-01..06 | MEDIDO EM DOIS AMBIENTES. **CI independente** (GitHub Actions, 3 rodadas de 12, commits `f88f676` e `27fa582`): Início mobile 92/93/93, Detalhe mobile 91/92/91, desktop 98–100; A11y 100, BP 96, SEO 92 (todas as metas atingidas). **Local oficial** (CP9.2): mobile 70/65 (não atingida), repetição 76/89; a diferença vem de uma tarefa ambiental do Chrome headless na máquina local (CP9_2_REPORT §1.2). Todos os relatórios preservados |
 | DEL-01 (lockfile) | VALIDADO (`package-lock.json` gerado com `npm install`, sem force/legacy-peer-deps) |
-| DEL-02, 03 (deploy) | PREPARADO (CP9): `vercel.json` (rewrites de SPA, headers do Service Worker); **publicação aguarda autorização** |
+| DEL-02, 03 (deploy) | VALIDADO (CP9.1): https://kurio-nft-marketplace-flax.vercel.app (Vercel ligada ao repositório; deploy por push). Commit publicado confirmado pelo status da Vercel no GitHub e pelos hashes de conteúdo dos chunks; smoke público 14/14 em 2 rodadas (`evidence/cp9-1/smoke-publico-*.log`) |
 | DEL-04, 05 (README, ARCHITECTURE) | DOCUMENTADO (CP9) |
 | DEL-06 (scripts) | VALIDADO: `dev`, `build`, `preview`, `typecheck`, `lint`, `test:e2e`, `audit:lighthouse` (`dev` não exercitado por teste automatizado) |
 | DEL-07 (checkout limpo) | VALIDADO (CP9, `a5aff5b`): `git clone` → `npm ci` → typecheck → lint → build → `check:public-build` → suíte completa (4 workers) = **473 passed, 0 failed, 9 skipped** (`cp9-tests/checkout-limpo-*.log`). Navegadores do Playwright vindos do cache local (`npx playwright install chromium` é passo de setup) |

@@ -4,8 +4,23 @@ SPA em React + TypeScript que implementa o marketplace de NFTs do Figma do desaf
 
 **Tudo é simulado no navegador.** A API REST e o servidor Socket.IO são o MSW, rodando no próprio navegador (Service Worker + interceptação de WebSocket). Autenticação, carteiras, pagamentos e blockchain são fictícios: nenhuma credencial, carteira ou rede real é usada, e a "segurança" da simulação não representa um backend de produção.
 
-- **URL pública:** _pendente: o deploy aguarda autorização_.
-- **Documentação:** [ARCHITECTURE.md](ARCHITECTURE.md) (arquitetura, decisões, limitações e desvios do Figma) · [planning/API_CONTRACTS.md](planning/API_CONTRACTS.md) (contratos REST e eventos) · [planning/REQUIREMENTS_MATRIX.md](planning/REQUIREMENTS_MATRIX.md) (requisito → teste → evidência) · [planning/CP9_REPORT.md](planning/CP9_REPORT.md) (resultados finais).
+- **Aplicação publicada:** https://kurio-nft-marketplace-flax.vercel.app (Vercel, deploy a cada push na `main`).
+- **Repositório:** https://github.com/SouFadinho/kurio-nft-marketplace · CI: GitHub Actions (`.github/workflows/ci.yml`).
+- **Documentação:** [ARCHITECTURE.md](ARCHITECTURE.md) (arquitetura, decisões, limitações e desvios do Figma) · [planning/API_CONTRACTS.md](planning/API_CONTRACTS.md) (contratos REST e eventos) · [planning/REQUIREMENTS_MATRIX.md](planning/REQUIREMENTS_MATRIX.md) (requisito → teste → evidência) · [planning/CP9_1_REPORT.md](planning/CP9_1_REPORT.md) (publicação, CI e resultados finais).
+
+## Telas
+
+Capturas reais da aplicação (build de produção com a API simulada). A pasta `planning/evidence/cp9/telas/` tem as 9 telas obrigatórias em 390, 768 e 1440 px.
+
+| Início (desktop) | Detalhe (desktop) |
+|---|---|
+| ![Início no desktop](docs/screenshots/inicio-desktop.webp) | ![Detalhe do NFT no desktop](docs/screenshots/detalhe-desktop.webp) |
+| **Pagamento (desktop)** | **Recibo confirmado (desktop)** |
+| ![Pagamento no desktop](docs/screenshots/pagamento-desktop.webp) | ![Recibo de compra confirmada no desktop](docs/screenshots/recibo-desktop.webp) |
+
+| Início | Detalhe | Carrinho | Carteiras |
+|---|---|---|---|
+| ![Início no mobile](docs/screenshots/inicio-mobile.webp) | ![Detalhe no mobile](docs/screenshots/detalhe-mobile.webp) | ![Carrinho no mobile](docs/screenshots/carrinho-mobile.webp) | ![Carteiras no mobile](docs/screenshots/carteiras-mobile.webp) |
 
 ## Funcionalidades
 
@@ -130,24 +145,36 @@ npm run audit:lighthouse         # 12 auditorias (Início e Detalhe × mobile e 
 npm run check:public-build       # build público: /demo/* em 404 e deep links
 ```
 
+Smoke test da aplicação publicada (HTTPS, Service Worker, Socket.IO, autenticação, isolamento e compra), sem servidor local:
+
+```powershell
+$env:SMOKE_URL = "https://kurio-nft-marketplace-flax.vercel.app"; npx playwright test -c playwright.smoke.config.ts
+```
+
 Projetos Playwright: `unit`, `desktop-chromium` (1440 px), `mobile-chromium` (390 px), `responsive` (8 larguras). `retries: 0`; workers: `PW_WORKERS` ou 4 local / 2 na CI. Cada teste parte de um banco simulado resetado.
 
-As baselines visuais versionadas são do Windows. Baselines Linux não foram geradas a partir delas, porque a renderização de fonte difere: são geradas no container oficial do Playwright (`npm run test:visual:update:linux`). Até lá, o teste visual é ignorado no Linux com o motivo explícito.
+As baselines visuais versionadas existem para Windows (geradas localmente) e Linux (geradas na CI, no container oficial do Playwright, job manual `visual-baselines-linux`, e inspecionadas antes de versionar). Uma não é derivada da outra, porque a renderização de fonte difere.
 
-## Resultados Lighthouse (build final, mediana de 3 execuções)
+## Resultados Lighthouse
 
-Rodada oficial de 25/11/2026 no commit `a5aff5b` (`planning/evidence/cp9-perf/oficial/`; Windows 11, Node 26.13.1, Lighthouse 13.6.0, HeadlessChrome 159, throttling padrão do Lighthouse).
+Metas: Performance ≥ 90, Accessibility ≥ 95, Best Practices ≥ 95, SEO ≥ 90. Mesma auditoria (`npm run audit:lighthouse`: build de produção, MSW ativo, configuração padrão do Lighthouse, 3 execuções por página e perfil, mediana) em dois ambientes. Todos os relatórios HTML/JSON estão versionados em `planning/evidence/`.
 
-| Página | Perfil | Performance | Accessibility | Best Practices | SEO | LCP | CLS | TBT |
-|---|---|---|---|---|---|---|---|---|
-| Início | mobile | **55** ✗ | 100 | 96 | 92 | 4,93 s | 0,000 | 1492 ms |
-| Início | desktop | 97 | 100 | 96 | 92 | 1,27 s | 0,010 | 18 ms |
-| Detalhe | mobile | **64** ✗ | 100 | 96 | 92 | 4,74 s | 0,000 | 649 ms |
-| Detalhe | desktop | 98 | 100 | 96 | 92 | 1,08 s | 0,000 | 40 ms |
+**Execução independente na CI** (GitHub Actions, Ubuntu 24.04, 4 vCPUs, Node 26.13.1, Lighthouse 13.6.0, Chromium do Playwright 1.65.1; 3 rodadas em runners diferentes; a 3ª, no commit `27fa582`, deu 93 · 98 · 91 · 100 nas mesmas 4 combinações):
 
-Medições locais variam entre rodadas: com o mesmo código, uma repetição do CP8 deu 70 na Início mobile (todas as execuções publicadas, nenhuma descartada).
+| Página | Perfil | Rodada 1 (Intel Xeon) | Rodada 2 (AMD EPYC) | LCP | CLS | TBT |
+|---|---|---|---|---|---|---|
+| Início | mobile | **92** (92 · 92 · 92) | **93** (93 · 93 · 93) | 3,14–3,18 s | 0 | 83–136 ms |
+| Início | desktop | 98 | 99 | 0,97–1,18 s | 0 | 0 ms |
+| Detalhe | mobile | **91** (91 · 91 · 91) | **92** (92 · 92 · 92) | 3,17 s | 0 | 121–182 ms |
+| Detalhe | desktop | 100 | 100 | 0,66 s | 0 | 0 ms |
 
-Metas: Performance ≥ 90, Accessibility ≥ 95, Best Practices ≥ 95, SEO ≥ 90. **A meta de Performance no mobile não foi atingida.** O LCP mobile é a arte do NFT, que só pode ser pedida depois de o MSW (API simulada no navegador) iniciar sob 4G lento e CPU 4×. As causas, as hipóteses testadas e as que foram revertidas estão em `planning/CP8_REPORT.md` §5 e `planning/evidence/cp9-perf/LEIA-ME.md`. Relatórios HTML/JSON originais em `planning/evidence/`.
+Accessibility 100, Best Practices 96 e SEO 92 em todos os perfis.
+
+**Rodada oficial local** (notebook Windows 11, i5-1235U; commit do CP9.2): Início mobile **70** (59 · 92 · 70) e Detalhe mobile **65** (65 · 64 · 70); desktop 98 e 100. Repetição: 76 e 89.
+
+Nesta máquina, as execuções ruins têm uma tarefa sem atribuição no início do carregamento (até ≈ 680 ms reais). Ela vem do Chrome headless emulando a GPU na CPU, não do código da página. Quando essa tarefa é pequena, o mesmo build marca 85–92. Nos runners da CI ela não aparece: em 35 das 36 execuções, cada combinação varia no máximo 1 ponto (exceção explicada no CP9_1_REPORT).
+
+**Conclusão honesta:** a meta mobile é atingida no ambiente independente e não é atingida de forma estável na máquina local. Detalhes, causas e hipóteses medidas: [planning/CP9_2_REPORT.md](planning/CP9_2_REPORT.md) e [planning/CP9_1_REPORT.md](planning/CP9_1_REPORT.md).
 
 ## Limitações e diferenças do Figma
 
@@ -155,6 +182,7 @@ Metas: Performance ≥ 90, Accessibility ≥ 95, Best Practices ≥ 95, SEO ≥ 
 - **Sessão por aba** (sessionStorage), sem cookie httpOnly. Em produção seria diferente.
 - **Assets:** o Figma estava disponível só para visualização. As artes dos NFTs são substitutas derivadas das capturas (`planning/ASSETS_MANIFEST.md`). A galeria tem 2 vistas reais (o Figma mostra 4).
 - **Acessibilidade:** auditoria automatizada (axe em 12 telas, teclado, foco, reflow e alvos de toque). Sem teste com leitor de tela; não há declaração de conformidade WCAG.
-- **Performance mobile** abaixo da meta (acima).
-- **CI:** o workflow do GitHub Actions está pronto (`.github/workflows/ci.yml`), mas ainda não foi executado (sem repositório remoto).
+- **Performance mobile:** ≥ 90 na CI; instável na máquina local (seção acima).
+- **Cookies simulados:** o build troca a Public Suffix List do `tldts` (usada só pelo cookie jar emulado do MSW) por uma regra simplificada. O KURIO não usa cookies; diferenças e testes em `src/mocks/vendor/tldts-lite.ts`.
+- **Domínio:** a URL pública é `kurio-nft-marketplace-flax.vercel.app`. O endereço sem o sufixo `-flax` pertence a outro projeto da Vercel.
 - Desvios de layout e decisões de UX: [ARCHITECTURE.md §13](ARCHITECTURE.md#13-desvios-do-figma-e-decisões-de-ux).
