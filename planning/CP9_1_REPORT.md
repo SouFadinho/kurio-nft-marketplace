@@ -86,6 +86,7 @@ O teste não foi alterado, mascarado nem excluído. **Causa não identificada.**
 | 45679085901 | `f88f676` | push | sucesso | **sucesso** (rodada 1) | — |
 | 45679106866 | `f88f676` | manual | sucesso | **sucesso** (rodada 2) | **geradas** |
 | 45681329772 | `27fa582` | push | 65 unitários + **417 passed, 0 failed**, 9 skipped; **regressão visual 8/8 comparada no Linux** | **sucesso** (rodada 3) | comparadas no Linux |
+| 45683671319 | `da4073a` | push | 65 unitários + **417 passed, 0 failed**, 9 skipped | **sucesso** (rodada 4) | comparadas no Linux |
 
 **Falhas da 1ª execução, corrigidas sem mascarar:**
 
@@ -102,18 +103,20 @@ O teste não foi alterado, mascarado nem excluído. **Causa não identificada.**
 
 ## 5. Lighthouse independente na CI × local
 
-3 rodadas (commits `f88f676` e `27fa582`, que diferem só em baselines e documentação). Mesmo script oficial (`npm run audit:lighthouse`) e mesmas versões: lockfile, Node 26.13.1 (`.nvmrc`), Lighthouse 13.6.0, Chromium do Playwright 1.65.1 (HeadlessChrome 159). Mesma configuração (mobile padrão: 4G lento simulado + CPU 4×; desktop padrão), 3 execuções por página e perfil. O script passou a registrar o índice de CPU de cada execução e o hardware.
+4 rodadas (commits `f88f676`, `27fa582` e `da4073a`, que diferem só em baselines e documentação). Mesmo script oficial (`npm run audit:lighthouse`) e mesmas versões: lockfile, Node 26.13.1 (`.nvmrc`), Lighthouse 13.6.0, Chromium do Playwright 1.65.1 (HeadlessChrome 159). Mesma configuração (mobile padrão: 4G lento simulado + CPU 4×; desktop padrão), 3 execuções por página e perfil. O script passou a registrar o índice de CPU de cada execução e o hardware.
 
-**Relatórios HTML/JSON completos:** `planning/evidence/cp9-1/lighthouse-ci-run-45679085901/`, `…-run-45679106866/` e `…-run-45681329772/`.
+**Relatórios HTML/JSON completos:** `planning/evidence/cp9-1/lighthouse-ci-run-45679085901/`, `…-run-45679106866/`, `…-run-45681329772/` e `…-run-45683671319/`.
 
-| Página | Perfil | CI rodada 1 (Intel Xeon 6973P-C) | CI rodada 2 (AMD EPYC 9V45) | CI rodada 3 (AMD EPYC 9V74) | Local oficial CP9.2 (i5-1235U) | Local repetição CP9.2 |
-|---|---|---|---|---|---|---|
-| Início | mobile | **92** (92 · 92 · 92) | **93** (93 · 93 · 93) | **93** (93 · 93 · 53*) | 70 (59 · 92 · 70) | 76 (60 · 91 · 76) |
-| Início | desktop | 98 | 99 | 98 | 98 | 98 |
-| Detalhe | mobile | **91** (91 · 91 · 91) | **92** (92 · 92 · 92) | **91** (91 · 91 · 91) | 65 (65 · 64 · 70) | 89 (91 · 89 · 85) |
-| Detalhe | desktop | 100 | 100 | 100 | 100 | 100 |
+| Página | Perfil | CI rodada 1 (Intel Xeon 6973P-C) | CI rodada 2 (AMD EPYC 9V45) | CI rodada 3 (AMD EPYC 9V74) | CI rodada 4 (AMD EPYC 9V74, commit final `da4073a`) | Local oficial CP9.2 (i5-1235U) | Local repetição CP9.2 |
+|---|---|---|---|---|---|---|---|
+| Início | mobile | **92** (92 · 92 · 92) | **93** (93 · 93 · 93) | **93** (93 · 93 · 53*) | **92** (93 · 92 · 69**) | 70 (59 · 92 · 70) | 76 (60 · 91 · 76) |
+| Início | desktop | 98 | 99 | 98 | 98 | 98 | 98 |
+| Detalhe | mobile | **91** (91 · 91 · 91) | **92** (92 · 92 · 92) | **91** (91 · 91 · 91) | **91** (90 · 91 · 91) | 65 (65 · 64 · 70) | 89 (91 · 89 · 85) |
+| Detalhe | desktop | 100 | 100 | 100 | 100 | 100 | 100 |
 
 \* Rodada 3, Início mobile, execução 3: **53**, mantida e não descartada. Nesta execução, o documento HTML levou 2,2 s em localhost (normal: ≈ 7 ms); nada aconteceu até 11,2 s; depois, uma única tarefa de 5,7 s. FCP 10,6 s; TBT 168 ms. É compatível com a VM do runner parada (CPU compartilhada), não com um padrão do código: as outras 2 execuções da rodada deram 93 e o comportamento não se repetiu nas outras 35 execuções da CI. A mediana da combinação continua 93.
+
+\*\* Rodada 4, Início mobile, execução 3: **69**, mantida. Padrão diferente da \*: uma tarefa de 226 ms nos primeiros 20 ms (antes de qualquer script do app) e `DOMContentLoaded` em 732 ms (normal: ≈ 132 ms). É a mesma tarefa de inicialização do navegador observada na máquina local, agora também na CI, só que rara: 2 de 48 execuções da CI × cerca de metade das execuções locais. Mediana 92.
 
 Accessibility 100, Best Practices 96 e SEO 92 em todos os perfis e ambientes.
 
@@ -127,7 +130,7 @@ Accessibility 100, Best Practices 96 e SEO 92 em todos os perfis e ambientes.
 **Leitura:**
 
 - O **LCP é praticamente igual** nos três ambientes (≈ 3,1–3,2 s); o ganho do CP9.2 se confirma.
-- A diferença está toda no **TBT**. Na máquina local aparece, em parte das execuções, uma tarefa sem atribuição no início do carregamento: o Chrome headless emulando a GPU na CPU. Ela chega a 2,7 s simulados. Nos runners da CI ela não aparece: em 35 das 36 execuções, cada combinação varia no máximo 1 ponto (a exceção está explicada abaixo da tabela).
+- A diferença está toda no **TBT**. Na máquina local aparece, em parte das execuções, uma tarefa sem atribuição no início do carregamento: o Chrome headless emulando a GPU na CPU. Ela chega a 2,7 s simulados. Nos runners da CI ela é rara: 46 das 48 execuções ficam dentro de 1 ponto da mediana da combinação; as 2 exceções estão explicadas abaixo da tabela. As 4 medianas de cada combinação mobile ficam entre 91 e 93.
 - **Metas atingidas no ambiente independente; não atingidas de forma estável na máquina local.** Os resultados locais anteriores não foram substituídos.
 
 **Limites de comparabilidade:**
@@ -156,7 +159,7 @@ Uma auditoria na URL pública (CDN, HTTP/2, brotli) mediria outra coisa e não f
 | Pagamento recusado; pedido pendente com queda de conexão, reconciliado ao reconectar e após refresh | ok |
 | Sem exceção na página nem erro no console. Só são ignoradas as linhas "Failed to load resource" que o navegador registra para respostas 4xx esperadas da API | ok |
 
-**Resultado: 14/14 em duas rodadas** (`evidence/cp9-1/smoke-publico-1.log`, `-2.log`).
+**Resultado: 14/14 em três rodadas**: duas no deploy de `4cf4628` e uma no do commit final do relatório, `da4073a` (`evidence/cp9-1/smoke-publico-*.log`).
 
 ## 7. Documentação atualizada
 

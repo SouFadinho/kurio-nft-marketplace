@@ -159,7 +159,7 @@ As baselines visuais versionadas existem para Windows (geradas localmente) e Lin
 
 Metas: Performance ≥ 90, Accessibility ≥ 95, Best Practices ≥ 95, SEO ≥ 90. Mesma auditoria (`npm run audit:lighthouse`: build de produção, MSW ativo, configuração padrão do Lighthouse, 3 execuções por página e perfil, mediana) em dois ambientes. Todos os relatórios HTML/JSON estão versionados em `planning/evidence/`.
 
-**Execução independente na CI** (GitHub Actions, Ubuntu 24.04, 4 vCPUs, Node 26.13.1, Lighthouse 13.6.0, Chromium do Playwright 1.65.1; 3 rodadas em runners diferentes; a 3ª, no commit `27fa582`, deu 93 · 98 · 91 · 100 nas mesmas 4 combinações):
+**Execução independente na CI** (GitHub Actions, Ubuntu 24.04, 4 vCPUs, Node 26.13.1, Lighthouse 13.6.0, Chromium do Playwright 1.65.1; 4 rodadas em runners diferentes; a 3ª e a 4ª (commits `27fa582` e `da4073a`) deram 93 · 98 · 91 · 100 e 92 · 98 · 91 · 100 nas mesmas 4 combinações):
 
 | Página | Perfil | Rodada 1 (Intel Xeon) | Rodada 2 (AMD EPYC) | LCP | CLS | TBT |
 |---|---|---|---|---|---|---|
@@ -172,7 +172,7 @@ Accessibility 100, Best Practices 96 e SEO 92 em todos os perfis.
 
 **Rodada oficial local** (notebook Windows 11, i5-1235U; commit do CP9.2): Início mobile **70** (59 · 92 · 70) e Detalhe mobile **65** (65 · 64 · 70); desktop 98 e 100. Repetição: 76 e 89.
 
-Nesta máquina, as execuções ruins têm uma tarefa sem atribuição no início do carregamento (até ≈ 680 ms reais). Ela vem do Chrome headless emulando a GPU na CPU, não do código da página. Quando essa tarefa é pequena, o mesmo build marca 85–92. Nos runners da CI ela não aparece: em 35 das 36 execuções, cada combinação varia no máximo 1 ponto (exceção explicada no CP9_1_REPORT).
+Nesta máquina, as execuções ruins têm uma tarefa sem atribuição no início do carregamento (até ≈ 680 ms reais). Ela vem do Chrome headless emulando a GPU na CPU, não do código da página. Quando essa tarefa é pequena, o mesmo build marca 85–92. Nos runners da CI ela é rara: 2 de 48 execuções em 4 rodadas, e as medianas mobile ficam entre 91 e 93 (detalhes no CP9_1_REPORT).
 
 **Conclusão honesta:** a meta mobile é atingida no ambiente independente e não é atingida de forma estável na máquina local. Detalhes, causas e hipóteses medidas: [planning/CP9_2_REPORT.md](planning/CP9_2_REPORT.md) e [planning/CP9_1_REPORT.md](planning/CP9_1_REPORT.md).
 
