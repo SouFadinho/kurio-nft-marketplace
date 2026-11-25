@@ -5,21 +5,29 @@
  * - A lupa abre a imagem em um diálogo (foco preso, Esc fecha).
  * - A imagem principal é a candidata a LCP: carregamento prioritário.
  * - Mobile: indicadores "•" trocam a imagem (o Figma mostra uma só; temos 2 vistas).
+ * - CP9.2 (performance medida): cada variante só é montada no seu breakpoint, e o diálogo da
+ *   lupa é carregado sob demanda (GalleryZoom) no primeiro clique.
  */
 import { Search } from 'lucide-react'
-import { useState } from 'react'
+import { lazy, Suspense, useRef, useState } from 'react'
 import type { NftDetail } from '@/api/contracts'
-import { Dialog, DialogContent, DialogDescription, DialogTitle, DialogTrigger } from '@/components/ui/dialog'
 import { NftImage } from '@/components/kurio/NftImage'
+import { DESKTOP_QUERY, useMediaQuery } from '@/lib/useMediaQuery'
 import { cn } from '@/lib/utils'
+
+const loadZoom = () => import('./GalleryZoom')
+const GalleryZoom = lazy(loadZoom)
 
 export function Gallery({ nft }: { nft: NftDetail }) {
   const [index, setIndex] = useState(0)
   const image = nft.gallery[index] ?? nft.gallery[0]!
+  const desktop = useMediaQuery(DESKTOP_QUERY)
+  const [zoomOpen, setZoomOpen] = useState(false)
+  const [zoomMounted, setZoomMounted] = useState(false)
+  const zoomButton = useRef<HTMLButtonElement>(null)
 
-  return (
-    <>
-      {/* ---------- Desktop ---------- */}
+  if (desktop) {
+    return (
       <div className="hidden gap-4 lg:grid lg:grid-cols-[104px_minmax(0,1fr)]">
         <ul className="flex flex-col gap-3" aria-label="Imagens do NFT">
           {nft.gallery.map((g, i) => (
@@ -43,24 +51,35 @@ export function Gallery({ nft }: { nft: NftDetail }) {
           <div className="size-full overflow-hidden rounded-md bg-surface-2">
             <NftImage src={image.src} alt={image.alt} priority />
           </div>
-          <Dialog>
-            <DialogTrigger
-              aria-label="Ampliar imagem"
-              className="absolute top-4 right-4 grid size-9 place-items-center rounded-full bg-background/70 text-foreground backdrop-blur-sm hover:bg-background focus-visible:outline-2 focus-visible:outline-ring"
-            >
-              <Search className="size-4" aria-hidden />
-            </DialogTrigger>
-            <DialogContent className="max-w-[min(92vw,720px)] p-3">
-              <DialogTitle className="sr-only">{nft.name}</DialogTitle>
-              <DialogDescription className="sr-only">{image.alt}</DialogDescription>
-              <div className="aspect-square overflow-hidden rounded-md">
-                <NftImage src={image.src} alt={image.alt} />
-              </div>
-            </DialogContent>
-          </Dialog>
+          <button
+            ref={zoomButton}
+            type="button"
+            aria-label="Ampliar imagem"
+            aria-haspopup="dialog"
+            aria-expanded={zoomOpen}
+            aria-controls={zoomOpen ? 'gallery-zoom' : undefined}
+            onPointerEnter={() => void loadZoom()}
+            onFocus={() => void loadZoom()}
+            onClick={() => {
+              setZoomMounted(true)
+              setZoomOpen(true)
+            }}
+            className="absolute top-4 right-4 grid size-9 place-items-center rounded-full bg-background/70 text-foreground backdrop-blur-sm hover:bg-background focus-visible:outline-2 focus-visible:outline-ring"
+          >
+            <Search className="size-4" aria-hidden />
+          </button>
+          {zoomMounted && (
+            <Suspense fallback={null}>
+              <GalleryZoom open={zoomOpen} onOpenChange={setZoomOpen} name={nft.name} image={image} returnFocusTo={zoomButton} />
+            </Suspense>
+          )}
         </div>
       </div>
+    )
+  }
 
+  return (
+    <>
       {/* ---------- Mobile / tablet ---------- */}
       {/* Figma: imagem com margens laterais e cantos arredondados (não em largura total). */}
       <div className="relative aspect-square overflow-hidden rounded-2xl bg-surface-2 md:mx-auto md:w-full md:max-w-xl lg:hidden">

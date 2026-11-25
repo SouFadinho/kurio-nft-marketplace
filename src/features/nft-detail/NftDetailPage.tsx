@@ -12,7 +12,7 @@
  * cache; esta tela reage ao cache, limita a quantidade ao estoque da edição e anuncia a
  * mudança em uma região `aria-live`.
  */
-import { useId, useState } from 'react'
+import { startTransition, useEffect, useId, useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { Link, useCanGoBack, useNavigate, useRouter } from '@tanstack/react-router'
 import { ChevronLeft, Heart, Link2, ShoppingCart } from 'lucide-react'
@@ -115,6 +115,21 @@ function Share({ nft }: { nft: NftDetail }) {
   )
 }
 
+/**
+ * CP9.2 (performance medida): as seções abaixo da dobra (abas e relacionados) são montadas logo
+ * depois da primeira pintura, numa transição do React (renderização fatiada, sem tarefa longa).
+ * Antes, toda a página renderizava num único bloco de ~64 ms de JS (×4 na simulação mobile).
+ */
+function useSecondaryReady(ready: boolean) {
+  const [show, setShow] = useState(false)
+  useEffect(() => {
+    if (!ready || show) return
+    const frame = requestAnimationFrame(() => startTransition(() => setShow(true)))
+    return () => cancelAnimationFrame(frame)
+  }, [ready, show])
+  return show
+}
+
 function InfoTabs({ nft }: { nft: NftDetail }) {
   return (
     <Tabs defaultValue="details" className="gap-5">
@@ -208,6 +223,7 @@ export function NftDetailPage({ nftId, edition, onEditionChange }: { nftId: stri
   // Estoque reduzido (inclusive em tempo real): a quantidade efetiva nunca passa do disponível.
   const quantity = Math.max(1, Math.min(requestedQty, maxQty))
   const live = useLiveChanges(nft, selectedId)
+  const showSecondary = useSecondaryReady(!!nft)
 
   if (!nft) return null
   const isFavorite = favorites.isFavorite(nft.id)
@@ -335,8 +351,15 @@ export function NftDetailPage({ nftId, edition, onEditionChange }: { nftId: stri
           </div>
         </div>
 
-        <InfoTabs nft={nft} />
-        <Related nft={nft} />
+        {showSecondary ? (
+          <>
+            <InfoTabs nft={nft} />
+            <Related nft={nft} />
+          </>
+        ) : (
+          // Reserva o espaço das seções para o rodapé não se deslocar quando elas entram.
+          <div aria-hidden data-testid="detail-secondary-placeholder" className="min-h-[53.5rem] md:min-h-[43.75rem] lg:min-h-[43.8rem]" />
+        )}
       </Container>
 
       {/* Barra de compra fixa (mobile/tablet), como no Figma Mobile / Detalhes. */}

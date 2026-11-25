@@ -13,7 +13,7 @@ import { Button } from '@/components/ui/button'
 import { Drawer, DrawerContent, DrawerDescription, DrawerFooter, DrawerHeader, DrawerTitle } from '@/components/ui/drawer'
 import type { CatalogController } from './controller'
 import { FiltersPanel } from './FiltersPanel'
-import { SortSelect } from './CatalogSection'
+import { SortSelect } from './SortSelect'
 
 export default function FiltersDrawer({
   open,

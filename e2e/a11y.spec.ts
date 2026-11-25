@@ -35,7 +35,8 @@ async function structure(page: Page) {
 
 async function audit(page: Page, label: string) {
   const results = await new AxeBuilder({ page }).withTags(TAGS).analyze()
-  expect.soft(results.violations.map((v) => `${label}: ${v.id} (${v.nodes.length})`)).toEqual([])
+  // Seletor e mensagem de cada nó: a falha diz exatamente qual elemento violou a regra.
+  expect.soft(results.violations.map((v) => `${label}: ${v.id} (${v.nodes.length}) ${v.nodes.map((n) => `${n.target.join(' ')} → ${n.failureSummary?.replace(/\s+/g, ' ').slice(0, 160)}`).join(' | ')}`)).toEqual([])
   expect.soft(results.passes.length, `${label}: o axe precisa ter verificado regras`).toBeGreaterThan(10)
   const s = await structure(page)
   expect.soft(s.h1, `${label}: exatamente um h1`).toBe(1)

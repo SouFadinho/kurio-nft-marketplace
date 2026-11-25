@@ -11,14 +11,13 @@
  * O enunciado exige busca; o campo fica na barra de ferramentas do catálogo e o ícone do
  * header leva até ele.
  */
-import { useEffect, useId, useRef } from 'react'
+import { lazy, Suspense, useEffect, useRef } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { Link } from '@tanstack/react-router'
 import { X } from 'lucide-react'
-import type { CatalogSort, NftList } from '@/api/contracts'
+import type { NftList } from '@/api/contracts'
 import { ApiError } from '@/api/http'
 import { Button } from '@/components/ui/button'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { NFTCard } from '@/components/kurio/NFTCard'
 import { NFTGrid } from '@/components/kurio/NFTGrid'
 import { NftImage } from '@/components/kurio/NftImage'
@@ -29,10 +28,15 @@ import { useCartActions } from '@/features/cart/actions'
 import { highlightsQuery, nftListQuery } from '@/features/nfts/queries'
 import { cn } from '@/lib/utils'
 import { type CatalogController } from './controller'
-import { FiltersPanel } from './FiltersPanel'
 import { CatalogSearchField } from './CatalogSearchField'
 import { DESKTOP_QUERY, useMediaQuery } from '@/lib/useMediaQuery'
-import { hasActiveFilters, SORT_LABEL, TAB_LABEL, toCatalogParams, type CatalogSearch } from './search'
+import { Skeleton } from '@/components/ui/skeleton'
+
+// CP9.2: só o desktop renderiza estes dois (Radix Slider e Select); carregados sob demanda para
+// ficarem fora do carregamento inicial do mobile, onde filtros e ordenação ficam no drawer.
+const FiltersPanel = lazy(() => import('./FiltersPanel').then((m) => ({ default: m.FiltersPanel })))
+const SortSelect = lazy(() => import('./SortSelect').then((m) => ({ default: m.SortSelect })))
+import { hasActiveFilters, TAB_LABEL, toCatalogParams, type CatalogSearch } from './search'
 
 export function useCatalogQuery(search: CatalogSearch) {
   return useQuery(nftListQuery(toCatalogParams(search)))
@@ -67,29 +71,6 @@ export function CatalogTabs({ controller, className }: { controller: CatalogCont
           {TAB_LABEL[tab]}
         </button>
       ))}
-    </div>
-  )
-}
-
-export function SortSelect({ controller, className }: { controller: CatalogController; className?: string }) {
-  const id = useId()
-  return (
-    <div className={cn('flex items-center gap-2', className)}>
-      <label htmlFor={id} className="text-caption whitespace-nowrap text-foreground">
-        Ordenar por:
-      </label>
-      <Select value={controller.search.sort ?? 'recent'} onValueChange={(v) => controller.setFilters({ sort: v === 'recent' ? undefined : (v as CatalogSort) })}>
-        <SelectTrigger id={id} className="h-9 min-w-48 border-transparent bg-transparent px-1 text-caption hover:border-input lg:h-8">
-          <SelectValue />
-        </SelectTrigger>
-        <SelectContent align="end">
-          {(Object.keys(SORT_LABEL) as CatalogSort[]).map((s) => (
-            <SelectItem key={s} value={s}>
-              {SORT_LABEL[s]}
-            </SelectItem>
-          ))}
-        </SelectContent>
-      </Select>
     </div>
   )
 }
@@ -226,7 +207,9 @@ export function CatalogSection({ controller, title }: { controller: CatalogContr
       {desktop && (
         <aside aria-label="Filtros do catálogo" className="hidden lg:flex lg:flex-col lg:gap-6">
           <div className="rounded-sm bg-surface p-4">
-            <FiltersPanel data={data} controller={controller} />
+            <Suspense fallback={<Skeleton className="h-[34rem] w-full" />}>
+              <FiltersPanel data={data} controller={controller} />
+            </Suspense>
           </div>
           <LimitedOfferCard />
         </aside>
@@ -238,7 +221,9 @@ export function CatalogSection({ controller, title }: { controller: CatalogContr
           {desktop && (
             <div className="hidden items-center gap-3 lg:flex">
               <CatalogSearchField controller={controller} variant="outline" className="w-56" />
-              <SortSelect controller={controller} />
+              <Suspense fallback={<div className="h-8 w-[16.5rem]" aria-hidden />}>
+                <SortSelect controller={controller} />
+              </Suspense>
             </div>
           )}
         </div>

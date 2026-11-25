@@ -83,6 +83,8 @@ test.describe('catálogo: busca, filtros, ordenação e paginação na URL', () 
 
   test('faixa de preço pela URL e ordenação por menor preço', async ({ page }) => {
     await openApp(page, '/?maxPrice=1.00')
+    // CP9.2: a tela renderiza antes da resposta da API (skeletons); espera o resultado antes de ler a lista.
+    await expect(cards(page).first()).toBeVisible()
     const prices = await cards(page).locator('[data-slot="price"] [data-value]').allTextContents()
     expect(prices.length).toBeGreaterThan(0)
     for (const p of prices) expect(Number.parseFloat(p)).toBeLessThanOrEqual(1)
@@ -123,6 +125,8 @@ test.describe('catálogo: busca, filtros, ordenação e paginação na URL', () 
   test('link compartilhável restaura todo o estado (abas, filtro, ordem, página)', async ({ page }) => {
     await openApp(page, '/mercado?tab=trending&network=ethereum&sort=name')
     await expect(page.getByRole('button', { name: 'Em alta' })).toHaveAttribute('aria-pressed', 'true')
+    // CP9.2: as abas aparecem antes da resposta da API; espera o resultado antes de ler a lista.
+    await expect(cardNames(page).first()).toBeVisible()
     const names = await cardNames(page).allTextContents()
     expect(names.length).toBeGreaterThan(0)
     expect([...names].sort((a, b) => a.localeCompare(b, 'pt-BR'))).toEqual(names)

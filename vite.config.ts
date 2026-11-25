@@ -36,6 +36,45 @@ function preloadEntryChunks(entries: string[]): Plugin {
   }
 }
 
+/**
+ * CP9.2 (medido com o Lantern do Lighthouse): pré-carregamento do chunk da ROTA ATUAL.
+ *
+ * Os componentes das rotas são carregados sob demanda pelo TanStack Router, que só os descobre
+ * depois de baixar e executar o App: mais uma volta de rede antes do conteúdo. Um script inline
+ * no HTML lê `location.pathname` e adiciona `<link rel="modulepreload">` para o chunk da tela
+ * acessada (e seus imports estáticos que ainda não estão no HTML). Cada página baixa só o que
+ * ela mesma vai usar; nada muda no comportamento nem na ordem de execução.
+ */
+function preloadRouteChunks(routes: Array<{ pattern: string; chunk: string }>): Plugin {
+  return {
+    name: 'kurio:preload-route-chunks',
+    apply: 'build',
+    transformIndexHtml: {
+      order: 'post',
+      handler(html, ctx) {
+        if (!ctx.bundle) return
+        const chunks = Object.values(ctx.bundle).filter((c) => c.type === 'chunk')
+        const closure = (name: string) => {
+          const files: string[] = []
+          const add = (fileName: string) => {
+            if (files.includes(fileName) || html.includes(fileName)) return
+            files.push(fileName)
+            const chunk = chunks.find((c) => c.fileName === fileName)
+            if (chunk && chunk.type === 'chunk') chunk.imports.forEach(add)
+          }
+          const root = chunks.find((c) => c.type === 'chunk' && c.name === name)
+          if (!root) throw new Error(`preloadRouteChunks: chunk "${name}" não encontrado`)
+          add(root.fileName)
+          return files.map((f) => `/${f}`)
+        }
+        const table = routes.map((r) => [r.pattern, closure(r.chunk)])
+        const code = `(function(){var p=location.pathname,t=${JSON.stringify(table)};for(var i=0;i<t.length;i++){if(new RegExp(t[i][0]).test(p)){for(var j=0;j<t[i][1].length;j++){var l=document.createElement('link');l.rel='modulepreload';l.crossOrigin='';l.href=t[i][1][j];document.head.appendChild(l)}break}}})()`
+        return [{ tag: 'script', children: code, injectTo: 'head' as const }]
+      },
+    },
+  }
+}
+
 // Ordem importa: o plugin do Router precisa rodar antes do plugin React
 // para gerar src/routeTree.gen.ts e fazer code-splitting por rota.
 export default defineConfig({
@@ -44,6 +83,10 @@ export default defineConfig({
     react(),
     tailwindcss(),
     preloadEntryChunks(['src/mocks/browser.ts', 'src/app/App.tsx']),
+    preloadRouteChunks([
+      { pattern: '^/(mercado/?)?$', chunk: 'catalog' },
+      { pattern: '^/nft/[^/]+/?$', chunk: 'detail' },
+    ]),
   ],
   resolve: {
     alias: [
@@ -87,9 +130,16 @@ export default defineConfig({
             // drawer e o painel de filtros (Select/Slider do Radix) continuam sob demanda.
             {
               name: 'catalog',
+              includeDependenciesRecursively: false,
               test: (id) =>
-                (/src[\\/]features[\\/](home|catalog|nfts)[\\/]/.test(id) && !/(FiltersDrawer|FiltersPanel)\.tsx$/.test(id)) ||
+                (/src[\\/]features[\\/](home|catalog|nfts)[\\/]/.test(id) && !/(FiltersDrawer|FiltersPanel|SortSelect)\.tsx$/.test(id)) ||
                 /src[\\/]routes[\\/](index|mercado)\.tsx\?tsr-split/.test(id),
+            },
+            // Detalhe do NFT (o diálogo de ampliação continua sob demanda).
+            {
+              name: 'detail',
+              includeDependenciesRecursively: false,
+              test: (id) => (/src[\\/]features[\\/]nft-detail[\\/]/.test(id) && !/GalleryZoom\.tsx$/.test(id)) || /src[\\/]routes[\\/]nft\.\$nftId\.tsx\?tsr-split/.test(id),
             },
           ],
         },
