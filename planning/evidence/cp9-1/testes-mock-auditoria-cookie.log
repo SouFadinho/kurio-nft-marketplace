@@ -1,0 +1,249 @@
+
+Running 209 tests using 4 workers
+
+[1/209] [unit] › e2e\unit\account-contracts.spec.ts:9:3 › contratos de conta (mesmo schema no cliente e no mock) › login: e-mail normalizado e senha obrigatória
+[2/209] [unit] › e2e\unit\account-contracts.spec.ts:14:3 › contratos de conta (mesmo schema no cliente e no mock) › cadastro: requisitos de senha, usuário e confirmação
+[3/209] [unit] › e2e\unit\account-contracts.spec.ts:34:3 › contratos de conta (mesmo schema no cliente e no mock) › carteira: endereço validado conforme a rede
+[4/209] [unit] › e2e\unit\account-contracts.spec.ts:29:3 › contratos de conta (mesmo schema no cliente e no mock) › perfil: limites de tamanho
+[5/209] [unit] › e2e\unit\account-contracts.spec.ts:23:3 › contratos de conta (mesmo schema no cliente e no mock) › troca de senha: confirmação e nova diferente da atual
+[6/209] [unit] › e2e\unit\account-contracts.spec.ts:53:3 › busca das rotas de login/cadastro › redirect só aceita caminhos internos; motivo desconhecido é descartado
+[7/209] [unit] › e2e\unit\account-contracts.spec.ts:59:3 › busca das rotas de login/cadastro › rotas privadas não são destino ao fechar o login
+[8/209] [unit] › e2e\unit\catalog-search.spec.ts:5:3 › features/catalog/search (validação da URL) › descarta valores inválidos e mantém os válidos
+[9/209] [unit] › e2e\unit\catalog-search.spec.ts:14:3 › features/catalog/search (validação da URL) › faixa invertida é corrigida e padrões não aparecem
+[10/209] [unit] › e2e\unit\catalog-search.spec.ts:22:3 › features/catalog/search (validação da URL) › devolve as chaves inválidas como undefined (o Router mescla sobre a query crua)
+[11/209] [unit] › e2e\unit\catalog-search.spec.ts:10:3 › features/catalog/search (validação da URL) › aceita números vindos da URL e normaliza preços
+[12/209] [unit] › e2e\unit\catalog-search.spec.ts:18:3 › features/catalog/search (validação da URL) › parâmetros da API sempre têm página válida
+[13/209] [unit] › e2e\unit\cn.spec.ts:5:3 › lib/utils cn (tailwind-merge com tokens do KURIO) › tamanho de texto personalizado convive com cor
+[14/209] [unit] › e2e\unit\cn.spec.ts:10:3 › lib/utils cn (tailwind-merge com tokens do KURIO) › dois tamanhos de texto: vence o último
+[15/209] [unit] › e2e\unit\cn.spec.ts:15:3 › lib/utils cn (tailwind-merge com tokens do KURIO) › alinhamento não conflita com tamanho
+[16/209] [unit] › e2e\unit\commerce.spec.ts:9:3 › cotação (pricing.ts, wei/bigint) › carrinho do Figma: 2 × 1.19 + 6 × 1.39 + 9 × 1.79 = 26.83; total com taxa Ethereum = 26.846
+[17/209] [unit] › e2e\unit\commerce.spec.ts:23:3 › cotação (pricing.ts, wei/bigint) › desconto percentual em wei (piso) e taxa por rede
+[18/209] [unit] › e2e\unit\commerce.spec.ts:17:3 › cotação (pricing.ts, wei/bigint) › sem ponto flutuante: 0.1 + 0.2 = 0.3 exatamente; 18 casas preservadas
+[19/209] [unit] › e2e\unit\commerce.spec.ts:39:3 › merge do carrinho de visitante (cart-model.ts) › soma quantidades, mantém a ordem, limita ao estoque e remove o que esgotou
+[20/209] [unit] › e2e\unit\commerce.spec.ts:85:3 › contratos do checkout › sameQuoteValues: id e validade não importam; qualquer valor importa
+[21/209] [unit] › e2e\unit\commerce.spec.ts:92:3 › contratos do checkout › rede compatível com o endereço
+[22/209] [unit] › e2e\unit\commerce.spec.ts:97:3 › contratos do checkout › carteira de pagamento: cadastrada ou externa validada pela rede
+[23/209] [unit] › e2e\unit\commerce.spec.ts:103:3 › contratos do checkout › cupom: normaliza para maiúsculas e exige código
+[24/209] [unit] › e2e\unit\commerce.spec.ts:59:3 › merge do carrinho de visitante (cart-model.ts) › determinístico: mesma entrada, mesma saída; cupom do usuário prevalece
+[25/209] [unit] › e2e\unit\eth.spec.ts:5:3 › lib/eth (bigint em wei) › soma exata onde number falha
+[26/209] [unit] › e2e\unit\eth.spec.ts:27:3 › lib/eth (bigint em wei) › rejeita entradas inválidas
+[27/209] [unit] › e2e\unit\eth.spec.ts:20:3 › lib/eth (bigint em wei) › formatação half-up para exibição
+[28/209] [unit] › e2e\unit\eth.spec.ts:16:3 › lib/eth (bigint em wei) › 18 casas decimais preservadas
+[29/209] [unit] › e2e\unit\eth.spec.ts:10:3 › lib/eth (bigint em wei) › total do carrinho desktop do Figma fecha exatamente
+[30/209] [unit] › e2e\unit\eventGuard.spec.ts:13:3 › realtime/EventGuard › descarta duplicata pelo eventId
+[31/209] [unit] › e2e\unit\eventGuard.spec.ts:31:3 › realtime/EventGuard › versões independentes por recurso
+[32/209] [unit] › e2e\unit\eventGuard.spec.ts:19:3 › realtime/EventGuard › descarta evento antigo ou igual à versão do cache (ex.: após reconciliação REST)
+[33/209] [unit] › e2e\unit\eventGuard.spec.ts:7:3 › realtime/EventGuard › aplica versões crescentes
+[34/209] [unit] › e2e\unit\eventGuard.spec.ts:25:3 › realtime/EventGuard › fora de ordem: v3 chega antes de v2 → v2 descartado
+[35/209] [unit] › e2e\unit\eventGuard.spec.ts:37:3 › realtime/EventGuard › memória limitada de eventIds
+[36/209] [unit] › e2e\unit\orders-events.spec.ts:39:3 › applyOrderUpdated (ciclo de vida do pedido no cliente) › aplica a versão nova com status, hash, data e motivo
+[37/209] [unit] › e2e\unit\orders-events.spec.ts:54:3 › applyOrderUpdated (ciclo de vida do pedido no cliente) › versão antiga ou igual não sobrescreve
+[38/209] [unit] › e2e\unit\rating.spec.ts:5:1 › formatRating = toLocaleString pt-BR com minimumFractionDigits 1 (notas 0–5)
+[39/209] [unit] › e2e\unit\orders-events.spec.ts:61:3 › applyOrderUpdated (ciclo de vida do pedido no cliente) › estado terminal não regride, nem com versão maior
+[40/209] [unit] › e2e\unit\orders-events.spec.ts:45:3 › applyOrderUpdated (ciclo de vida do pedido no cliente) › evento repetido (mesmo eventId) é descartado
+[41/209] [unit] › e2e\unit\seed-hashes.spec.ts:9:1 › hashes do seed correspondem às senhas de demonstração (PBKDF2, salt por usuário)
+[42/209] [unit] › e2e\unit\tldts-lite.spec.ts:20:1 › contrato: tough-cookie importa do tldts apenas getDomain (builds ESM e CJS)
+[43/209] [unit] › e2e\unit\tldts-lite.spec.ts:32:1 › contrato: o MSW chega ao tldts só pelo cookie jar do tough-cookie
+[44/209] [unit] › e2e\unit\tldts-lite.spec.ts:44:1 › diferenças conhecidas (só sufixos públicos de vários níveis): documentadas, não silenciosas
+[45/209] [unit] › e2e\unit\tldts-lite.spec.ts:38:1 › diferencial: mesmo resultado do tldts real nos hosts usados pelo app
+[46/209] [unit] › e2e\unit\tokens.spec.ts:49:5 › tokens de cor: contraste WCAG › foreground sobre surface ≥ 4.5:1
+[47/209] [unit] › e2e\unit\tokens.spec.ts:49:5 › tokens de cor: contraste WCAG › foreground sobre background ≥ 4.5:1
+[48/209] [unit] › e2e\unit\tokens.spec.ts:49:5 › tokens de cor: contraste WCAG › foreground sobre surface-2 ≥ 4.5:1
+[49/209] [unit] › e2e\unit\tokens.spec.ts:49:5 › tokens de cor: contraste WCAG › muted-foreground sobre band ≥ 4.5:1
+[50/209] [unit] › e2e\unit\tokens.spec.ts:49:5 › tokens de cor: contraste WCAG › placeholder sobre surface ≥ 4.5:1
+[51/209] [unit] › e2e\unit\tokens.spec.ts:49:5 › tokens de cor: contraste WCAG › placeholder sobre background ≥ 4.5:1
+[52/209] [unit] › e2e\unit\tokens.spec.ts:49:5 › tokens de cor: contraste WCAG › price sobre surface ≥ 4.5:1
+[53/209] [unit] › e2e\unit\tokens.spec.ts:49:5 › tokens de cor: contraste WCAG › muted-foreground sobre background ≥ 4.5:1
+[54/209] [unit] › e2e\unit\tokens.spec.ts:49:5 › tokens de cor: contraste WCAG › muted-foreground sobre surface ≥ 4.5:1
+[55/209] [unit] › e2e\unit\tokens.spec.ts:49:5 › tokens de cor: contraste WCAG › price sobre background ≥ 4.5:1
+[56/209] [unit] › e2e\unit\tokens.spec.ts:49:5 › tokens de cor: contraste WCAG › primary-foreground sobre primary ≥ 4.5:1
+[57/209] [unit] › e2e\unit\tokens.spec.ts:49:5 › tokens de cor: contraste WCAG › primary-foreground sobre primary-active ≥ 4.5:1
+[58/209] [unit] › e2e\unit\tokens.spec.ts:49:5 › tokens de cor: contraste WCAG › destructive sobre surface ≥ 4.5:1
+[59/209] [unit] › e2e\unit\tokens.spec.ts:49:5 › tokens de cor: contraste WCAG › success sobre surface ≥ 4.5:1
+[60/209] [unit] › e2e\unit\tokens.spec.ts:49:5 › tokens de cor: contraste WCAG › destructive sobre destructive-surface ≥ 4.5:1
+[61/209] [unit] › e2e\unit\tokens.spec.ts:49:5 › tokens de cor: contraste WCAG › success sobre success-surface ≥ 4.5:1
+[62/209] [unit] › e2e\unit\tokens.spec.ts:49:5 › tokens de cor: contraste WCAG › input sobre surface ≥ 3:1
+[63/209] [unit] › e2e\unit\tokens.spec.ts:49:5 › tokens de cor: contraste WCAG › input sobre background ≥ 3:1
+[64/209] [unit] › e2e\unit\tokens.spec.ts:49:5 › tokens de cor: contraste WCAG › ring sobre background ≥ 3:1
+[65/209] [unit] › e2e\unit\tokens.spec.ts:56:3 › Pagination.pageWindow › janela com reticências
+[66/209] [desktop-chromium] › e2e\auth.spec.ts:10:3 › login › credenciais válidas: entra, volta ao início e a sessão sobrevive ao refresh
+[67/209] [desktop-chromium] › e2e\auth.spec.ts:19:3 › login › credenciais inválidas: alerta acessível, sem revelar qual campo errou
+[68/209] [desktop-chromium] › e2e\auth.spec.ts:37:3 › login › falha de conexão mostra mensagem de rede
+[69/209] [desktop-chromium] › e2e\auth.spec.ts:26:3 › login › validação no cliente: erros associados aos campos e foco no primeiro inválido
+[70/209] [desktop-chromium] › e2e\auth.spec.ts:43:3 › login › envio duplicado é bloqueado enquanto a requisição está em andamento
+[71/209] [desktop-chromium] › e2e\auth.spec.ts:57:3 › login › mostrar/ocultar senha
+[72/209] [desktop-chromium] › e2e\auth.spec.ts:68:3 › login › login social visível, mas avisa que não está disponível na demonstração
+[73/209] [desktop-chromium] › e2e\auth.spec.ts:75:3 › login › redirect externo é ignorado (sem open redirect)
+[74/209] [desktop-chromium] › e2e\auth.spec.ts:83:3 › cadastro › conta nova: valida, cria, entra automaticamente e persiste
+[75/209] [desktop-chromium] › e2e\auth.spec.ts:109:3 › cadastro › e-mail e usuário já existentes: conflito da API no campo certo
+[76/209] [desktop-chromium] › e2e\auth.spec.ts:122:3 › cadastro › requisitos de senha e confirmação
+[77/209] [desktop-chromium] › e2e\auth.spec.ts:141:5 › sessão e rotas protegidas › /perfil exige login e volta para a rota após entrar
+[78/209] [desktop-chromium] › e2e\auth.spec.ts:141:5 › sessão e rotas protegidas › /perfil/carteiras exige login e volta para a rota após entrar
+[79/209] [desktop-chromium] › e2e\auth.spec.ts:141:5 › sessão e rotas protegidas › /favoritos exige login e volta para a rota após entrar
+[80/209] [desktop-chromium] › e2e\auth.spec.ts:141:5 › sessão e rotas protegidas › /pedidos exige login e volta para a rota após entrar
+[81/209] [desktop-chromium] › e2e\auth.spec.ts:149:3 › sessão e rotas protegidas › expiração: volta ao login com aviso e retoma a rota de origem
+[82/209] [desktop-chromium] › e2e\auth.spec.ts:163:3 › sessão e rotas protegidas › expiração em página pública sem ação pendente: continua como visitante, com aviso
+[83/209] [desktop-chromium] › e2e\auth.spec.ts:183:3 › sessão e rotas protegidas › logout encerra a sessão, limpa o armazenamento e protege as rotas de novo
+[84/209] [desktop-chromium] › e2e\auth.spec.ts:192:3 › sessão e rotas protegidas › troca de usuário: Bruno não vê dados de Ana
+[85/209] [desktop-chromium] › e2e\auth.spec.ts:205:3 › apresentação e acessibilidade › desktop: modal com foco preso, Esc fecha e o foco volta ao botão Entrar
+[86/209] [desktop-chromium] › e2e\auth.spec.ts:224:3 › apresentação e acessibilidade › desktop: abas Entrar | Criar conta preservam o destino
+[87/209] [desktop-chromium] › e2e\auth.spec.ts:232:3 › apresentação e acessibilidade › mobile: tela cheia, sem rodapé nem navegação inferior
+[88/209] [desktop-chromium] › e2e\auth.spec.ts:242:5 › apresentação e acessibilidade › axe sem violações em /login
+[89/209] [desktop-chromium] › e2e\auth.spec.ts:242:5 › apresentação e acessibilidade › axe sem violações em /cadastro
+[90/209] [desktop-chromium] › e2e\hardening.spec.ts:37:3 › carrinho em duas abas visíveis do mesmo usuário › a aba que está mostrando o carrinho atualiza sozinha quando a outra muda o carrinho
+[91/209] [desktop-chromium] › e2e\hardening.spec.ts:50:3 › carrinho em duas abas visíveis do mesmo usuário › cart.updated é privado: a aba de outro usuário não recebe
+[92/209] [desktop-chromium] › e2e\hardening.spec.ts:62:3 › tentativa idempotente após refresh ou fechamento da aba › timeout + refresh antes da resposta: o pagamento encontra o pedido pela chave, sem criar outro
+[93/209] [desktop-chromium] › e2e\hardening.spec.ts:74:3 › tentativa idempotente após refresh ou fechamento da aba › timeout + fechar a aba: nova aba, novo login, o pagamento recupera o mesmo pedido
+[94/209] [desktop-chromium] › e2e\hardening.spec.ts:85:3 › tentativa idempotente após refresh ou fechamento da aba › tentativa que NÃO chegou ao servidor é descartada: nada é recuperado nem criado
+[95/209] [desktop-chromium] › e2e\hardening.spec.ts:98:3 › troca de líder do cluster › durante uma requisição: a aba promovida desiste da RPC antiga na hora e o retry é atendido por ela
+[96/209] [desktop-chromium] › e2e\hardening.spec.ts:111:3 › troca de líder do cluster › durante a liquidação: a aba promovida retoma o agendamento e o pedido é confirmado
+[97/209] [desktop-chromium] › e2e\hardening.spec.ts:133:3 › cookie jar do MSW (auditoria do CP9.1) › com cookies persistidos no jar do MSW, catálogo, login, dados privados e socket funcionam sem erro
+[98/209] [desktop-chromium] › e2e\hardening.spec.ts:151:3 › compatibilidade › sem Web Locks a aplicação funciona como aba única (com aviso)
+[99/209] [desktop-chromium] › e2e\hardening.spec.ts:169:3 › explorador simulado › contrato público: só dados da transação, nenhum dado do comprador
+[100/209] [desktop-chromium] › e2e\isolation.spec.ts:45:3 › isolamento entre usuários › favoritos: resposta atrasada de Ana não aparece para Bruno
+[101/209] [desktop-chromium] › e2e\isolation.spec.ts:77:3 › isolamento entre usuários › carteiras: Ana sai durante o carregamento e Bruno nunca vê as carteiras dela
+[102/209] [desktop-chromium] › e2e\isolation.spec.ts:92:3 › isolamento entre usuários › a API não deixa Bruno ler nem alterar carteira de Ana (404)
+[103/209] [desktop-chromium] › e2e\isolation.spec.ts:107:3 › isolamento entre usuários › logout encerra o socket autenticado de Ana; Bruno recebe um novo
+[104/209] [desktop-chromium] › e2e\isolation.spec.ts:118:3 › isolamento entre usuários › expiração durante ação de favoritar: intenção é retomada após novo login
+[105/209] [desktop-chromium] › e2e\poc.spec.ts:10:3 › PoC CP1 — REST (Axios → MSW) + TanStack Query › 1. GET /api/nfts é respondido pelo service worker do MSW e renderizado via Query
+[106/209] [desktop-chromium] › e2e\poc.spec.ts:21:3 › PoC CP1 — REST (Axios → MSW) + TanStack Query › 2. login (mutation) + criação de pedido (mutation idempotente) + consulta do pedido
+[107/209] [desktop-chromium] › e2e\poc.spec.ts:31:3 › PoC CP1 — REST (Axios → MSW) + TanStack Query › 2b. clique repetido não duplica o pedido (mesma Idempotency-Key)
+[108/209] [desktop-chromium] › e2e\poc.spec.ts:41:3 › PoC CP1 — Socket.IO (socket.io-client → MSW ws.link + @mswjs/socket.io-binding) › 3/4. nft.updated atualiza lista e detalhe; o REST reflete a mesma mudança após refresh
+[109/209] [desktop-chromium] › e2e\poc.spec.ts:59:3 › PoC CP1 — Socket.IO (socket.io-client → MSW ws.link + @mswjs/socket.io-binding) › 5. order.updated (privado) leva o pedido de pendente a confirmado, sem polling
+[110/209] [desktop-chromium] › e2e\poc.spec.ts:72:3 › PoC CP1 — Socket.IO (socket.io-client → MSW ws.link + @mswjs/socket.io-binding) › 5b. pedido recusado é terminal e não mostra confirmação
+[111/209] [desktop-chromium] › e2e\poc.spec.ts:83:3 › PoC CP1 — Socket.IO (socket.io-client → MSW ws.link + @mswjs/socket.io-binding) › 6. handshake autenticado e isolamento: eventos e dados de Ana não chegam a Bruno
+[112/209] [desktop-chromium] › e2e\poc.spec.ts:106:3 › PoC CP1 — Socket.IO (socket.io-client → MSW ws.link + @mswjs/socket.io-binding) › 6b. token inválido no handshake é recusado (CONNECT_ERROR) e a sessão cai para anônima
+[113/209] [desktop-chromium] › e2e\poc.spec.ts:125:3 › PoC CP1 — Socket.IO (socket.io-client → MSW ws.link + @mswjs/socket.io-binding) › 6c. protocolo: nenhum ACK nem evento antes de validar o CONNECT (sem corrida no handshake)
+[114/209] [desktop-chromium] › e2e\poc.spec.ts:169:3 › PoC CP1 — Socket.IO (socket.io-client → MSW ws.link + @mswjs/socket.io-binding) › 7/8. desconexão com pedido pendente → reconexão → reconciliação pelo REST
+[115/209] [desktop-chromium] › e2e\poc.spec.ts:196:3 › PoC CP1 — Socket.IO (socket.io-client → MSW ws.link + @mswjs/socket.io-binding) › 7b. refresh com pedido pendente recupera o estado; liquidação automática persiste
+[116/209] [desktop-chromium] › e2e\poc.spec.ts:206:3 › PoC CP1 — Socket.IO (socket.io-client → MSW ws.link + @mswjs/socket.io-binding) › 9. eventos duplicados e antigos são descartados sem regredir o estado
+[117/209] [desktop-chromium] › e2e\poc.spec.ts:221:3 › PoC CP1 — Socket.IO (socket.io-client → MSW ws.link + @mswjs/socket.io-binding) › heartbeat: a conexão sobrevive além do ping timeout do binding (30 s)
+[118/209] [desktop-chromium] › e2e\poc.spec.ts:232:3 › PoC CP1 — cenários › reset integral: ?reset=1 restaura catálogo, pedidos e sessões do seed
+[119/209] [desktop-chromium] › e2e\poc.spec.ts:250:3 › PoC CP1 — rotas no build de produção › 11. acesso direto, refresh, NFT inexistente, rota inexistente e rota protegida
+[120/209] [desktop-chromium] › e2e\poc.spec.ts:270:3 › PoC CP1 — rotas no build de produção › login com credenciais erradas mostra o erro da API
+[121/209] [desktop-chromium] › e2e\races.spec.ts:20:3 › R-42: leitura REST antiga depois de evento novo (pedido) › versão N retida, evento N+1 aplicado, resposta N liberada: o estado continua em N+1
+[122/209] [desktop-chromium] › e2e\races.spec.ts:47:3 › eventos de pedido repetidos, antigos e terminais › duplicado, versão antiga e tentativa de regredir estado terminal são ignorados
+[123/209] [desktop-chromium] › e2e\races.spec.ts:64:3 › eventos de pedido repetidos, antigos e terminais › evento antigo antes do terminal não regride um pendente; o terminal vence
+[124/209] [desktop-chromium] › e2e\races.spec.ts:77:3 › R-44: primeira adição do visitante › leitura do carrinho vazio retida, POST grava, leitura antiga liberada: o carrinho continua com o item
+[125/209] [desktop-chromium] › e2e\recovery.spec.ts:13:3 › refresh, nova aba e acesso direto › refresh durante o pedido pendente: continua pendente e recebe a confirmação depois
+[126/209] [desktop-chromium] › e2e\recovery.spec.ts:22:3 › refresh, nova aba e acesso direto › fechar a aba e reabrir pela URL: login (sessão é por aba) e o estado vem do REST
+[127/209] [desktop-chromium] › e2e\recovery.spec.ts:41:5 › desconexão e reconciliação › pedido confirmado enquanto o cliente está offline: reconcilia ao reconectar
+[128/209] [desktop-chromium] › e2e\recovery.spec.ts:41:5 › desconexão e reconciliação › pedido recusado enquanto o cliente está offline: reconcilia ao reconectar
+[129/209] [desktop-chromium] › e2e\recovery.spec.ts:58:5 › falhas na criação até o recibo › timeout após a criação: retry recupera o mesmo pedido até o recibo
+[130/209] [desktop-chromium] › e2e\recovery.spec.ts:58:5 › falhas na criação até o recibo › resposta perdida após a criação: retry recupera o mesmo pedido até o recibo
+[131/209] [desktop-chromium] › e2e\recovery.spec.ts:82:3 › sessão › sessão expira com o pedido pendente: login com aviso, volta ao pedido e acompanha a liquidação
+[132/209] [desktop-chromium] › e2e\tabs.spec.ts:21:3 › consistência entre abas › um único servidor lógico: catálogo e estoque sincronizados pelos sockets de cada aba
+[133/209] [desktop-chromium] › e2e\tabs.spec.ts:35:3 › consistência entre abas › carrinho do mesmo usuário: escritas concorrentes das duas abas sem perda; a outra aba atualiza ao voltar
+[134/209] [desktop-chromium] › e2e\tabs.spec.ts:56:3 › consistência entre abas › idempotência entre abas: a mesma tentativa enviada pelas duas abas cria UM pedido
+[135/209] [desktop-chromium] › e2e\tabs.spec.ts:81:3 › consistência entre abas › isolamento entre usuários em abas diferentes: pedido e eventos de Ana não chegam à aba de Bruno
+[136/209] [desktop-chromium] › e2e\tabs.spec.ts:93:3 › consistência entre abas › failover: a aba líder fecha, a outra assume o servidor e continua a liquidação
+[137/209] [desktop-chromium] › e2e\tabs.spec.ts:105:3 › consistência entre abas › aba desconectada perde eventos e reconcilia pelo REST ao reconectar
+[138/209] [mobile-chromium] › e2e\auth.spec.ts:10:3 › login › credenciais válidas: entra, volta ao início e a sessão sobrevive ao refresh
+[139/209] [mobile-chromium] › e2e\auth.spec.ts:19:3 › login › credenciais inválidas: alerta acessível, sem revelar qual campo errou
+[140/209] [mobile-chromium] › e2e\auth.spec.ts:26:3 › login › validação no cliente: erros associados aos campos e foco no primeiro inválido
+[141/209] [mobile-chromium] › e2e\auth.spec.ts:43:3 › login › envio duplicado é bloqueado enquanto a requisição está em andamento
+[142/209] [mobile-chromium] › e2e\auth.spec.ts:57:3 › login › mostrar/ocultar senha
+[143/209] [mobile-chromium] › e2e\auth.spec.ts:37:3 › login › falha de conexão mostra mensagem de rede
+[144/209] [mobile-chromium] › e2e\auth.spec.ts:68:3 › login › login social visível, mas avisa que não está disponível na demonstração
+[145/209] [mobile-chromium] › e2e\auth.spec.ts:75:3 › login › redirect externo é ignorado (sem open redirect)
+[146/209] [mobile-chromium] › e2e\auth.spec.ts:83:3 › cadastro › conta nova: valida, cria, entra automaticamente e persiste
+[147/209] [mobile-chromium] › e2e\auth.spec.ts:109:3 › cadastro › e-mail e usuário já existentes: conflito da API no campo certo
+[148/209] [mobile-chromium] › e2e\auth.spec.ts:122:3 › cadastro › requisitos de senha e confirmação
+[149/209] [mobile-chromium] › e2e\auth.spec.ts:141:5 › sessão e rotas protegidas › /perfil exige login e volta para a rota após entrar
+[150/209] [mobile-chromium] › e2e\auth.spec.ts:141:5 › sessão e rotas protegidas › /perfil/carteiras exige login e volta para a rota após entrar
+[151/209] [mobile-chromium] › e2e\auth.spec.ts:141:5 › sessão e rotas protegidas › /favoritos exige login e volta para a rota após entrar
+[152/209] [mobile-chromium] › e2e\auth.spec.ts:141:5 › sessão e rotas protegidas › /pedidos exige login e volta para a rota após entrar
+[153/209] [mobile-chromium] › e2e\auth.spec.ts:149:3 › sessão e rotas protegidas › expiração: volta ao login com aviso e retoma a rota de origem
+[154/209] [mobile-chromium] › e2e\auth.spec.ts:163:3 › sessão e rotas protegidas › expiração em página pública sem ação pendente: continua como visitante, com aviso
+[155/209] [mobile-chromium] › e2e\auth.spec.ts:183:3 › sessão e rotas protegidas › logout encerra a sessão, limpa o armazenamento e protege as rotas de novo
+[156/209] [mobile-chromium] › e2e\auth.spec.ts:192:3 › sessão e rotas protegidas › troca de usuário: Bruno não vê dados de Ana
+[157/209] [mobile-chromium] › e2e\auth.spec.ts:205:3 › apresentação e acessibilidade › desktop: modal com foco preso, Esc fecha e o foco volta ao botão Entrar
+[158/209] [mobile-chromium] › e2e\auth.spec.ts:224:3 › apresentação e acessibilidade › desktop: abas Entrar | Criar conta preservam o destino
+[159/209] [mobile-chromium] › e2e\auth.spec.ts:232:3 › apresentação e acessibilidade › mobile: tela cheia, sem rodapé nem navegação inferior
+[160/209] [mobile-chromium] › e2e\auth.spec.ts:242:5 › apresentação e acessibilidade › axe sem violações em /login
+[161/209] [mobile-chromium] › e2e\auth.spec.ts:242:5 › apresentação e acessibilidade › axe sem violações em /cadastro
+[162/209] [mobile-chromium] › e2e\hardening.spec.ts:37:3 › carrinho em duas abas visíveis do mesmo usuário › a aba que está mostrando o carrinho atualiza sozinha quando a outra muda o carrinho
+[163/209] [mobile-chromium] › e2e\hardening.spec.ts:50:3 › carrinho em duas abas visíveis do mesmo usuário › cart.updated é privado: a aba de outro usuário não recebe
+[164/209] [mobile-chromium] › e2e\hardening.spec.ts:62:3 › tentativa idempotente após refresh ou fechamento da aba › timeout + refresh antes da resposta: o pagamento encontra o pedido pela chave, sem criar outro
+  1) [desktop-chromium] › e2e\recovery.spec.ts:82:3 › sessão › sessão expira com o pedido pendente: login com aviso, volta ao pedido e acompanha a liquidação 
+
+    Test timeout of 30000ms exceeded.
+
+    Error: locator.click: Test timeout of 30000ms exceeded.
+    Call log:
+      - waiting for getByRole('button', { name: 'Atualizar status' })
+
+
+      83 |     const orderId = await placeOrder(page)
+      84 |     await mock(page).expireSessions()
+    > 85 |     await page.getByRole('button', { name: 'Atualizar status' }).click()
+         |                                                                  ^
+      86 |     await expect(page).toHaveURL(new RegExp(`/login\\?redirect=%2Fpedidos%2F${orderId}&motivo=expirada`))
+      87 |     await expect(page.getByRole('alert')).toContainText('Sua sessão expirou')
+      88 |     await submitLogin(page, USERS.ana.email, USERS.ana.password)
+        at D:\emprego\e2e\recovery.spec.ts:85:66
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\recovery-sessão-sessão-exp-6f266-do-e-acompanha-a-liquidação-desktop-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\recovery-sessão-sessão-exp-6f266-do-e-acompanha-a-liquidação-desktop-chromium\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\recovery-sessão-sessão-exp-6f266-do-e-acompanha-a-liquidação-desktop-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\recovery-sessão-sessão-exp-6f266-do-e-acompanha-a-liquidação-desktop-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[165/209] [mobile-chromium] › e2e\hardening.spec.ts:74:3 › tentativa idempotente após refresh ou fechamento da aba › timeout + fechar a aba: nova aba, novo login, o pagamento recupera o mesmo pedido
+[166/209] [mobile-chromium] › e2e\hardening.spec.ts:85:3 › tentativa idempotente após refresh ou fechamento da aba › tentativa que NÃO chegou ao servidor é descartada: nada é recuperado nem criado
+[167/209] [mobile-chromium] › e2e\hardening.spec.ts:98:3 › troca de líder do cluster › durante uma requisição: a aba promovida desiste da RPC antiga na hora e o retry é atendido por ela
+[168/209] [mobile-chromium] › e2e\hardening.spec.ts:111:3 › troca de líder do cluster › durante a liquidação: a aba promovida retoma o agendamento e o pedido é confirmado
+[169/209] [mobile-chromium] › e2e\hardening.spec.ts:133:3 › cookie jar do MSW (auditoria do CP9.1) › com cookies persistidos no jar do MSW, catálogo, login, dados privados e socket funcionam sem erro
+[170/209] [mobile-chromium] › e2e\hardening.spec.ts:151:3 › compatibilidade › sem Web Locks a aplicação funciona como aba única (com aviso)
+[171/209] [mobile-chromium] › e2e\hardening.spec.ts:169:3 › explorador simulado › contrato público: só dados da transação, nenhum dado do comprador
+[172/209] [mobile-chromium] › e2e\isolation.spec.ts:45:3 › isolamento entre usuários › favoritos: resposta atrasada de Ana não aparece para Bruno
+[173/209] [mobile-chromium] › e2e\isolation.spec.ts:77:3 › isolamento entre usuários › carteiras: Ana sai durante o carregamento e Bruno nunca vê as carteiras dela
+[174/209] [mobile-chromium] › e2e\isolation.spec.ts:92:3 › isolamento entre usuários › a API não deixa Bruno ler nem alterar carteira de Ana (404)
+[175/209] [mobile-chromium] › e2e\isolation.spec.ts:107:3 › isolamento entre usuários › logout encerra o socket autenticado de Ana; Bruno recebe um novo
+[176/209] [mobile-chromium] › e2e\isolation.spec.ts:118:3 › isolamento entre usuários › expiração durante ação de favoritar: intenção é retomada após novo login
+[177/209] [mobile-chromium] › e2e\poc.spec.ts:10:3 › PoC CP1 — REST (Axios → MSW) + TanStack Query › 1. GET /api/nfts é respondido pelo service worker do MSW e renderizado via Query
+[178/209] [mobile-chromium] › e2e\poc.spec.ts:21:3 › PoC CP1 — REST (Axios → MSW) + TanStack Query › 2. login (mutation) + criação de pedido (mutation idempotente) + consulta do pedido
+[179/209] [mobile-chromium] › e2e\poc.spec.ts:31:3 › PoC CP1 — REST (Axios → MSW) + TanStack Query › 2b. clique repetido não duplica o pedido (mesma Idempotency-Key)
+[180/209] [mobile-chromium] › e2e\poc.spec.ts:41:3 › PoC CP1 — Socket.IO (socket.io-client → MSW ws.link + @mswjs/socket.io-binding) › 3/4. nft.updated atualiza lista e detalhe; o REST reflete a mesma mudança após refresh
+[181/209] [mobile-chromium] › e2e\poc.spec.ts:59:3 › PoC CP1 — Socket.IO (socket.io-client → MSW ws.link + @mswjs/socket.io-binding) › 5. order.updated (privado) leva o pedido de pendente a confirmado, sem polling
+[182/209] [mobile-chromium] › e2e\poc.spec.ts:72:3 › PoC CP1 — Socket.IO (socket.io-client → MSW ws.link + @mswjs/socket.io-binding) › 5b. pedido recusado é terminal e não mostra confirmação
+[183/209] [mobile-chromium] › e2e\poc.spec.ts:83:3 › PoC CP1 — Socket.IO (socket.io-client → MSW ws.link + @mswjs/socket.io-binding) › 6. handshake autenticado e isolamento: eventos e dados de Ana não chegam a Bruno
+[184/209] [mobile-chromium] › e2e\poc.spec.ts:106:3 › PoC CP1 — Socket.IO (socket.io-client → MSW ws.link + @mswjs/socket.io-binding) › 6b. token inválido no handshake é recusado (CONNECT_ERROR) e a sessão cai para anônima
+[185/209] [mobile-chromium] › e2e\poc.spec.ts:125:3 › PoC CP1 — Socket.IO (socket.io-client → MSW ws.link + @mswjs/socket.io-binding) › 6c. protocolo: nenhum ACK nem evento antes de validar o CONNECT (sem corrida no handshake)
+[186/209] [mobile-chromium] › e2e\poc.spec.ts:169:3 › PoC CP1 — Socket.IO (socket.io-client → MSW ws.link + @mswjs/socket.io-binding) › 7/8. desconexão com pedido pendente → reconexão → reconciliação pelo REST
+[187/209] [mobile-chromium] › e2e\poc.spec.ts:196:3 › PoC CP1 — Socket.IO (socket.io-client → MSW ws.link + @mswjs/socket.io-binding) › 7b. refresh com pedido pendente recupera o estado; liquidação automática persiste
+[188/209] [mobile-chromium] › e2e\poc.spec.ts:206:3 › PoC CP1 — Socket.IO (socket.io-client → MSW ws.link + @mswjs/socket.io-binding) › 9. eventos duplicados e antigos são descartados sem regredir o estado
+[189/209] [mobile-chromium] › e2e\poc.spec.ts:221:3 › PoC CP1 — Socket.IO (socket.io-client → MSW ws.link + @mswjs/socket.io-binding) › heartbeat: a conexão sobrevive além do ping timeout do binding (30 s)
+[190/209] [mobile-chromium] › e2e\poc.spec.ts:232:3 › PoC CP1 — cenários › reset integral: ?reset=1 restaura catálogo, pedidos e sessões do seed
+[191/209] [mobile-chromium] › e2e\poc.spec.ts:250:3 › PoC CP1 — rotas no build de produção › 11. acesso direto, refresh, NFT inexistente, rota inexistente e rota protegida
+[192/209] [mobile-chromium] › e2e\poc.spec.ts:270:3 › PoC CP1 — rotas no build de produção › login com credenciais erradas mostra o erro da API
+[193/209] [mobile-chromium] › e2e\races.spec.ts:20:3 › R-42: leitura REST antiga depois de evento novo (pedido) › versão N retida, evento N+1 aplicado, resposta N liberada: o estado continua em N+1
+[194/209] [mobile-chromium] › e2e\races.spec.ts:47:3 › eventos de pedido repetidos, antigos e terminais › duplicado, versão antiga e tentativa de regredir estado terminal são ignorados
+[195/209] [mobile-chromium] › e2e\races.spec.ts:64:3 › eventos de pedido repetidos, antigos e terminais › evento antigo antes do terminal não regride um pendente; o terminal vence
+[196/209] [mobile-chromium] › e2e\races.spec.ts:77:3 › R-44: primeira adição do visitante › leitura do carrinho vazio retida, POST grava, leitura antiga liberada: o carrinho continua com o item
+[197/209] [mobile-chromium] › e2e\recovery.spec.ts:13:3 › refresh, nova aba e acesso direto › refresh durante o pedido pendente: continua pendente e recebe a confirmação depois
+[198/209] [mobile-chromium] › e2e\recovery.spec.ts:22:3 › refresh, nova aba e acesso direto › fechar a aba e reabrir pela URL: login (sessão é por aba) e o estado vem do REST
+[199/209] [mobile-chromium] › e2e\recovery.spec.ts:41:5 › desconexão e reconciliação › pedido confirmado enquanto o cliente está offline: reconcilia ao reconectar
+[200/209] [mobile-chromium] › e2e\recovery.spec.ts:41:5 › desconexão e reconciliação › pedido recusado enquanto o cliente está offline: reconcilia ao reconectar
+[201/209] [mobile-chromium] › e2e\recovery.spec.ts:58:5 › falhas na criação até o recibo › timeout após a criação: retry recupera o mesmo pedido até o recibo
+[202/209] [mobile-chromium] › e2e\recovery.spec.ts:58:5 › falhas na criação até o recibo › resposta perdida após a criação: retry recupera o mesmo pedido até o recibo
+[203/209] [mobile-chromium] › e2e\recovery.spec.ts:82:3 › sessão › sessão expira com o pedido pendente: login com aviso, volta ao pedido e acompanha a liquidação
+[204/209] [mobile-chromium] › e2e\tabs.spec.ts:21:3 › consistência entre abas › um único servidor lógico: catálogo e estoque sincronizados pelos sockets de cada aba
+[205/209] [mobile-chromium] › e2e\tabs.spec.ts:35:3 › consistência entre abas › carrinho do mesmo usuário: escritas concorrentes das duas abas sem perda; a outra aba atualiza ao voltar
+[206/209] [mobile-chromium] › e2e\tabs.spec.ts:56:3 › consistência entre abas › idempotência entre abas: a mesma tentativa enviada pelas duas abas cria UM pedido
+[207/209] [mobile-chromium] › e2e\tabs.spec.ts:81:3 › consistência entre abas › isolamento entre usuários em abas diferentes: pedido e eventos de Ana não chegam à aba de Bruno
+[208/209] [mobile-chromium] › e2e\tabs.spec.ts:93:3 › consistência entre abas › failover: a aba líder fecha, a outra assume o servidor e continua a liquidação
+[209/209] [mobile-chromium] › e2e\tabs.spec.ts:105:3 › consistência entre abas › aba desconectada perde eventos e reconcilia pelo REST ao reconectar
+  1 failed
+    [desktop-chromium] › e2e\recovery.spec.ts:82:3 › sessão › sessão expira com o pedido pendente: login com aviso, volta ao pedido e acompanha a liquidação 
+  4 skipped
+  204 passed (4.9m)

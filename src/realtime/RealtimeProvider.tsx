@@ -66,8 +66,6 @@ export function RealtimeProvider({ children }: { children: ReactNode }) {
 
     let connectedBefore = false
 
-    /** Consultas cobertas pela reconciliação: catálogo/NFTs, dados do usuário e do visitante. */
-    const reconcilable = (key: readonly unknown[]) => key[0] === 'nfts' || key[0] === 'guest' || (!!userId && key[0] === 'me' && key[1] === userId)
 
     /**
      * CP9.2: uma consulta na PRIMEIRA busca (sem dados) quando a reconciliação roda não é refeita
@@ -127,10 +125,16 @@ export function RealtimeProvider({ children }: { children: ReactNode }) {
       }))
       // Reconciliação também na PRIMEIRA conexão: dados buscados antes de o socket se autenticar
       // podem ter perdido eventos emitidos nesse intervalo (corrida encontrada no CP3, teste 7b).
-      // CP9.2: também quando há consultas em trânsito (começaram antes do socket e podem ter
-      // perdido eventos emitidos antes da conexão); `reconcile` refaz essas ao terminarem.
       const cache = queryClient.getQueryCache()
-      if (isReconnect || cache.getAll().some((q) => q.state.dataUpdatedAt > 0 || (q.state.fetchStatus === 'fetching' && reconcilable(q.queryKey)))) void reconcile()
+      if (isReconnect || cache.getAll().some((q) => q.state.dataUpdatedAt > 0)) {
+        void reconcile()
+        return
+      }
+      // CP9.2/CP9.1: sem dados em cache, mas com consultas PÚBLICAS de NFT em trânsito (começaram
+      // antes do socket e podem ter perdido um nft.updated): só elas são refeitas quando terminam.
+      // Dados privados ficam como no CP9 (uma busca privada extra disputava o 401 de expiração com
+      // a ação do usuário: isolation.spec e recovery.spec › sessão).
+      refetchWhenSettled(cache.getAll().filter((q) => q.state.fetchStatus === 'fetching' && q.state.data === undefined && q.queryKey[0] === 'nfts'))
     })
     socket.on('disconnect', () => diagnostics.update({ state: 'disconnected' }))
     socket.on('connect_error', (error) => {

@@ -1,0 +1,52 @@
+
+Running 48 tests using 4 workers
+
+[1/48] [desktop-chromium] › e2e\isolation.spec.ts:118:3 › isolamento entre usuários › expiração durante ação de favoritar: intenção é retomada após novo login
+[2/48] [desktop-chromium] › e2e\isolation.spec.ts:118:3 › isolamento entre usuários › expiração durante ação de favoritar: intenção é retomada após novo login
+[3/48] [desktop-chromium] › e2e\recovery.spec.ts:82:3 › sessão › sessão expira com o pedido pendente: login com aviso, volta ao pedido e acompanha a liquidação
+[4/48] [desktop-chromium] › e2e\recovery.spec.ts:82:3 › sessão › sessão expira com o pedido pendente: login com aviso, volta ao pedido e acompanha a liquidação
+[5/48] [desktop-chromium] › e2e\recovery.spec.ts:82:3 › sessão › sessão expira com o pedido pendente: login com aviso, volta ao pedido e acompanha a liquidação
+[6/48] [desktop-chromium] › e2e\isolation.spec.ts:118:3 › isolamento entre usuários › expiração durante ação de favoritar: intenção é retomada após novo login
+[7/48] [desktop-chromium] › e2e\recovery.spec.ts:82:3 › sessão › sessão expira com o pedido pendente: login com aviso, volta ao pedido e acompanha a liquidação
+[8/48] [desktop-chromium] › e2e\isolation.spec.ts:118:3 › isolamento entre usuários › expiração durante ação de favoritar: intenção é retomada após novo login
+[9/48] [desktop-chromium] › e2e\isolation.spec.ts:118:3 › isolamento entre usuários › expiração durante ação de favoritar: intenção é retomada após novo login
+[10/48] [desktop-chromium] › e2e\isolation.spec.ts:118:3 › isolamento entre usuários › expiração durante ação de favoritar: intenção é retomada após novo login
+[11/48] [desktop-chromium] › e2e\recovery.spec.ts:82:3 › sessão › sessão expira com o pedido pendente: login com aviso, volta ao pedido e acompanha a liquidação
+[12/48] [desktop-chromium] › e2e\recovery.spec.ts:82:3 › sessão › sessão expira com o pedido pendente: login com aviso, volta ao pedido e acompanha a liquidação
+[13/48] [desktop-chromium] › e2e\isolation.spec.ts:118:3 › isolamento entre usuários › expiração durante ação de favoritar: intenção é retomada após novo login
+[14/48] [desktop-chromium] › e2e\recovery.spec.ts:82:3 › sessão › sessão expira com o pedido pendente: login com aviso, volta ao pedido e acompanha a liquidação
+[15/48] [desktop-chromium] › e2e\isolation.spec.ts:118:3 › isolamento entre usuários › expiração durante ação de favoritar: intenção é retomada após novo login
+[16/48] [desktop-chromium] › e2e\recovery.spec.ts:82:3 › sessão › sessão expira com o pedido pendente: login com aviso, volta ao pedido e acompanha a liquidação
+[17/48] [desktop-chromium] › e2e\isolation.spec.ts:118:3 › isolamento entre usuários › expiração durante ação de favoritar: intenção é retomada após novo login
+[18/48] [desktop-chromium] › e2e\recovery.spec.ts:82:3 › sessão › sessão expira com o pedido pendente: login com aviso, volta ao pedido e acompanha a liquidação
+[19/48] [desktop-chromium] › e2e\isolation.spec.ts:118:3 › isolamento entre usuários › expiração durante ação de favoritar: intenção é retomada após novo login
+[20/48] [desktop-chromium] › e2e\recovery.spec.ts:82:3 › sessão › sessão expira com o pedido pendente: login com aviso, volta ao pedido e acompanha a liquidação
+[21/48] [desktop-chromium] › e2e\isolation.spec.ts:118:3 › isolamento entre usuários › expiração durante ação de favoritar: intenção é retomada após novo login
+[22/48] [desktop-chromium] › e2e\recovery.spec.ts:82:3 › sessão › sessão expira com o pedido pendente: login com aviso, volta ao pedido e acompanha a liquidação
+[23/48] [desktop-chromium] › e2e\isolation.spec.ts:118:3 › isolamento entre usuários › expiração durante ação de favoritar: intenção é retomada após novo login
+[24/48] [desktop-chromium] › e2e\recovery.spec.ts:82:3 › sessão › sessão expira com o pedido pendente: login com aviso, volta ao pedido e acompanha a liquidação
+[25/48] [mobile-chromium] › e2e\isolation.spec.ts:118:3 › isolamento entre usuários › expiração durante ação de favoritar: intenção é retomada após novo login
+[26/48] [mobile-chromium] › e2e\recovery.spec.ts:82:3 › sessão › sessão expira com o pedido pendente: login com aviso, volta ao pedido e acompanha a liquidação
+[27/48] [mobile-chromium] › e2e\isolation.spec.ts:118:3 › isolamento entre usuários › expiração durante ação de favoritar: intenção é retomada após novo login
+[28/48] [mobile-chromium] › e2e\recovery.spec.ts:82:3 › sessão › sessão expira com o pedido pendente: login com aviso, volta ao pedido e acompanha a liquidação
+[29/48] [mobile-chromium] › e2e\isolation.spec.ts:118:3 › isolamento entre usuários › expiração durante ação de favoritar: intenção é retomada após novo login
+[30/48] [mobile-chromium] › e2e\recovery.spec.ts:82:3 › sessão › sessão expira com o pedido pendente: login com aviso, volta ao pedido e acompanha a liquidação
+[31/48] [mobile-chromium] › e2e\isolation.spec.ts:118:3 › isolamento entre usuários › expiração durante ação de favoritar: intenção é retomada após novo login
+[32/48] [mobile-chromium] › e2e\isolation.spec.ts:118:3 › isolamento entre usuários › expiração durante ação de favoritar: intenção é retomada após novo login
+[33/48] [mobile-chromium] › e2e\recovery.spec.ts:82:3 › sessão › sessão expira com o pedido pendente: login com aviso, volta ao pedido e acompanha a liquidação
+[34/48] [mobile-chromium] › e2e\recovery.spec.ts:82:3 › sessão › sessão expira com o pedido pendente: login com aviso, volta ao pedido e acompanha a liquidação
+[35/48] [mobile-chromium] › e2e\isolation.spec.ts:118:3 › isolamento entre usuários › expiração durante ação de favoritar: intenção é retomada após novo login
+[36/48] [mobile-chromium] › e2e\recovery.spec.ts:82:3 › sessão › sessão expira com o pedido pendente: login com aviso, volta ao pedido e acompanha a liquidação
+[37/48] [mobile-chromium] › e2e\recovery.spec.ts:82:3 › sessão › sessão expira com o pedido pendente: login com aviso, volta ao pedido e acompanha a liquidação
+[38/48] [mobile-chromium] › e2e\isolation.spec.ts:118:3 › isolamento entre usuários › expiração durante ação de favoritar: intenção é retomada após novo login
+[39/48] [mobile-chromium] › e2e\isolation.spec.ts:118:3 › isolamento entre usuários › expiração durante ação de favoritar: intenção é retomada após novo login
+[40/48] [mobile-chromium] › e2e\isolation.spec.ts:118:3 › isolamento entre usuários › expiração durante ação de favoritar: intenção é retomada após novo login
+[41/48] [mobile-chromium] › e2e\recovery.spec.ts:82:3 › sessão › sessão expira com o pedido pendente: login com aviso, volta ao pedido e acompanha a liquidação
+[42/48] [mobile-chromium] › e2e\recovery.spec.ts:82:3 › sessão › sessão expira com o pedido pendente: login com aviso, volta ao pedido e acompanha a liquidação
+[43/48] [mobile-chromium] › e2e\isolation.spec.ts:118:3 › isolamento entre usuários › expiração durante ação de favoritar: intenção é retomada após novo login
+[44/48] [mobile-chromium] › e2e\recovery.spec.ts:82:3 › sessão › sessão expira com o pedido pendente: login com aviso, volta ao pedido e acompanha a liquidação
+[45/48] [mobile-chromium] › e2e\recovery.spec.ts:82:3 › sessão › sessão expira com o pedido pendente: login com aviso, volta ao pedido e acompanha a liquidação
+[46/48] [mobile-chromium] › e2e\isolation.spec.ts:118:3 › isolamento entre usuários › expiração durante ação de favoritar: intenção é retomada após novo login
+[47/48] [mobile-chromium] › e2e\isolation.spec.ts:118:3 › isolamento entre usuários › expiração durante ação de favoritar: intenção é retomada após novo login
+[48/48] [mobile-chromium] › e2e\recovery.spec.ts:82:3 › sessão › sessão expira com o pedido pendente: login com aviso, volta ao pedido e acompanha a liquidação
+  48 passed (2.9m)

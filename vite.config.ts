@@ -94,10 +94,10 @@ export default defineConfig({
   resolve: {
     alias: [
       { find: '@', replacement: path.resolve(import.meta.dirname, './src') },
-      // CP9.2: o cookie jar emulado do MSW (tough-cookie + Public Suffix List do tldts, 277 kB e
-      // trabalho em toda requisição simulada) é trocado por um substituto mínimo; o KURIO não usa
-      // cookies. Justificativa, API coberta e limites em src/mocks/vendor/tough-cookie-lite.ts.
-      { find: /^tough-cookie$/, replacement: path.resolve(import.meta.dirname, './src/mocks/vendor/tough-cookie-lite.ts') },
+      // CP9.2 (auditado no CP9.1): só a Public Suffix List do `tldts` (251 kB) sai do chunk do MSW.
+      // O cookie jar do MSW continua sendo o `tough-cookie` real; dele, o `tldts` fornece apenas
+      // `getDomain()`. Contrato, diferenças e testes em src/mocks/vendor/tldts-lite.ts.
+      { find: /^tldts$/, replacement: path.resolve(import.meta.dirname, './src/mocks/vendor/tldts-lite.ts') },
     ],
   },
   build: {

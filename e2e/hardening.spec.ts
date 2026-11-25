@@ -125,6 +125,27 @@ test.describe('troca de líder do cluster', () => {
   })
 })
 
+test.describe('cookie jar do MSW (auditoria do CP9.1)', () => {
+  // O build troca o `tldts` por um substituto mínimo (src/mocks/vendor/tldts-lite.ts). Com o jar
+  // vazio (caso normal do KURIO) o caminho já roda em toda requisição; aqui o jar persistido do
+  // MSW chega PREENCHIDO, o que exercita a busca por domínio/caminho do tough-cookie real
+  // (permuteDomain → getDomain do substituto) e a serialização do cookie no header.
+  test('com cookies persistidos no jar do MSW, catálogo, login, dados privados e socket funcionam sem erro', async ({ page }) => {
+    await page.addInitScript(() => {
+      const cookie = (key: string, path: string) => ({ key, value: '1', domain: 'localhost', path, hostOnly: true, creation: new Date().toISOString() })
+      localStorage.setItem('__msw-cookie-store__', JSON.stringify([cookie('probe_root', '/'), cookie('probe_api', '/api')]))
+    })
+    await openApp(page, '/')
+    await expect(page.getByTestId('nft-card').first()).toBeVisible()
+    await signIn(page, USERS.ana, '/favoritos')
+    await expect(page.getByRole('heading', { level: 1, name: 'Favoritos' })).toBeAttached()
+    await expect.poll(async () => (await mock(page).connections()).some((c) => c.userId === USERS.ana.id)).toBe(true)
+    // O MSW continua lendo o jar persistido (os cookies não foram descartados por erro de parsing).
+    const stored = await page.evaluate(() => JSON.parse(localStorage.getItem('__msw-cookie-store__') ?? '[]') as Array<{ key: string }>)
+    expect(stored.map((c) => c.key).sort()).toEqual(['probe_api', 'probe_root'])
+  })
+})
+
 test.describe('compatibilidade', () => {
   // BroadcastChannel é requisito do próprio MSW (interceptação de WebSocket); só Web Locks pode faltar.
   test('sem Web Locks a aplicação funciona como aba única (com aviso)', async ({ browser }) => {

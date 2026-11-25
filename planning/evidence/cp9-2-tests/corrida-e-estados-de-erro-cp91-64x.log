@@ -1,0 +1,68 @@
+
+Running 64 tests using 4 workers
+
+[1/64] [desktop-chromium] › e2e\catalog.spec.ts:180:3 › catálogo: estados › erro HTTP mostra feedback e "Tentar novamente" recupera
+[2/64] [desktop-chromium] › e2e\catalog.spec.ts:188:3 › catálogo: estados › erro de conexão mostra feedback específico e recupera
+[3/64] [desktop-chromium] › e2e\catalog.spec.ts:237:3 › catálogo: tempo real e favoritos › evento emitido ANTES de o socket conectar, com a listagem em trânsito: o cliente reconcilia ao conectar
+[4/64] [desktop-chromium] › e2e\catalog.spec.ts:224:3 › catálogo: tempo real e favoritos › resposta REST antiga que chega DEPOIS do evento não regride o preço
+[5/64] [desktop-chromium] › e2e\catalog.spec.ts:237:3 › catálogo: tempo real e favoritos › evento emitido ANTES de o socket conectar, com a listagem em trânsito: o cliente reconcilia ao conectar
+[6/64] [desktop-chromium] › e2e\catalog.spec.ts:188:3 › catálogo: estados › erro de conexão mostra feedback específico e recupera
+[7/64] [desktop-chromium] › e2e\catalog.spec.ts:180:3 › catálogo: estados › erro HTTP mostra feedback e "Tentar novamente" recupera
+[8/64] [desktop-chromium] › e2e\catalog.spec.ts:224:3 › catálogo: tempo real e favoritos › resposta REST antiga que chega DEPOIS do evento não regride o preço
+[9/64] [desktop-chromium] › e2e\catalog.spec.ts:180:3 › catálogo: estados › erro HTTP mostra feedback e "Tentar novamente" recupera
+[10/64] [desktop-chromium] › e2e\catalog.spec.ts:188:3 › catálogo: estados › erro de conexão mostra feedback específico e recupera
+[11/64] [desktop-chromium] › e2e\catalog.spec.ts:224:3 › catálogo: tempo real e favoritos › resposta REST antiga que chega DEPOIS do evento não regride o preço
+[12/64] [desktop-chromium] › e2e\catalog.spec.ts:237:3 › catálogo: tempo real e favoritos › evento emitido ANTES de o socket conectar, com a listagem em trânsito: o cliente reconcilia ao conectar
+[13/64] [desktop-chromium] › e2e\catalog.spec.ts:180:3 › catálogo: estados › erro HTTP mostra feedback e "Tentar novamente" recupera
+[14/64] [desktop-chromium] › e2e\catalog.spec.ts:188:3 › catálogo: estados › erro de conexão mostra feedback específico e recupera
+[15/64] [desktop-chromium] › e2e\catalog.spec.ts:224:3 › catálogo: tempo real e favoritos › resposta REST antiga que chega DEPOIS do evento não regride o preço
+[16/64] [desktop-chromium] › e2e\catalog.spec.ts:237:3 › catálogo: tempo real e favoritos › evento emitido ANTES de o socket conectar, com a listagem em trânsito: o cliente reconcilia ao conectar
+[17/64] [desktop-chromium] › e2e\catalog.spec.ts:180:3 › catálogo: estados › erro HTTP mostra feedback e "Tentar novamente" recupera
+[18/64] [desktop-chromium] › e2e\catalog.spec.ts:188:3 › catálogo: estados › erro de conexão mostra feedback específico e recupera
+[19/64] [desktop-chromium] › e2e\catalog.spec.ts:224:3 › catálogo: tempo real e favoritos › resposta REST antiga que chega DEPOIS do evento não regride o preço
+[20/64] [desktop-chromium] › e2e\catalog.spec.ts:237:3 › catálogo: tempo real e favoritos › evento emitido ANTES de o socket conectar, com a listagem em trânsito: o cliente reconcilia ao conectar
+[21/64] [desktop-chromium] › e2e\catalog.spec.ts:180:3 › catálogo: estados › erro HTTP mostra feedback e "Tentar novamente" recupera
+[22/64] [desktop-chromium] › e2e\catalog.spec.ts:224:3 › catálogo: tempo real e favoritos › resposta REST antiga que chega DEPOIS do evento não regride o preço
+[23/64] [desktop-chromium] › e2e\catalog.spec.ts:188:3 › catálogo: estados › erro de conexão mostra feedback específico e recupera
+[24/64] [desktop-chromium] › e2e\catalog.spec.ts:237:3 › catálogo: tempo real e favoritos › evento emitido ANTES de o socket conectar, com a listagem em trânsito: o cliente reconcilia ao conectar
+[25/64] [desktop-chromium] › e2e\catalog.spec.ts:224:3 › catálogo: tempo real e favoritos › resposta REST antiga que chega DEPOIS do evento não regride o preço
+[26/64] [desktop-chromium] › e2e\catalog.spec.ts:180:3 › catálogo: estados › erro HTTP mostra feedback e "Tentar novamente" recupera
+[27/64] [desktop-chromium] › e2e\catalog.spec.ts:188:3 › catálogo: estados › erro de conexão mostra feedback específico e recupera
+[28/64] [desktop-chromium] › e2e\catalog.spec.ts:237:3 › catálogo: tempo real e favoritos › evento emitido ANTES de o socket conectar, com a listagem em trânsito: o cliente reconcilia ao conectar
+[29/64] [desktop-chromium] › e2e\catalog.spec.ts:224:3 › catálogo: tempo real e favoritos › resposta REST antiga que chega DEPOIS do evento não regride o preço
+[30/64] [desktop-chromium] › e2e\catalog.spec.ts:188:3 › catálogo: estados › erro de conexão mostra feedback específico e recupera
+[31/64] [desktop-chromium] › e2e\catalog.spec.ts:180:3 › catálogo: estados › erro HTTP mostra feedback e "Tentar novamente" recupera
+[32/64] [desktop-chromium] › e2e\catalog.spec.ts:237:3 › catálogo: tempo real e favoritos › evento emitido ANTES de o socket conectar, com a listagem em trânsito: o cliente reconcilia ao conectar
+[33/64] [mobile-chromium] › e2e\catalog.spec.ts:180:3 › catálogo: estados › erro HTTP mostra feedback e "Tentar novamente" recupera
+[34/64] [mobile-chromium] › e2e\catalog.spec.ts:188:3 › catálogo: estados › erro de conexão mostra feedback específico e recupera
+[35/64] [mobile-chromium] › e2e\catalog.spec.ts:224:3 › catálogo: tempo real e favoritos › resposta REST antiga que chega DEPOIS do evento não regride o preço
+[36/64] [mobile-chromium] › e2e\catalog.spec.ts:237:3 › catálogo: tempo real e favoritos › evento emitido ANTES de o socket conectar, com a listagem em trânsito: o cliente reconcilia ao conectar
+[37/64] [mobile-chromium] › e2e\catalog.spec.ts:188:3 › catálogo: estados › erro de conexão mostra feedback específico e recupera
+[38/64] [mobile-chromium] › e2e\catalog.spec.ts:180:3 › catálogo: estados › erro HTTP mostra feedback e "Tentar novamente" recupera
+[39/64] [mobile-chromium] › e2e\catalog.spec.ts:224:3 › catálogo: tempo real e favoritos › resposta REST antiga que chega DEPOIS do evento não regride o preço
+[40/64] [mobile-chromium] › e2e\catalog.spec.ts:237:3 › catálogo: tempo real e favoritos › evento emitido ANTES de o socket conectar, com a listagem em trânsito: o cliente reconcilia ao conectar
+[41/64] [mobile-chromium] › e2e\catalog.spec.ts:188:3 › catálogo: estados › erro de conexão mostra feedback específico e recupera
+[42/64] [mobile-chromium] › e2e\catalog.spec.ts:180:3 › catálogo: estados › erro HTTP mostra feedback e "Tentar novamente" recupera
+[43/64] [mobile-chromium] › e2e\catalog.spec.ts:237:3 › catálogo: tempo real e favoritos › evento emitido ANTES de o socket conectar, com a listagem em trânsito: o cliente reconcilia ao conectar
+[44/64] [mobile-chromium] › e2e\catalog.spec.ts:224:3 › catálogo: tempo real e favoritos › resposta REST antiga que chega DEPOIS do evento não regride o preço
+[45/64] [mobile-chromium] › e2e\catalog.spec.ts:224:3 › catálogo: tempo real e favoritos › resposta REST antiga que chega DEPOIS do evento não regride o preço
+[46/64] [mobile-chromium] › e2e\catalog.spec.ts:188:3 › catálogo: estados › erro de conexão mostra feedback específico e recupera
+[47/64] [mobile-chromium] › e2e\catalog.spec.ts:180:3 › catálogo: estados › erro HTTP mostra feedback e "Tentar novamente" recupera
+[48/64] [mobile-chromium] › e2e\catalog.spec.ts:237:3 › catálogo: tempo real e favoritos › evento emitido ANTES de o socket conectar, com a listagem em trânsito: o cliente reconcilia ao conectar
+[49/64] [mobile-chromium] › e2e\catalog.spec.ts:180:3 › catálogo: estados › erro HTTP mostra feedback e "Tentar novamente" recupera
+[50/64] [mobile-chromium] › e2e\catalog.spec.ts:224:3 › catálogo: tempo real e favoritos › resposta REST antiga que chega DEPOIS do evento não regride o preço
+[51/64] [mobile-chromium] › e2e\catalog.spec.ts:188:3 › catálogo: estados › erro de conexão mostra feedback específico e recupera
+[52/64] [mobile-chromium] › e2e\catalog.spec.ts:237:3 › catálogo: tempo real e favoritos › evento emitido ANTES de o socket conectar, com a listagem em trânsito: o cliente reconcilia ao conectar
+[53/64] [mobile-chromium] › e2e\catalog.spec.ts:188:3 › catálogo: estados › erro de conexão mostra feedback específico e recupera
+[54/64] [mobile-chromium] › e2e\catalog.spec.ts:180:3 › catálogo: estados › erro HTTP mostra feedback e "Tentar novamente" recupera
+[55/64] [mobile-chromium] › e2e\catalog.spec.ts:224:3 › catálogo: tempo real e favoritos › resposta REST antiga que chega DEPOIS do evento não regride o preço
+[56/64] [mobile-chromium] › e2e\catalog.spec.ts:237:3 › catálogo: tempo real e favoritos › evento emitido ANTES de o socket conectar, com a listagem em trânsito: o cliente reconcilia ao conectar
+[57/64] [mobile-chromium] › e2e\catalog.spec.ts:188:3 › catálogo: estados › erro de conexão mostra feedback específico e recupera
+[58/64] [mobile-chromium] › e2e\catalog.spec.ts:180:3 › catálogo: estados › erro HTTP mostra feedback e "Tentar novamente" recupera
+[59/64] [mobile-chromium] › e2e\catalog.spec.ts:224:3 › catálogo: tempo real e favoritos › resposta REST antiga que chega DEPOIS do evento não regride o preço
+[60/64] [mobile-chromium] › e2e\catalog.spec.ts:237:3 › catálogo: tempo real e favoritos › evento emitido ANTES de o socket conectar, com a listagem em trânsito: o cliente reconcilia ao conectar
+[61/64] [mobile-chromium] › e2e\catalog.spec.ts:180:3 › catálogo: estados › erro HTTP mostra feedback e "Tentar novamente" recupera
+[62/64] [mobile-chromium] › e2e\catalog.spec.ts:188:3 › catálogo: estados › erro de conexão mostra feedback específico e recupera
+[63/64] [mobile-chromium] › e2e\catalog.spec.ts:224:3 › catálogo: tempo real e favoritos › resposta REST antiga que chega DEPOIS do evento não regride o preço
+[64/64] [mobile-chromium] › e2e\catalog.spec.ts:237:3 › catálogo: tempo real e favoritos › evento emitido ANTES de o socket conectar, com a listagem em trânsito: o cliente reconcilia ao conectar
+  64 passed (2.5m)
