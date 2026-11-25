@@ -1,0 +1,97 @@
+
+Running 13 tests using 4 workers
+
+[1/13] [desktop-chromium] › e2e\cart.spec.ts:14:3 › adicionar, quantidade e remoção › pelo card do catálogo: adiciona, mostra no carrinho com valores da API e persiste no refresh
+[2/13] [desktop-chromium] › e2e\cart.spec.ts:30:3 › adicionar, quantidade e remoção › pelo detalhe: edição e quantidade; mesma linha soma, outra edição é outra linha
+[3/13] [desktop-chromium] › e2e\cart.spec.ts:50:3 › adicionar, quantidade e remoção › alterar quantidade, limite pelo estoque e remover até o carrinho vazio
+[4/13] [desktop-chromium] › e2e\cart.spec.ts:67:3 › adicionar, quantidade e remoção › adicionar além do estoque: a API recusa e o carrinho não muda
+[5/13] [desktop-chromium] › e2e\cart.spec.ts:79:3 › tempo real no carrinho › estoque cai abaixo da quantidade: linha alerta, checkout bloqueia, "Ajustar" corrige
+[6/13] [desktop-chromium] › e2e\cart.spec.ts:94:3 › tempo real no carrinho › preço muda: linha avisa o preço anterior e o resumo é recotado pela API
+[7/13] [desktop-chromium] › e2e\cart.spec.ts:110:3 › cupons › válido aplica o desconto da API; inválido e expirado mostram erro no campo; remover
+[8/13] [desktop-chromium] › e2e\cart.spec.ts:140:3 › visitante, merge e isolamento › merge determinístico após login: soma quantidades, limita ao estoque, mantém a ordem
+[9/13] [desktop-chromium] › e2e\cart.spec.ts:172:3 › visitante, merge e isolamento › isolamento: depois do logout o visitante tem carrinho vazio; Bruno não vê o de Ana
+[10/13] [desktop-chromium] › e2e\cart.spec.ts:194:3 › estados e falhas › erro ao carregar e recuperação com "Tentar novamente"
+  1) [desktop-chromium] › e2e\cart.spec.ts:94:3 › tempo real no carrinho › preço muda: linha avisa o preço anterior e o resumo é recotado pela API 
+
+    Error: expect(locator).toContainText(expected) failed
+
+    Locator: getByTestId('cart-line').filter({ hasText: 'Emerald Ape #042' }).getByRole('status')
+    Expected substring: "era 1.19 ETH, agora 1.25 ETH"
+    Error: strict mode violation: getByTestId('cart-line').filter({ hasText: 'Emerald Ape #042' }).getByRole('status') resolved to 2 elements:
+        1) <output id="_r_2_" aria-live="polite" class="min-w-6 text-center font-mono text-body font-semibold tabular-nums">1</output> aka getByTestId('cart-line').getByText('1', { exact: true })
+        2) <div role="status" class="flex flex-wrap items-center gap-2 px-3 py-2 text-caption bg-primary/10 text-price">…</div> aka getByRole('status').filter({ hasText: 'Preço atualizado: era 1.19' })
+
+    Call log:
+      - Expect "toContainText" getByTestId('cart-line').filter({ hasText: 'Emerald Ape #042' }).getByRole('status') with timeout 5000ms
+      - waiting for getByTestId('cart-line').filter({ hasText: 'Emerald Ape #042' }).getByRole('status')
+
+
+       98 |     await expect(summaryValue(page, 'quote-subtotal')).toHaveAttribute('data-value', '1.19')
+       99 |     await mock(page).updateNft('nft-001', { price: '1.25' })
+    > 100 |     await expect(line(page, 'Emerald Ape #042').getByRole('status')).toContainText('era 1.19 ETH, agora 1.25 ETH')
+          |                                                                      ^
+      101 |     await expect(summaryValue(page, 'quote-subtotal')).toHaveAttribute('data-value', '1.25')
+      102 |     // Evento repetido/antigo não regride o valor.
+      103 |     await mock(page).emitStaleNftUpdate('nft-001', '0.50')
+        at D:\emprego\e2e\cart.spec.ts:100:70
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\cart-tempo-real-no-carrinh-d5920--resumo-é-recotado-pela-API-desktop-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\cart-tempo-real-no-carrinh-d5920--resumo-é-recotado-pela-API-desktop-chromium\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\cart-tempo-real-no-carrinh-d5920--resumo-é-recotado-pela-API-desktop-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\cart-tempo-real-no-carrinh-d5920--resumo-é-recotado-pela-API-desktop-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[11/13] [desktop-chromium] › e2e\cart.spec.ts:213:3 › estados e falhas › cotação em andamento: resumo em carregamento e checkout bloqueado até a API responder
+[12/13] [desktop-chromium] › e2e\cart.spec.ts:203:3 › estados e falhas › falha ao alterar: o carrinho anterior é preservado e o erro é anunciado
+[13/13] [desktop-chromium] › e2e\cart.spec.ts:224:3 › estados e falhas › acessibilidade: axe sem violações e controles operáveis por teclado
+  2) [desktop-chromium] › e2e\cart.spec.ts:194:3 › estados e falhas › erro ao carregar e recuperação com "Tentar novamente" 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByRole('heading', { name: 'Não foi possível carregar o carrinho' })
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" getByRole('heading', { name: 'Não foi possível carregar o carrinho' }) with timeout 5000ms
+      - waiting for getByRole('heading', { name: 'Não foi possível carregar o carrinho' })
+
+
+      196 |     await seedCart(page, [{ nftId: 'nft-001', quantity: 1 }])
+      197 |     await page.goto('/carrinho?scenario=cart-error')
+    > 198 |     await expect(page.getByRole('heading', { name: 'Não foi possível carregar o carrinho' })).toBeVisible()
+          |                                                                                               ^
+      199 |     await page.getByRole('button', { name: 'Tentar novamente' }).click()
+      200 |     await expect(line(page, 'Emerald Ape #042')).toBeVisible()
+      201 |   })
+        at D:\emprego\e2e\cart.spec.ts:198:95
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\cart-estados-e-falhas-erro-4de4c-ração-com-Tentar-novamente--desktop-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\cart-estados-e-falhas-erro-4de4c-ração-com-Tentar-novamente--desktop-chromium\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\cart-estados-e-falhas-erro-4de4c-ração-com-Tentar-novamente--desktop-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\cart-estados-e-falhas-erro-4de4c-ração-com-Tentar-novamente--desktop-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+  2 failed
+    [desktop-chromium] › e2e\cart.spec.ts:94:3 › tempo real no carrinho › preço muda: linha avisa o preço anterior e o resumo é recotado pela API 
+    [desktop-chromium] › e2e\cart.spec.ts:194:3 › estados e falhas › erro ao carregar e recuperação com "Tentar novamente" 
+  11 passed (46.8s)

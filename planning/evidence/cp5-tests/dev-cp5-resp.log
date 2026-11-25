@@ -1,0 +1,12 @@
+
+Running 8 tests using 4 workers
+
+[1/8] [responsive] › e2e\layout.responsive.spec.ts:77:3 › carrinho e pagamento sem overflow em 360px
+[2/8] [responsive] › e2e\layout.responsive.spec.ts:77:3 › carrinho e pagamento sem overflow em 768px
+[3/8] [responsive] › e2e\layout.responsive.spec.ts:77:3 › carrinho e pagamento sem overflow em 390px
+[4/8] [responsive] › e2e\layout.responsive.spec.ts:77:3 › carrinho e pagamento sem overflow em 600px
+[5/8] [responsive] › e2e\layout.responsive.spec.ts:77:3 › carrinho e pagamento sem overflow em 900px
+[6/8] [responsive] › e2e\layout.responsive.spec.ts:77:3 › carrinho e pagamento sem overflow em 1024px
+[7/8] [responsive] › e2e\layout.responsive.spec.ts:77:3 › carrinho e pagamento sem overflow em 1280px
+[8/8] [responsive] › e2e\layout.responsive.spec.ts:77:3 › carrinho e pagamento sem overflow em 1440px
+  8 passed (35.7s)

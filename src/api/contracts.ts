@@ -249,11 +249,25 @@ export const TERMINAL_ORDER_STATUSES: readonly OrderStatus[] = ['confirmed', 're
 
 export const OrderLine = z.object({
   nftId: z.string(),
+  /** CP5: edição comprada (pedidos da PoC do CP1 não têm). */
+  editionId: z.string().optional(),
   name: z.string(),
   unitPrice: EthAmount,
   quantity: z.number().int().positive(),
   lineTotal: EthAmount,
 })
+
+/** Valores congelados da cotação aceita (pedidos criados pelo checkout do CP5). */
+export const OrderPricing = z.object({
+  quoteId: z.string(),
+  network: Network,
+  subtotal: EthAmount,
+  discount: EthAmount,
+  networkFee: EthAmount,
+  couponCode: z.string().nullable(),
+  walletAddress: z.string(),
+})
+export type OrderPricing = z.infer<typeof OrderPricing>
 
 export const Order = z.object({
   id: z.string(),
@@ -264,13 +278,174 @@ export const Order = z.object({
   total: EthAmount,
   txHash: z.string().nullable(),
   createdAt: z.string(),
+  pricing: OrderPricing.nullable().optional(),
 })
 export type Order = z.infer<typeof Order>
 
+/** Pedido direto por itens (PoC do CP1, em /demo/poc). O checkout usa `CheckoutRequest`. */
 export const CreateOrderRequest = z.object({
   items: z.array(z.object({ nftId: z.string(), quantity: z.number().int().positive() })).min(1),
 })
 export type CreateOrderRequest = z.infer<typeof CreateOrderRequest>
+
+// ---------- Carrinho, cupons e cotação (CP5) ----------
+/** Limite por linha (evita quantidades absurdas; o estoque real é validado pela API). */
+export const MAX_LINE_QUANTITY = 99
+
+/** Problema atual da linha: estoque menor que a quantidade, ou edição esgotada. */
+export const CartLineIssue = z.enum(['insufficient', 'unavailable'])
+export type CartLineIssue = z.infer<typeof CartLineIssue>
+
+export const CartLine = z.object({
+  /** Identidade da linha: NFT + edição (`nftId:editionId`). */
+  id: z.string(),
+  nftId: z.string(),
+  editionId: z.string(),
+  editionLabel: z.string(),
+  name: z.string(),
+  image: z.string(),
+  imageAlt: z.string(),
+  unitPrice: EthAmount,
+  /** Preço quando o item foi adicionado; diferente de `unitPrice` = o preço mudou desde então. */
+  priceAtAdd: EthAmount,
+  quantity: z.number().int().positive(),
+  /** Disponibilidade atual da edição. */
+  available: z.number().int().nonnegative(),
+  issue: CartLineIssue.nullable(),
+})
+export type CartLine = z.infer<typeof CartLine>
+
+export const AppliedCoupon = z.object({ code: z.string(), label: z.string() })
+
+export const Cart = z.object({
+  /** Dono: usuário autenticado ou carrinho de visitante. */
+  owner: z.enum(['user', 'guest']),
+  /** Cresce a cada mudança de conteúdo (itens, quantidades, cupom). */
+  version: z.number().int().nonnegative(),
+  lines: z.array(CartLine),
+  coupon: AppliedCoupon.nullable(),
+})
+export type Cart = z.infer<typeof Cart>
+
+const Quantity = z.number().int().positive('A quantidade mínima é 1').max(MAX_LINE_QUANTITY, `A quantidade máxima é ${MAX_LINE_QUANTITY}`)
+
+export const AddCartItem = z.object({
+  nftId: z.string().min(1),
+  /** Opcional: sem edição (ex.: card do catálogo), a API escolhe a primeira edição disponível. */
+  editionId: z.string().min(1).optional(),
+  quantity: Quantity,
+})
+export type AddCartItem = z.infer<typeof AddCartItem>
+
+export const UpdateCartItem = z.object({ quantity: Quantity })
+
+export const ApplyCoupon = z.object({
+  code: z
+    .string()
+    .trim()
+    .min(1, 'Informe o código promocional')
+    .max(32, 'Código muito longo')
+    .transform((v) => v.toUpperCase()),
+})
+
+export const MergeCartRequest = z.object({ guestCartId: z.string().min(8) })
+export const MergeCartResponse = z.object({
+  cart: Cart,
+  /** Linhas cuja quantidade foi reduzida (ou removida) pelo estoque durante o merge. */
+  adjusted: z.array(z.object({ name: z.string(), requested: z.number().int(), kept: z.number().int().nonnegative() })),
+  merged: z.number().int().nonnegative(),
+})
+export type MergeCartResponse = z.infer<typeof MergeCartResponse>
+
+export const QuoteRequest = z.object({ network: Network })
+
+export const QuoteLine = z.object({
+  lineId: z.string(),
+  nftId: z.string(),
+  editionId: z.string(),
+  name: z.string(),
+  unitPrice: EthAmount,
+  quantity: z.number().int().positive(),
+  lineTotal: EthAmount,
+})
+
+/**
+ * Cotação: a FONTE DE VERDADE dos valores (CART-03 / PAY-02). Calculada pela API em wei
+ * (bigint) e devolvida como strings decimais. O cliente só exibe; nunca soma.
+ */
+export const Quote = z.object({
+  id: z.string(),
+  cartVersion: z.number().int().nonnegative(),
+  network: Network,
+  lines: z.array(QuoteLine),
+  subtotal: EthAmount,
+  discount: EthAmount,
+  networkFee: EthAmount,
+  total: EthAmount,
+  coupon: AppliedCoupon.nullable(),
+  expiresAt: z.string(),
+})
+export type Quote = z.infer<typeof Quote>
+
+/** Mesmos valores = mesma oferta (ids e validade podem mudar). */
+export function sameQuoteValues(a: Quote, b: Quote) {
+  const key = (q: Quote) =>
+    JSON.stringify([q.network, q.subtotal, q.discount, q.networkFee, q.total, q.coupon?.code ?? null, q.lines.map((l) => [l.lineId, l.unitPrice, l.quantity, l.lineTotal])])
+  return key(a) === key(b)
+}
+
+// ---------- Checkout (CP5) ----------
+/** Conexão simulada de carteira (WalletConnect, MetaMask, Coinbase Wallet): nada real. */
+export const WalletConnectionRequest = z.object({
+  provider: WalletType,
+  network: Network,
+  address: z.string().min(1),
+})
+export const WalletConnection = WalletConnectionRequest.extend({ id: z.string(), connectedAt: z.string() })
+export type WalletConnection = z.infer<typeof WalletConnection>
+
+/** Redes compatíveis com o formato do endereço (EVM ↔ Ethereum/Polygon; base58 ↔ Solana). */
+export function networksForAddress(address: string): Network[] {
+  return /^0x/i.test(address) ? ['ethereum', 'polygon'] : ['solana']
+}
+
+export const CheckoutBuyer = z.object({
+  displayName: DisplayNameField,
+  email: EmailField,
+  note: z.string().trim().max(280, 'Use no máximo 280 caracteres').optional(),
+})
+export type CheckoutBuyer = z.infer<typeof CheckoutBuyer>
+
+/** Carteira de pagamento: uma cadastrada no perfil ou outra informada só para esta compra. */
+export const PaymentWallet = z.discriminatedUnion('kind', [
+  z.object({ kind: z.literal('saved'), walletId: z.string().min(1, 'Selecione uma carteira') }),
+  z
+    .object({
+      kind: z.literal('external'),
+      network: Network,
+      type: WalletType,
+      address: z.string().trim().min(1, 'Informe o endereço da carteira'),
+    })
+    .superRefine((v, ctx) => {
+      if (!isValidAddress(v.network, v.address)) {
+        ctx.addIssue({
+          code: 'custom',
+          path: ['address'],
+          message: v.network === 'solana' ? 'Endereço Solana inválido (base58, 32 a 44 caracteres)' : 'Endereço inválido: use 0x seguido de 40 caracteres hexadecimais',
+        })
+      }
+    }),
+])
+export type PaymentWallet = z.infer<typeof PaymentWallet>
+
+export const CheckoutRequest = z.object({
+  quoteId: z.string().min(1),
+  network: Network,
+  buyer: CheckoutBuyer,
+  wallet: PaymentWallet,
+  connectionId: z.string().min(1, 'Conecte a carteira antes de confirmar'),
+})
+export type CheckoutRequest = z.infer<typeof CheckoutRequest>
 
 // ---------- Erros ----------
 export const ApiErrorCode = z.enum([
@@ -283,6 +458,14 @@ export const ApiErrorCode = z.enum([
   'IDEMPOTENCY_KEY_REUSED',
   'OUT_OF_STOCK',
   'TRANSIENT',
+  // CP5
+  'COUPON_INVALID',
+  'COUPON_EXPIRED',
+  'QUOTE_EXPIRED',
+  'QUOTE_STALE',
+  'CART_EMPTY',
+  'WALLET_REJECTED',
+  'WALLET_DISCONNECTED',
 ])
 export type ApiErrorCode = z.infer<typeof ApiErrorCode>
 

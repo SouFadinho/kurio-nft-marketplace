@@ -20,9 +20,19 @@ export type RouteKey =
   | 'me.password'
   | 'me.wallets.read'
   | 'me.wallets.write'
+  | 'cart.read'
+  | 'cart.write'
+  | 'quote'
+  | 'wallet.connect'
+  | 'orders.create'
 
 export interface FailureRule {
-  kind: 'http-503' | 'http-500' | 'network'
+  /**
+   * 'rejected': recusa de negócio (ex.: a carteira recusou a conexão).
+   * '*-after-commit': o servidor GRAVA e depois a resposta se perde (rede) ou demora mais que o
+   * timeout do cliente; o retry com a mesma chave de idempotência recupera o mesmo pedido (PEND-02).
+   */
+  kind: 'http-503' | 'http-500' | 'network' | 'rejected' | 'network-after-commit' | 'timeout-after-commit'
   /** Quantas requisições falham antes de voltar ao normal (Infinity = sempre). */
   times: number
 }
@@ -80,6 +90,23 @@ export const SCENARIOS = {
   'profile-save-fail': { ...base, failures: { 'me.profile.write': { kind: 'http-503', times: Infinity } } },
   /** Leituras privadas ficam retidas até o teste liberar: respostas atrasadas após logout/troca de usuário. */
   'slow-private': { ...base, holdRoutes: ['favorites.read', 'me.wallets.read'] },
+  // ---------- CP5: carrinho e checkout ----------
+  /** A leitura do carrinho falha até `__kurioMock.recover('cart.read')` (erro + recuperação determinística). */
+  'cart-error': { ...base, failures: { 'cart.read': { kind: 'http-503', times: Infinity } } },
+  /** Escritas no carrinho falham sempre (o carrinho anterior é preservado). */
+  'cart-write-fail': { ...base, failures: { 'cart.write': { kind: 'http-503', times: Infinity } } },
+  /** A cotação fica retida até o teste liberar (skeleton do resumo). */
+  'hold-quote': { ...base, holdRoutes: ['quote'] },
+  /** A primeira conexão de carteira é recusada pelo "usuário" na carteira simulada. */
+  'wallet-refused': { ...base, failures: { 'wallet.connect': { kind: 'rejected', times: 1 } } },
+  /** A primeira criação de pedido falha ANTES de gravar (503). */
+  'order-fail': { ...base, failures: { 'orders.create': { kind: 'http-503', times: 1 } } },
+  /** A primeira criação GRAVA o pedido e a resposta se perde (erro de rede). */
+  'order-lost-response': { ...base, settlement: 'manual', failures: { 'orders.create': { kind: 'network-after-commit', times: 1 } } },
+  /** A primeira criação GRAVA o pedido e responde depois do timeout do cliente. */
+  'order-timeout': { ...base, settlement: 'manual', failures: { 'orders.create': { kind: 'timeout-after-commit', times: 1 } } },
+  /** Criação lenta (1,5 s) e liquidação manual: estado "enviando" observável e cliques repetidos. */
+  'slow-order': { ...base, settlement: 'manual', routeLatency: { 'orders.create': () => 1_500 } },
 } satisfies Record<string, ScenarioConfig>
 
 export type ScenarioName = keyof typeof SCENARIOS

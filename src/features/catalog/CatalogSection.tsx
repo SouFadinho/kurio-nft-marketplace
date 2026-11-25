@@ -25,6 +25,7 @@ import { NftImage } from '@/components/kurio/NftImage'
 import { Pagination } from '@/components/kurio/Pagination'
 import { EmptyState, ErrorState } from '@/components/kurio/states'
 import { useFavoriteAction } from '@/features/favorites/queries'
+import { useCartActions } from '@/features/cart/actions'
 import { highlightsQuery, nftListQuery } from '@/features/nfts/queries'
 import { cn } from '@/lib/utils'
 import { type CatalogController } from './controller'
@@ -152,6 +153,7 @@ export function CatalogSection({ controller, title }: { controller: CatalogContr
   const { search, setPage, clearAll } = controller
   const query = useCatalogQuery(search)
   const favorites = useFavoriteAction()
+  const cart = useCartActions()
   const sectionRef = useRef<HTMLElement>(null)
   const page = search.page ?? 1
   const data = query.data
@@ -202,6 +204,8 @@ export function CatalogSection({ controller, title }: { controller: CatalogContr
               favorite={favorites.isFavorite(n.id)}
               favoritePending={favorites.pendingId === n.id}
               onToggleFavorite={(next) => favorites.toggle(n, next)}
+              onAddToCart={() => void cart.addToCart({ nftId: n.id, name: n.name, quantity: 1 })}
+              addPending={cart.pendingNftId === n.id}
             />
           )}
         />

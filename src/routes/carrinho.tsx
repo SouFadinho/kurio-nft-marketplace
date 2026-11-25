@@ -1,8 +1,9 @@
 import { createFileRoute } from '@tanstack/react-router'
-import { PlaceholderPage } from '@/components/kurio/pages'
+import { CartPage } from '@/features/cart/CartPage'
 
-// TEMPORÁRIO: carrinho no CP5. No mobile, o Figma não tem navegação inferior nesta tela.
+// Carrinho (TELA-03): público (visitante tem carrinho próprio). No mobile, o Figma não tem
+// navegação inferior nesta tela (a ação principal fica fixa na base).
 export const Route = createFileRoute('/carrinho')({
   staticData: { hideBottomNav: true },
-  component: () => <PlaceholderPage title="Carrinho de NFTs" checkpoint="CP5 (Carrinho e checkout)" />,
+  component: CartPage,
 })

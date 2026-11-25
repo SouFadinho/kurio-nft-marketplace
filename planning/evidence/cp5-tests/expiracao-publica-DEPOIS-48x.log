@@ -1,0 +1,52 @@
+
+Running 48 tests using 4 workers
+
+[1/48] [desktop-chromium] › e2e\auth.spec.ts:155:3 › sessão e rotas protegidas › expiração em página pública sem ação pendente: continua como visitante, com aviso
+[2/48] [desktop-chromium] › e2e\auth.spec.ts:155:3 › sessão e rotas protegidas › expiração em página pública sem ação pendente: continua como visitante, com aviso
+[3/48] [desktop-chromium] › e2e\auth.spec.ts:155:3 › sessão e rotas protegidas › expiração em página pública sem ação pendente: continua como visitante, com aviso
+[4/48] [desktop-chromium] › e2e\auth.spec.ts:155:3 › sessão e rotas protegidas › expiração em página pública sem ação pendente: continua como visitante, com aviso
+[5/48] [desktop-chromium] › e2e\auth.spec.ts:155:3 › sessão e rotas protegidas › expiração em página pública sem ação pendente: continua como visitante, com aviso
+[6/48] [desktop-chromium] › e2e\auth.spec.ts:155:3 › sessão e rotas protegidas › expiração em página pública sem ação pendente: continua como visitante, com aviso
+[7/48] [desktop-chromium] › e2e\auth.spec.ts:155:3 › sessão e rotas protegidas › expiração em página pública sem ação pendente: continua como visitante, com aviso
+[8/48] [desktop-chromium] › e2e\auth.spec.ts:155:3 › sessão e rotas protegidas › expiração em página pública sem ação pendente: continua como visitante, com aviso
+[9/48] [desktop-chromium] › e2e\auth.spec.ts:155:3 › sessão e rotas protegidas › expiração em página pública sem ação pendente: continua como visitante, com aviso
+[10/48] [desktop-chromium] › e2e\auth.spec.ts:155:3 › sessão e rotas protegidas › expiração em página pública sem ação pendente: continua como visitante, com aviso
+[11/48] [desktop-chromium] › e2e\auth.spec.ts:155:3 › sessão e rotas protegidas › expiração em página pública sem ação pendente: continua como visitante, com aviso
+[12/48] [desktop-chromium] › e2e\auth.spec.ts:155:3 › sessão e rotas protegidas › expiração em página pública sem ação pendente: continua como visitante, com aviso
+[13/48] [desktop-chromium] › e2e\auth.spec.ts:155:3 › sessão e rotas protegidas › expiração em página pública sem ação pendente: continua como visitante, com aviso
+[14/48] [desktop-chromium] › e2e\auth.spec.ts:155:3 › sessão e rotas protegidas › expiração em página pública sem ação pendente: continua como visitante, com aviso
+[15/48] [desktop-chromium] › e2e\auth.spec.ts:155:3 › sessão e rotas protegidas › expiração em página pública sem ação pendente: continua como visitante, com aviso
+[16/48] [desktop-chromium] › e2e\auth.spec.ts:155:3 › sessão e rotas protegidas › expiração em página pública sem ação pendente: continua como visitante, com aviso
+[17/48] [desktop-chromium] › e2e\auth.spec.ts:155:3 › sessão e rotas protegidas › expiração em página pública sem ação pendente: continua como visitante, com aviso
+[18/48] [desktop-chromium] › e2e\auth.spec.ts:155:3 › sessão e rotas protegidas › expiração em página pública sem ação pendente: continua como visitante, com aviso
+[19/48] [desktop-chromium] › e2e\auth.spec.ts:155:3 › sessão e rotas protegidas › expiração em página pública sem ação pendente: continua como visitante, com aviso
+[20/48] [desktop-chromium] › e2e\auth.spec.ts:155:3 › sessão e rotas protegidas › expiração em página pública sem ação pendente: continua como visitante, com aviso
+[21/48] [desktop-chromium] › e2e\auth.spec.ts:155:3 › sessão e rotas protegidas › expiração em página pública sem ação pendente: continua como visitante, com aviso
+[22/48] [desktop-chromium] › e2e\auth.spec.ts:155:3 › sessão e rotas protegidas › expiração em página pública sem ação pendente: continua como visitante, com aviso
+[23/48] [desktop-chromium] › e2e\auth.spec.ts:155:3 › sessão e rotas protegidas › expiração em página pública sem ação pendente: continua como visitante, com aviso
+[24/48] [desktop-chromium] › e2e\auth.spec.ts:155:3 › sessão e rotas protegidas › expiração em página pública sem ação pendente: continua como visitante, com aviso
+[25/48] [mobile-chromium] › e2e\auth.spec.ts:155:3 › sessão e rotas protegidas › expiração em página pública sem ação pendente: continua como visitante, com aviso
+[26/48] [mobile-chromium] › e2e\auth.spec.ts:155:3 › sessão e rotas protegidas › expiração em página pública sem ação pendente: continua como visitante, com aviso
+[27/48] [mobile-chromium] › e2e\auth.spec.ts:155:3 › sessão e rotas protegidas › expiração em página pública sem ação pendente: continua como visitante, com aviso
+[28/48] [mobile-chromium] › e2e\auth.spec.ts:155:3 › sessão e rotas protegidas › expiração em página pública sem ação pendente: continua como visitante, com aviso
+[29/48] [mobile-chromium] › e2e\auth.spec.ts:155:3 › sessão e rotas protegidas › expiração em página pública sem ação pendente: continua como visitante, com aviso
+[30/48] [mobile-chromium] › e2e\auth.spec.ts:155:3 › sessão e rotas protegidas › expiração em página pública sem ação pendente: continua como visitante, com aviso
+[31/48] [mobile-chromium] › e2e\auth.spec.ts:155:3 › sessão e rotas protegidas › expiração em página pública sem ação pendente: continua como visitante, com aviso
+[32/48] [mobile-chromium] › e2e\auth.spec.ts:155:3 › sessão e rotas protegidas › expiração em página pública sem ação pendente: continua como visitante, com aviso
+[33/48] [mobile-chromium] › e2e\auth.spec.ts:155:3 › sessão e rotas protegidas › expiração em página pública sem ação pendente: continua como visitante, com aviso
+[34/48] [mobile-chromium] › e2e\auth.spec.ts:155:3 › sessão e rotas protegidas › expiração em página pública sem ação pendente: continua como visitante, com aviso
+[35/48] [mobile-chromium] › e2e\auth.spec.ts:155:3 › sessão e rotas protegidas › expiração em página pública sem ação pendente: continua como visitante, com aviso
+[36/48] [mobile-chromium] › e2e\auth.spec.ts:155:3 › sessão e rotas protegidas › expiração em página pública sem ação pendente: continua como visitante, com aviso
+[37/48] [mobile-chromium] › e2e\auth.spec.ts:155:3 › sessão e rotas protegidas › expiração em página pública sem ação pendente: continua como visitante, com aviso
+[38/48] [mobile-chromium] › e2e\auth.spec.ts:155:3 › sessão e rotas protegidas › expiração em página pública sem ação pendente: continua como visitante, com aviso
+[39/48] [mobile-chromium] › e2e\auth.spec.ts:155:3 › sessão e rotas protegidas › expiração em página pública sem ação pendente: continua como visitante, com aviso
+[40/48] [mobile-chromium] › e2e\auth.spec.ts:155:3 › sessão e rotas protegidas › expiração em página pública sem ação pendente: continua como visitante, com aviso
+[41/48] [mobile-chromium] › e2e\auth.spec.ts:155:3 › sessão e rotas protegidas › expiração em página pública sem ação pendente: continua como visitante, com aviso
+[42/48] [mobile-chromium] › e2e\auth.spec.ts:155:3 › sessão e rotas protegidas › expiração em página pública sem ação pendente: continua como visitante, com aviso
+[43/48] [mobile-chromium] › e2e\auth.spec.ts:155:3 › sessão e rotas protegidas › expiração em página pública sem ação pendente: continua como visitante, com aviso
+[44/48] [mobile-chromium] › e2e\auth.spec.ts:155:3 › sessão e rotas protegidas › expiração em página pública sem ação pendente: continua como visitante, com aviso
+[45/48] [mobile-chromium] › e2e\auth.spec.ts:155:3 › sessão e rotas protegidas › expiração em página pública sem ação pendente: continua como visitante, com aviso
+[46/48] [mobile-chromium] › e2e\auth.spec.ts:155:3 › sessão e rotas protegidas › expiração em página pública sem ação pendente: continua como visitante, com aviso
+[47/48] [mobile-chromium] › e2e\auth.spec.ts:155:3 › sessão e rotas protegidas › expiração em página pública sem ação pendente: continua como visitante, com aviso
+[48/48] [mobile-chromium] › e2e\auth.spec.ts:155:3 › sessão e rotas protegidas › expiração em página pública sem ação pendente: continua como visitante, com aviso
+  48 passed (2.2m)

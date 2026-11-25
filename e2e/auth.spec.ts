@@ -156,8 +156,15 @@ test.describe('sessão e rotas protegidas', () => {
     await openApp(page, '/')
     await signIn(page, USERS.ana)
     await expect(page.getByRole('button', { name: 'Favoritar Sage Nomad #009' })).toBeVisible()
-    await mock(page).expireSessions()
-    await page.reload() // a leitura de favoritos (privada) recebe 401
+    // Determinístico (CP5): o token guardado NA ABA passa a ser um que a API não aceita, e só a
+    // página recarregada o usa. Expirar no servidor e recarregar era instável: uma leitura privada
+    // ainda em trânsito na página ANTIGA podia receber o 401 antes do reload (aviso exibido e
+    // perdido com a página; a nova já nascia deslogada). Reproduzido em 7 de 24 repetições.
+    await page.evaluate(() => {
+      const stored = JSON.parse(sessionStorage.getItem('kurio:session')!) as { token: string }
+      sessionStorage.setItem('kurio:session', JSON.stringify({ ...stored, token: 'token-expirado-no-servidor' }))
+    })
+    await page.reload() // a leitura de favoritos (privada) recebe 401 SESSION_EXPIRED
     await expect(page.getByText('Sua sessão expirou')).toBeVisible()
     await expect(page).toHaveURL(/\/$/)
     expect(await page.evaluate(() => sessionStorage.getItem('kurio:session'))).toBeNull()

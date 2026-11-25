@@ -18,6 +18,11 @@ export function resetFailures() {
   held.clear()
 }
 
+/** Encerra as falhas injetadas de uma rota (o "servidor" volta a responder normalmente). */
+export function recoverRoute(route: RouteKey) {
+  used.set(route, Infinity)
+}
+
 /** Libera as respostas retidas de uma rota (cenários com `holdRoutes`). */
 export function releaseRoute(route: RouteKey) {
   released.add(route)
@@ -36,13 +41,32 @@ export async function routeDelay(route: RouteKey, url: URL) {
 }
 
 /** Devolve a resposta de falha, se o cenário mandar falhar esta requisição. */
+const AFTER_COMMIT = new Set(['network-after-commit', 'timeout-after-commit'])
+
+/**
+ * Falha que acontece DEPOIS de gravar (só a criação de pedidos usa). Consome a regra e diz o
+ * tipo; quem chama decide como "perder" a resposta.
+ */
+export function takeAfterCommitFailure(route: RouteKey): 'network-after-commit' | 'timeout-after-commit' | null {
+  const rule = db.scenario().failures?.[route]
+  if (!rule || !AFTER_COMMIT.has(rule.kind)) return null
+  const count = used.get(route) ?? 0
+  if (count >= rule.times) return null
+  used.set(route, count + 1)
+  return rule.kind as 'network-after-commit' | 'timeout-after-commit'
+}
+
 export function maybeFail(route: RouteKey): Response | null {
   const rule = db.scenario().failures?.[route]
-  if (!rule) return null
+  if (!rule || AFTER_COMMIT.has(rule.kind)) return null
   const count = used.get(route) ?? 0
   if (count >= rule.times) return null
   used.set(route, count + 1)
   if (rule.kind === 'network') return HttpResponse.error()
+  if (rule.kind === 'rejected') {
+    const rejected: ApiErrorBody = { code: 'WALLET_REJECTED', message: 'A conexão foi recusada na carteira.' }
+    return HttpResponse.json(rejected, { status: 403 })
+  }
   const status = rule.kind === 'http-503' ? 503 : 500
   const body: ApiErrorBody = { code: 'TRANSIENT', message: 'O serviço está temporariamente indisponível.' }
   return HttpResponse.json(body, { status })

@@ -19,7 +19,9 @@ export type NftPatch = { price?: string; available?: number; editions?: Array<{ 
 interface MockControl {
   scenario(): string
   release(route: string): void
+  recover(route: string): void
   expireSessions(): number
+  expireQuotes(): number
   updateNft(id: string, patch: NftPatch): unknown
   emitStaleNftUpdate(id: string, price: string): unknown
   settleOrder(id: string, status: OrderStatus): unknown
@@ -50,7 +52,9 @@ export function mock(page: Page) {
     settleOrder: async (id: string, status: OrderStatus) =>
       (await ready(), page.evaluate(([i, s]) => window.__kurioMock.settleOrder(i, s), [id, status] as const)),
     expireSessions: async () => (await ready(), page.evaluate(() => window.__kurioMock.expireSessions())),
+    expireQuotes: async () => (await ready(), page.evaluate(() => window.__kurioMock.expireQuotes())),
     release: async (route: string) => (await ready(), page.evaluate((r) => window.__kurioMock.release(r), route)),
+    recover: async (route: string) => (await ready(), page.evaluate((r) => window.__kurioMock.recover(r), route)),
     orders: async () => (await ready(), page.evaluate(() => window.__kurioMock.orders())),
     connections: async () => (await ready(), page.evaluate(() => window.__kurioMock.realtime.connections())),
     stats: async () => (await ready(), page.evaluate(() => window.__kurioMock.realtime.stats())),
@@ -123,4 +127,40 @@ export async function openAccount(page: Page) {
 export async function signOut(page: Page) {
   await page.getByRole('navigation', { name: 'Conta' }).getByRole('button', { name: 'Sair' }).click()
   await expect(page).toHaveURL(/\/$|\/\?/)
+}
+
+/**
+ * Preparação de carrinho PELA API simulada (não é o que está sob teste nos testes de checkout).
+ * Usa a sessão atual da aba (token em sessionStorage) ou o id de visitante (criado se preciso).
+ */
+export async function seedCart(page: Page, items: Array<{ nftId: string; editionId?: string; quantity: number }>) {
+  const statuses = await page.evaluate(async (list) => {
+    const token = (JSON.parse(sessionStorage.getItem('kurio:session') ?? 'null') as { token?: string } | null)?.token
+    let guest = localStorage.getItem('kurio:guest-cart')
+    if (!token && !guest) {
+      guest = crypto.randomUUID()
+      localStorage.setItem('kurio:guest-cart', guest)
+    }
+    const headers: Record<string, string> = { 'Content-Type': 'application/json', ...(token ? { Authorization: 'Bearer ' + token } : { 'X-Cart-Id': guest! }) }
+    const out: number[] = []
+    for (const item of list) out.push((await fetch('/api/cart/items', { method: 'POST', headers, body: JSON.stringify(item) })).status)
+    return out
+  }, items)
+  expect(statuses.every((st) => st === 200)).toBe(true)
+}
+
+/** Total exibido no resumo (valor exato da cotação, em ETH decimal). */
+export const summaryValue = (page: Page, id: 'quote-subtotal' | 'quote-discount' | 'quote-fee' | 'quote-total') =>
+  page.getByRole('complementary', { name: 'Resumo' }).getByTestId(id)
+
+/** Quantidade total no carrinho atual, lida da API (independe de header/bottom nav no viewport). */
+export async function cartQuantity(page: Page) {
+  return page.evaluate(async () => {
+    const token = (JSON.parse(sessionStorage.getItem('kurio:session') ?? 'null') as { token?: string } | null)?.token
+    const guest = localStorage.getItem('kurio:guest-cart')
+    if (!token && !guest) return 0
+    const res = await fetch('/api/cart', { headers: token ? { Authorization: 'Bearer ' + token } : { 'X-Cart-Id': guest! } })
+    const cart = (await res.json()) as { lines: Array<{ quantity: number }> }
+    return cart.lines.reduce((sum, l) => sum + l.quantity, 0)
+  })
 }

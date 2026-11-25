@@ -11,7 +11,7 @@
  */
 import { setupWorker } from 'msw/browser'
 import { db } from './db'
-import { releaseRoute, resetFailures } from './failures'
+import { recoverRoute, releaseRoute, resetFailures } from './failures'
 import { restHandlers } from './handlers'
 import { realtimeControl, realtimeHandler } from './realtime/server'
 import { isScenarioName, type ScenarioName } from './scenarios'
@@ -40,11 +40,19 @@ const control = {
   scenario: () => db.get().scenario,
   /** Libera respostas retidas pelo cenário (ex.: 'nfts.list' em hold-catalog). */
   release: releaseRoute,
+  /** Encerra as falhas injetadas de uma rota (recuperação determinística). */
+  recover: recoverRoute,
   /** Expira todas as sessões ativas: a próxima requisição privada recebe 401 SESSION_EXPIRED. */
   expireSessions: () =>
     db.commit((s) => {
       for (const x of s.sessions) x.expiresAt = new Date(0).toISOString()
       return s.sessions.length
+    }),
+  /** Expira todas as cotações: o próximo pedido recebe 409 QUOTE_EXPIRED. */
+  expireQuotes: () =>
+    db.commit((s) => {
+      for (const q of s.quotes) q.expiresAt = new Date(0).toISOString()
+      return s.quotes.length
     }),
   updateNft,
   emitStaleNftUpdate,

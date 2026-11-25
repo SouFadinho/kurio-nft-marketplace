@@ -6,11 +6,20 @@ import { useClientSession } from '@/features/auth/queries'
 
 export function useOrder(orderId: string) {
   const session = useClientSession()
+  const queryClient = useQueryClient()
   const userId = session?.userId ?? 'anonymous'
+  const key = queryKeys.me.order(userId, orderId)
   return useQuery({
-    queryKey: queryKeys.me.order(userId, orderId),
+    queryKey: key,
     enabled: !!session,
-    queryFn: async ({ signal }) => Order.parse((await http.get(`/orders/${encodeURIComponent(orderId)}`, { signal })).data),
+    queryFn: async ({ signal }) => {
+      const fresh = Order.parse((await http.get(`/orders/${encodeURIComponent(orderId)}`, { signal })).data)
+      // Monotônico (como os NFTs no CP3): uma leitura REST que já estava em trânsito quando o
+      // `order.updated` chegou traz uma versão ANTERIOR e não pode desfazer o evento (ex.: voltar
+      // de "recusado" para "pendente"). Mantém a versão mais nova do cache.
+      const cached = queryClient.getQueryData<Order>(key)
+      return cached && cached.version > fresh.version ? cached : fresh
+    },
     // Sem polling: o estado chega por order.updated (Socket.IO) e é reconciliado via REST
     // na reconexão. Isso deixa claro, nos testes, que a atualização veio do socket.
     refetchOnWindowFocus: false,
@@ -30,7 +39,8 @@ export function useCreateOrder() {
     onSuccess: (order) => {
       if (!session) return
       queryClient.setQueryData(queryKeys.me.order(session.userId, order.id), order)
-      void queryClient.invalidateQueries({ queryKey: queryKeys.me.orders(session.userId) })
+      // exact: a lista; sem prefixo, para não refazer a leitura do pedido recém-gravado no cache.
+      void queryClient.invalidateQueries({ queryKey: queryKeys.me.orders(session.userId), exact: true })
     },
   })
 }

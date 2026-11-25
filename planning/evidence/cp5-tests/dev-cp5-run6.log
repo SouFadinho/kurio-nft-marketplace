@@ -1,0 +1,266 @@
+
+Running 100 tests using 4 workers
+
+[1/100] [desktop-chromium] › e2e\cart.spec.ts:31:3 › adicionar, quantidade e remoção › pelo detalhe: edição e quantidade; mesma linha soma, outra edição é outra linha
+[2/100] [desktop-chromium] › e2e\cart.spec.ts:14:3 › adicionar, quantidade e remoção › pelo card do catálogo: adiciona, mostra no carrinho com valores da API e persiste no refresh
+[3/100] [desktop-chromium] › e2e\cart.spec.ts:51:3 › adicionar, quantidade e remoção › alterar quantidade, limite pelo estoque e remover até o carrinho vazio
+[4/100] [desktop-chromium] › e2e\cart.spec.ts:68:3 › adicionar, quantidade e remoção › adicionar além do estoque: a API recusa e o carrinho não muda
+[5/100] [desktop-chromium] › e2e\cart.spec.ts:80:3 › tempo real no carrinho › estoque cai abaixo da quantidade: linha alerta, checkout bloqueia, "Ajustar" corrige
+[6/100] [desktop-chromium] › e2e\cart.spec.ts:95:3 › tempo real no carrinho › preço muda: linha avisa o preço anterior e o resumo é recotado pela API
+[7/100] [desktop-chromium] › e2e\cart.spec.ts:111:3 › cupons › válido aplica o desconto da API; inválido e expirado mostram erro no campo; remover
+[8/100] [desktop-chromium] › e2e\cart.spec.ts:141:3 › visitante, merge e isolamento › merge determinístico após login: soma quantidades, limita ao estoque, mantém a ordem
+[9/100] [desktop-chromium] › e2e\cart.spec.ts:173:3 › visitante, merge e isolamento › isolamento: depois do logout o visitante tem carrinho vazio; Bruno não vê o de Ana
+[10/100] [desktop-chromium] › e2e\cart.spec.ts:197:3 › estados e falhas › erro ao carregar e recuperação com "Tentar novamente"
+[11/100] [desktop-chromium] › e2e\cart.spec.ts:208:3 › estados e falhas › falha ao alterar: o carrinho anterior é preservado e o erro é anunciado
+[12/100] [desktop-chromium] › e2e\cart.spec.ts:218:3 › estados e falhas › cotação em andamento: resumo em carregamento e checkout bloqueado até a API responder
+[13/100] [desktop-chromium] › e2e\cart.spec.ts:229:3 › estados e falhas › acessibilidade: axe sem violações e controles operáveis por teclado
+[14/100] [desktop-chromium] › e2e\catalog.spec.ts:33:3 › catálogo: busca, filtros, ordenação e paginação na URL › primeira página reproduz o Figma (ordem "Listados recentemente")
+[15/100] [desktop-chromium] › e2e\catalog.spec.ts:49:3 › catálogo: busca, filtros, ordenação e paginação na URL › busca por texto (debounce, URL com replace) e busca sem resultados
+[16/100] [desktop-chromium] › e2e\catalog.spec.ts:66:3 › catálogo: busca, filtros, ordenação e paginação na URL › filtros combinados (coleção + rede), contagens e limpeza individual
+[17/100] [desktop-chromium] › e2e\catalog.spec.ts:84:3 › catálogo: busca, filtros, ordenação e paginação na URL › faixa de preço pela URL e ordenação por menor preço
+[18/100] [desktop-chromium] › e2e\catalog.spec.ts:114:3 › catálogo: busca, filtros, ordenação e paginação na URL › mudar um filtro volta para a página 1
+[19/100] [desktop-chromium] › e2e\catalog.spec.ts:96:3 › catálogo: busca, filtros, ordenação e paginação na URL › paginação + histórico do navegador (voltar/avançar) + refresh
+[20/100] [desktop-chromium] › e2e\catalog.spec.ts:123:3 › catálogo: busca, filtros, ordenação e paginação na URL › link compartilhável restaura todo o estado (abas, filtro, ordem, página)
+[21/100] [desktop-chromium] › e2e\catalog.spec.ts:132:3 › catálogo: busca, filtros, ordenação e paginação na URL › parâmetros inválidos são descartados; página além do fim vai para a última
+[22/100] [desktop-chromium] › e2e\catalog.spec.ts:142:3 › catálogo: busca, filtros, ordenação e paginação na URL › respostas fora de ordem não sobrescrevem a busca atual
+[23/100] [desktop-chromium] › e2e\catalog.spec.ts:157:3 › catálogo: estados › carregamento mostra skeletons (resposta retida) e depois os cards
+[24/100] [desktop-chromium] › e2e\catalog.spec.ts:168:3 › catálogo: estados › erro HTTP mostra feedback e "Tentar novamente" recupera
+[25/100] [desktop-chromium] › e2e\catalog.spec.ts:176:3 › catálogo: estados › erro de conexão mostra feedback específico e recupera
+[26/100] [desktop-chromium] › e2e\catalog.spec.ts:184:3 › catálogo: estados › catálogo vazio mostra estado vazio sem simular dados
+[27/100] [desktop-chromium] › e2e\catalog.spec.ts:191:3 › catálogo: estados › falha ao carregar imagem mostra fallback no mesmo espaço
+[28/100] [desktop-chromium] › e2e\catalog.spec.ts:202:3 › catálogo: tempo real e favoritos › nft.updated (Socket.IO) atualiza preço e disponibilidade no card
+[29/100] [desktop-chromium] › e2e\catalog.spec.ts:212:3 › catálogo: tempo real e favoritos › resposta REST antiga que chega DEPOIS do evento não regride o preço
+[30/100] [desktop-chromium] › e2e\catalog.spec.ts:223:3 › catálogo: tempo real e favoritos › visitante ao favoritar vai ao login, volta e o favorito é aplicado; persiste após refresh
+[31/100] [desktop-chromium] › e2e\catalog.spec.ts:238:3 › catálogo: tempo real e favoritos › falha ao favoritar desfaz a atualização otimista (rollback) e avisa
+[32/100] [desktop-chromium] › e2e\catalog.spec.ts:253:3 › catálogo: teclado › filtro de coleção operável por teclado
+[33/100] [desktop-chromium] › e2e\catalog.spec.ts:263:3 › catálogo: teclado › drawer de filtros mobile: foco interno, aplicar fecha e devolve o foco
+[34/100] [desktop-chromium] › e2e\checkout.spec.ts:32:3 › fluxo principal › visitante: carrinho → login (merge) → pagamento → pedido pendente → confirmado pela rede simulada
+[35/100] [desktop-chromium] › e2e\checkout.spec.ts:68:3 › fluxo principal › pagamento recusado: nada de confirmação, carrinho preservado e estoque reservado devolvido
+[36/100] [desktop-chromium] › e2e\checkout.spec.ts:82:3 › fluxo principal › validação: dados do colecionador, carteira externa e conexão obrigatória
+[37/100] [desktop-chromium] › e2e\checkout.spec.ts:106:3 › carteiras e redes › carteira Polygon usa a taxa da rede escolhida; rede compatível com o endereço
+[38/100] [desktop-chromium] › e2e\checkout.spec.ts:124:3 › carteiras e redes › conexão recusada, nova tentativa, desconexão e troca de carteira desconectando
+[39/100] [desktop-chromium] › e2e\checkout.spec.ts:138:3 › consistência financeira em tempo real › preço muda durante a revisão: alerta antes → depois, compra bloqueada até aceitar; pedido com o novo valor
+[40/100] [desktop-chromium] › e2e\checkout.spec.ts:158:3 › consistência financeira em tempo real › mudança que o cliente não viu (socket offline): a API recusa a cotação antiga e exige nova confirmação
+[41/100] [desktop-chromium] › e2e\checkout.spec.ts:173:3 › consistência financeira em tempo real › estoque acaba durante a revisão: pagamento pede revisão do carrinho
+[42/100] [desktop-chromium] › e2e\checkout.spec.ts:186:3 › consistência financeira em tempo real › cotação expirada: a API recusa, a cotação é renovada com os mesmos valores e a compra é confirmada de novo
+[43/100] [desktop-chromium] › e2e\checkout.spec.ts:201:3 › idempotência e falhas (PEND-01, PEND-02) › cliques repetidos criam um único pedido
+[44/100] [desktop-chromium] › e2e\checkout.spec.ts:210:3 › idempotência e falhas (PEND-01, PEND-02) › API: mesma chave + mesmo conteúdo = mesmo pedido; mesma chave + conteúdo diferente = 409
+[45/100] [desktop-chromium] › e2e\checkout.spec.ts:233:3 › idempotência e falhas (PEND-01, PEND-02) › resposta perdida após a criação: retry com a mesma chave recupera o MESMO pedido
+[46/100] [desktop-chromium] › e2e\checkout.spec.ts:246:3 › idempotência e falhas (PEND-01, PEND-02) › timeout após a criação: retry com a mesma chave recupera o MESMO pedido
+[47/100] [desktop-chromium] › e2e\checkout.spec.ts:260:3 › idempotência e falhas (PEND-01, PEND-02) › falha antes de gravar: dados preservados, carrinho intacto, nova tentativa cria o pedido
+[48/100] [desktop-chromium] › e2e\checkout.spec.ts:276:3 › sessão e acesso › expiração ao confirmar: login com aviso, volta ao pagamento com o rascunho e nada é enviado sozinho
+[49/100] [desktop-chromium] › e2e\checkout.spec.ts:296:3 › sessão e acesso › pagamento exige login; pedido de outro usuário não aparece
+[50/100] [desktop-chromium] › e2e\checkout.spec.ts:304:3 › sessão e acesso › acessibilidade: axe sem violações; carteiras e provedores por teclado
+  1) [desktop-chromium] › e2e\checkout.spec.ts:233:3 › idempotência e falhas (PEND-01, PEND-02) › resposta perdida após a criação: retry com a mesma chave recupera o MESMO pedido 
+
+    Error: expect(page).toHaveURL(expected) failed
+
+    Expected pattern: /\/pedidos\/ord_000003$/
+    Received string:  "http://localhost:4173/pagamento"
+    Timeout: 5000ms
+
+    Call log:
+      - Expect "toHaveURL" with timeout 5000ms
+        13 × locator resolved to <html lang="pt-BR">…</html>
+           - unexpected value "http://localhost:4173/pagamento"
+
+
+      240 |     expect(created).toBeDefined()
+      241 |     await alert.getByRole('button', { name: 'Tentar novamente' }).click()
+    > 242 |     await expect(page).toHaveURL(new RegExp(`/pedidos/${created!.id}$`))
+          |                        ^
+      243 |     expect(await ordersCount(page)).toBe(1)
+      244 |   })
+      245 |
+        at D:\emprego\e2e\checkout.spec.ts:242:24
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\checkout-idempotência-e-fa-ff9c4-ave-recupera-o-MESMO-pedido-desktop-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\checkout-idempotência-e-fa-ff9c4-ave-recupera-o-MESMO-pedido-desktop-chromium\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\checkout-idempotência-e-fa-ff9c4-ave-recupera-o-MESMO-pedido-desktop-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\checkout-idempotência-e-fa-ff9c4-ave-recupera-o-MESMO-pedido-desktop-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[51/100] [mobile-chromium] › e2e\cart.spec.ts:14:3 › adicionar, quantidade e remoção › pelo card do catálogo: adiciona, mostra no carrinho com valores da API e persiste no refresh
+[52/100] [mobile-chromium] › e2e\cart.spec.ts:31:3 › adicionar, quantidade e remoção › pelo detalhe: edição e quantidade; mesma linha soma, outra edição é outra linha
+[53/100] [mobile-chromium] › e2e\cart.spec.ts:68:3 › adicionar, quantidade e remoção › adicionar além do estoque: a API recusa e o carrinho não muda
+  2) [desktop-chromium] › e2e\checkout.spec.ts:246:3 › idempotência e falhas (PEND-01, PEND-02) › timeout após a criação: retry com a mesma chave recupera o MESMO pedido 
+
+    Error: expect(page).toHaveURL(expected) failed
+
+    Expected pattern: /\/pedidos\/ord_000003$/
+    Received string:  "http://localhost:4173/pedidos/ord_000007"
+    Timeout: 5000ms
+
+    Call log:
+      - Expect "toHaveURL" with timeout 5000ms
+        - locator resolved to <html lang="pt-BR">…</html>
+        - unexpected value "http://localhost:4173/pagamento"
+        12 × locator resolved to <html lang="pt-BR">…</html>
+           - unexpected value "http://localhost:4173/pedidos/ord_000007"
+
+
+      254 |     const [created] = await mock(page).orders()
+      255 |     await alert.getByRole('button', { name: 'Tentar novamente' }).click()
+    > 256 |     await expect(page).toHaveURL(new RegExp(`/pedidos/${created!.id}$`))
+          |                        ^
+      257 |     expect(await ordersCount(page)).toBe(1)
+      258 |   })
+      259 |
+        at D:\emprego\e2e\checkout.spec.ts:256:24
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\checkout-idempotência-e-fa-f46fc-ave-recupera-o-MESMO-pedido-desktop-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\checkout-idempotência-e-fa-f46fc-ave-recupera-o-MESMO-pedido-desktop-chromium\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\checkout-idempotência-e-fa-f46fc-ave-recupera-o-MESMO-pedido-desktop-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\checkout-idempotência-e-fa-f46fc-ave-recupera-o-MESMO-pedido-desktop-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[54/100] [mobile-chromium] › e2e\cart.spec.ts:51:3 › adicionar, quantidade e remoção › alterar quantidade, limite pelo estoque e remover até o carrinho vazio
+[55/100] [mobile-chromium] › e2e\cart.spec.ts:95:3 › tempo real no carrinho › preço muda: linha avisa o preço anterior e o resumo é recotado pela API
+[56/100] [mobile-chromium] › e2e\cart.spec.ts:111:3 › cupons › válido aplica o desconto da API; inválido e expirado mostram erro no campo; remover
+[57/100] [mobile-chromium] › e2e\cart.spec.ts:80:3 › tempo real no carrinho › estoque cai abaixo da quantidade: linha alerta, checkout bloqueia, "Ajustar" corrige
+[58/100] [mobile-chromium] › e2e\cart.spec.ts:141:3 › visitante, merge e isolamento › merge determinístico após login: soma quantidades, limita ao estoque, mantém a ordem
+[59/100] [mobile-chromium] › e2e\cart.spec.ts:173:3 › visitante, merge e isolamento › isolamento: depois do logout o visitante tem carrinho vazio; Bruno não vê o de Ana
+[60/100] [mobile-chromium] › e2e\cart.spec.ts:197:3 › estados e falhas › erro ao carregar e recuperação com "Tentar novamente"
+[61/100] [mobile-chromium] › e2e\cart.spec.ts:208:3 › estados e falhas › falha ao alterar: o carrinho anterior é preservado e o erro é anunciado
+[62/100] [mobile-chromium] › e2e\cart.spec.ts:218:3 › estados e falhas › cotação em andamento: resumo em carregamento e checkout bloqueado até a API responder
+[63/100] [mobile-chromium] › e2e\cart.spec.ts:229:3 › estados e falhas › acessibilidade: axe sem violações e controles operáveis por teclado
+[64/100] [mobile-chromium] › e2e\catalog.spec.ts:33:3 › catálogo: busca, filtros, ordenação e paginação na URL › primeira página reproduz o Figma (ordem "Listados recentemente")
+[65/100] [mobile-chromium] › e2e\catalog.spec.ts:49:3 › catálogo: busca, filtros, ordenação e paginação na URL › busca por texto (debounce, URL com replace) e busca sem resultados
+[66/100] [mobile-chromium] › e2e\catalog.spec.ts:66:3 › catálogo: busca, filtros, ordenação e paginação na URL › filtros combinados (coleção + rede), contagens e limpeza individual
+[67/100] [mobile-chromium] › e2e\catalog.spec.ts:84:3 › catálogo: busca, filtros, ordenação e paginação na URL › faixa de preço pela URL e ordenação por menor preço
+[68/100] [mobile-chromium] › e2e\catalog.spec.ts:96:3 › catálogo: busca, filtros, ordenação e paginação na URL › paginação + histórico do navegador (voltar/avançar) + refresh
+[69/100] [mobile-chromium] › e2e\catalog.spec.ts:114:3 › catálogo: busca, filtros, ordenação e paginação na URL › mudar um filtro volta para a página 1
+[70/100] [mobile-chromium] › e2e\catalog.spec.ts:123:3 › catálogo: busca, filtros, ordenação e paginação na URL › link compartilhável restaura todo o estado (abas, filtro, ordem, página)
+[71/100] [mobile-chromium] › e2e\catalog.spec.ts:132:3 › catálogo: busca, filtros, ordenação e paginação na URL › parâmetros inválidos são descartados; página além do fim vai para a última
+[72/100] [mobile-chromium] › e2e\catalog.spec.ts:142:3 › catálogo: busca, filtros, ordenação e paginação na URL › respostas fora de ordem não sobrescrevem a busca atual
+[73/100] [mobile-chromium] › e2e\catalog.spec.ts:157:3 › catálogo: estados › carregamento mostra skeletons (resposta retida) e depois os cards
+[74/100] [mobile-chromium] › e2e\catalog.spec.ts:168:3 › catálogo: estados › erro HTTP mostra feedback e "Tentar novamente" recupera
+[75/100] [mobile-chromium] › e2e\catalog.spec.ts:176:3 › catálogo: estados › erro de conexão mostra feedback específico e recupera
+[76/100] [mobile-chromium] › e2e\catalog.spec.ts:184:3 › catálogo: estados › catálogo vazio mostra estado vazio sem simular dados
+[77/100] [mobile-chromium] › e2e\catalog.spec.ts:191:3 › catálogo: estados › falha ao carregar imagem mostra fallback no mesmo espaço
+[78/100] [mobile-chromium] › e2e\catalog.spec.ts:202:3 › catálogo: tempo real e favoritos › nft.updated (Socket.IO) atualiza preço e disponibilidade no card
+[79/100] [mobile-chromium] › e2e\catalog.spec.ts:212:3 › catálogo: tempo real e favoritos › resposta REST antiga que chega DEPOIS do evento não regride o preço
+[80/100] [mobile-chromium] › e2e\catalog.spec.ts:223:3 › catálogo: tempo real e favoritos › visitante ao favoritar vai ao login, volta e o favorito é aplicado; persiste após refresh
+[81/100] [mobile-chromium] › e2e\catalog.spec.ts:238:3 › catálogo: tempo real e favoritos › falha ao favoritar desfaz a atualização otimista (rollback) e avisa
+[82/100] [mobile-chromium] › e2e\catalog.spec.ts:253:3 › catálogo: teclado › filtro de coleção operável por teclado
+[83/100] [mobile-chromium] › e2e\catalog.spec.ts:263:3 › catálogo: teclado › drawer de filtros mobile: foco interno, aplicar fecha e devolve o foco
+[84/100] [mobile-chromium] › e2e\checkout.spec.ts:32:3 › fluxo principal › visitante: carrinho → login (merge) → pagamento → pedido pendente → confirmado pela rede simulada
+[85/100] [mobile-chromium] › e2e\checkout.spec.ts:68:3 › fluxo principal › pagamento recusado: nada de confirmação, carrinho preservado e estoque reservado devolvido
+[86/100] [mobile-chromium] › e2e\checkout.spec.ts:82:3 › fluxo principal › validação: dados do colecionador, carteira externa e conexão obrigatória
+[87/100] [mobile-chromium] › e2e\checkout.spec.ts:106:3 › carteiras e redes › carteira Polygon usa a taxa da rede escolhida; rede compatível com o endereço
+[88/100] [mobile-chromium] › e2e\checkout.spec.ts:124:3 › carteiras e redes › conexão recusada, nova tentativa, desconexão e troca de carteira desconectando
+[89/100] [mobile-chromium] › e2e\checkout.spec.ts:138:3 › consistência financeira em tempo real › preço muda durante a revisão: alerta antes → depois, compra bloqueada até aceitar; pedido com o novo valor
+[90/100] [mobile-chromium] › e2e\checkout.spec.ts:158:3 › consistência financeira em tempo real › mudança que o cliente não viu (socket offline): a API recusa a cotação antiga e exige nova confirmação
+[91/100] [mobile-chromium] › e2e\checkout.spec.ts:173:3 › consistência financeira em tempo real › estoque acaba durante a revisão: pagamento pede revisão do carrinho
+[92/100] [mobile-chromium] › e2e\checkout.spec.ts:186:3 › consistência financeira em tempo real › cotação expirada: a API recusa, a cotação é renovada com os mesmos valores e a compra é confirmada de novo
+[93/100] [mobile-chromium] › e2e\checkout.spec.ts:201:3 › idempotência e falhas (PEND-01, PEND-02) › cliques repetidos criam um único pedido
+[94/100] [mobile-chromium] › e2e\checkout.spec.ts:210:3 › idempotência e falhas (PEND-01, PEND-02) › API: mesma chave + mesmo conteúdo = mesmo pedido; mesma chave + conteúdo diferente = 409
+[95/100] [mobile-chromium] › e2e\checkout.spec.ts:233:3 › idempotência e falhas (PEND-01, PEND-02) › resposta perdida após a criação: retry com a mesma chave recupera o MESMO pedido
+[96/100] [mobile-chromium] › e2e\checkout.spec.ts:246:3 › idempotência e falhas (PEND-01, PEND-02) › timeout após a criação: retry com a mesma chave recupera o MESMO pedido
+[97/100] [mobile-chromium] › e2e\checkout.spec.ts:260:3 › idempotência e falhas (PEND-01, PEND-02) › falha antes de gravar: dados preservados, carrinho intacto, nova tentativa cria o pedido
+[98/100] [mobile-chromium] › e2e\checkout.spec.ts:276:3 › sessão e acesso › expiração ao confirmar: login com aviso, volta ao pagamento com o rascunho e nada é enviado sozinho
+[99/100] [mobile-chromium] › e2e\checkout.spec.ts:296:3 › sessão e acesso › pagamento exige login; pedido de outro usuário não aparece
+  3) [mobile-chromium] › e2e\checkout.spec.ts:233:3 › idempotência e falhas (PEND-01, PEND-02) › resposta perdida após a criação: retry com a mesma chave recupera o MESMO pedido 
+
+    Error: expect(page).toHaveURL(expected) failed
+
+    Expected pattern: /\/pedidos\/ord_000003$/
+    Received string:  "http://localhost:4173/pagamento"
+    Timeout: 5000ms
+
+    Call log:
+      - Expect "toHaveURL" with timeout 5000ms
+        13 × locator resolved to <html lang="pt-BR">…</html>
+           - unexpected value "http://localhost:4173/pagamento"
+
+
+      240 |     expect(created).toBeDefined()
+      241 |     await alert.getByRole('button', { name: 'Tentar novamente' }).click()
+    > 242 |     await expect(page).toHaveURL(new RegExp(`/pedidos/${created!.id}$`))
+          |                        ^
+      243 |     expect(await ordersCount(page)).toBe(1)
+      244 |   })
+      245 |
+        at D:\emprego\e2e\checkout.spec.ts:242:24
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\checkout-idempotência-e-fa-ff9c4-ave-recupera-o-MESMO-pedido-mobile-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\checkout-idempotência-e-fa-ff9c4-ave-recupera-o-MESMO-pedido-mobile-chromium\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\checkout-idempotência-e-fa-ff9c4-ave-recupera-o-MESMO-pedido-mobile-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\checkout-idempotência-e-fa-ff9c4-ave-recupera-o-MESMO-pedido-mobile-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[100/100] [mobile-chromium] › e2e\checkout.spec.ts:304:3 › sessão e acesso › acessibilidade: axe sem violações; carteiras e provedores por teclado
+  4) [mobile-chromium] › e2e\checkout.spec.ts:246:3 › idempotência e falhas (PEND-01, PEND-02) › timeout após a criação: retry com a mesma chave recupera o MESMO pedido 
+
+    Error: expect(page).toHaveURL(expected) failed
+
+    Expected pattern: /\/pedidos\/ord_000003$/
+    Received string:  "http://localhost:4173/pedidos/ord_000007"
+    Timeout: 5000ms
+
+    Call log:
+      - Expect "toHaveURL" with timeout 5000ms
+        3 × locator resolved to <html lang="pt-BR">…</html>
+          - unexpected value "http://localhost:4173/pagamento"
+        10 × locator resolved to <html lang="pt-BR">…</html>
+           - unexpected value "http://localhost:4173/pedidos/ord_000007"
+
+
+      254 |     const [created] = await mock(page).orders()
+      255 |     await alert.getByRole('button', { name: 'Tentar novamente' }).click()
+    > 256 |     await expect(page).toHaveURL(new RegExp(`/pedidos/${created!.id}$`))
+          |                        ^
+      257 |     expect(await ordersCount(page)).toBe(1)
+      258 |   })
+      259 |
+        at D:\emprego\e2e\checkout.spec.ts:256:24
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\checkout-idempotência-e-fa-f46fc-ave-recupera-o-MESMO-pedido-mobile-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\checkout-idempotência-e-fa-f46fc-ave-recupera-o-MESMO-pedido-mobile-chromium\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\checkout-idempotência-e-fa-f46fc-ave-recupera-o-MESMO-pedido-mobile-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\checkout-idempotência-e-fa-f46fc-ave-recupera-o-MESMO-pedido-mobile-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+  4 failed
+    [desktop-chromium] › e2e\checkout.spec.ts:233:3 › idempotência e falhas (PEND-01, PEND-02) › resposta perdida após a criação: retry com a mesma chave recupera o MESMO pedido 
+    [desktop-chromium] › e2e\checkout.spec.ts:246:3 › idempotência e falhas (PEND-01, PEND-02) › timeout após a criação: retry com a mesma chave recupera o MESMO pedido 
+    [mobile-chromium] › e2e\checkout.spec.ts:233:3 › idempotência e falhas (PEND-01, PEND-02) › resposta perdida após a criação: retry com a mesma chave recupera o MESMO pedido 
+    [mobile-chromium] › e2e\checkout.spec.ts:246:3 › idempotência e falhas (PEND-01, PEND-02) › timeout após a criação: retry com a mesma chave recupera o MESMO pedido 
+  2 skipped
+  94 passed (3.5m)

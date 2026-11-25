@@ -99,9 +99,39 @@ export function settleOrder(orderId: string, status: 'confirmed' | 'rejected') {
   })
   timers.delete(orderId)
   if (!order) return null
+  if (order.pricing) applyCheckoutSettlement(order)
   const event = orderEvent(order)
   emitToUser(order.userId, event)
   return event
+}
+
+/**
+ * Efeitos da liquidação de um pedido do checkout (PAY-07):
+ * - confirmado: remove do carrinho do usuário APENAS os itens e quantidades comprados (o que foi
+ *   adicionado depois continua lá); o cupom usado sai;
+ * - recusado: o carrinho fica intacto e o estoque reservado na criação volta (emite `nft.updated`).
+ */
+function applyCheckoutSettlement(order: DbOrder) {
+  if (order.status === 'confirmed') {
+    db.commit((s) => {
+      const key = `user:${order.userId}`
+      const cart = s.carts[key]
+      if (!cart) return
+      for (const bought of order.lines) {
+        const line = cart.lines.find((l) => l.nftId === bought.nftId && l.editionId === bought.editionId)
+        if (line) line.quantity -= bought.quantity
+      }
+      cart.lines = cart.lines.filter((l) => l.quantity > 0)
+      if (order.pricing && cart.couponCode === order.pricing.couponCode) cart.couponCode = null
+      cart.version += 1
+    })
+    return
+  }
+  for (const line of order.lines) {
+    const nft = db.get().nfts.find((n) => n.id === line.nftId)
+    const edition = nft?.editions.find((e) => e.id === line.editionId)
+    if (nft && edition) updateNft(nft.id, { editions: [{ id: edition.id, available: edition.available + line.quantity }] })
+  }
 }
 
 export function scheduleSettlement(order: DbOrder) {

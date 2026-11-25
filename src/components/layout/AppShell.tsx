@@ -13,6 +13,7 @@ import { useMatches } from '@tanstack/react-router'
 import { BottomNav } from './BottomNav'
 import { SiteFooter } from './SiteFooter'
 import { SiteHeader } from './SiteHeader'
+import { useCartCount } from '@/features/cart/queries'
 
 declare module '@tanstack/react-router' {
   interface StaticDataRouteOption {
@@ -30,6 +31,8 @@ export function AppShell({ children }: { children: ReactNode }) {
   const hideBottomNav = matches.some((m) => m.staticData?.hideBottomNav)
   const minimal = matches.some((m) => m.staticData?.chrome === 'minimal')
   const mobileMinimal = matches.some((m) => m.staticData?.mobileChrome === 'minimal')
+  // Badge do carrinho (CP5): quantidade total vinda do carrinho da API.
+  const cartCount = useCartCount()
 
   return (
     <div className="flex min-h-dvh flex-col">
@@ -39,7 +42,7 @@ export function AppShell({ children }: { children: ReactNode }) {
       >
         Pular para o conteúdo
       </a>
-      {!minimal && <SiteHeader />}
+      {!minimal && <SiteHeader cartCount={cartCount} />}
       <main id="conteudo" tabIndex={-1} className="flex-1 outline-none">
         {children}
       </main>
@@ -51,7 +54,7 @@ export function AppShell({ children }: { children: ReactNode }) {
         ) : (
           <SiteFooter />
         ))}
-      {!minimal && !hideBottomNav && <BottomNav />}
+      {!minimal && !hideBottomNav && <BottomNav cartCount={cartCount} />}
     </div>
   )
 }

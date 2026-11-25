@@ -7,6 +7,7 @@ import type { QueryClient } from '@tanstack/react-query'
 import { queryKeys } from '@/api/queryKeys'
 import {
   TERMINAL_ORDER_STATUSES,
+  type Cart,
   type FavoriteList,
   type Highlights,
   type Nft,
@@ -46,6 +47,7 @@ export function applyNftUpdated(qc: QueryClient, guard: EventGuard, event: NftUp
   // próxima consulta: as listas são só marcadas como desatualizadas (sem refetch imediato,
   // para não reordenar a grade sob o cursor do usuário).
   void qc.invalidateQueries({ queryKey: queryKeys.nfts.lists, refetchType: 'none' })
+  invalidateCartsWith(qc, id)
   return 'apply'
 }
 
@@ -113,5 +115,19 @@ export function applyOrderUpdated(qc: QueryClient, guard: EventGuard, userId: st
     void qc.invalidateQueries({ queryKey: key })
   }
   void qc.invalidateQueries({ queryKey: queryKeys.me.orders(userId), exact: true })
+  // CP5 (PAY-07): pedido confirmado tira do carrinho os itens comprados (no servidor).
+  if (event.data.status === 'confirmed') void qc.invalidateQueries({ queryKey: queryKeys.me.cart(userId) })
   return 'apply'
+}
+
+/**
+ * CP5: carrinhos (do usuário ou de visitante) que contêm o NFT são revalidados. A cotação fica
+ * sob a chave do carrinho, então também é refeita: um preço ou estoque novo nunca passa
+ * despercebido, e o checkout exige nova confirmação quando os valores mudam.
+ */
+export function invalidateCartsWith(qc: QueryClient, nftId: string) {
+  for (const query of qc.getQueryCache().findAll({ predicate: (q) => q.queryKey[2] === 'cart' && q.queryKey.length === 3 })) {
+    const cart = query.state.data as Cart | undefined
+    if (cart?.lines.some((l) => l.nftId === nftId)) void qc.invalidateQueries({ queryKey: query.queryKey })
+  }
 }

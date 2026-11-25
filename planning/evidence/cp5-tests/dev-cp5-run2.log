@@ -1,0 +1,285 @@
+
+Running 29 tests using 4 workers
+
+[1/29] [desktop-chromium] › e2e\cart.spec.ts:50:3 › adicionar, quantidade e remoção › alterar quantidade, limite pelo estoque e remover até o carrinho vazio
+[2/29] [desktop-chromium] › e2e\cart.spec.ts:14:3 › adicionar, quantidade e remoção › pelo card do catálogo: adiciona, mostra no carrinho com valores da API e persiste no refresh
+[3/29] [desktop-chromium] › e2e\cart.spec.ts:30:3 › adicionar, quantidade e remoção › pelo detalhe: edição e quantidade; mesma linha soma, outra edição é outra linha
+[4/29] [desktop-chromium] › e2e\cart.spec.ts:67:3 › adicionar, quantidade e remoção › adicionar além do estoque: a API recusa e o carrinho não muda
+[5/29] [desktop-chromium] › e2e\cart.spec.ts:79:3 › tempo real no carrinho › estoque cai abaixo da quantidade: linha alerta, checkout bloqueia, "Ajustar" corrige
+[6/29] [desktop-chromium] › e2e\cart.spec.ts:94:3 › tempo real no carrinho › preço muda: linha avisa o preço anterior e o resumo é recotado pela API
+[7/29] [desktop-chromium] › e2e\cart.spec.ts:110:3 › cupons › válido aplica o desconto da API; inválido e expirado mostram erro no campo; remover
+[8/29] [desktop-chromium] › e2e\cart.spec.ts:140:3 › visitante, merge e isolamento › merge determinístico após login: soma quantidades, limita ao estoque, mantém a ordem
+[9/29] [desktop-chromium] › e2e\cart.spec.ts:172:3 › visitante, merge e isolamento › isolamento: depois do logout o visitante tem carrinho vazio; Bruno não vê o de Ana
+[10/29] [desktop-chromium] › e2e\cart.spec.ts:194:3 › estados e falhas › erro ao carregar e recuperação com "Tentar novamente"
+[11/29] [desktop-chromium] › e2e\cart.spec.ts:203:3 › estados e falhas › falha ao alterar: o carrinho anterior é preservado e o erro é anunciado
+[12/29] [desktop-chromium] › e2e\cart.spec.ts:213:3 › estados e falhas › cotação em andamento: resumo em carregamento e checkout bloqueado até a API responder
+[13/29] [desktop-chromium] › e2e\cart.spec.ts:224:3 › estados e falhas › acessibilidade: axe sem violações e controles operáveis por teclado
+[14/29] [desktop-chromium] › e2e\checkout.spec.ts:32:3 › fluxo principal › visitante: carrinho → login (merge) → pagamento → pedido pendente → confirmado pela rede simulada
+[15/29] [desktop-chromium] › e2e\checkout.spec.ts:67:3 › fluxo principal › validação: dados do colecionador, carteira externa e conexão obrigatória
+  1) [desktop-chromium] › e2e\cart.spec.ts:194:3 › estados e falhas › erro ao carregar e recuperação com "Tentar novamente" 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByRole('heading', { name: 'Não foi possível carregar o carrinho' })
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" getByRole('heading', { name: 'Não foi possível carregar o carrinho' }) with timeout 5000ms
+      - waiting for getByRole('heading', { name: 'Não foi possível carregar o carrinho' })
+
+
+      196 |     await seedCart(page, [{ nftId: 'nft-001', quantity: 1 }])
+      197 |     await page.goto('/carrinho?scenario=cart-error')
+    > 198 |     await expect(page.getByRole('heading', { name: 'Não foi possível carregar o carrinho' })).toBeVisible()
+          |                                                                                               ^
+      199 |     await page.getByRole('button', { name: 'Tentar novamente' }).click()
+      200 |     await expect(line(page, 'Emerald Ape #042')).toBeVisible()
+      201 |   })
+        at D:\emprego\e2e\cart.spec.ts:198:95
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\cart-estados-e-falhas-erro-4de4c-ração-com-Tentar-novamente--desktop-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\cart-estados-e-falhas-erro-4de4c-ração-com-Tentar-novamente--desktop-chromium\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\cart-estados-e-falhas-erro-4de4c-ração-com-Tentar-novamente--desktop-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\cart-estados-e-falhas-erro-4de4c-ração-com-Tentar-novamente--desktop-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[16/29] [desktop-chromium] › e2e\checkout.spec.ts:91:3 › carteiras e redes › carteira Polygon usa a taxa da rede escolhida; rede compatível com o endereço
+[17/29] [desktop-chromium] › e2e\checkout.spec.ts:109:3 › carteiras e redes › conexão recusada, nova tentativa, desconexão e troca de carteira desconectando
+[18/29] [desktop-chromium] › e2e\checkout.spec.ts:123:3 › consistência financeira em tempo real › preço muda durante a revisão: alerta antes → depois, compra bloqueada até aceitar; pedido com o novo valor
+[19/29] [desktop-chromium] › e2e\checkout.spec.ts:143:3 › consistência financeira em tempo real › mudança que o cliente não viu (socket offline): a API recusa a cotação antiga e exige nova confirmação
+[20/29] [desktop-chromium] › e2e\checkout.spec.ts:158:3 › consistência financeira em tempo real › estoque acaba durante a revisão: pagamento pede revisão do carrinho
+[21/29] [desktop-chromium] › e2e\checkout.spec.ts:166:3 › consistência financeira em tempo real › cotação expirada: a API recusa, a cotação é renovada com os mesmos valores e a compra é confirmada de novo
+[22/29] [desktop-chromium] › e2e\checkout.spec.ts:181:3 › idempotência e falhas (PEND-01, PEND-02) › cliques repetidos criam um único pedido
+[23/29] [desktop-chromium] › e2e\checkout.spec.ts:190:3 › idempotência e falhas (PEND-01, PEND-02) › API: mesma chave + mesmo conteúdo = mesmo pedido; mesma chave + conteúdo diferente = 409
+[24/29] [desktop-chromium] › e2e\checkout.spec.ts:213:3 › idempotência e falhas (PEND-01, PEND-02) › resposta perdida após a criação: retry com a mesma chave recupera o MESMO pedido
+[25/29] [desktop-chromium] › e2e\checkout.spec.ts:226:3 › idempotência e falhas (PEND-01, PEND-02) › timeout após a criação: retry com a mesma chave recupera o MESMO pedido
+  2) [desktop-chromium] › e2e\checkout.spec.ts:67:3 › fluxo principal › validação: dados do colecionador, carteira externa e conexão obrigatória 
+
+    Test timeout of 30000ms exceeded.
+
+    Error: locator.click: Test timeout of 30000ms exceeded.
+    Call log:
+      - waiting for getByRole('button', { name: /^(Confirmar compra|Enviando pedido…)$/ }).visible()
+        - locator resolved to <button type="submit" data-size="lg" data-slot="button" form="checkout-form" aria-disabled="true" data-variant="default" aria-describedby="checkout-status" class="shrink-0 items-center justify-center gap-2 whitespace-nowrap font-mono font-semibold select-none transition-[background-color,color,border-color,box-shadow,transform] duration-[var(--duration-fast)] ease-[var(--ease-standard)] outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring disabled:pointer-even…>Confirmar compra</button>
+      - attempting click action
+        2 × waiting for element to be visible, enabled and stable
+          - element is not enabled
+        - retrying click action
+        - waiting 20ms
+        2 × waiting for element to be visible, enabled and stable
+          - element is not enabled
+        - retrying click action
+          - waiting 100ms
+        44 × waiting for element to be visible, enabled and stable
+           - element is not enabled
+         - retrying click action
+           - waiting 500ms
+        - waiting for element to be visible, enabled and stable
+
+
+      69 |     await page.getByLabel('Nome de exibição').fill('')
+      70 |     await page.getByLabel('E-mail', { exact: true }).fill('ana@')
+    > 71 |     await confirmButton(page).click()
+         |                               ^
+      72 |     await expect(page.getByLabel('Nome de exibição')).toBeFocused()
+      73 |     await expect(page.getByLabel('Nome de exibição')).toHaveAccessibleDescription('Informe pelo menos 2 caracteres')
+      74 |     await expect(page.getByLabel('E-mail', { exact: true })).toHaveAccessibleDescription('Informe um e-mail válido')
+        at D:\emprego\e2e\checkout.spec.ts:71:31
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\checkout-fluxo-principal-v-eafc6-terna-e-conexão-obrigatória-desktop-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\checkout-fluxo-principal-v-eafc6-terna-e-conexão-obrigatória-desktop-chromium\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\checkout-fluxo-principal-v-eafc6-terna-e-conexão-obrigatória-desktop-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\checkout-fluxo-principal-v-eafc6-terna-e-conexão-obrigatória-desktop-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[26/29] [desktop-chromium] › e2e\checkout.spec.ts:240:3 › idempotência e falhas (PEND-01, PEND-02) › falha antes de gravar: dados preservados, carrinho intacto, nova tentativa cria o pedido
+[27/29] [desktop-chromium] › e2e\checkout.spec.ts:256:3 › sessão e acesso › expiração ao confirmar: login com aviso, volta ao pagamento com o rascunho e nada é enviado sozinho
+  3) [desktop-chromium] › e2e\checkout.spec.ts:123:3 › consistência financeira em tempo real › preço muda durante a revisão: alerta antes → depois, compra bloqueada até aceitar; pedido com o novo valor 
+
+    Test timeout of 30000ms exceeded.
+
+    Error: locator.click: Test timeout of 30000ms exceeded.
+    Call log:
+      - waiting for getByRole('button', { name: /^(Confirmar compra|Enviando pedido…)$/ }).visible()
+        - locator resolved to <button type="submit" data-size="lg" data-slot="button" form="checkout-form" aria-disabled="true" data-variant="default" aria-describedby="checkout-status" class="shrink-0 items-center justify-center gap-2 whitespace-nowrap font-mono font-semibold select-none transition-[background-color,color,border-color,box-shadow,transform] duration-[var(--duration-fast)] ease-[var(--ease-standard)] outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring disabled:pointer-even…>Confirmar compra</button>
+      - attempting click action
+        2 × waiting for element to be visible, enabled and stable
+          - element is not enabled
+        - retrying click action
+        - waiting 20ms
+        2 × waiting for element to be visible, enabled and stable
+          - element is not enabled
+        - retrying click action
+          - waiting 100ms
+        44 × waiting for element to be visible, enabled and stable
+           - element is not enabled
+         - retrying click action
+           - waiting 500ms
+        - waiting for element to be visible, enabled and stable
+
+
+      130 |     // O valor aceito NÃO muda sozinho.
+      131 |     await expect(summaryValue(page, 'quote-total')).toHaveAttribute('data-value', '1.206')
+    > 132 |     await confirmButton(page).click()
+          |                               ^
+      133 |     await expect(page.getByRole('alert').filter({ hasText: 'Os valores mudaram. Revise e aceite' })).toBeVisible()
+      134 |     expect(await ordersCount(page)).toBe(0)
+      135 |
+        at D:\emprego\e2e\checkout.spec.ts:132:31
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\checkout-consistência-fina-dea25-tar-pedido-com-o-novo-valor-desktop-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\checkout-consistência-fina-dea25-tar-pedido-com-o-novo-valor-desktop-chromium\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\checkout-consistência-fina-dea25-tar-pedido-com-o-novo-valor-desktop-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\checkout-consistência-fina-dea25-tar-pedido-com-o-novo-valor-desktop-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[28/29] [desktop-chromium] › e2e\checkout.spec.ts:276:3 › sessão e acesso › pagamento exige login; pedido de outro usuário não aparece
+[29/29] [desktop-chromium] › e2e\checkout.spec.ts:284:3 › sessão e acesso › acessibilidade: axe sem violações; carteiras e provedores por teclado
+  4) [desktop-chromium] › e2e\checkout.spec.ts:226:3 › idempotência e falhas (PEND-01, PEND-02) › timeout após a criação: retry com a mesma chave recupera o MESMO pedido 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByRole('alert').filter({ hasText: 'Não recebemos a resposta do servidor' })
+    Expected: visible
+    Timeout: 8000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" getByRole('alert').filter({ hasText: 'Não recebemos a resposta do servidor' }) with timeout 8000ms
+      - waiting for getByRole('alert').filter({ hasText: 'Não recebemos a resposta do servidor' })
+
+
+      230 |     const alert = page.getByRole('alert').filter({ hasText: 'Não recebemos a resposta do servidor' })
+      231 |     // O cliente desiste após ORDER_CREATE_TIMEOUT_MS (5 s); o servidor já gravou o pedido.
+    > 232 |     await expect(alert).toBeVisible({ timeout: 8_000 })
+          |                         ^
+      233 |     expect(await ordersCount(page)).toBe(1)
+      234 |     const [created] = await mock(page).orders()
+      235 |     await alert.getByRole('button', { name: 'Tentar novamente' }).click()
+        at D:\emprego\e2e\checkout.spec.ts:232:25
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\checkout-idempotência-e-fa-f46fc-ave-recupera-o-MESMO-pedido-desktop-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\checkout-idempotência-e-fa-f46fc-ave-recupera-o-MESMO-pedido-desktop-chromium\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\checkout-idempotência-e-fa-f46fc-ave-recupera-o-MESMO-pedido-desktop-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\checkout-idempotência-e-fa-f46fc-ave-recupera-o-MESMO-pedido-desktop-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+  5) [desktop-chromium] › e2e\checkout.spec.ts:284:3 › sessão e acesso › acessibilidade: axe sem violações; carteiras e provedores por teclado 
+
+    Error: expect(locator).toBeChecked() failed
+
+    Locator:  getByRole('radio', { name: /Reserva/ })
+    Expected: checked
+    Received: unchecked
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toBeChecked" getByRole('radio', { name: /Reserva/ }) with timeout 5000ms
+      - waiting for getByRole('radio', { name: /Reserva/ })
+        14 × locator resolved to <button id="_r_7_" role="radio" tabindex="0" type="button" aria-checked="false" data-state="unchecked" value="saved:wal_ana_2" data-slot="radio-group-item" data-radix-collection-item="" class="aspect-square size-4 shrink-0 rounded-full border border-input text-primary shadow-xs transition-[color,box-shadow] outline-none focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 disabled:cursor-not-allowed disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-destruct…></button>
+           - unexpected value "unchecked"
+
+
+      287 |     await principal.focus()
+      288 |     await page.keyboard.press('ArrowDown')
+    > 289 |     await expect(page.getByRole('radio', { name: /Reserva/ })).toBeChecked()
+          |                                                                ^
+      290 |     await expect(page.getByRole('radio', { name: 'Coinbase Wallet' })).toBeChecked()
+      291 |     await confirmButton(page).click()
+      292 |     await expect(page.getByRole('alert').filter({ hasText: 'Conecte a carteira' })).toBeVisible()
+        at D:\emprego\e2e\checkout.spec.ts:289:64
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\checkout-sessão-e-acesso-a-db966-as-e-provedores-por-teclado-desktop-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\checkout-sessão-e-acesso-a-db966-as-e-provedores-por-teclado-desktop-chromium\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\checkout-sessão-e-acesso-a-db966-as-e-provedores-por-teclado-desktop-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\checkout-sessão-e-acesso-a-db966-as-e-provedores-por-teclado-desktop-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+  6) [desktop-chromium] › e2e\checkout.spec.ts:213:3 › idempotência e falhas (PEND-01, PEND-02) › resposta perdida após a criação: retry com a mesma chave recupera o MESMO pedido 
+
+    Test timeout of 30000ms exceeded.
+
+    Error: locator.click: Test timeout of 30000ms exceeded.
+    Call log:
+      - waiting for getByRole('alert').filter({ hasText: 'Não recebemos a resposta do servidor' }).getByRole('button', { name: 'Tentar novamente' })
+
+
+      219 |     const [created] = await mock(page).orders()
+      220 |     expect(created).toBeDefined()
+    > 221 |     await alert.getByRole('button', { name: 'Tentar novamente' }).click()
+          |                                                                   ^
+      222 |     await expect(page).toHaveURL(new RegExp(`/pedidos/${created!.id}$`))
+      223 |     expect(await ordersCount(page)).toBe(1)
+      224 |   })
+        at D:\emprego\e2e\checkout.spec.ts:221:67
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\checkout-idempotência-e-fa-ff9c4-ave-recupera-o-MESMO-pedido-desktop-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\checkout-idempotência-e-fa-ff9c4-ave-recupera-o-MESMO-pedido-desktop-chromium\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\checkout-idempotência-e-fa-ff9c4-ave-recupera-o-MESMO-pedido-desktop-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\checkout-idempotência-e-fa-ff9c4-ave-recupera-o-MESMO-pedido-desktop-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+  6 failed
+    [desktop-chromium] › e2e\cart.spec.ts:194:3 › estados e falhas › erro ao carregar e recuperação com "Tentar novamente" 
+    [desktop-chromium] › e2e\checkout.spec.ts:67:3 › fluxo principal › validação: dados do colecionador, carteira externa e conexão obrigatória 
+    [desktop-chromium] › e2e\checkout.spec.ts:123:3 › consistência financeira em tempo real › preço muda durante a revisão: alerta antes → depois, compra bloqueada até aceitar; pedido com o novo valor 
+    [desktop-chromium] › e2e\checkout.spec.ts:213:3 › idempotência e falhas (PEND-01, PEND-02) › resposta perdida após a criação: retry com a mesma chave recupera o MESMO pedido 
+    [desktop-chromium] › e2e\checkout.spec.ts:226:3 › idempotência e falhas (PEND-01, PEND-02) › timeout após a criação: retry com a mesma chave recupera o MESMO pedido 
+    [desktop-chromium] › e2e\checkout.spec.ts:284:3 › sessão e acesso › acessibilidade: axe sem violações; carteiras e provedores por teclado 
+  23 passed (1.7m)

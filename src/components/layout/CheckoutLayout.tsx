@@ -20,6 +20,7 @@ export function CheckoutLayout({
   main,
   summary,
   mobileAction,
+  below,
   backTo = '/',
 }: {
   title: string
@@ -28,6 +29,8 @@ export function CheckoutLayout({
   summary: ReactNode
   /** Ação principal fixa no mobile. */
   mobileAction?: ReactNode
+  /** Conteúdo de largura total abaixo (ex.: "Colecionadores também viram" no carrinho desktop). */
+  below?: ReactNode
   backTo?: '/' | '/mercado' | '/carrinho'
 }) {
   return (
@@ -59,6 +62,7 @@ export function CheckoutLayout({
             {summary}
           </aside>
         </div>
+        {below}
       </Container>
       {mobileAction && (
         <>

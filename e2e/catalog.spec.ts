@@ -241,7 +241,7 @@ test.describe('catálogo: tempo real e favoritos', () => {
     await page.getByLabel('E-mail', { exact: true }).fill(USERS.bruno.email)
     await page.getByLabel('Senha', { exact: true }).fill(USERS.bruno.password)
     await page.getByRole('button', { name: 'Entrar' }).click()
-    const fav = page.locator('[data-nft-id="nft-001"]').getByRole('button', { name: /Emerald Ape #042/ })
+    const fav = page.locator('[data-nft-id="nft-001"]').getByRole('button', { name: /^(Favoritar Emerald Ape #042|Remover Emerald Ape #042 dos favoritos)$/ }) // CP5: o card também tem o botão de carrinho
     await expect(fav).toHaveAttribute('aria-pressed', 'false')
     await fav.click()
     await expect(page.getByText('Não foi possível favoritar Emerald Ape #042')).toBeVisible()

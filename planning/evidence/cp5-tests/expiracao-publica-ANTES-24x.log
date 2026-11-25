@@ -1,0 +1,302 @@
+
+Running 24 tests using 4 workers
+
+[1/24] [desktop-chromium] › e2e\auth.spec.ts:155:3 › sessão e rotas protegidas › expiração em página pública sem ação pendente: continua como visitante, com aviso
+[2/24] [desktop-chromium] › e2e\auth.spec.ts:155:3 › sessão e rotas protegidas › expiração em página pública sem ação pendente: continua como visitante, com aviso
+[3/24] [desktop-chromium] › e2e\auth.spec.ts:155:3 › sessão e rotas protegidas › expiração em página pública sem ação pendente: continua como visitante, com aviso
+[4/24] [desktop-chromium] › e2e\auth.spec.ts:155:3 › sessão e rotas protegidas › expiração em página pública sem ação pendente: continua como visitante, com aviso
+[5/24] [desktop-chromium] › e2e\auth.spec.ts:155:3 › sessão e rotas protegidas › expiração em página pública sem ação pendente: continua como visitante, com aviso
+[6/24] [desktop-chromium] › e2e\auth.spec.ts:155:3 › sessão e rotas protegidas › expiração em página pública sem ação pendente: continua como visitante, com aviso
+[7/24] [desktop-chromium] › e2e\auth.spec.ts:155:3 › sessão e rotas protegidas › expiração em página pública sem ação pendente: continua como visitante, com aviso
+[8/24] [desktop-chromium] › e2e\auth.spec.ts:155:3 › sessão e rotas protegidas › expiração em página pública sem ação pendente: continua como visitante, com aviso
+[9/24] [desktop-chromium] › e2e\auth.spec.ts:155:3 › sessão e rotas protegidas › expiração em página pública sem ação pendente: continua como visitante, com aviso
+  1) [desktop-chromium] › e2e\auth.spec.ts:155:3 › sessão e rotas protegidas › expiração em página pública sem ação pendente: continua como visitante, com aviso 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByText('Sua sessão expirou')
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" getByText('Sua sessão expirou') with timeout 5000ms
+      - waiting for getByText('Sua sessão expirou')
+
+
+      159 |     await mock(page).expireSessions()
+      160 |     await page.reload() // a leitura de favoritos (privada) recebe 401
+    > 161 |     await expect(page.getByText('Sua sessão expirou')).toBeVisible()
+          |                                                        ^
+      162 |     await expect(page).toHaveURL(/\/$/)
+      163 |     expect(await page.evaluate(() => sessionStorage.getItem('kurio:session'))).toBeNull()
+      164 |     await page.getByRole('button', { name: 'Entrar' }).last().click()
+        at D:\emprego\e2e\auth.spec.ts:161:56
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\auth-sessão-e-rotas-proteg-980b3-ua-como-visitante-com-aviso-desktop-chromium-repeat5\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\auth-sessão-e-rotas-proteg-980b3-ua-como-visitante-com-aviso-desktop-chromium-repeat5\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\auth-sessão-e-rotas-proteg-980b3-ua-como-visitante-com-aviso-desktop-chromium-repeat5\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\auth-sessão-e-rotas-proteg-980b3-ua-como-visitante-com-aviso-desktop-chromium-repeat5\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[10/24] [desktop-chromium] › e2e\auth.spec.ts:155:3 › sessão e rotas protegidas › expiração em página pública sem ação pendente: continua como visitante, com aviso
+  2) [desktop-chromium] › e2e\auth.spec.ts:155:3 › sessão e rotas protegidas › expiração em página pública sem ação pendente: continua como visitante, com aviso 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByText('Sua sessão expirou')
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" getByText('Sua sessão expirou') with timeout 5000ms
+      - waiting for getByText('Sua sessão expirou')
+
+
+      159 |     await mock(page).expireSessions()
+      160 |     await page.reload() // a leitura de favoritos (privada) recebe 401
+    > 161 |     await expect(page.getByText('Sua sessão expirou')).toBeVisible()
+          |                                                        ^
+      162 |     await expect(page).toHaveURL(/\/$/)
+      163 |     expect(await page.evaluate(() => sessionStorage.getItem('kurio:session'))).toBeNull()
+      164 |     await page.getByRole('button', { name: 'Entrar' }).last().click()
+        at D:\emprego\e2e\auth.spec.ts:161:56
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\auth-sessão-e-rotas-proteg-980b3-ua-como-visitante-com-aviso-desktop-chromium-repeat7\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\auth-sessão-e-rotas-proteg-980b3-ua-como-visitante-com-aviso-desktop-chromium-repeat7\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\auth-sessão-e-rotas-proteg-980b3-ua-como-visitante-com-aviso-desktop-chromium-repeat7\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\auth-sessão-e-rotas-proteg-980b3-ua-como-visitante-com-aviso-desktop-chromium-repeat7\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+  3) [desktop-chromium] › e2e\auth.spec.ts:155:3 › sessão e rotas protegidas › expiração em página pública sem ação pendente: continua como visitante, com aviso 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByText('Sua sessão expirou')
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" getByText('Sua sessão expirou') with timeout 5000ms
+      - waiting for getByText('Sua sessão expirou')
+
+
+      159 |     await mock(page).expireSessions()
+      160 |     await page.reload() // a leitura de favoritos (privada) recebe 401
+    > 161 |     await expect(page.getByText('Sua sessão expirou')).toBeVisible()
+          |                                                        ^
+      162 |     await expect(page).toHaveURL(/\/$/)
+      163 |     expect(await page.evaluate(() => sessionStorage.getItem('kurio:session'))).toBeNull()
+      164 |     await page.getByRole('button', { name: 'Entrar' }).last().click()
+        at D:\emprego\e2e\auth.spec.ts:161:56
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\auth-sessão-e-rotas-proteg-980b3-ua-como-visitante-com-aviso-desktop-chromium-repeat6\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\auth-sessão-e-rotas-proteg-980b3-ua-como-visitante-com-aviso-desktop-chromium-repeat6\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\auth-sessão-e-rotas-proteg-980b3-ua-como-visitante-com-aviso-desktop-chromium-repeat6\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\auth-sessão-e-rotas-proteg-980b3-ua-como-visitante-com-aviso-desktop-chromium-repeat6\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[11/24] [desktop-chromium] › e2e\auth.spec.ts:155:3 › sessão e rotas protegidas › expiração em página pública sem ação pendente: continua como visitante, com aviso
+[12/24] [desktop-chromium] › e2e\auth.spec.ts:155:3 › sessão e rotas protegidas › expiração em página pública sem ação pendente: continua como visitante, com aviso
+[13/24] [desktop-chromium] › e2e\auth.spec.ts:155:3 › sessão e rotas protegidas › expiração em página pública sem ação pendente: continua como visitante, com aviso
+  4) [desktop-chromium] › e2e\auth.spec.ts:155:3 › sessão e rotas protegidas › expiração em página pública sem ação pendente: continua como visitante, com aviso 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByText('Sua sessão expirou')
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" getByText('Sua sessão expirou') with timeout 5000ms
+      - waiting for getByText('Sua sessão expirou')
+
+
+      159 |     await mock(page).expireSessions()
+      160 |     await page.reload() // a leitura de favoritos (privada) recebe 401
+    > 161 |     await expect(page.getByText('Sua sessão expirou')).toBeVisible()
+          |                                                        ^
+      162 |     await expect(page).toHaveURL(/\/$/)
+      163 |     expect(await page.evaluate(() => sessionStorage.getItem('kurio:session'))).toBeNull()
+      164 |     await page.getByRole('button', { name: 'Entrar' }).last().click()
+        at D:\emprego\e2e\auth.spec.ts:161:56
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\auth-sessão-e-rotas-proteg-980b3-ua-como-visitante-com-aviso-desktop-chromium-repeat9\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\auth-sessão-e-rotas-proteg-980b3-ua-como-visitante-com-aviso-desktop-chromium-repeat9\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\auth-sessão-e-rotas-proteg-980b3-ua-como-visitante-com-aviso-desktop-chromium-repeat9\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\auth-sessão-e-rotas-proteg-980b3-ua-como-visitante-com-aviso-desktop-chromium-repeat9\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[14/24] [desktop-chromium] › e2e\auth.spec.ts:155:3 › sessão e rotas protegidas › expiração em página pública sem ação pendente: continua como visitante, com aviso
+[15/24] [desktop-chromium] › e2e\auth.spec.ts:155:3 › sessão e rotas protegidas › expiração em página pública sem ação pendente: continua como visitante, com aviso
+  5) [desktop-chromium] › e2e\auth.spec.ts:155:3 › sessão e rotas protegidas › expiração em página pública sem ação pendente: continua como visitante, com aviso 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByText('Sua sessão expirou')
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" getByText('Sua sessão expirou') with timeout 5000ms
+      - waiting for getByText('Sua sessão expirou')
+
+
+      159 |     await mock(page).expireSessions()
+      160 |     await page.reload() // a leitura de favoritos (privada) recebe 401
+    > 161 |     await expect(page.getByText('Sua sessão expirou')).toBeVisible()
+          |                                                        ^
+      162 |     await expect(page).toHaveURL(/\/$/)
+      163 |     expect(await page.evaluate(() => sessionStorage.getItem('kurio:session'))).toBeNull()
+      164 |     await page.getByRole('button', { name: 'Entrar' }).last().click()
+        at D:\emprego\e2e\auth.spec.ts:161:56
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\auth-sessão-e-rotas-proteg-980b3-ua-como-visitante-com-aviso-desktop-chromium-repeat10\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\auth-sessão-e-rotas-proteg-980b3-ua-como-visitante-com-aviso-desktop-chromium-repeat10\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\auth-sessão-e-rotas-proteg-980b3-ua-como-visitante-com-aviso-desktop-chromium-repeat10\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\auth-sessão-e-rotas-proteg-980b3-ua-como-visitante-com-aviso-desktop-chromium-repeat10\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[16/24] [desktop-chromium] › e2e\auth.spec.ts:155:3 › sessão e rotas protegidas › expiração em página pública sem ação pendente: continua como visitante, com aviso
+[17/24] [desktop-chromium] › e2e\auth.spec.ts:155:3 › sessão e rotas protegidas › expiração em página pública sem ação pendente: continua como visitante, com aviso
+[18/24] [desktop-chromium] › e2e\auth.spec.ts:155:3 › sessão e rotas protegidas › expiração em página pública sem ação pendente: continua como visitante, com aviso
+[19/24] [desktop-chromium] › e2e\auth.spec.ts:155:3 › sessão e rotas protegidas › expiração em página pública sem ação pendente: continua como visitante, com aviso
+[20/24] [desktop-chromium] › e2e\auth.spec.ts:155:3 › sessão e rotas protegidas › expiração em página pública sem ação pendente: continua como visitante, com aviso
+[21/24] [desktop-chromium] › e2e\auth.spec.ts:155:3 › sessão e rotas protegidas › expiração em página pública sem ação pendente: continua como visitante, com aviso
+[22/24] [desktop-chromium] › e2e\auth.spec.ts:155:3 › sessão e rotas protegidas › expiração em página pública sem ação pendente: continua como visitante, com aviso
+[23/24] [desktop-chromium] › e2e\auth.spec.ts:155:3 › sessão e rotas protegidas › expiração em página pública sem ação pendente: continua como visitante, com aviso
+[24/24] [desktop-chromium] › e2e\auth.spec.ts:155:3 › sessão e rotas protegidas › expiração em página pública sem ação pendente: continua como visitante, com aviso
+  6) [desktop-chromium] › e2e\auth.spec.ts:155:3 › sessão e rotas protegidas › expiração em página pública sem ação pendente: continua como visitante, com aviso 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByText('Sua sessão expirou')
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" getByText('Sua sessão expirou') with timeout 5000ms
+      - waiting for getByText('Sua sessão expirou')
+
+
+      159 |     await mock(page).expireSessions()
+      160 |     await page.reload() // a leitura de favoritos (privada) recebe 401
+    > 161 |     await expect(page.getByText('Sua sessão expirou')).toBeVisible()
+          |                                                        ^
+      162 |     await expect(page).toHaveURL(/\/$/)
+      163 |     expect(await page.evaluate(() => sessionStorage.getItem('kurio:session'))).toBeNull()
+      164 |     await page.getByRole('button', { name: 'Entrar' }).last().click()
+        at D:\emprego\e2e\auth.spec.ts:161:56
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\auth-sessão-e-rotas-proteg-980b3-ua-como-visitante-com-aviso-desktop-chromium-repeat20\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\auth-sessão-e-rotas-proteg-980b3-ua-como-visitante-com-aviso-desktop-chromium-repeat20\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\auth-sessão-e-rotas-proteg-980b3-ua-como-visitante-com-aviso-desktop-chromium-repeat20\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\auth-sessão-e-rotas-proteg-980b3-ua-como-visitante-com-aviso-desktop-chromium-repeat20\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+  7) [desktop-chromium] › e2e\auth.spec.ts:155:3 › sessão e rotas protegidas › expiração em página pública sem ação pendente: continua como visitante, com aviso 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByText('Sua sessão expirou')
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" getByText('Sua sessão expirou') with timeout 5000ms
+      - waiting for getByText('Sua sessão expirou')
+
+
+      159 |     await mock(page).expireSessions()
+      160 |     await page.reload() // a leitura de favoritos (privada) recebe 401
+    > 161 |     await expect(page.getByText('Sua sessão expirou')).toBeVisible()
+          |                                                        ^
+      162 |     await expect(page).toHaveURL(/\/$/)
+      163 |     expect(await page.evaluate(() => sessionStorage.getItem('kurio:session'))).toBeNull()
+      164 |     await page.getByRole('button', { name: 'Entrar' }).last().click()
+        at D:\emprego\e2e\auth.spec.ts:161:56
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\auth-sessão-e-rotas-proteg-980b3-ua-como-visitante-com-aviso-desktop-chromium-repeat22\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\auth-sessão-e-rotas-proteg-980b3-ua-como-visitante-com-aviso-desktop-chromium-repeat22\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\auth-sessão-e-rotas-proteg-980b3-ua-como-visitante-com-aviso-desktop-chromium-repeat22\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\auth-sessão-e-rotas-proteg-980b3-ua-como-visitante-com-aviso-desktop-chromium-repeat22\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+  7 failed
+    [desktop-chromium] › e2e\auth.spec.ts:155:3 › sessão e rotas protegidas › expiração em página pública sem ação pendente: continua como visitante, com aviso 
+    [desktop-chromium] › e2e\auth.spec.ts:155:3 › sessão e rotas protegidas › expiração em página pública sem ação pendente: continua como visitante, com aviso 
+    [desktop-chromium] › e2e\auth.spec.ts:155:3 › sessão e rotas protegidas › expiração em página pública sem ação pendente: continua como visitante, com aviso 
+    [desktop-chromium] › e2e\auth.spec.ts:155:3 › sessão e rotas protegidas › expiração em página pública sem ação pendente: continua como visitante, com aviso 
+    [desktop-chromium] › e2e\auth.spec.ts:155:3 › sessão e rotas protegidas › expiração em página pública sem ação pendente: continua como visitante, com aviso 
+    [desktop-chromium] › e2e\auth.spec.ts:155:3 › sessão e rotas protegidas › expiração em página pública sem ação pendente: continua como visitante, com aviso 
+    [desktop-chromium] › e2e\auth.spec.ts:155:3 › sessão e rotas protegidas › expiração em página pública sem ação pendente: continua como visitante, com aviso 
+  17 passed (1.4m)

@@ -3,7 +3,7 @@
  */
 import { type Page } from '@playwright/test'
 import { expect, test } from './fixtures'
-import { USERS, openApp, signIn } from './support'
+import { USERS, openApp, seedCart, signIn, summaryValue } from './support'
 
 const WIDTHS = [360, 390, 600, 768, 900, 1024, 1280, 1440]
 const ROUTES = ['/', '/mercado', '/mercado?category=musica&network=solana', '/nft/nft-001', '/nft/nao-existe', '/criadores', '/demo/componentes', '/demo/conta', '/demo/checkout', '/rota-inexistente', '/login', '/cadastro']
@@ -69,6 +69,41 @@ for (const width of WIDTHS) {
       expect(box.left).toBeGreaterThanOrEqual(0)
       expect(box.right).toBeLessThanOrEqual(width)
     }
+  })
+}
+
+// CP5: carrinho (com problema de estoque e preço alterado visíveis) e pagamento (carteira externa aberta).
+for (const width of WIDTHS) {
+  test(`carrinho e pagamento sem overflow em ${width}px`, async ({ page }) => {
+    test.setTimeout(90_000)
+    await page.setViewportSize({ width, height: 900 })
+    await openApp(page, '/')
+    await signIn(page, USERS.ana)
+    await seedCart(page, [
+      { nftId: 'nft-001', editionId: 'ed-10', quantity: 2 },
+      { nftId: 'nft-006', editionId: 'ed-50', quantity: 3 },
+    ])
+    await page.goto('/pagamento')
+    await expect(summaryValue(page, 'quote-total')).toBeVisible()
+    await page.getByRole('radio', { name: 'Usar outra carteira' }).check()
+    let result = await horizontalOverflow(page)
+    expect.soft(result.scroll, `/pagamento @${width}px: scrollWidth ${result.scroll} > ${result.client} (${result.offenders.join(', ')})`).toBeLessThanOrEqual(result.client)
+    expect.soft(result.offenders, `/pagamento @${width}px`).toEqual([])
+
+    await page.goto('/carrinho')
+    await expect(summaryValue(page, 'quote-total')).toBeVisible()
+    result = await horizontalOverflow(page)
+    expect.soft(result.scroll, `/carrinho @${width}px: scrollWidth ${result.scroll} > ${result.client} (${result.offenders.join(', ')})`).toBeLessThanOrEqual(result.client)
+    expect.soft(result.offenders, `/carrinho @${width}px`).toEqual([])
+    // O placeholder do cupom cabe inteiro no campo (sem corte).
+    const fit = await page.getByLabel('Código promocional').evaluate((el: HTMLInputElement) => {
+      const style = getComputedStyle(el)
+      const ph = getComputedStyle(el, '::placeholder')
+      const ctx = document.createElement('canvas').getContext('2d')!
+      ctx.font = `${ph.fontSize} ${ph.fontFamily}`
+      return { text: Math.ceil(ctx.measureText(el.placeholder).width), room: Math.floor(el.clientWidth - parseFloat(style.paddingLeft) - parseFloat(style.paddingRight)) }
+    })
+    expect.soft(fit.text, `placeholder do cupom cortado em ${width}px (texto ${fit.text}px, espaço ${fit.room}px)`).toBeLessThanOrEqual(fit.room)
   })
 }
 

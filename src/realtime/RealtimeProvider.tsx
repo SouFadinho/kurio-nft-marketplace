@@ -68,6 +68,7 @@ export function RealtimeProvider({ children }: { children: ReactNode }) {
       await Promise.all([
         queryClient.invalidateQueries({ queryKey: queryKeys.nfts.all }),
         userId ? queryClient.invalidateQueries({ queryKey: queryKeys.me.all(userId) }) : Promise.resolve(),
+        queryClient.invalidateQueries({ queryKey: queryKeys.guest.all }),
       ])
       diagnostics.update((d) => ({ reconciliations: d.reconciliations + 1 }))
     }

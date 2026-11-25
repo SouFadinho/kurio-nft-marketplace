@@ -11,7 +11,7 @@
  * - `NFTCardSkeleton` reproduz exatamente as mesmas dimensões.
  */
 import { Link } from '@tanstack/react-router'
-import { Heart } from 'lucide-react'
+import { Heart, ShoppingCart } from 'lucide-react'
 import type { Nft } from '@/api/contracts'
 import { Badge } from '@/components/ui/badge'
 import { Skeleton } from '@/components/ui/skeleton'
@@ -28,6 +28,8 @@ export function NFTCard({
   favorite,
   onToggleFavorite,
   favoritePending = false,
+  onAddToCart,
+  addPending = false,
   priority = false,
   className,
 }: {
@@ -36,6 +38,9 @@ export function NFTCard({
   favorite?: boolean
   onToggleFavorite?: (next: boolean) => void
   favoritePending?: boolean
+  /** CP5: adicionar ao carrinho (a API escolhe a primeira edição disponível). */
+  onAddToCart?: () => void
+  addPending?: boolean
   /** Primeira dobra: carrega com prioridade (LCP). */
   priority?: boolean
   className?: string
@@ -79,6 +84,20 @@ export function NFTCard({
             )}
           >
             <Heart className="size-3.5" fill={favorite ? 'currentColor' : 'none'} aria-hidden />
+          </button>
+        )}
+        {onAddToCart && !soldOut && (
+          <button
+            type="button"
+            aria-label={`Adicionar ${nft.name} ao carrinho`}
+            disabled={addPending}
+            onClick={onAddToCart}
+            className={cn(
+              "absolute right-3 bottom-7 z-10 grid size-7 place-items-center rounded-full bg-surface-2/90 text-muted-foreground transition-colors after:absolute after:-inset-2 after:content-[''] lg:bottom-5",
+              'hover:bg-surface-3 hover:text-foreground disabled:opacity-60 outline-none focus-visible:outline-2 focus-visible:outline-ring',
+            )}
+          >
+            <ShoppingCart className="size-3.5" aria-hidden />
           </button>
         )}
       </div>

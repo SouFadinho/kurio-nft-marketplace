@@ -24,5 +24,14 @@ export const queryKeys = {
     favorites: (userId: string) => ['me', userId, 'favorites'] as const,
     profile: (userId: string) => ['me', userId, 'profile'] as const,
     wallets: (userId: string) => ['me', userId, 'wallets'] as const,
+    cart: (userId: string) => ['me', userId, 'cart'] as const,
+  },
+  /** Carrinho de visitante (id aleatório local). Não fica sob ['me']: não há usuário. */
+  guest: {
+    all: ['guest'] as const,
+    cart: (guestId: string) => ['guest', guestId, 'cart'] as const,
   },
 }
+
+/** Chave de cotação: sob a chave do carrinho, para ser invalidada junto com ele. */
+export const quoteKey = (cartKey: readonly unknown[], network: string, signature: string) => [...cartKey, 'quote', network, signature] as const

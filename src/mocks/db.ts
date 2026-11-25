@@ -6,13 +6,13 @@
  * - `reset(scenario)` recria TUDO a partir do seed determinístico.
  * - Toda escrita passa por `commit()`, que persiste o estado.
  */
-import type { Order, Wallet } from '@/api/contracts'
+import type { Network, Order, Wallet, WalletConnection } from '@/api/contracts'
 import { buildCatalog, type CatalogNft } from './fixtures/catalog'
 import { hashPassword } from './crypto'
 import { SCENARIOS, type ScenarioConfig, type ScenarioName } from './scenarios'
 
-// v4 (CP4): usuários com perfil completo, avatar e carteiras; estados anteriores são descartados.
-const STORAGE_KEY = 'kurio:mock:db:v4'
+// v5 (CP5): carrinhos, cupons, cotações e conexões de carteira; estados anteriores são descartados.
+const STORAGE_KEY = 'kurio:mock:db:v5'
 
 export interface DbUser {
   id: string
@@ -47,7 +47,7 @@ export interface DbNft extends CatalogNft {
 }
 
 export interface DbState {
-  schema: 4
+  schema: 5
   scenario: ScenarioName
   seq: number
   users: DbUser[]
@@ -58,7 +58,50 @@ export interface DbState {
   favorites: Record<string, string[]>
   /** Carteiras por usuário (no máximo uma principal e uma secundária). */
   wallets: Record<string, Wallet[]>
+  /** Carrinhos por dono: `user:<id>` ou `guest:<id aleatório>`. */
+  carts: Record<string, DbCart>
+  coupons: DbCoupon[]
+  quotes: DbQuote[]
+  walletConnections: Array<WalletConnection & { userId: string }>
 }
+
+export interface DbCartLine {
+  nftId: string
+  editionId: string
+  quantity: number
+  priceAtAdd: string
+}
+
+export interface DbCart {
+  version: number
+  lines: DbCartLine[]
+  couponCode: string | null
+}
+
+export interface DbCoupon {
+  code: string
+  label: string
+  /** Percentual inteiro sobre o subtotal (ex.: 10 = 10%). */
+  percentOff: number
+  expiresAt: string
+}
+
+export interface DbQuote {
+  id: string
+  ownerKey: string
+  network: Network
+  /** Impressão digital das condições (preços, quantidades, cupom, rede): muda = cotação obsoleta. */
+  fingerprint: string
+  expiresAt: string
+  consumed: boolean
+}
+
+/** Cupons fictícios. O expirado tem data fixa no passado (determinístico). */
+export const SEED_COUPONS: DbCoupon[] = [
+  { code: 'KURIO10', label: 'Desconto do lançamento (10%)', percentOff: 10, expiresAt: '2099-12-31T23:59:59.000Z' },
+  { code: 'COLECAO5', label: 'Desconto de colecionador (5%)', percentOff: 5, expiresAt: '2099-12-31T23:59:59.000Z' },
+  { code: 'NATAL2024', label: 'Natal 2024 (15%)', percentOff: 15, expiresAt: '2024-12-31T23:59:59.000Z' },
+]
 
 /** Usuários fictícios (MOCK-05). As senhas estão documentadas no README; aqui só existem como hash. */
 export const SEED_USERS = [
@@ -85,7 +128,7 @@ async function seed(scenario: ScenarioName): Promise<DbState> {
     }),
   )
   return {
-    schema: 4,
+    schema: 5,
     scenario,
     seq: 0,
     users,
@@ -94,6 +137,10 @@ async function seed(scenario: ScenarioName): Promise<DbState> {
     orders: [],
     favorites: {},
     wallets: structuredClone(SEED_WALLETS),
+    carts: {},
+    coupons: structuredClone(SEED_COUPONS),
+    quotes: [],
+    walletConnections: [],
   }
 }
 
@@ -107,7 +154,7 @@ export const db = {
       try {
         const raw = localStorage.getItem(STORAGE_KEY)
         const parsed = raw ? (JSON.parse(raw) as DbState) : null
-        if (parsed?.schema === 4) {
+        if (parsed?.schema === 5) {
           state = parsed
           if (options.scenario) state.scenario = options.scenario
           persist()

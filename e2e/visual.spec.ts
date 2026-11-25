@@ -1,5 +1,6 @@
 /**
- * Regressão visual (TEST-02) de Início e Detalhe do NFT, nos projetos desktop e mobile.
+ * Regressão visual (TEST-02) de Início, Detalhe do NFT, Carrinho e Pagamento (CP5), nos
+ * projetos desktop e mobile.
  *
  * IMPORTANTE: estas baselines garantem ESTABILIDADE (nada mudou sem querer), não fidelidade
  * ao Figma; a fidelidade é avaliada nas comparações lado a lado (planning/evidence/cp3).
@@ -10,7 +11,7 @@
  */
 import { type Page } from '@playwright/test'
 import { expect, test } from './fixtures'
-import { openApp } from './support'
+import { USERS, openApp, seedCart, signIn, summaryValue } from './support'
 
 test.use({ reducedMotion: 'reduce' })
 
@@ -35,12 +36,27 @@ async function settle(page: Page) {
   await page.waitForTimeout(150)
 }
 
+const CART = [
+  { nftId: 'nft-001', editionId: 'ed-10', quantity: 2 },
+  { nftId: 'nft-005', editionId: 'ed-50', quantity: 1 },
+  { nftId: 'nft-006', editionId: 'ed-50', quantity: 3 },
+]
+
 for (const [name, path] of [
   ['inicio', '/'],
   ['detalhe', '/nft/nft-001'],
+  ['carrinho', '/carrinho'],
+  ['pagamento', '/pagamento'],
 ] as const) {
   test(`baseline visual: ${name}`, async ({ page }) => {
-    await openApp(page, path)
+    if (name === 'carrinho' || name === 'pagamento') {
+      // Mesmos 3 itens do Figma (Emerald Ape, Violet Nomad, Ivory Baron); pagamento com Ana logada.
+      await openApp(page, '/')
+      if (name === 'pagamento') await signIn(page, USERS.ana)
+      await seedCart(page, CART)
+      await page.goto(path)
+      await expect(summaryValue(page, 'quote-total')).toBeVisible()
+    } else await openApp(page, path)
     await settle(page)
     await expect(page).toHaveScreenshot(`${name}.png`, { fullPage: true, animations: 'disabled', caret: 'hide', maxDiffPixelRatio: 0.01 })
   })

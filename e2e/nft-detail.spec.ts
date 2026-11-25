@@ -5,7 +5,7 @@
  */
 import { type Page } from '@playwright/test'
 import { expect, test } from './fixtures'
-import { mock, openApp } from './support'
+import { cartQuantity, mock, openApp } from './support'
 
 const isMobile = (page: Page) => (page.viewportSize()?.width ?? 1440) < 1024
 const price = (page: Page) =>
@@ -70,13 +70,17 @@ test.describe('detalhe do NFT', () => {
     await expect(page.getByTestId('live-notice')).toHaveText('Esta edição esgotou.')
   })
 
-  test('comprar e adicionar ao carrinho NÃO simulam sucesso (carrinho é do CP5)', async ({ page }) => {
+  // CP5: adaptado. No CP3 este teste garantia que as ações NÃO simulavam sucesso enquanto não
+  // havia carrinho; agora as ações são reais (API) e o teste confere o efeito no servidor.
+  test('adicionar ao carrinho grava na API; comprar leva ao pagamento (visitante passa pelo login)', async ({ page }) => {
     await openApp(page, '/nft/nft-001')
+    await page.getByRole('button', { name: 'Adicionar Emerald Ape #042 ao carrinho' }).filter({ visible: true }).click()
+    await expect(page.getByText('Emerald Ape #042 adicionado ao carrinho')).toBeVisible()
+    await expect.poll(() => cartQuantity(page)).toBe(1)
     const buy = isMobile(page) ? page.getByRole('button', { name: 'Comprar NFT', exact: true }) : page.getByRole('button', { name: 'Comprar', exact: true })
     await buy.click()
-    await expect(page.getByText('Compra ainda não disponível')).toBeVisible()
-    await page.getByRole('button', { name: 'Adicionar Emerald Ape #042 ao carrinho' }).filter({ visible: true }).click()
-    await expect(page.getByText('Compra ainda não disponível').first()).toBeVisible()
+    await expect(page).toHaveURL(/\/login\?redirect=%2Fpagamento/)
+    await expect.poll(() => cartQuantity(page)).toBe(2)
   })
 
   test('falha ao carregar o detalhe: erro e "Tentar novamente" recupera', async ({ page }) => {

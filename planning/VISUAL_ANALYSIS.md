@@ -158,3 +158,14 @@ Lista e detalhe de **pedidos** e status em tempo real; páginas Mercado, Criador
 6. **Carteiras em modo de leitura primeiro**: o Figma mostra a carteira principal já como formulário; aqui cada carteira aparece resumida (apelido, tipo, rede, endereço abreviado, ENS) com "Editar" e "Tornar principal", e o formulário abre sob demanda. Evita edição acidental e deixa claro qual carteira é a principal.
 7. **Perfil e carteiras no mobile e no tablet**: sem frame no Figma; derivados do layout de conta do CP2.
 8. Google e Facebook: glifos simplificados, não os logotipos oficiais; os botões avisam que a integração não existe na demonstração.
+
+## 13. Desvios do Figma no CP5 (carrinho e pagamento)
+
+1. **Botão de carrinho no card**: o Figma mostra carrinho/favoritar/zoom no hover do card desktop; aqui o favoritar fica no canto superior (CP3) e o carrinho no canto inferior direito da arte, sempre visível (toque no mobile). Baselines visuais da Início atualizadas por isso.
+2. **Carrinho mobile**: cada card ganhou uma linha "Total da linha + Remover" (o Figma mobile não mostra total por linha e tem um ícone de lixeira ambíguo sobre o "+"); o resumo tem o título "Resumo da carteira". Registrado como VIS-09.
+3. **Cupom**: desktop com rótulo visível "Código promocional" (como no Figma desktop); mobile em pílula como no Figma, com o rótulo só para leitores de tela. Abaixo de 375 px, campo e botão empilham para o placeholder do Figma caber inteiro (verificado de 360 a 1440 px).
+4. **Linhas do resumo**: "Taxa de rede (Ethereum)" mostra a rede da cotação; o desconto mostra o rótulo do cupom aplicado. Valores com unidade ("(-) 0.00 ETH" em vez de "(-) 00.00", §10.5).
+5. **Pagamento desktop**: o Figma repete campos de carteira no "Perfil do colecionador" (rede, endereço, tipo, código de indicação, ENS). Aqui: dados do colecionador (nome, e-mail, observação) + seleção de carteira cadastrada ou "Usar outra carteira" (tipo, endereço) + rede. Código de indicação e ENS editável não existem no pagamento (pertencem ao perfil/carteiras).
+6. **Pagamento mobile**: o Figma mobile não tem os dados do colecionador; aqui eles aparecem antes das carteiras (exigidos pelo CP5 e presentes no desktop). "Trocar carteira" virou "Gerenciar carteiras" (leva a /perfil/carteiras).
+7. **Conexão**: botão "Conectar <provedor>" e estado "Conectada via …" (o Figma não mostra o passo de conexão); aviso de que a conexão é simulada.
+8. **Alerta de valores alterados** e **situação do pedido** (`/pedidos/:id`): sem referência no Figma; derivados dos tokens. O recibo final é do CP6.

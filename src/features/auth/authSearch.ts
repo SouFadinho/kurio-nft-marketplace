@@ -12,8 +12,8 @@ export const AuthSearch = z.object({
   motivo: z.enum(['expirada']).optional().catch(undefined),
 })
 
-/** Prefixos de rotas privadas (perfil, carteiras, favoritos; checkout e pedidos no CP5/CP6). */
-const PROTECTED_PREFIXES = ['/perfil', '/favoritos', '/checkout', '/pedidos']
+/** Prefixos de rotas privadas (perfil, carteiras, favoritos, pagamento e pedidos). */
+const PROTECTED_PREFIXES = ['/perfil', '/favoritos', '/pagamento', '/pedidos']
 
 /** Fechar o login sem entrar não pode voltar para uma rota privada (cairia no login de novo). */
 export function isProtectedPath(href: string) {

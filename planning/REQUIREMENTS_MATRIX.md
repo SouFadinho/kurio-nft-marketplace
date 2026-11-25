@@ -25,8 +25,8 @@ Abreviação: `T<n>` = teste `<n>.` de `e2e/poc.spec.ts`.
 ## Pendências registradas na aprovação do CP1
 | ID | Pendência | Destino |
 |---|---|---|
-| PEND-01 | Idempotência com a mesma chave e payload diferente (409 implementado, não testado) | CP5 · E2E-07 |
-| PEND-02 | Timeout após a criação do pedido e recuperação por retry | CP5 · E2E-07 |
+| PEND-01 | ~~Idempotência com a mesma chave e payload diferente~~ **RESOLVIDO (CP5)**: checkout.spec › API mesma chave + mesmo conteúdo = mesmo pedido (200); conteúdo diferente = 409 `IDEMPOTENCY_KEY_REUSED` | — |
+| PEND-02 | ~~Timeout após a criação do pedido e recuperação por retry~~ **RESOLVIDO (CP5)**: cenários `order-timeout` e `order-lost-response`; o retry (inclusive pelo botão principal) recupera o MESMO pedido, 1 pedido no servidor | — |
 | PEND-03 | Consistência da persistência do mock entre abas | CP6 |
 | PEND-04 | Impacto do MSW na performance inicial (R-25) | CP8 |
 | PEND-05 | Revalidação integral do HEAD a cada checkpoint. CP1: `91380dc`. **CP2: `6ad49e0` validado em checkout limpo (126/126)** · **CP3: `2b2aa83` validado em checkout limpo (199 passed / 2 skipped)** · **CP4: `ea6f60b` validado em checkout limpo (295 passed / 5 skipped)** | todo CP · CP9 |
@@ -74,7 +74,7 @@ Abreviação: `T<n>` = teste `<n>.` de `e2e/poc.spec.ts`.
 | Descarte de eventos antigos e duplicados | T9 + 6 testes unitários do `EventGuard` | VALIDADO |
 | Reconexão e reconciliação REST | T7/8 (3 rodadas + 20× por viewport) | VALIDADO |
 | Logout e troca de usuário sem vazamento | T6 | VALIDADO |
-| Idempotência de pedidos | T2b (clique duplo → 1 pedido); mesma chave com outro conteúdo → 409 implementado | VALIDADO (clique repetido) · conflito 409 e timeout: IMPLEMENTADO, NÃO VALIDADO (E2E-07, CP5) |
+| Idempotência de pedidos | T2b (clique duplo → 1 pedido); mesma chave com outro conteúdo → 409 implementado | VALIDADO (CP5): clique repetido, conflito 409, timeout e resposta perdida após a criação (checkout.spec) |
 | Precisão decimal em ETH | 5 testes unitários de `lib/eth` | VALIDADO |
 | Mocks no build de produção | toda a suíte roda em `vite build` + `vite preview` | VALIDADO |
 | Reset integral dos cenários | T "reset integral" | VALIDADO (recursos da PoC) |
@@ -86,7 +86,7 @@ Abreviação: `T<n>` = teste `<n>.` de `e2e/poc.spec.ts`.
 | AV-1 | Fidelidade visual e responsividade | 20 | IMPLEMENTADO, NÃO VALIDADO (design system e estrutura global prontos e comparados; telas no CP3–CP6) |
 | AV-2 | Fluxos e experiência | 20 | PENDENTE |
 | AV-3 | Integração e estado | 15 | IMPLEMENTADO, NÃO VALIDADO (base validada na PoC) |
-| AV-4 | Tempo real | 10 | IMPLEMENTADO, NÃO VALIDADO (mecanismos validados; cenário RT-08 pendente) |
+| AV-4 | Tempo real | 10 | VALIDADO (CP5): catálogo, detalhe, carrinho e pagamento; RT-08 coberto |
 | AV-5 | Mocking | 10 | IMPLEMENTADO, NÃO VALIDADO (3 de 21 cenários) |
 | AV-6 | Testes | 10 | PENDENTE (0 de 12 grupos E2E finais) |
 | AV-7 | Acessibilidade | 5 | IMPLEMENTADO, NÃO VALIDADO (base validada no CP2; revalidar nas telas e no CP8) |
@@ -107,13 +107,20 @@ Todas `PENDENTE` (TELA-01..09). Desde o CP2:
 | ID | Status | Evidência / observação |
 |---|---|---|
 | CAT-01..05 | VALIDADO (CP3) | ver §11 |
-| CART-01..05 | PENDENTE | — |
+| CART-01 (adicionar/alterar/remover por NFT e edição, estoque) | VALIDADO (CP5) | cart.spec › adicionar, quantidade e remoção (§14) |
+| CART-02 (refresh; visitante preservado ao autenticar) | VALIDADO (CP5) | cart.spec › refresh; merge determinístico; unit › cart-model |
+| CART-03 (cupom válido, inválido, expirado, remover) | VALIDADO (CP5) | cart.spec › cupons |
+| CART-04 (valores coerentes com a API) | VALIDADO (CP5) | resumo = cotação da API; unit › pricing (wei) |
+| CART-05 (preço e estoque em tempo real com o carrinho aberto) | VALIDADO (CP5) | cart.spec › tempo real no carrinho |
 | CART-06 (precisão ETH) | VALIDADO | unit `lib/eth` |
-| PAY-01..03, PAY-07 | PENDENTE | — |
-| PAY-04 (duplicidade) | VALIDADO (clique repetido) / IMPLEMENTADO, NÃO VALIDADO (timeout) | T2b |
+| PAY-01 (validação; revisão antes do envio) | VALIDADO (CP5) | checkout.spec › validação |
+| PAY-02 (carteiras cadastradas, rede, conexão/recusa/desconexão) | VALIDADO (CP5) | checkout.spec › carteiras e redes |
+| PAY-03 (revalidar antes de confirmar; mudança exige nova confirmação) | VALIDADO (CP5) | checkout.spec › consistência financeira (preço, socket offline, estoque, cotação expirada) |
+| PAY-07 (falha preserva itens; após confirmação, remover só o comprado) | VALIDADO (CP5) | checkout.spec › falha antes de gravar; recusado preserva carrinho e devolve estoque; confirmado tira só os itens comprados |
+| PAY-04 (duplicidade) | VALIDADO (CP5) | checkout.spec › cliques repetidos; timeout e resposta perdida → mesmo pedido |
 | PAY-05 (pendente/confirmado/recusado + recuperação) | VALIDADO (PoC) | T5, T5b, T7/8, T7b |
 | PAY-06 (confirmação só se confirmada) | VALIDADO (PoC) | T5b |
-| PAY-08 (snapshot + tx simulado) | IMPLEMENTADO, NÃO VALIDADO | as linhas do pedido são gravadas na criação; a mudança de preço posterior ainda não foi testada |
+| PAY-08 (snapshot + tx simulado) | IMPLEMENTADO PARCIALMENTE (CP5) | o pedido do checkout grava linhas, edição, subtotal, desconto, taxa, rede, cupom e carteira (`pricing`); o pedido mostra o total aceito. Recibo imutável e explorer simulado: CP6 |
 | ACC-01 (login/logout/sessão/cadastro) | VALIDADO (CP4) | auth.spec › login, cadastro, logout (§13) |
 | ACC-02 (rotas privadas) | VALIDADO (CP4) | auth.spec › /perfil, /perfil/carteiras, /favoritos com retorno |
 | ACC-03 (sessão após refresh) | VALIDADO (CP4) | auth.spec › sessão sobrevive ao refresh |
@@ -126,22 +133,23 @@ Todas `PENDENTE` (TELA-01..09). Desde o CP2:
 | INT-05 (estados) | VALIDADO (catálogo e detalhe, CP3) | §11 |
 | INT-07 (respostas obsoletas) | VALIDADO (CP3) | `out-of-order` + `stale-in-flight` (§11) |
 | INT-11 (otimista + rollback) | VALIDADO (favoritos, CP3) | `favorite-fail` |
-| INT-09, INT-12 | PENDENTE / IMPLEMENTADO, NÃO VALIDADO | idempotência no CP5; documentação de cache no CP9 |
+| INT-09 (idempotência) | VALIDADO (CP5) | checkout.spec › idempotência e falhas |
+| INT-12 | IMPLEMENTADO, NÃO VALIDADO | documentação de cache no CP9 |
 | INT-06 (invalidação após eventos) | VALIDADO (PoC) | T3/4, T7/8 |
-| API-01 | IMPLEMENTADO, NÃO VALIDADO (parcial) | auth (login, cadastro, sessão, logout), nfts, orders, favoritos, perfil, avatar, senha e carteiras (CP4, exercitados pelos E2E); faltam carrinho e cotação |
+| API-01 | IMPLEMENTADO, NÃO VALIDADO (parcial) | auth (login, cadastro, sessão, logout), nfts, orders, favoritos, perfil, avatar, senha e carteiras (CP4, exercitados pelos E2E); carrinho, cupom, merge, cotação, conexão de carteira e pedido do checkout (CP5) |
 | API-02 | IMPLEMENTADO, NÃO VALIDADO (parcial) | 401, 404, 409, 422 nos handlers |
-| API-03 | VALIDADO (mesma tentativa) / IMPLEMENTADO, NÃO VALIDADO (conflito) | T2b |
+| API-03 | VALIDADO (CP5) | mesma tentativa → mesmo pedido; mesma chave + outro conteúdo → 409 |
 | MOCK-01, 02, 07, 08, 09, 10 | VALIDADO | lint, T3/4 (REST e evento coerentes após reload), suíte no build de produção |
 | MOCK-03 (persistência e reset) | VALIDADO (PoC) | T3/4 (reload), T "reset integral" |
-| MOCK-04, 06 | VALIDADO parcialmente (19 cenários; CP4: `auth-offline`, `avatar-fail`, `profile-save-fail`, `slow-private` + `expireSessions()`; conflitos e senha errada vêm dos dados; faltam cupom e pagamento) | `slow`, `hold-catalog`, `out-of-order`, `stale-in-flight`, `catalog-error`, `catalog-offline`, `detail-error`, `empty`, `broken-images`, `favorite-fail`… |
+| MOCK-04, 06 | VALIDADO parcialmente (19 cenários; CP4: `auth-offline`, `avatar-fail`, `profile-save-fail`, `slow-private` + `expireSessions()`; conflitos e senha errada vêm dos dados; CP5: `cart-error`, `cart-write-fail`, `hold-quote`, `wallet-refused`, `order-fail`, `order-lost-response`, `order-timeout`, `slow-order` + `expireQuotes()` e `recover(rota)`; cupons inválido/expirado vêm dos dados) | `slow`, `hold-catalog`, `out-of-order`, `stale-in-flight`, `catalog-error`, `catalog-offline`, `detail-error`, `empty`, `broken-images`, `favorite-fail`… |
 | MOCK-05 (2 usuários) | VALIDADO | T6 |
-| RT-01 (nft.updated) | VALIDADO (catálogo, detalhe com edições e estoque) · carrinho PENDENTE (CP5) | T3/4 + §11 |
+| RT-01 (nft.updated) | VALIDADO (catálogo, detalhe, carrinho e pagamento) | T3/4 + §11 + cart.spec/checkout.spec (§14) |
 | RT-02 (order.updated) | VALIDADO | T5, T5b |
 | RT-03, RT-04 | VALIDADO | T9 + unitários |
 | RT-05 | VALIDADO | T7/8 |
 | RT-06 | VALIDADO | T6, T6b, T6c |
 | RT-07 (listeners liberados) | VALIDADO (PoC) | T6: a conexão de Ana desaparece do servidor após logout |
-| RT-08 | PENDENTE | E2E-09 (CP5/CP6) |
+| RT-08 | VALIDADO (CP5) | checkout.spec › preço muda durante a revisão; estoque acaba; mudança não vista (socket offline) recusada pela API |
 | RT-09 | VALIDADO (PoC) | T7/8, T7b, T5b (terminal) |
 
 ## 6. UI, acessibilidade, testes, Lighthouse e entrega
@@ -164,11 +172,15 @@ Todas `PENDENTE` (TELA-01..09). Desde o CP2:
 | E2E-03 | VALIDADO (CP4): auth.spec |
 | E2E-04 | VALIDADO (CP3 + CP4: troca de usuário, expiração e retomada da intenção) |
 | E2E-08 | VALIDADO (CP4): account.spec |
-| E2E-11 | VALIDADO parcialmente (CP4: modal de login com foco preso/Esc/retorno do foco, validação de formulários; diálogos de checkout no CP5) |
-| E2E-12 | VALIDADO parcialmente (skeleton, erro, retry no catálogo e detalhe; carrinho no CP5) |
-| E2E-05–07, 09, 10 | PENDENTE (CP5–CP7) |
+| E2E-11 | VALIDADO (CP4 + CP5: modal de login, validação de formulários, carrinho e pagamento por teclado, axe em /carrinho e /pagamento) |
+| E2E-12 | VALIDADO (catálogo, detalhe; CP5: erro e retry do carrinho, cotação em andamento, falha de escrita) |
+| E2E-05 | VALIDADO (CP5): cart.spec |
+| E2E-06 | VALIDADO PARCIALMENTE (CP5): do carrinho ao pedido criado e confirmado pela rede simulada; o recibo final é do CP6 |
+| E2E-07 | VALIDADO (CP5): checkout.spec › idempotência e falhas (recusa, clique repetido, timeout, resposta perdida) |
+| E2E-09 | VALIDADO (CP5): checkout.spec › consistência financeira em tempo real |
+| E2E-10 | VALIDADO PARCIALMENTE: eventos duplicados/antigos no carrinho (CP5) e retomada de pedido pendente na PoC; tela de pedido final no CP6 |
 | TEST-01 (Chromium desktop + mobile) | VALIDADO (configuração) |
-| TEST-02 (visual) | IMPLEMENTADO: baselines de Início e Detalhe (desktop+mobile, Windows). Carrinho e Pagamento no CP5; baselines Linux no CP7 |
+| TEST-02 (visual) | IMPLEMENTADO: baselines de Início, Detalhe, Carrinho e Pagamento (desktop+mobile, Windows; CP5). Baselines Linux no CP7 |
 | TEST-03 (estado isolado) | VALIDADO: contexto novo + `?reset=1` por teste; 3 rodadas paralelas sem interferência |
 | TEST-04 (HTML + traces) | IMPLEMENTADO, NÃO VALIDADO (`trace: retain-on-failure`; relatório HTML gerado) |
 | TEST-05 | VALIDADO (os testes acionam o servidor simulado; a UI muda via socket ou Axios) |
@@ -205,6 +217,9 @@ Todas `PENDENTE` (TELA-01..09). Desde o CP2:
 | VIS-04 | Revisar as miniaturas da galeria (hoje 2 vistas; Figma mostra 4) | revisão visual final |
 | VIS-05 | Garantir que a barra fixa de compra (mobile) não oculte conteúdo | revisão visual final |
 | VIS-06 | Melhorar a variedade visual dos NFTs relacionados | revisão visual final |
+| VIS-07 | (registrado no CP5) Aproximar a tela de Carteiras do formulário original do Figma (hoje: resumo + "Editar"), preservando os rótulos acessíveis | revisão visual final |
+| VIS-08 | (registrado no CP5) Posição do modal de login/cadastro no desktop (Figma: perto do topo do hero; hoje: centralizado) | revisão visual final |
+| VIS-09 | (CP5) Carrinho mobile: linha "Total + Remover" e título "Resumo da carteira" não existem no Figma | revisão visual final |
 
 ## 13. CP4: autenticação, perfil e carteiras (evidências em `planning/evidence/cp4/` e `planning/evidence/cp4-tests/`)
 
@@ -232,3 +247,34 @@ Todos os casos rodam em `desktop-chromium` (1440) e `mobile-chromium` (390), sal
 | — | Acessibilidade (axe, com erros visíveis) | auth › axe /login, /cadastro; account › axe perfil e carteiras | VALIDADO |
 | — | Responsividade (8 larguras; menu da conta sem corte no tablet) | layout.responsive › /login, /cadastro; conta sem overflow e menu utilizável | VALIDADO |
 | — | Contrato de carteiras para o checkout (CP5) | `useWallets` + `sortWallets` (principal primeiro); `PendingIntent.checkout` | IMPLEMENTADO, NÃO VALIDADO (uso real no CP5) |
+
+## 14. CP5: carrinho e checkout (evidências em `planning/evidence/cp5/` e `planning/evidence/cp5-tests/`)
+
+Todos os casos rodam em `desktop-chromium` (1440) e `mobile-chromium` (390), com tráfego real UI → TanStack Query → Axios → MSW e eventos pelo socket.io-client.
+
+| ID | Requisito | Teste (arquivo › caso) | Status |
+|---|---|---|---|
+| TELA-03 | Carrinho (Figma desktop e mobile) | cart.spec (13 casos); `comparacao-carrinho-*`; baseline visual | VALIDADO (funcional) · diferenças em VISUAL_ANALYSIS §13 |
+| TELA-04 | Pagamento (Figma desktop e mobile) | checkout.spec (17 casos); `comparacao-pagamento-*`; baseline visual | VALIDADO (funcional) · diferenças em VISUAL_ANALYSIS §13 |
+| — | Adicionar pelo card do catálogo e pelo detalhe (edição + quantidade); mesma linha soma | cart.spec › card; detalhe; nft-detail › adicionar/comprar (adaptado) | VALIDADO |
+| — | Quantidade, limite de estoque, remoção, carrinho vazio | cart.spec › quantidade/remoção; além do estoque (409) | VALIDADO |
+| — | Persistência (refresh) e merge determinístico | cart.spec › refresh; merge (soma, estoque, ordem); unit › cart-model (2 casos) | VALIDADO |
+| — | Isolamento entre usuários e visitante após logout | cart.spec › isolamento | VALIDADO |
+| — | Cupons válido, inválido, expirado, remover | cart.spec › cupons | VALIDADO |
+| — | Precisão financeira (wei/bigint, cotação da API) | unit › pricing (3 casos, inclui o carrinho do Figma 26.83 → 26.846); E2E conferem `data-value` exato | VALIDADO |
+| — | Estados: carregamento da cotação, erro + recuperação, falha de escrita | cart.spec › estados e falhas | VALIDADO |
+| — | Dados do colecionador, validação, carteira externa | checkout.spec › validação | VALIDADO |
+| — | Carteiras cadastradas (`useWallets` + `sortWallets`), rede compatível, taxa por rede | checkout.spec › carteiras e redes | VALIDADO |
+| — | Conexão simulada: recusa, nova tentativa, desconexão, troca desconecta | checkout.spec › conexão | VALIDADO |
+| — | Preço muda na revisão: alerta antes → depois, bloqueio, aceite explícito | checkout.spec › preço muda | VALIDADO |
+| — | Mudança não vista pelo cliente (socket offline): API recusa cotação antiga | checkout.spec › socket offline | VALIDADO |
+| — | Estoque acaba durante a revisão | checkout.spec › estoque acaba | VALIDADO |
+| — | Cotação expirada | checkout.spec › cotação expirada | VALIDADO |
+| — | Idempotência (PEND-01) e timeout/resposta perdida (PEND-02) | checkout.spec › idempotência e falhas (4 casos) | VALIDADO |
+| — | Falha antes de gravar preserva dados e carrinho | checkout.spec › falha antes de gravar | VALIDADO |
+| — | Pagamento recusado: sem confirmação, carrinho preservado, estoque devolvido | checkout.spec › recusado | VALIDADO |
+| — | Confirmação só com status da API (pendente → confirmado via socket) | checkout.spec › fluxo principal | VALIDADO |
+| — | Expiração da sessão ao confirmar: login, volta com rascunho, nada reenviado sozinho | checkout.spec › expiração | VALIDADO |
+| — | Teclado, foco e axe | cart.spec › acessibilidade; checkout.spec › acessibilidade | VALIDADO |
+| — | Responsividade (8 larguras) + placeholder do cupom sem corte | layout.responsive › carrinho e pagamento | VALIDADO |
+| — | Recibo imutável, tela de confirmação final, recuperação avançada | — | PENDENTE (CP6) |

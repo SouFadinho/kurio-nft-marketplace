@@ -4,7 +4,7 @@
  * autorização são decididos aqui.
  */
 import { delay, http, HttpResponse } from 'msw'
-import { CreateOrderRequest, type Order } from '@/api/contracts'
+import { CheckoutRequest, CreateOrderRequest, type Order } from '@/api/contracts'
 import { addEth, mulEth, parseEth, toEthString } from '@/lib/eth'
 import { db, type DbOrder } from '../db'
 import { digest } from '../crypto'
@@ -13,6 +13,8 @@ import { scheduleSettlement } from '../services'
 import { availableOf } from '../catalog-model'
 import { catalogHandlers } from './catalog'
 import { accountHandlers } from './account'
+import { commerceHandlers, createCheckoutOrder } from './commerce'
+import { routeDelay } from '../failures'
 
 const latency = () => delay(db.scenario().latencyMs)
 
@@ -25,19 +27,25 @@ function publicOrder(order: DbOrder): Order {
 export const restHandlers = [
   ...catalogHandlers,
   ...accountHandlers,
+  ...commerceHandlers,
   // ---------- Pedidos ----------
   http.post('/api/orders', async ({ request }) => {
-    await latency()
+    const raw = await request.json().catch(() => null)
+    const checkout = CheckoutRequest.safeParse(raw)
+    // Checkout (CP5) usa a latência/falhas da rota 'orders.create'; a PoC mantém a latência global.
+    if (checkout.success) await routeDelay('orders.create', new URL(request.url))
+    else await latency()
     const session = requireSession(request)
     if (session instanceof Response) return session
 
     const key = request.headers.get('Idempotency-Key')
     if (!key) return apiError(422, { code: 'VALIDATION_ERROR', message: 'Idempotency-Key é obrigatória.' })
 
-    const parsed = CreateOrderRequest.safeParse(await request.json().catch(() => null))
-    if (!parsed.success) return apiError(422, { code: 'VALIDATION_ERROR', message: 'Pedido inválido.' })
+    const legacy = CreateOrderRequest.safeParse(raw)
+    if (!checkout.success && !legacy.success) return apiError(422, { code: 'VALIDATION_ERROR', message: 'Pedido inválido.' })
+    const body = checkout.success ? checkout.data : legacy.data!
 
-    const requestHash = await digest({ userId: session.userId, body: parsed.data })
+    const requestHash = await digest({ userId: session.userId, body })
     const existing = db.get().orders.find((o) => o.idempotencyKey === key && o.userId === session.userId)
     if (existing) {
       // Mesma tentativa → mesmo pedido. Mesma chave com outro conteúdo → conflito (API-03).
@@ -46,6 +54,9 @@ export const restHandlers = [
       }
       return HttpResponse.json(publicOrder(existing), { status: 200 })
     }
+
+    if (checkout.success) return createCheckoutOrder(session, checkout.data, { key, requestHash }, publicOrder)
+    const parsed = legacy as { success: true; data: CreateOrderRequest }
 
     const nfts = db.get().nfts
     const lines = []

@@ -1,0 +1,38 @@
+
+Running 34 tests using 4 workers
+
+[1/34] [desktop-chromium] › e2e\checkout.spec.ts:32:3 › fluxo principal › visitante: carrinho → login (merge) → pagamento → pedido pendente → confirmado pela rede simulada
+[2/34] [desktop-chromium] › e2e\checkout.spec.ts:106:3 › carteiras e redes › carteira Polygon usa a taxa da rede escolhida; rede compatível com o endereço
+[3/34] [desktop-chromium] › e2e\checkout.spec.ts:82:3 › fluxo principal › validação: dados do colecionador, carteira externa e conexão obrigatória
+[4/34] [desktop-chromium] › e2e\checkout.spec.ts:68:3 › fluxo principal › pagamento recusado: nada de confirmação, carrinho preservado e estoque reservado devolvido
+[5/34] [desktop-chromium] › e2e\checkout.spec.ts:124:3 › carteiras e redes › conexão recusada, nova tentativa, desconexão e troca de carteira desconectando
+[6/34] [desktop-chromium] › e2e\checkout.spec.ts:138:3 › consistência financeira em tempo real › preço muda durante a revisão: alerta antes → depois, compra bloqueada até aceitar; pedido com o novo valor
+[7/34] [desktop-chromium] › e2e\checkout.spec.ts:158:3 › consistência financeira em tempo real › mudança que o cliente não viu (socket offline): a API recusa a cotação antiga e exige nova confirmação
+[8/34] [desktop-chromium] › e2e\checkout.spec.ts:173:3 › consistência financeira em tempo real › estoque acaba durante a revisão: pagamento pede revisão do carrinho
+[9/34] [desktop-chromium] › e2e\checkout.spec.ts:186:3 › consistência financeira em tempo real › cotação expirada: a API recusa, a cotação é renovada com os mesmos valores e a compra é confirmada de novo
+[10/34] [desktop-chromium] › e2e\checkout.spec.ts:201:3 › idempotência e falhas (PEND-01, PEND-02) › cliques repetidos criam um único pedido
+[11/34] [desktop-chromium] › e2e\checkout.spec.ts:210:3 › idempotência e falhas (PEND-01, PEND-02) › API: mesma chave + mesmo conteúdo = mesmo pedido; mesma chave + conteúdo diferente = 409
+[12/34] [desktop-chromium] › e2e\checkout.spec.ts:233:3 › idempotência e falhas (PEND-01, PEND-02) › resposta perdida após a criação: retry com a mesma chave recupera o MESMO pedido
+[13/34] [desktop-chromium] › e2e\checkout.spec.ts:246:3 › idempotência e falhas (PEND-01, PEND-02) › timeout após a criação: retry com a mesma chave recupera o MESMO pedido
+[14/34] [desktop-chromium] › e2e\checkout.spec.ts:260:3 › idempotência e falhas (PEND-01, PEND-02) › falha antes de gravar: dados preservados, carrinho intacto, nova tentativa cria o pedido
+[15/34] [desktop-chromium] › e2e\checkout.spec.ts:276:3 › sessão e acesso › expiração ao confirmar: login com aviso, volta ao pagamento com o rascunho e nada é enviado sozinho
+[16/34] [desktop-chromium] › e2e\checkout.spec.ts:296:3 › sessão e acesso › pagamento exige login; pedido de outro usuário não aparece
+[17/34] [desktop-chromium] › e2e\checkout.spec.ts:304:3 › sessão e acesso › acessibilidade: axe sem violações; carteiras e provedores por teclado
+[18/34] [mobile-chromium] › e2e\checkout.spec.ts:32:3 › fluxo principal › visitante: carrinho → login (merge) → pagamento → pedido pendente → confirmado pela rede simulada
+[19/34] [mobile-chromium] › e2e\checkout.spec.ts:68:3 › fluxo principal › pagamento recusado: nada de confirmação, carrinho preservado e estoque reservado devolvido
+[20/34] [mobile-chromium] › e2e\checkout.spec.ts:82:3 › fluxo principal › validação: dados do colecionador, carteira externa e conexão obrigatória
+[21/34] [mobile-chromium] › e2e\checkout.spec.ts:124:3 › carteiras e redes › conexão recusada, nova tentativa, desconexão e troca de carteira desconectando
+[22/34] [mobile-chromium] › e2e\checkout.spec.ts:138:3 › consistência financeira em tempo real › preço muda durante a revisão: alerta antes → depois, compra bloqueada até aceitar; pedido com o novo valor
+[23/34] [mobile-chromium] › e2e\checkout.spec.ts:106:3 › carteiras e redes › carteira Polygon usa a taxa da rede escolhida; rede compatível com o endereço
+[24/34] [mobile-chromium] › e2e\checkout.spec.ts:158:3 › consistência financeira em tempo real › mudança que o cliente não viu (socket offline): a API recusa a cotação antiga e exige nova confirmação
+[25/34] [mobile-chromium] › e2e\checkout.spec.ts:173:3 › consistência financeira em tempo real › estoque acaba durante a revisão: pagamento pede revisão do carrinho
+[26/34] [mobile-chromium] › e2e\checkout.spec.ts:186:3 › consistência financeira em tempo real › cotação expirada: a API recusa, a cotação é renovada com os mesmos valores e a compra é confirmada de novo
+[27/34] [mobile-chromium] › e2e\checkout.spec.ts:201:3 › idempotência e falhas (PEND-01, PEND-02) › cliques repetidos criam um único pedido
+[28/34] [mobile-chromium] › e2e\checkout.spec.ts:210:3 › idempotência e falhas (PEND-01, PEND-02) › API: mesma chave + mesmo conteúdo = mesmo pedido; mesma chave + conteúdo diferente = 409
+[29/34] [mobile-chromium] › e2e\checkout.spec.ts:233:3 › idempotência e falhas (PEND-01, PEND-02) › resposta perdida após a criação: retry com a mesma chave recupera o MESMO pedido
+[30/34] [mobile-chromium] › e2e\checkout.spec.ts:246:3 › idempotência e falhas (PEND-01, PEND-02) › timeout após a criação: retry com a mesma chave recupera o MESMO pedido
+[31/34] [mobile-chromium] › e2e\checkout.spec.ts:260:3 › idempotência e falhas (PEND-01, PEND-02) › falha antes de gravar: dados preservados, carrinho intacto, nova tentativa cria o pedido
+[32/34] [mobile-chromium] › e2e\checkout.spec.ts:276:3 › sessão e acesso › expiração ao confirmar: login com aviso, volta ao pagamento com o rascunho e nada é enviado sozinho
+[33/34] [mobile-chromium] › e2e\checkout.spec.ts:296:3 › sessão e acesso › pagamento exige login; pedido de outro usuário não aparece
+[34/34] [mobile-chromium] › e2e\checkout.spec.ts:304:3 › sessão e acesso › acessibilidade: axe sem violações; carteiras e provedores por teclado
+  34 passed (1.7m)
