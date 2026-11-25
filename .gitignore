@@ -4,7 +4,6 @@ dist
 .env.local
 .env.*.local
 
-
 # Saídas de teste e auditoria. Os relatórios de entrega ficam versionados em planning/evidence/ (cópias explícitas).
 playwright-report
 test-results
@@ -19,3 +18,9 @@ Thumbs.db
 
 # Caches locais (navegadores do Playwright, temporários, logs)
 .cache
+
+# Vínculo local com o projeto da Vercel (CLI)
+.vercel
+
+.env*.local
+lighthouse-ci/

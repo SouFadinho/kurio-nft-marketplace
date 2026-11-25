@@ -23,7 +23,8 @@ import { chromium } from '@playwright/test'
 const PORT = 4173
 const ORIGIN = `http://localhost:${PORT}`
 const RUNS = Number(process.env.LH_RUNS ?? 3)
-const OUT = path.resolve('lighthouse')
+// CP9.1: LH_OUT permite gravar em outra pasta (ex.: execução independente na CI).
+const OUT = path.resolve(process.env.LH_OUT ?? 'lighthouse')
 const REPORTS = path.join(OUT, 'reports')
 const PAGES = [
   { name: 'inicio', path: '/' },
@@ -91,6 +92,10 @@ async function main() {
               lcpMs: lhr.audits['largest-contentful-paint']?.numericValue ?? null,
               cls: lhr.audits['cumulative-layout-shift']?.numericValue ?? null,
               tbtMs: lhr.audits['total-blocking-time']?.numericValue ?? null,
+              // CP9.1: índice de CPU medido pelo próprio Lighthouse em cada execução (comparabilidade
+              // entre máquinas e explicação de variação), e o método de throttling efetivo.
+              benchmarkIndex: Math.round(lhr.environment?.benchmarkIndex ?? 0),
+              throttlingMethod: lhr.configSettings?.throttlingMethod ?? null,
               lighthouseVersion: lhr.lighthouseVersion,
               userAgent: lhr.environment?.hostUserAgent,
             }
@@ -115,6 +120,7 @@ async function main() {
           medianLcpMs: median(rs.map((r) => r.lcpMs)),
           medianCls: median(rs.map((r) => r.cls)),
           medianTbtMs: median(rs.map((r) => r.tbtMs)),
+          medianBenchmarkIndex: median(rs.map((r) => r.benchmarkIndex)),
         })
       }
     }
@@ -124,6 +130,11 @@ async function main() {
       node: process.version,
       os: `${os.type()} ${os.release()} ${os.arch()}`,
       cpu: os.cpus()[0]?.model,
+      cpuCount: os.cpus().length,
+      totalMemoryGb: Math.round(os.totalmem() / 2 ** 30),
+      ci: process.env.CI === 'true',
+      runner: process.env.GITHUB_ACTIONS ? { os: process.env.RUNNER_OS, arch: process.env.RUNNER_ARCH, image: process.env.ImageOS, imageVersion: process.env.ImageVersion, sha: process.env.GITHUB_SHA, runId: process.env.GITHUB_RUN_ID } : null,
+      chromium: chromePath,
       lighthouse: results[0]?.lighthouseVersion,
       browser: results[0]?.userAgent,
       runsPerCombination: RUNS,
@@ -141,16 +152,25 @@ async function main() {
         : [`> **NÃO OFICIAL:** ${RUNS} medição(ões) por combinação. A auditoria de entrega exige 3 (CHALLENGE §10).`, '']),
       `Gerado em ${env.date}. Node ${env.node} · ${env.os} · Lighthouse ${env.lighthouse}.`,
       `Navegador: ${env.browser}.`,
+      `Hardware: ${env.cpu} (${env.cpuCount} núcleos lógicos), ${env.totalMemoryGb} GB${env.runner ? ` · GitHub Actions ${env.runner.os}/${env.runner.arch} ${env.runner.image ?? ''} ${env.runner.imageVersion ?? ''} · commit ${env.runner.sha?.slice(0, 7)} · run ${env.runner.runId}` : ' · máquina local'}.`,
       `Medições por página e perfil: ${RUNS}. Valores = mediana. Metas: Perf ≥ 90, A11y ≥ 95, BP ≥ 95, SEO ≥ 90.`,
       '',
-      '| Página | Perfil | Performance | Accessibility | Best Practices | SEO | LCP (ms) | CLS | TBT (ms) |',
-      '|---|---|---|---|---|---|---|---|---|',
+      '| Página | Perfil | Performance | Accessibility | Best Practices | SEO | LCP (ms) | CLS | TBT (ms) | Índice de CPU |',
+      '|---|---|---|---|---|---|---|---|---|---|',
       ...groups.map(
         (g) =>
-          `| ${g.page} | ${g.profile} | ${ok('performance', g.median.performance)} | ${ok('accessibility', g.median.accessibility)} | ${ok('best-practices', g.median['best-practices'])} | ${ok('seo', g.median.seo)} | ${Math.round(g.medianLcpMs)} | ${g.medianCls.toFixed(3)} | ${Math.round(g.medianTbtMs)} |`,
+          `| ${g.page} | ${g.profile} | ${ok('performance', g.median.performance)} | ${ok('accessibility', g.median.accessibility)} | ${ok('best-practices', g.median['best-practices'])} | ${ok('seo', g.median.seo)} | ${Math.round(g.medianLcpMs)} | ${g.medianCls.toFixed(3)} | ${Math.round(g.medianTbtMs)} | ${g.medianBenchmarkIndex} |`,
       ),
       '',
-      'Relatórios individuais em `lighthouse/reports/`.',
+      '### Todas as execuções',
+      '',
+      '| Página | Perfil | Execução | Performance | Accessibility | Best Practices | SEO | LCP (ms) | CLS | TBT (ms) | Índice de CPU |',
+      '|---|---|---|---|---|---|---|---|---|---|---|',
+      ...results.map(
+        (r) => `| ${r.page} | ${r.profile} | ${r.run} | ${r.scores.performance} | ${r.scores.accessibility} | ${r.scores['best-practices']} | ${r.scores.seo} | ${Math.round(r.lcpMs)} | ${r.cls.toFixed(3)} | ${Math.round(r.tbtMs)} | ${r.benchmarkIndex} |`,
+      ),
+      '',
+      `Relatórios individuais em \`${path.relative(process.cwd(), REPORTS).replaceAll('\\', '/')}/\`.`,
     ].join('\n')
     await writeFile(path.join(OUT, 'summary.md'), md)
     console.log(`\n${md}`)

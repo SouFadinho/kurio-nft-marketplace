@@ -107,6 +107,11 @@ test.describe('consistência entre abas', () => {
     const other = await secondTab(context)
     // Pré-condição explícita (CP8: o socket é carregado sob demanda): a outra aba já conectada.
     await expect.poll(async () => (await mock(other).connections()).filter((c) => c.state === 'anonymous').length).toBe(1)
+    // Pré-condição (CP9.1, CI Linux): a outra aba já mostra o dado antigo e a rede assentou (carga
+    // inicial e reconciliação pós-conexão concluídas); senão ela busca o preço novo pelo REST, o que é
+    // correto, mas não é o cenário deste teste (evento perdido enquanto desconectada).
+    await expect(price(other, 'nft-002')).toHaveText('1.69 ETH')
+    await other.waitForLoadState('networkidle')
     await mock(other).setOnline(false) // só o transporte da outra aba
     await mock(page).updateNft('nft-002', { price: '3.10' })
     await expect(price(page, 'nft-002')).toHaveText('3.10 ETH')

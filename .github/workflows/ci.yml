@@ -1,8 +1,9 @@
-# CI do KURIO (CP7, revisado no CP9). Preparado; ainda NÃO executado no GitHub
-# (repositório sem remoto até a autorização de publicação). Não declarar aprovado antes de rodar.
+# CI do KURIO (CP7, revisado no CP9 e no CP9.1). Executado no GitHub Actions a partir do CP9.1;
+# resultados registrados em planning/CP9_1_REPORT.md.
 #
 # Jobs:
 # - quality: typecheck, lint, build, verificação do build público, unitários e E2E.
+# - lighthouse: auditoria independente (push na main e manual), relatórios como artefato.
 # - visual-baselines-linux (manual): gera as baselines visuais Linux no container oficial do
 #   Playwright e as publica como artefato para REVISÃO. Nada é commitado automaticamente:
 #   as imagens são inspecionadas e versionadas por uma pessoa.
@@ -110,3 +111,49 @@ jobs:
           path: e2e/visual.spec.ts-snapshots/*-linux.png
           if-no-files-found: error
           retention-days: 30
+
+  lighthouse:
+    # CP9.1: execução INDEPENDENTE da auditoria, em outra máquina (runner do GitHub). Mesmo script
+    # oficial (scripts/lighthouse.mjs: build de produção + vite preview + MSW ativo + configuração
+    # padrão do Lighthouse, 3 execuções por página e perfil), mesmas versões (lockfile, Node do
+    # .nvmrc, Chromium do Playwright do lockfile). O hardware é outro: cada execução registra o
+    # índice de CPU do Lighthouse, e o resumo registra CPU, memória e imagem do runner. Os
+    # relatórios ficam como artefato; nada substitui as medições locais.
+    name: Lighthouse independente (3 execuções por página e perfil)
+    if: ${{ github.event_name == 'workflow_dispatch' || github.ref == 'refs/heads/main' }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    env:
+      CI: 'true'
+      LH_OUT: lighthouse-ci
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - name: Instalar dependências (lockfile)
+        run: npm ci
+
+      - name: Instalar o Chromium do Playwright (mesmo navegador da auditoria local)
+        run: npx playwright install --with-deps chromium
+
+      - name: Hardware do runner
+        run: |
+          nproc
+          lscpu | grep -E 'Model name|^CPU\(s\)|Thread|Core'
+          free -h
+
+      - name: Auditoria Lighthouse (12 execuções, sequenciais)
+        run: npm run audit:lighthouse
+
+      - name: Publicar relatórios (HTML, JSON e resumo)
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: lighthouse-ci-${{ github.sha }}
+          path: lighthouse-ci/
+          if-no-files-found: error
+          retention-days: 90

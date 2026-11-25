@@ -134,7 +134,8 @@ export function CouponForm({ cart, className }: { cart: Cart; className?: string
     <form onSubmit={onSubmit} noValidate className={cn('flex flex-col gap-1.5', className)} aria-label="Cupom de desconto">
       {/* Figma: no desktop, rótulo visível + campo e botão retos; no mobile, pílula sem rótulo
           visível (o rótulo continua associado para leitores de tela). Placeholder do Figma inteiro,
-          sem corte, de 360 a 1440 px (layout.responsive); abaixo de 375 px a pílula empilha. */}
+          sem corte, de 360 a 1440 px (layout.responsive); abaixo de 375 px a pílula empilha. CP9.1: px-2 no
+          mobile; no Linux (CI) a fonte rende 1 px mais larga e o texto ficava 1 px maior que o espaço. */}
       <label htmlFor={inputId} className="sr-only text-caption font-semibold lg:not-sr-only">
         Código promocional
       </label>
@@ -148,7 +149,7 @@ export function CouponForm({ cart, className }: { cart: Cart; className?: string
           placeholder="Digite o código promocional…"
           aria-invalid={error ? true : undefined}
           aria-describedby={error ? 'coupon-error' : undefined}
-          className="h-10 min-w-0 rounded-full border-transparent bg-transparent px-2.5 text-caption placeholder:text-[0.6875rem] lg:h-10 lg:rounded-xs lg:rounded-r-none lg:border-input lg:px-2.5"
+          className="h-10 min-w-0 rounded-full border-transparent bg-transparent px-2 text-caption placeholder:text-[0.6875rem] lg:h-10 lg:rounded-xs lg:rounded-r-none lg:border-input lg:px-2.5"
         />
         <Button type="submit" size="sm" disabled={apply.isPending} className="h-10 shrink-0 rounded-full bg-primary-gradient px-3 lg:rounded-xs lg:rounded-l-none lg:bg-primary lg:bg-none lg:px-3.5">
           {apply.isPending ? 'Aplicando…' : 'Aplicar'}
