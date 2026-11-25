@@ -6,7 +6,7 @@ SPA em React + TypeScript que implementa o marketplace de NFTs do Figma do desaf
 
 - **Aplicação publicada:** https://kurio-nft-marketplace-flax.vercel.app (Vercel, deploy a cada push na `main`).
 - **Repositório:** https://github.com/SouFadinho/kurio-nft-marketplace · CI: GitHub Actions (`.github/workflows/ci.yml`).
-- **Documentação:** [ARCHITECTURE.md](ARCHITECTURE.md) (arquitetura, decisões, limitações e desvios do Figma) · [planning/API_CONTRACTS.md](planning/API_CONTRACTS.md) (contratos REST e eventos) · [planning/REQUIREMENTS_MATRIX.md](planning/REQUIREMENTS_MATRIX.md) (requisito → teste → evidência) · [planning/CP9_1_REPORT.md](planning/CP9_1_REPORT.md) (publicação, CI e resultados finais).
+- **Documentação:** [ARCHITECTURE.md](ARCHITECTURE.md) (arquitetura, decisões, limitações e desvios do Figma) · [planning/API_CONTRACTS.md](planning/API_CONTRACTS.md) (contratos REST e eventos) · [planning/REQUIREMENTS_MATRIX.md](planning/REQUIREMENTS_MATRIX.md) (requisito → teste → evidência) · [planning/CP9_1_REPORT.md](planning/CP9_1_REPORT.md) (publicação, CI e resultados) · [planning/CP10_REPORT.md](planning/CP10_REPORT.md) (auditoria final).
 
 ## Telas
 
