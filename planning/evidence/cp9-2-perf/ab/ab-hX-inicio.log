@@ -1,0 +1,18 @@
+A {"perf":60,"tbt":3086,"lcp":3587,"fcp":1038,"cls":0,"bench":2190}
+B {"perf":81,"tbt":466,"lcp":3230,"fcp":953,"cls":0,"bench":2147}
+B {"perf":93,"tbt":108,"lcp":3193,"fcp":929,"cls":0,"bench":1987}
+A {"perf":91,"tbt":187,"lcp":3193,"fcp":929,"cls":0,"bench":2121}
+A {"perf":90,"tbt":190,"lcp":3210,"fcp":930,"cls":0,"bench":2043}
+B {"perf":92,"tbt":139,"lcp":3213,"fcp":931,"cls":0,"bench":2138}
+B {"perf":92,"tbt":138,"lcp":3192,"fcp":928,"cls":0,"bench":2034}
+A {"perf":93,"tbt":83,"lcp":3190,"fcp":927,"cls":0,"bench":2221}
+A {"perf":91,"tbt":149,"lcp":3194,"fcp":929,"cls":0,"bench":1959}
+B {"perf":93,"tbt":82,"lcp":3200,"fcp":925,"cls":0,"bench":2165}
+B {"perf":93,"tbt":88,"lcp":3184,"fcp":923,"cls":0,"bench":2135}
+A {"perf":91,"tbt":179,"lcp":3190,"fcp":927,"cls":0,"bench":1989}
+A {"perf":92,"tbt":132,"lcp":3212,"fcp":931,"cls":0,"bench":1951}
+B {"perf":90,"tbt":188,"lcp":3195,"fcp":930,"cls":0,"bench":2100}
+B {"perf":70,"tbt":1187,"lcp":3167,"fcp":946,"cls":0,"bench":1656}
+A {"perf":85,"tbt":374,"lcp":3124,"fcp":925,"cls":0,"bench":1837}
+A: mediana perf 91 · TBT 183 · LCP 3193.5 · FCP 929 · CLS máx 0.000
+B: mediana perf 92 · TBT 138.5 · LCP 3194 · FCP 929.5 · CLS máx 0.000

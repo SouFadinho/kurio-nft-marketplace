@@ -1,0 +1,9 @@
+OK   /demo → h1 "Página não encontrada"
+OK   /demo/poc → h1 "Página não encontrada"
+OK   /demo/componentes → h1 "Página não encontrada"
+OK   /mercado → HTTP 200 (deep link)
+OK   /nft/nft-001 → HTTP 200 (deep link)
+OK   /login → HTTP 200 (deep link)
+OK   /perfil → HTTP 200 (deep link)
+OK   /pedidos → HTTP 200 (deep link)
+OK   nenhum chunk demo.* requisitado

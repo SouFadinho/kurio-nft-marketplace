@@ -1,0 +1,116 @@
+2026-11-25 14:23:14
+6ed77c2 CP9.2: suíte completa final (rodada 3): 478 passed, 0 failed, 9 skipped
+
+> kurio-nft-marketplace@0.1.0 audit:lighthouse
+> node scripts/lighthouse.mjs
+
+
+> kurio-nft-marketplace@0.1.0 build
+> tsc -b && vite build
+
+[36mvite v8.3.8 [32mbuilding client environment for production...[36m[39m
+transforming...
+✓ 2953 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                                                    1.87 kB │ gzip:  0.81 kB
+dist/assets/roboto-mono-vietnamese-wght-normal-DlC-zuDL.woff2     10.30 kB
+dist/assets/roboto-mono-greek-wght-normal-BJJTbwTT.woff2          14.04 kB
+dist/assets/roboto-mono-cyrillic-wght-normal-HUlVHixE.woff2       18.59 kB
+dist/assets/roboto-mono-latin-ext-wght-normal-QAYlOegK.woff2      22.91 kB
+dist/assets/roboto-mono-latin-wght-normal-CZtBPCCa.woff2          32.79 kB
+dist/assets/roboto-mono-cyrillic-ext-wght-normal-BUDPrIko.woff2   35.91 kB
+dist/assets/index-DhTPcWIw.css                                    78.79 kB │ gzip: 15.38 kB
+dist/assets/perfil-CedMxCOm.js                                     0.07 kB │ gzip:  0.08 kB
+dist/assets/dist-D8Wfxh48.js                                       0.15 kB │ gzip:  0.15 kB
+dist/assets/demo.poc.nft._nftId-BRij2Epc.js                        0.16 kB │ gzip:  0.16 kB
+dist/assets/pedidos._orderId-Dpgh6j0Z.js                           0.22 kB │ gzip:  0.18 kB
+dist/assets/cadastro-CFc1u5qp.js                                   0.24 kB │ gzip:  0.19 kB
+dist/assets/aprenda-BV6wwV5R.js                                    0.27 kB │ gzip:  0.23 kB
+dist/assets/login-BnXSbszb.js                                      0.27 kB │ gzip:  0.21 kB
+dist/assets/criadores-DMcb61Sh.js                                  0.29 kB │ gzip:  0.24 kB
+dist/assets/demo.poc.nft._nftId-DjPQ1HN3.js                        0.37 kB │ gzip:  0.28 kB
+dist/assets/GalleryZoom-dFqtCWoa.js                                0.64 kB │ gzip:  0.39 kB
+dist/assets/demo-JM5cWdSK.js                                       0.66 kB │ gzip:  0.44 kB
+dist/assets/rolldown-runtime-XKyaHtl9.js                           0.72 kB │ gzip:  0.42 kB
+dist/assets/demo.index-BP1Oanut.js                                 0.79 kB │ gzip:  0.38 kB
+dist/assets/actions-vWkanPNd.js                                    0.82 kB │ gzip:  0.49 kB
+dist/assets/SortSelect-Dj3qy-Hk.js                                 0.86 kB │ gzip:  0.51 kB
+dist/assets/demo.poc.nft._nftId-D7nkxTn3.js                        0.89 kB │ gzip:  0.47 kB
+dist/assets/sonner-Bcqo2uBq.js                                     1.04 kB │ gzip:  0.59 kB
+dist/assets/FiltersDrawer-BULvPhCK.js                              1.15 kB │ gzip:  0.61 kB
+dist/assets/favoritos-BubQ8tPB.js                                  1.21 kB │ gzip:  0.71 kB
+dist/assets/index-Ckre-3pv.js                                      1.55 kB │ gzip:  0.81 kB
+dist/assets/CheckoutLayout-BQ5CLuaG.js                             1.62 kB │ gzip:  0.76 kB
+dist/assets/demo.conta-CsHWeI2_.js                                 1.80 kB │ gzip:  0.77 kB
+dist/assets/demo.poc-DGQhtAj4.js                                   1.83 kB │ gzip:  0.86 kB
+dist/assets/demo.poc.pedidos._orderId-B_xthgaz.js                  1.87 kB │ gzip:  0.90 kB
+dist/assets/WalletCard-oFGuX3ll.js                                 2.00 kB │ gzip:  0.94 kB
+dist/assets/home-USzbsivs.js                                       2.30 kB │ gzip:  1.04 kB
+dist/assets/dialog-CpM3hTGu.js                                     2.36 kB │ gzip:  0.91 kB
+dist/assets/pedidos.index-CLnZ0Pxy.js                              2.41 kB │ gzip:  1.10 kB
+dist/assets/FiltersPanel-DnIlZT6j.js                               2.54 kB │ gzip:  1.19 kB
+dist/assets/AccountLayout-qRRAE3mA.js                              2.56 kB │ gzip:  1.14 kB
+dist/assets/demo.poc.index-COVgiEnN.js                             2.80 kB │ gzip:  1.19 kB
+dist/assets/explorador.tx._hash-DRU-885R.js                        2.82 kB │ gzip:  1.17 kB
+dist/assets/demo.checkout-CLDvxEE6.js                              2.91 kB │ gzip:  1.21 kB
+dist/assets/dist-CphC-bJ0.js                                       3.27 kB │ gzip:  1.38 kB
+dist/assets/tabs-DDve8LYG.js                                       3.84 kB │ gzip:  1.67 kB
+dist/assets/dist-C1zmvNUY.js                                       4.39 kB │ gzip:  1.81 kB
+dist/assets/QuoteSummary-z1h-eTfq.js                               4.90 kB │ gzip:  1.91 kB
+dist/assets/dist-BJyER1oZ.js                                       5.32 kB │ gzip:  1.96 kB
+dist/assets/perfil.carteiras-C_LL9Br-.js                           7.16 kB │ gzip:  2.56 kB
+dist/assets/perfil.index-XhQdrAcN.js                               7.33 kB │ gzip:  2.64 kB
+dist/assets/carrinho-DJqnYDl5.js                                   7.62 kB │ gzip:  2.85 kB
+dist/assets/OrderStatusPage-C6LKY7PZ.js                            8.14 kB │ gzip:  2.62 kB
+dist/assets/AuthScreen-pt038rg2.js                                 8.39 kB │ gzip:  3.08 kB
+dist/assets/dist-BwGBURZg.js                                       9.33 kB │ gzip:  3.29 kB
+dist/assets/dist-B1ISvTOT.js                                       9.71 kB │ gzip:  3.60 kB
+dist/assets/esm-B6DvIUmM.js                                       10.52 kB │ gzip:  3.82 kB
+dist/assets/slider-DpydAcsW.js                                    11.36 kB │ gzip:  4.47 kB
+dist/assets/catalog-BVIIo3GE.js                                   16.95 kB │ gzip:  5.54 kB
+dist/assets/ui-DqMSZSjW.js                                        17.13 kB │ gzip:  6.52 kB
+dist/assets/detail-M7fZqu8D.js                                    17.32 kB │ gzip:  5.67 kB
+dist/assets/pagamento-DBq35psD.js                                 17.69 kB │ gzip:  6.05 kB
+dist/assets/kit-DlzMli9Y.js                                       19.17 kB │ gzip:  6.10 kB
+dist/assets/es2015-C-a-LJ_3.js                                    23.25 kB │ gzip:  8.35 kB
+dist/assets/esm-CYb1mJY5.js                                       30.77 kB │ gzip:  9.56 kB
+dist/assets/app-CsGgoOCM.js                                       31.07 kB │ gzip: 11.29 kB
+dist/assets/drawer-CRhB-pmM.js                                    31.48 kB │ gzip:  9.28 kB
+dist/assets/App-DRqfTzC9.js                                       32.93 kB │ gzip: 10.27 kB
+dist/assets/dist-CSeBfMBe.js                                      33.88 kB │ gzip:  9.40 kB
+dist/assets/demo.componentes-BaW64mwi.js                          38.75 kB │ gzip: 12.09 kB
+dist/assets/select-CuAfFoX8.js                                    49.95 kB │ gzip: 17.48 kB
+dist/assets/browser-Dpncwt_x.js                                  201.53 kB │ gzip: 58.52 kB
+dist/assets/react-C1iE8mnY.js                                    218.75 kB │ gzip: 68.27 kB
+dist/assets/vendor-BwIPlYHb.js                                   291.66 kB │ gzip: 92.58 kB
+
+[32m✓ built in 1.59s[39m
+inicio-mobile-1: performance=60 accessibility=100 best-practices=96 seo=92
+inicio-mobile-2: performance=91 accessibility=100 best-practices=96 seo=92
+inicio-mobile-3: performance=76 accessibility=100 best-practices=96 seo=92
+inicio-desktop-1: performance=98 accessibility=100 best-practices=96 seo=92
+inicio-desktop-2: performance=98 accessibility=100 best-practices=96 seo=92
+inicio-desktop-3: performance=97 accessibility=100 best-practices=96 seo=92
+detalhe-mobile-1: performance=91 accessibility=100 best-practices=96 seo=92
+detalhe-mobile-2: performance=89 accessibility=100 best-practices=96 seo=92
+detalhe-mobile-3: performance=85 accessibility=100 best-practices=96 seo=92
+detalhe-desktop-1: performance=100 accessibility=100 best-practices=96 seo=92
+detalhe-desktop-2: performance=100 accessibility=100 best-practices=96 seo=92
+detalhe-desktop-3: performance=100 accessibility=100 best-practices=96 seo=92
+
+# Lighthouse — resumo
+
+Gerado em 2026-11-25T17:26:05.324Z. Node v26.13.1 · Windows_NT 10.0.26300 x64 · Lighthouse 13.6.0.
+Navegador: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/159.0.0.0 Safari/537.36.
+Medições por página e perfil: 3. Valores = mediana. Metas: Perf ≥ 90, A11y ≥ 95, BP ≥ 95, SEO ≥ 90.
+
+| Página | Perfil | Performance | Accessibility | Best Practices | SEO | LCP (ms) | CLS | TBT (ms) |
+|---|---|---|---|---|---|---|---|---|
+| inicio | mobile | **76** ⚠ | 100 | 96 | 92 | 3206 | 0.000 | 731 |
+| inicio | desktop | 98 | 100 | 96 | 92 | 1156 | 0.000 | 0 |
+| detalhe | mobile | **89** ⚠ | 100 | 96 | 92 | 3182 | 0.000 | 241 |
+| detalhe | desktop | 100 | 100 | 96 | 92 | 690 | 0.000 | 0 |
+
+Relatórios individuais em `lighthouse/reports/`.
+2026-11-25 14:26:06
