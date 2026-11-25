@@ -27,10 +27,16 @@ declare module '@tanstack/react-router' {
 }
 
 export function AppShell({ children }: { children: ReactNode }) {
-  const matches = useMatches()
-  const hideBottomNav = matches.some((m) => m.staticData?.hideBottomNav)
-  const minimal = matches.some((m) => m.staticData?.chrome === 'minimal')
-  const mobileMinimal = matches.some((m) => m.staticData?.mobileChrome === 'minimal')
+  // CP9.2 (performance medida): seleciona só as 3 flags como um valor primitivo. Sem `select`, toda
+  // mudança de estado do Router (carregando, loader resolvido...) re-renderizava o shell inteiro
+  // (header, navegação e rodapé) durante a abertura de cada tela.
+  const flags = useMatches({
+    select: (matches) =>
+      [matches.some((m) => m.staticData?.hideBottomNav), matches.some((m) => m.staticData?.chrome === 'minimal'), matches.some((m) => m.staticData?.mobileChrome === 'minimal')]
+        .map(Number)
+        .join(''),
+  })
+  const [hideBottomNav, minimal, mobileMinimal] = [...flags].map((f) => f === '1')
   // Badge do carrinho (CP5): quantidade total vinda do carrinho da API.
   const cartCount = useCartCount()
 

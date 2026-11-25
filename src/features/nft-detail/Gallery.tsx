@@ -18,7 +18,7 @@ import { cn } from '@/lib/utils'
 const loadZoom = () => import('./GalleryZoom')
 const GalleryZoom = lazy(loadZoom)
 
-export function Gallery({ nft }: { nft: NftDetail }) {
+export function Gallery({ nft, onMainImageSettled }: { nft: NftDetail; onMainImageSettled?: () => void }) {
   const [index, setIndex] = useState(0)
   const image = nft.gallery[index] ?? nft.gallery[0]!
   const desktop = useMediaQuery(DESKTOP_QUERY)
@@ -49,7 +49,7 @@ export function Gallery({ nft }: { nft: NftDetail }) {
         </ul>
         <div className="relative aspect-square overflow-hidden rounded-lg bg-surface p-2">
           <div className="size-full overflow-hidden rounded-md bg-surface-2">
-            <NftImage src={image.src} alt={image.alt} priority />
+            <NftImage src={image.src} alt={image.alt} priority onSettled={onMainImageSettled} />
           </div>
           <button
             ref={zoomButton}
@@ -83,7 +83,7 @@ export function Gallery({ nft }: { nft: NftDetail }) {
       {/* ---------- Mobile / tablet ---------- */}
       {/* Figma: imagem com margens laterais e cantos arredondados (não em largura total). */}
       <div className="relative aspect-square overflow-hidden rounded-2xl bg-surface-2 md:mx-auto md:w-full md:max-w-xl lg:hidden">
-        <NftImage src={image.src} alt={image.alt} priority />
+        <NftImage src={image.src} alt={image.alt} priority onSettled={onMainImageSettled} />
         {nft.gallery.length > 1 && (
           <div role="group" aria-label="Imagens do NFT" className="absolute inset-x-0 bottom-8 flex justify-center gap-1">
             {nft.gallery.map((g, i) => (

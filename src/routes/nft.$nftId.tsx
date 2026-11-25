@@ -6,6 +6,7 @@
  * - A edição escolhida fica na URL (`?edicao=`): o link é compartilhável e sobrevive a refresh.
  * - Mobile: sem navegação inferior; a tela tem a própria barra de compra (Figma).
  */
+import { startTransition, useEffect, useState } from 'react'
 import { createFileRoute, Link, notFound, useRouter } from '@tanstack/react-router'
 import { z } from 'zod'
 import { ApiError } from '@/api/http'
@@ -55,6 +56,13 @@ function DetailRoute() {
   const { nftId } = Route.useParams()
   const { edicao } = Route.useSearch()
   const navigate = Route.useNavigate()
+  // CP9.2 (performance medida): a página do detalhe é renderizada numa transição do React. O Router
+  // atualiza a rota de forma síncrona; sem a transição, a página inteira renderizava num bloco
+  // único de ~65 ms de JS (tarefa longa). Na transição, o React fatia a renderização e mostra o
+  // skeleton (mesmas dimensões) até concluir.
+  const [ready, setReady] = useState(false)
+  useEffect(() => startTransition(() => setReady(true)), [])
+  if (!ready) return <DetailSkeleton />
   return (
     <NftDetailPage
       nftId={nftId}

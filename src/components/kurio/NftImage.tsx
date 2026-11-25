@@ -4,6 +4,8 @@
  * - Falha de carregamento: troca por um painel "Imagem indisponível" do mesmo tamanho,
  *   anunciado com o texto alternativo (o conteúdo continua compreensível).
  * - `priority`: primeira dobra/LCP (eager + fetchpriority alta); demais em lazy loading.
+ * - `onSettled`: chamado quando a imagem termina (carregou ou falhou). CP9.2: o detalhe usa para
+ *   montar as seções secundárias só depois da imagem principal.
  */
 import { ImageOff } from 'lucide-react'
 import { useState } from 'react'
@@ -15,12 +17,14 @@ export function NftImage({
   priority = false,
   size = 512,
   className,
+  onSettled,
 }: {
   src: string
   alt: string
   priority?: boolean
   size?: number
   className?: string
+  onSettled?: () => void
 }) {
   const [failedSrc, setFailedSrc] = useState<string | null>(null)
   if (failedSrc === src) {
@@ -42,7 +46,11 @@ export function NftImage({
       loading={priority ? 'eager' : 'lazy'}
       fetchPriority={priority ? 'high' : 'auto'}
       decoding={priority ? 'sync' : 'async'}
-      onError={() => setFailedSrc(src)}
+      onLoad={onSettled}
+      onError={() => {
+        setFailedSrc(src)
+        onSettled?.()
+      }}
       className={cn('size-full object-cover', className)}
     />
   )

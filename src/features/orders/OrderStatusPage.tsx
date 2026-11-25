@@ -29,8 +29,9 @@ import { cn } from '@/lib/utils'
 import { useOrder } from './queries'
 
 /** Datas no fuso de Brasília (produto brasileiro; determinístico nos testes). */
-export const formatDateTime = (iso: string) =>
-  new Intl.DateTimeFormat('pt-BR', { dateStyle: 'short', timeStyle: 'short', timeZone: 'America/Sao_Paulo' }).format(new Date(iso))
+// Formatador único (CP9.2): criar um Intl.DateTimeFormat por chamada é caro.
+const dateTimeFormat = new Intl.DateTimeFormat('pt-BR', { dateStyle: 'short', timeStyle: 'short', timeZone: 'America/Sao_Paulo' })
+export const formatDateTime = (iso: string) => dateTimeFormat.format(new Date(iso))
 
 export function statusView(order: Order) {
   if (order.status === 'confirmed') return { icon: CheckCircle2, title: 'Compra confirmada', text: 'A rede (simulada) confirmou o pagamento. Este é o seu recibo.', tone: 'text-success', panel: 'bg-success-surface border-success/40', label: 'Confirmado' }

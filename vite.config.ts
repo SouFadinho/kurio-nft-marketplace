@@ -69,6 +69,9 @@ function preloadRouteChunks(routes: Array<{ pattern: string; chunk: string }>): 
         }
         const table = routes.map((r) => [r.pattern, closure(r.chunk)])
         const code = `(function(){var p=location.pathname,t=${JSON.stringify(table)};for(var i=0;i<t.length;i++){if(new RegExp(t[i][0]).test(p)){for(var j=0;j<t[i][1].length;j++){var l=document.createElement('link');l.rel='modulepreload';l.crossOrigin='';l.href=t[i][1][j];document.head.appendChild(l)}break}}})()`
+        // No fim do <body>: os modulepreload do núcleo (React, vendor, MSW), no <head>, entram na
+        // fila de conexões primeiro; os da rota vêm logo depois (medido: no <head>, eles ocupavam
+        // as 6 conexões simuladas e atrasavam o vendor em ~460 ms).
         return [{ tag: 'script', children: code, injectTo: 'head' as const }]
       },
     },
@@ -91,9 +94,10 @@ export default defineConfig({
   resolve: {
     alias: [
       { find: '@', replacement: path.resolve(import.meta.dirname, './src') },
-      // CP9.2: a Public Suffix List do `tldts` (251 kB, só para o cookie jar emulado do MSW, que o
-      // KURIO não usa) sai do chunk do MSW. Justificativa e limites em src/mocks/vendor/tldts-lite.ts.
-      { find: /^tldts$/, replacement: path.resolve(import.meta.dirname, './src/mocks/vendor/tldts-lite.ts') },
+      // CP9.2: o cookie jar emulado do MSW (tough-cookie + Public Suffix List do tldts, 277 kB e
+      // trabalho em toda requisição simulada) é trocado por um substituto mínimo; o KURIO não usa
+      // cookies. Justificativa, API coberta e limites em src/mocks/vendor/tough-cookie-lite.ts.
+      { find: /^tough-cookie$/, replacement: path.resolve(import.meta.dirname, './src/mocks/vendor/tough-cookie-lite.ts') },
     ],
   },
   build: {
@@ -108,11 +112,11 @@ export default defineConfig({
           groups: [
             { name: 'react', test: /node_modules[\\/](react|react-dom|scheduler)[\\/]/ },
             { name: 'vendor', test: /node_modules[\\/](@tanstack|axios|zod|sonner|tailwind-merge|clsx|class-variance-authority)[\\/]/ },
-            // Primitivos do Radix usados pelo Tooltip e pelo Button do App (os de diálogos e
-            // drawers, carregados sob demanda, ficam de fora), floating-ui e os ícones.
+            // Slot do Radix (Button e Badge, usados no shell) e os ícones. Os demais primitivos
+            // (Tooltip, diálogos, drawers, Select…) ficam com os componentes que os usam, sob demanda.
             {
               name: 'ui',
-              test: /node_modules[\\/](@radix-ui[\\/](primitive|react-(slot|compose-refs|primitive|presence|context|use-[a-z-]+|popper|portal|dismissable-layer|visually-hidden|arrow|id|tooltip))|@floating-ui|lucide-react)[\\/]/,
+              test: /node_modules[\\/](@radix-ui[\\/]react-(slot|compose-refs)|lucide-react)[\\/]/,
             },
             // Código compartilhado da inicialização: contratos, cliente HTTP, chaves, consultas,
             // sessão e componentes básicos (antes: ~10 chunks de 0,2–3 kB).

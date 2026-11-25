@@ -1,9 +1,10 @@
 /** Avaliação em estrelas (Figma: "★★★★★ 19 avaliações de colecionadores"). Texto alternativo completo. */
 import { Star } from 'lucide-react'
+import { formatRating } from '@/lib/rating'
 import { cn } from '@/lib/utils'
 
 export function RatingStars({ rating, count, className, compact = false }: { rating: number; count: number; className?: string; compact?: boolean }) {
-  const label = `Avaliação ${rating.toLocaleString('pt-BR', { minimumFractionDigits: 1 })} de 5, ${count} avaliações de colecionadores`
+  const label = `Avaliação ${formatRating(rating)} de 5, ${count} avaliações de colecionadores`
   if (compact) {
     return (
       <span className={cn('inline-flex items-center gap-1 rounded-full border border-primary px-2.5 py-1 text-caption font-semibold', className)} aria-label={label} role="img">

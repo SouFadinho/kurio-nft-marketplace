@@ -21,7 +21,7 @@ import { RadioGroup } from '@/components/ui/radio-group'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { Slider } from '@/components/ui/slider'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
-import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip'
 import { Container } from '@/components/kurio/basics'
 import { NetworkBadge } from '@/components/kurio/NetworkBadge'
 import { NFTCard } from '@/components/kurio/NFTCard'
@@ -97,6 +97,7 @@ function ComponentGallery() {
     })
 
   return (
+    <TooltipProvider delayDuration={300}>
     <>
       <MobileTopBar title="Design system" />
       <Container className="pb-12">
@@ -380,5 +381,6 @@ function ComponentGallery() {
         </Block>
       </Container>
     </>
+    </TooltipProvider>
   )
 }

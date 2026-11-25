@@ -4,7 +4,6 @@ import { routeTree } from '@/routeTree.gen'
 import { RealtimeProvider } from '@/realtime/RealtimeProvider'
 import { ApiError } from '@/api/http'
 import { Toaster } from '@/components/ui/sonner'
-import { TooltipProvider } from '@/components/ui/tooltip'
 
 /**
  * Política de cache (INT-12, versão inicial):
@@ -41,12 +40,12 @@ declare module '@tanstack/react-router' {
 export function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <TooltipProvider delayDuration={300}>
-        <RealtimeProvider>
-          <RouterProvider router={router} />
-        </RealtimeProvider>
-        <Toaster />
-      </TooltipProvider>
+      {/* CP9.2: o TooltipProvider (Radix Tooltip + floating-ui) só é usado na galeria interna de
+          componentes e foi movido para lá; antes, entrava no carregamento inicial de todas as telas. */}
+      <RealtimeProvider>
+        <RouterProvider router={router} />
+      </RealtimeProvider>
+      <Toaster />
     </QueryClientProvider>
   )
 }

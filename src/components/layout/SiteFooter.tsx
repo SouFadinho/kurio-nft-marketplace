@@ -14,11 +14,12 @@
  * backend no escopo: valida o e-mail e informa que está indisponível, sem fingir inscrição.
  */
 import { Link } from '@tanstack/react-router'
-import { useId, useState, type FormEvent } from 'react'
+import { memo, useId, useState, type FormEvent } from 'react'
 import { toast } from 'sonner'
 import { Button } from '@/components/ui/button'
 import { Container, UnavailableAction, UNAVAILABLE_MESSAGE } from '@/components/kurio/basics'
 import { FacebookIcon, InstagramIcon, LinkedinIcon, XSocialIcon, YoutubeIcon } from '@/components/icons/brand'
+import { DESKTOP_QUERY, useMediaQuery } from '@/lib/useMediaQuery'
 import { BENEFITS, FOOTER_COLUMNS, type FooterLink } from './navigation'
 
 const SOCIALS = [
@@ -113,9 +114,24 @@ function CompatibleWallets() {
   )
 }
 
-export function SiteFooter() {
+/**
+ * CP9.2 (performance medida): só a variante do breakpoint atual é renderizada (antes, desktop e
+ * mobile eram renderizados e um deles escondido por CSS). Adiar a montagem do rodapé foi medido e
+ * descartado: a renderização adiada caía antes da primeira pintura com conteúdo e piorava o FCP
+ * simulado (planning/CP9_2_REPORT.md).
+ */
+export const SiteFooter = memo(function SiteFooter() {
+  const desktop = useMediaQuery(DESKTOP_QUERY)
   return (
     <footer className="mt-16 pb-[calc(var(--spacing-bottom-nav)+env(safe-area-inset-bottom)+1.5rem)] lg:pb-6" data-testid="site-footer">
+      {desktop ? <DesktopFooter /> : <MobileFooter />}
+    </footer>
+  )
+})
+
+function DesktopFooter() {
+  return (
+    <>
       {/* ---------- Desktop ---------- */}
       <Container className="hidden lg:block">
         <div className="overflow-hidden rounded-sm bg-surface">
@@ -164,6 +180,13 @@ export function SiteFooter() {
         <p className="py-4 text-center text-caption text-muted-foreground">© 2026 Kurio. Propriedade digital para todos.</p>
       </Container>
 
+    </>
+  )
+}
+
+function MobileFooter() {
+  return (
+    <>
       {/* ---------- Mobile (derivado) ---------- */}
       <Container className="flex flex-col gap-6 border-t border-border pt-8 lg:hidden">
         <div className="flex flex-col gap-1">
@@ -194,6 +217,6 @@ export function SiteFooter() {
         </div>
         <p className="text-caption text-muted-foreground">© 2026 Kurio. Propriedade digital para todos.</p>
       </Container>
-    </footer>
+    </>
   )
 }

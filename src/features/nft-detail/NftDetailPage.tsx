@@ -12,7 +12,7 @@
  * cache; esta tela reage ao cache, limita a quantidade ao estoque da edição e anuncia a
  * mudança em uma região `aria-live`.
  */
-import { startTransition, useEffect, useId, useState } from 'react'
+import { useEffect, useId, useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { Link, useCanGoBack, useNavigate, useRouter } from '@tanstack/react-router'
 import { ChevronLeft, Heart, Link2, ShoppingCart } from 'lucide-react'
@@ -34,6 +34,7 @@ import { nftDetailQuery, nftListQuery } from '@/features/nfts/queries'
 import { formatEth } from '@/lib/eth'
 import { cn } from '@/lib/utils'
 import { defaultEdition, EditionPicker } from './EditionPicker'
+import { useAfterFirstPaint } from '@/lib/useAfterFirstPaint'
 import { Gallery } from './Gallery'
 
 const RARITY_LABEL = { common: 'Comum', rare: 'Raro', legendary: 'Lendário' } as const
@@ -113,21 +114,6 @@ function Share({ nft }: { nft: NftDetail }) {
       </UnavailableAction>
     </div>
   )
-}
-
-/**
- * CP9.2 (performance medida): as seções abaixo da dobra (abas e relacionados) são montadas logo
- * depois da primeira pintura, numa transição do React (renderização fatiada, sem tarefa longa).
- * Antes, toda a página renderizava num único bloco de ~64 ms de JS (×4 na simulação mobile).
- */
-function useSecondaryReady(ready: boolean) {
-  const [show, setShow] = useState(false)
-  useEffect(() => {
-    if (!ready || show) return
-    const frame = requestAnimationFrame(() => startTransition(() => setShow(true)))
-    return () => cancelAnimationFrame(frame)
-  }, [ready, show])
-  return show
 }
 
 function InfoTabs({ nft }: { nft: NftDetail }) {
@@ -223,7 +209,14 @@ export function NftDetailPage({ nftId, edition, onEditionChange }: { nftId: stri
   // Estoque reduzido (inclusive em tempo real): a quantidade efetiva nunca passa do disponível.
   const quantity = Math.max(1, Math.min(requestedQty, maxQty))
   const live = useLiveChanges(nft, selectedId)
-  const showSecondary = useSecondaryReady(!!nft)
+  // CP9.2: abas e relacionados (abaixo da dobra) só depois da imagem principal (o LCP): montá-los
+  // antes da primeira pintura com conteúdo atrasava o FCP. Limite de 3 s como garantia.
+  const [mainImageSettled, setMainImageSettled] = useState(false)
+  useEffect(() => {
+    const timer = window.setTimeout(() => setMainImageSettled(true), 3_000)
+    return () => window.clearTimeout(timer)
+  }, [])
+  const showSecondary = useAfterFirstPaint(!!nft && mainImageSettled)
 
   if (!nft) return null
   const isFavorite = favorites.isFavorite(nft.id)
@@ -278,7 +271,7 @@ export function NftDetailPage({ nftId, edition, onEditionChange }: { nftId: stri
         </div>
 
         <div className="grid gap-0 lg:grid-cols-[minmax(0,580px)_minmax(0,1fr)] lg:gap-16">
-          <Gallery nft={nft} />
+          <Gallery nft={nft} onMainImageSettled={() => setMainImageSettled(true)} />
 
           <div className="relative -mx-4 -mt-10 flex flex-col gap-5 rounded-t-2xl bg-surface px-5 pt-6 pb-6 md:mx-auto md:mt-6 md:w-full md:max-w-xl md:rounded-2xl lg:m-0 lg:max-w-none lg:rounded-none lg:bg-transparent lg:p-0">
             {/* Mobile (Figma): nome + selo "★ 4.8 (19)" na mesma linha.
