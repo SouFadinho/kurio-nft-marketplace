@@ -170,4 +170,4 @@ Nenhum arquivo passa de 100 MB (limite do GitHub). Para reduzir o tamanho: remov
 
 ## 9. Commit local final
 
-COMMIT_PLACEHOLDER
+Commit local `ad6320c` (CP9: validação final, Lighthouse oficial e relatórios de entrega), sobre `a5aff5b` (código validado em checkout limpo), + commit com este hash no relatório. Nada publicado; sem repositório remoto.
