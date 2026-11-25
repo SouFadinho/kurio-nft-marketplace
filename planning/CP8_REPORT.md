@@ -171,4 +171,4 @@ Testes novos: `e2e/a11y.spec.ts` (7 casos × 2 projetos), `e2e/unit/seed-hashes.
 - **Limitações:** VIS-03/04/06 dependem de assets oficiais inexistentes; VIS-09/16 parciais; sem leitor de tela real nem conformidade WCAG declarada; Lighthouse local em Windows (não em CI, sem throttling de rede real); baselines Linux não geradas; baseline visual pouco sensível em telas escuras (R-47).
 
 ## 9. Commit
-COMMIT_PLACEHOLDER
+Commit local `740289a` (CP8: refinamento visual, acessibilidade e performance) + commit com este hash no relatório. Nada publicado; sem repositório remoto.
