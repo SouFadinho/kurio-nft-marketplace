@@ -136,4 +136,6 @@ A situação completa por teste está na matriz §15.
 - CP9: auditoria em checkout limpo, remoção de `/demo/*`, README e deploy (com autorização).
 
 ## 9. Commit
-COMMIT_INFO
+- Commit do código, testes, evidências e documentação: **`070415e`** ("CP6: pedidos, recibo, recuperação, reserva e várias abas"); este relatório recebeu o hash num commit de documentação logo em seguida.
+- Checkout limpo: deixado para a auditoria final do CP9, conforme orientação do CP6.
+- Nada foi publicado; não há repositório remoto.
