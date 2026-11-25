@@ -62,7 +62,7 @@ Abreviação: `T<n>` = teste `<n>.` de `e2e/poc.spec.ts`.
 | shadcn/ui (CLI 4.23.0, radix-ui 1.8.1) | Button, Dialog, Drawer, RadioGroup, Select, Tabs, Skeleton, Sonner… adaptados à identidade | design-system.spec (foco, drawer, axe) e telas | VALIDADO |
 | MSW 2.15.0 + @mswjs/socket.io-binding 0.2.0 | REST + Socket.IO | toda a suíte, contra o build de produção | VALIDADO |
 | Playwright 1.65.1 | E2E | `e2e-full-run-*.log` | VALIDADO |
-| Lighthouse 13.6.0 | auditoria versionada (`scripts/lighthouse.mjs`), local e no job `lighthouse` da CI | 12 execuções por rodada; local (CP8, CP9, CP9.2) e independente na CI (CP9.1, 2 rodadas) | VALIDADO |
+| Lighthouse 13.6.0 | auditoria versionada (`scripts/lighthouse.mjs`), local e no job `lighthouse` da CI | 12 execuções por rodada; local (CP8, CP9, CP9.2) e independente na CI (CP9.1, 4 rodadas) | VALIDADO |
 
 ## 2. Validações críticas pedidas no CP1
 
@@ -268,7 +268,7 @@ Todos os casos rodam em `desktop-chromium` (1440) e `mobile-chromium` (390), sal
 | — | Mobile: tela cheia sem rodapé/bottom nav | auth › apresentação (mobile) | VALIDADO |
 | — | Acessibilidade (axe, com erros visíveis) | auth › axe /login, /cadastro; account › axe perfil e carteiras | VALIDADO |
 | — | Responsividade (8 larguras; menu da conta sem corte no tablet) | layout.responsive › /login, /cadastro; conta sem overflow e menu utilizável | VALIDADO |
-| — | Contrato de carteiras para o checkout (CP5) | `useWallets` + `sortWallets` (principal primeiro); `PendingIntent.checkout` | IMPLEMENTADO, NÃO VALIDADO (uso real no CP5) |
+| — | Contrato de carteiras para o checkout (CP5) | `useWallets` + `sortWallets` (principal primeiro); `PendingIntent.checkout` | VALIDADO no CP5 (checkout.spec › carteiras e redes) |
 
 ## 14. CP5: carrinho e checkout (evidências em `planning/evidence/cp5/` e `planning/evidence/cp5-tests/`)
 
@@ -299,7 +299,7 @@ Todos os casos rodam em `desktop-chromium` (1440) e `mobile-chromium` (390), com
 | — | Expiração da sessão ao confirmar: login, volta com rascunho, nada reenviado sozinho | checkout.spec › expiração | VALIDADO |
 | — | Teclado, foco e axe | cart.spec › acessibilidade; checkout.spec › acessibilidade | VALIDADO |
 | — | Responsividade (8 larguras) + placeholder do cupom sem corte | layout.responsive › carrinho e pagamento | VALIDADO |
-| — | Recibo imutável, tela de confirmação final, recuperação avançada | — | PENDENTE (CP6) |
+| — | Recibo imutável, tela de confirmação final, recuperação avançada | ver §15 (CP6) | VALIDADO no CP6 |
 
 ## 15. CP6: pedidos, confirmação, recuperação e tempo real (evidências em `planning/evidence/cp6/` e `planning/evidence/cp6-tests/`)
 

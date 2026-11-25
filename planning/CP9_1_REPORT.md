@@ -58,6 +58,8 @@ Nessa repetição houve 5 falhas, todas **timeouts de 30 s** dos testes com 4 a 
 
 O teste não foi alterado, mascarado nem excluído. **Causa não identificada.**
 
+> **Atualização (CP10):** causa identificada e corrigida sem afrouxar a auditoria. Ver `CP10_REPORT.md` §2.
+
 ## 3. Publicação
 
 - **Merge:** `perf/cp9.2-mobile` → `main` por fast-forward (histórico preservado).
@@ -175,7 +177,7 @@ Uma auditoria na URL pública (CDN, HTTP/2, brotli) mediria outra coisa e não f
 
 - **Performance local:** mobile ≥ 90 não é estável na máquina local (CI: 91–93).
 - **Acessibilidade:** sem leitor de tela; sem declaração WCAG.
-- **Contraste no recibo:** a falha única não teve causa identificada.
+- **Contraste no recibo:** a falha única não teve causa identificada no CP9.1 (identificada no CP10: `CP10_REPORT.md` §2).
 - **Assets:** artes substitutas; galeria com 2 vistas.
 - **Simulação no navegador:** banco por visitante, sem backend compartilhado.
 - **Vercel:** o identificador do time aparece nas URLs de preview (R-52); o domínio sem `-flax` é de outro projeto (R-53).

@@ -74,19 +74,33 @@ test.describe('auditoria das telas (axe WCAG 2.2 A/AA + estrutura)', () => {
     await audit(page, '/pagamento')
   })
 
-  test('Confirmação (pendente, confirmado, recusado) e Meus pedidos', async ({ page }) => {
+  // CP10: o toast "Carteira conectada" do pagamento acompanha a navegação até o pedido. Se a
+  // auditoria coincide com a animação de saída (400 ms de opacidade), o axe mede o título do toast
+  // semitransparente (ex.: 1,74:1 a 20% de opacidade) e acusa color-contrast: era a falha
+  // intermitente do "recibo". As telas são auditadas em repouso, depois que o toast sai; o contraste
+  // do toast parado é auditado em "notificação: contraste auditado com a mensagem parada". A espera
+  // alonga o fluxo, então ele foi dividido em dois testes (mesmas auditorias, sem aumentar timeout).
+  test('Confirmação: pendente, recibo confirmado e Meus pedidos', async ({ page }) => {
     const id = await placeOrder(page)
+    await expect(page.locator('[data-sonner-toast]')).toHaveCount(0)
     await audit(page, 'pedido pendente')
     await mock(page).settleOrder(id, 'confirmed')
     await expect(page.getByTestId('order-status')).toHaveAttribute('data-status', 'confirmed')
     await audit(page, 'recibo')
-    const rejected = await placeOrder(page, { items: [{ nftId: 'nft-002', editionId: 'ed-10', quantity: 1 }], open: false })
-    await mock(page).settleOrder(rejected, 'rejected')
+    await page.goto('/pedidos')
+    await expect(page.getByTestId('order-row')).toHaveCount(1)
+    await audit(page, '/pedidos (confirmado)')
+  })
+
+  test('Confirmação: pedido recusado e Meus pedidos', async ({ page }) => {
+    const id = await placeOrder(page, { items: [{ nftId: 'nft-002', editionId: 'ed-10', quantity: 1 }] })
+    await expect(page.locator('[data-sonner-toast]')).toHaveCount(0)
+    await mock(page).settleOrder(id, 'rejected')
     await expect(page.getByTestId('order-status')).toHaveAttribute('data-status', 'rejected')
     await audit(page, 'pedido recusado')
     await page.goto('/pedidos')
-    await expect(page.getByTestId('order-row')).toHaveCount(2)
-    await audit(page, '/pedidos')
+    await expect(page.getByTestId('order-row')).toHaveCount(1)
+    await audit(page, '/pedidos (recusado)')
   })
 })
 
@@ -166,6 +180,21 @@ test.describe('toque, reflow e notificações', () => {
       }, bar)
       expect.soft(lastBottom, `${path}: último texto do rodapé acima da barra fixa`).toBeLessThanOrEqual(barTop)
     }
+  })
+
+  test('notificação: contraste auditado com a mensagem parada', async ({ page }) => {
+    await openApp(page, '/')
+    await seedCart(page, [{ nftId: 'nft-001', editionId: 'ed-10', quantity: 1 }])
+    await page.goto('/carrinho')
+    await expect(summaryValue(page, 'quote-total')).toBeVisible()
+    await page.getByRole('button', { name: 'Aumentar quantidade de Emerald Ape #042' }).filter({ visible: true }).click()
+    const toast = page.locator('[data-sonner-toast]').first()
+    // Com o ponteiro sobre a notificação, o sonner pausa a expiração; espera a animação de entrada acabar.
+    await toast.hover()
+    await expect.poll(() => toast.evaluate((el) => el.getAnimations({ subtree: true }).length)).toBe(0)
+    const r = await new AxeBuilder({ page }).include('[data-sonner-toast]').withTags(TAGS).analyze()
+    expect(r.violations.map((v) => `${v.id}: ${v.nodes.map((n) => n.failureSummary).join(' | ')}`)).toEqual([])
+    expect(r.passes.map((p) => p.id), 'o contraste do toast precisa ter sido medido').toContain('color-contrast')
   })
 
   test('notificação não cobre a ação fixa nem o total do mobile', async ({ page }) => {
