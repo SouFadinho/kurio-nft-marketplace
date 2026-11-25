@@ -16,7 +16,8 @@ on:
   workflow_dispatch:
 
 concurrency:
-  group: ci-${{ github.ref }}
+  # CP9.1: push e execução manual em grupos separados (gerar baselines não cancela a CI do push).
+  group: ci-${{ github.ref }}-${{ github.event_name }}
   cancel-in-progress: true
 
 jobs:
@@ -139,6 +140,12 @@ jobs:
 
       - name: Instalar o Chromium do Playwright (mesmo navegador da auditoria local)
         run: npx playwright install --with-deps chromium
+
+      # Ubuntu 24.04 restringe namespaces de usuário sem privilégio (AppArmor), e o sandbox do Chrome
+      # não sobe ("waiting for dynamic debugging port", 1ª execução). Liberar no runner mantém as MESMAS
+      # flags do Chrome da auditoria local (sem --no-sandbox), o que preserva a comparabilidade.
+      - name: Permitir o sandbox do Chrome (AppArmor do Ubuntu 24.04)
+        run: sudo sysctl -w kernel.apparmor_restrict_unprivileged_userns=0
 
       - name: Hardware do runner
         run: |

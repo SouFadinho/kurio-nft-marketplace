@@ -1,0 +1,18 @@
+
+Running 14 tests using 2 workers
+
+[1/14] [desktop-chromium] › e2e\public.smoke.ts:26:3 › infraestrutura da publicação › HTTPS, headers do Service Worker, cache dos assets, rewrites e /api sem fallback
+[2/14] [desktop-chromium] › e2e\public.smoke.ts:53:3 › infraestrutura da publicação › Service Worker do MSW controla a página; /demo/* fica em 404 no build público
+[3/14] [desktop-chromium] › e2e\public.smoke.ts:63:3 › fluxos na URL pública › catálogo, filtro na URL, refresh e preço em tempo real pelo Socket.IO (wss)
+[4/14] [desktop-chromium] › e2e\public.smoke.ts:75:3 › fluxos na URL pública › cadastro inexistente não entra; login, logout e isolamento entre Ana e Bruno
+[5/14] [desktop-chromium] › e2e\public.smoke.ts:94:3 › fluxos na URL pública › perfil e carteiras carregam os dados da conta
+[6/14] [desktop-chromium] › e2e\public.smoke.ts:102:3 › fluxos na URL pública › compra completa: carrinho, cupom, pagamento e recibo confirmado
+[7/14] [desktop-chromium] › e2e\public.smoke.ts:121:3 › fluxos na URL pública › pagamento recusado e pedido pendente com queda de conexão: recupera após reconectar e após refresh
+[8/14] [mobile-chromium] › e2e\public.smoke.ts:26:3 › infraestrutura da publicação › HTTPS, headers do Service Worker, cache dos assets, rewrites e /api sem fallback
+[9/14] [mobile-chromium] › e2e\public.smoke.ts:53:3 › infraestrutura da publicação › Service Worker do MSW controla a página; /demo/* fica em 404 no build público
+[10/14] [mobile-chromium] › e2e\public.smoke.ts:63:3 › fluxos na URL pública › catálogo, filtro na URL, refresh e preço em tempo real pelo Socket.IO (wss)
+[11/14] [mobile-chromium] › e2e\public.smoke.ts:94:3 › fluxos na URL pública › perfil e carteiras carregam os dados da conta
+[12/14] [mobile-chromium] › e2e\public.smoke.ts:75:3 › fluxos na URL pública › cadastro inexistente não entra; login, logout e isolamento entre Ana e Bruno
+[13/14] [mobile-chromium] › e2e\public.smoke.ts:102:3 › fluxos na URL pública › compra completa: carrinho, cupom, pagamento e recibo confirmado
+[14/14] [mobile-chromium] › e2e\public.smoke.ts:121:3 › fluxos na URL pública › pagamento recusado e pedido pendente com queda de conexão: recupera após reconectar e após refresh
+  14 passed (34.8s)

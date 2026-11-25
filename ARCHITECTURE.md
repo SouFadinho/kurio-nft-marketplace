@@ -151,6 +151,13 @@ sequenceDiagram
 - Em reconexão, ao voltar à aba (`visibilitychange`) e ao restaurar a página (`pageshow`), os recursos ativos são reconciliados pelo REST.
 - Corrida REST × evento: uma resposta REST que saiu antes do evento e chega depois tem versão menor e é descartada (leituras monotônicas, §6).
 - Listeners são removidos quando o socket da sessão é destruído e quando a tela deixa de assinar um pedido.
+- **Evento perdido antes da primeira conexão (corrigido no CP9.2).** O socket conecta depois da primeira renderização. Um `nft.updated` emitido antes da conexão não chega ao cliente.
+
+  Se, nesse momento, a listagem de NFTs ainda estava na **primeira busca**, o `invalidateQueries` do TanStack Query v5 não a refazia: sem dados, o `cancelRefetch` não se aplica, a chamada se junta à requisição em andamento, e o "invalidado" é limpo quando ela termina. O preço antigo ficava.
+
+  Agora, consultas públicas de NFT em primeira busca na conexão são refeitas quando terminam (em tempo ocioso, máx. 2 s), e só se terminaram com sucesso (um erro continua com o "Tentar novamente" do usuário). Dados privados seguem a reconciliação padrão: uma busca privada extra disputaria o 401 de expiração com a ação do usuário.
+
+  Teste determinístico em `catalog.spec` › "evento emitido ANTES de o socket conectar": falha 24/24 sem a correção e passa 48/48 com ela.
 
 ## 12. Várias abas: eleição de líder
 
@@ -195,10 +202,37 @@ flowchart LR
 
 ## 14. Performance e acessibilidade
 
-**Performance:**
-- MSW e App baixados em paralelo; Socket.IO sob demanda; code splitting por rota; hashes do seed pré-calculados; fonte self-hosted com fallback métrico (CLS ≈ 0); imagens com dimensões explícitas e `fetchpriority` na principal.
-- Desktop atinge as metas. **Mobile não atinge 90:** a arte do NFT só pode ser pedida depois de o MSW iniciar e a API simulada responder (4G lento + CPU 4×).
-- Hipóteses medidas e rejeitadas: renderizar antes do MSW (piorou o TBT) e reduzir as imagens (LCP inalterado). Detalhes em `planning/CP8_REPORT.md` §5 e `planning/evidence/cp9-perf/LEIA-ME.md`.
+**Performance (CP8 e CP9.2, decisões medidas; `planning/CP9_2_REPORT.md`):**
+- **Carregamento:**
+  - MSW e App baixados em paralelo;
+  - Socket.IO sob demanda;
+  - hashes do seed pré-calculados;
+  - fonte self-hosted com fallback métrico (CLS 0);
+  - imagens com dimensões explícitas e `fetchpriority` na principal.
+- **Chunks** (`vite.config.ts`, `codeSplitting.groups`): a inicialização usa ~9 arquivos agrupados (react, vendor, ui, app, kit), em vez de ~30 chunks minúsculos. Em HTTP/1.1, esses chunks disputavam 6 conexões e atrasavam o MSW.
+  - Os componentes de cada tela ficam em um grupo (`catalog`, `detail`).
+  - Um script inline no HTML (`preloadRouteChunks`) adiciona `modulepreload` só do chunk da rota acessada.
+- **Fora da inicialização (sob demanda):**
+  - drawer de filtros, Select/Slider (só desktop), diálogo da galeria;
+  - `TooltipProvider` (só na galeria interna);
+  - sonner: `src/lib/toast.ts`; o Toaster monta na 1ª interação ou após 4 s, com a região `aria-live` antes de qualquer mensagem.
+  - Variantes desktop/mobile são montadas só no breakpoint correspondente.
+- **Detalhe:** seções abaixo da dobra são montadas após a imagem principal; a página renderiza numa transição do React (sem bloco único de JS).
+- **Sem Intl em caminhos quentes:** `formatRating`, ordenação padrão do catálogo simulado.
+- **Public Suffix List fora do MSW:** o build troca `tldts` por `src/mocks/vendor/tldts-lite.ts`. O cookie jar do MSW (`tough-cookie` real) usa dele só `getDomain()`; o KURIO não usa cookies.
+  - Contrato, diferencial e diferenças conhecidas: `e2e/unit/tldts-lite.spec.ts`.
+  - No CP9.2, o próprio `tough-cookie` chegou a ser substituído; a auditoria do CP9.1 achou incompatibilidades (`toString()`, ordem RFC 6265) e reverteu essa parte.
+- **Resultados:** desktop 97–100. Mobile: LCP 4,9 → 3,1 s, mas a meta 90 **não** foi atingida nas rodadas oficiais locais.
+  - O TBT das execuções ruins vem de uma tarefa inicial sem atribuição do Chrome headless (emulação de GPU na CPU), não do código da página.
+  - Execução independente na CI: `planning/CP9_1_REPORT.md`.
+- **Medido e rejeitado:**
+  - renderizar antes do MSW;
+  - latência 0 na simulação;
+  - imagens menores / `srcset`;
+  - lazy loading por IntersectionObserver (pior em A/B intercalado);
+  - adiar o rodapé;
+  - `useDeferredValue` na grade;
+  - `decoding="async"`.
 
 **Acessibilidade:**
 - skip link, foco visível e preso em diálogos e drawers (com retorno);
