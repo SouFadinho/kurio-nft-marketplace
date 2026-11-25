@@ -154,4 +154,5 @@ Por último, o upload de artefatos: o relatório HTML do Playwright sempre, e `t
   - CP9: checkout limpo, baselines Linux + execução do CI (com autorização de publicação), remoção de `/demo/*`, README e deploy.
 
 ## 10. Commit
-COMMIT_INFO
+- Commit: **`2860c10`** ("CP7: consolidação de testes, cobertura e CI"); este relatório recebeu o hash num commit de documentação logo em seguida.
+- Nada foi publicado; não há repositório remoto. Checkout limpo, baselines Linux e execução do CI ficam para o CP9.
