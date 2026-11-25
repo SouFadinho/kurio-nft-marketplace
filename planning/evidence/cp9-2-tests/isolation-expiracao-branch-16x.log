@@ -1,0 +1,146 @@
+[WebServer] [PLUGIN_TIMINGS] JavaScript callbacks ran for 5.5s of this 6.3s build (88%).
+[WebServer] The slowest callbacks, timed inside each callback (the wait before a callback starts is excluded, the time it awaits is included):
+[WebServer]   - plugin @tailwindcss/vite:generate:build transform (81%, 5.1s, 2 calls)
+[WebServer]   - plugin vite:css transform (68%, 4.3s, 2 calls)
+[WebServer] These rows add up to more than the total. Callbacks can overlap, so the same time counts for more than one row.
+[WebServer] See https://rolldown.rs/reference/InputOptions.checks#bundlertimings for more details.
+[WebServer] 
+
+
+Running 16 tests using 4 workers
+
+[1/16] [desktop-chromium] › e2e\isolation.spec.ts:118:3 › isolamento entre usuários › expiração durante ação de favoritar: intenção é retomada após novo login
+[2/16] [desktop-chromium] › e2e\isolation.spec.ts:118:3 › isolamento entre usuários › expiração durante ação de favoritar: intenção é retomada após novo login
+[3/16] [desktop-chromium] › e2e\isolation.spec.ts:118:3 › isolamento entre usuários › expiração durante ação de favoritar: intenção é retomada após novo login
+[4/16] [desktop-chromium] › e2e\isolation.spec.ts:118:3 › isolamento entre usuários › expiração durante ação de favoritar: intenção é retomada após novo login
+[5/16] [desktop-chromium] › e2e\isolation.spec.ts:118:3 › isolamento entre usuários › expiração durante ação de favoritar: intenção é retomada após novo login
+[6/16] [desktop-chromium] › e2e\isolation.spec.ts:118:3 › isolamento entre usuários › expiração durante ação de favoritar: intenção é retomada após novo login
+[7/16] [desktop-chromium] › e2e\isolation.spec.ts:118:3 › isolamento entre usuários › expiração durante ação de favoritar: intenção é retomada após novo login
+[8/16] [desktop-chromium] › e2e\isolation.spec.ts:118:3 › isolamento entre usuários › expiração durante ação de favoritar: intenção é retomada após novo login
+[9/16] [mobile-chromium] › e2e\isolation.spec.ts:118:3 › isolamento entre usuários › expiração durante ação de favoritar: intenção é retomada após novo login
+[10/16] [mobile-chromium] › e2e\isolation.spec.ts:118:3 › isolamento entre usuários › expiração durante ação de favoritar: intenção é retomada após novo login
+[11/16] [mobile-chromium] › e2e\isolation.spec.ts:118:3 › isolamento entre usuários › expiração durante ação de favoritar: intenção é retomada após novo login
+  1) [desktop-chromium] › e2e\isolation.spec.ts:118:3 › isolamento entre usuários › expiração durante ação de favoritar: intenção é retomada após novo login 
+
+    Error: expect(page).toHaveURL(expected) failed
+
+    Expected pattern: /\/login\?.*motivo=expirada/
+    Received string:  "http://localhost:4173/"
+    Timeout: 5000ms
+
+    Call log:
+      - Expect "toHaveURL" with timeout 5000ms
+        13 × locator resolved to <html lang="pt-BR">…</html>
+           - unexpected value "http://localhost:4173/"
+
+
+      127 |       document.querySelector<HTMLButtonElement>('[aria-label="Favoritar Sage Nomad #009"]')!.click()
+      128 |     })
+    > 129 |     await expect(page).toHaveURL(/\/login\?.*motivo=expirada/)
+          |                        ^
+      130 |     // Otimista desfeito: nada ficou marcado como favorito sem a API confirmar.
+      131 |     await submitLogin(page, USERS.ana.email, USERS.ana.password)
+      132 |     await expect(page.getByRole('button', { name: 'Remover Sage Nomad #009 dos favoritos' })).toHaveAttribute('aria-pressed', 'true')
+        at D:\emprego\e2e\isolation.spec.ts:129:24
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\isolation-isolamento-entre-414ff--é-retomada-após-novo-login-desktop-chromium-repeat7\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\isolation-isolamento-entre-414ff--é-retomada-após-novo-login-desktop-chromium-repeat7\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\isolation-isolamento-entre-414ff--é-retomada-após-novo-login-desktop-chromium-repeat7\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\isolation-isolamento-entre-414ff--é-retomada-após-novo-login-desktop-chromium-repeat7\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[12/16] [mobile-chromium] › e2e\isolation.spec.ts:118:3 › isolamento entre usuários › expiração durante ação de favoritar: intenção é retomada após novo login
+[13/16] [mobile-chromium] › e2e\isolation.spec.ts:118:3 › isolamento entre usuários › expiração durante ação de favoritar: intenção é retomada após novo login
+[14/16] [mobile-chromium] › e2e\isolation.spec.ts:118:3 › isolamento entre usuários › expiração durante ação de favoritar: intenção é retomada após novo login
+[15/16] [mobile-chromium] › e2e\isolation.spec.ts:118:3 › isolamento entre usuários › expiração durante ação de favoritar: intenção é retomada após novo login
+[16/16] [mobile-chromium] › e2e\isolation.spec.ts:118:3 › isolamento entre usuários › expiração durante ação de favoritar: intenção é retomada após novo login
+  2) [mobile-chromium] › e2e\isolation.spec.ts:118:3 › isolamento entre usuários › expiração durante ação de favoritar: intenção é retomada após novo login 
+
+    Error: expect(page).toHaveURL(expected) failed
+
+    Expected pattern: /\/login\?.*motivo=expirada/
+    Received string:  "http://localhost:4173/"
+    Timeout: 5000ms
+
+    Call log:
+      - Expect "toHaveURL" with timeout 5000ms
+        13 × locator resolved to <html lang="pt-BR">…</html>
+           - unexpected value "http://localhost:4173/"
+
+
+      127 |       document.querySelector<HTMLButtonElement>('[aria-label="Favoritar Sage Nomad #009"]')!.click()
+      128 |     })
+    > 129 |     await expect(page).toHaveURL(/\/login\?.*motivo=expirada/)
+          |                        ^
+      130 |     // Otimista desfeito: nada ficou marcado como favorito sem a API confirmar.
+      131 |     await submitLogin(page, USERS.ana.email, USERS.ana.password)
+      132 |     await expect(page.getByRole('button', { name: 'Remover Sage Nomad #009 dos favoritos' })).toHaveAttribute('aria-pressed', 'true')
+        at D:\emprego\e2e\isolation.spec.ts:129:24
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\isolation-isolamento-entre-414ff--é-retomada-após-novo-login-mobile-chromium-repeat6\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\isolation-isolamento-entre-414ff--é-retomada-após-novo-login-mobile-chromium-repeat6\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\isolation-isolamento-entre-414ff--é-retomada-após-novo-login-mobile-chromium-repeat6\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\isolation-isolamento-entre-414ff--é-retomada-após-novo-login-mobile-chromium-repeat6\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+  3) [mobile-chromium] › e2e\isolation.spec.ts:118:3 › isolamento entre usuários › expiração durante ação de favoritar: intenção é retomada após novo login 
+
+    Error: expect(page).toHaveURL(expected) failed
+
+    Expected pattern: /\/login\?.*motivo=expirada/
+    Received string:  "http://localhost:4173/"
+    Timeout: 5000ms
+
+    Call log:
+      - Expect "toHaveURL" with timeout 5000ms
+        13 × locator resolved to <html lang="pt-BR">…</html>
+           - unexpected value "http://localhost:4173/"
+
+
+      127 |       document.querySelector<HTMLButtonElement>('[aria-label="Favoritar Sage Nomad #009"]')!.click()
+      128 |     })
+    > 129 |     await expect(page).toHaveURL(/\/login\?.*motivo=expirada/)
+          |                        ^
+      130 |     // Otimista desfeito: nada ficou marcado como favorito sem a API confirmar.
+      131 |     await submitLogin(page, USERS.ana.email, USERS.ana.password)
+      132 |     await expect(page.getByRole('button', { name: 'Remover Sage Nomad #009 dos favoritos' })).toHaveAttribute('aria-pressed', 'true')
+        at D:\emprego\e2e\isolation.spec.ts:129:24
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\isolation-isolamento-entre-414ff--é-retomada-após-novo-login-mobile-chromium-repeat7\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\isolation-isolamento-entre-414ff--é-retomada-após-novo-login-mobile-chromium-repeat7\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\isolation-isolamento-entre-414ff--é-retomada-após-novo-login-mobile-chromium-repeat7\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\isolation-isolamento-entre-414ff--é-retomada-após-novo-login-mobile-chromium-repeat7\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+  3 failed
+    [desktop-chromium] › e2e\isolation.spec.ts:118:3 › isolamento entre usuários › expiração durante ação de favoritar: intenção é retomada após novo login 
+    [mobile-chromium] › e2e\isolation.spec.ts:118:3 › isolamento entre usuários › expiração durante ação de favoritar: intenção é retomada após novo login 
+    [mobile-chromium] › e2e\isolation.spec.ts:118:3 › isolamento entre usuários › expiração durante ação de favoritar: intenção é retomada após novo login 
+  13 passed (1.5m)

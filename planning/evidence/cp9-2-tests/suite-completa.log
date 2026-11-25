@@ -1,50 +1,50 @@
 
 Running 487 tests using 4 workers
 
-[1/487] [unit] › e2e\unit\account-contracts.spec.ts:14:3 › contratos de conta (mesmo schema no cliente e no mock) › cadastro: requisitos de senha, usuário e confirmação
-[2/487] [unit] › e2e\unit\account-contracts.spec.ts:29:3 › contratos de conta (mesmo schema no cliente e no mock) › perfil: limites de tamanho
-[3/487] [unit] › e2e\unit\account-contracts.spec.ts:9:3 › contratos de conta (mesmo schema no cliente e no mock) › login: e-mail normalizado e senha obrigatória
+[1/487] [unit] › e2e\unit\account-contracts.spec.ts:9:3 › contratos de conta (mesmo schema no cliente e no mock) › login: e-mail normalizado e senha obrigatória
+[2/487] [unit] › e2e\unit\account-contracts.spec.ts:23:3 › contratos de conta (mesmo schema no cliente e no mock) › troca de senha: confirmação e nova diferente da atual
+[3/487] [unit] › e2e\unit\account-contracts.spec.ts:14:3 › contratos de conta (mesmo schema no cliente e no mock) › cadastro: requisitos de senha, usuário e confirmação
 [4/487] [unit] › e2e\unit\account-contracts.spec.ts:34:3 › contratos de conta (mesmo schema no cliente e no mock) › carteira: endereço validado conforme a rede
-[5/487] [unit] › e2e\unit\account-contracts.spec.ts:23:3 › contratos de conta (mesmo schema no cliente e no mock) › troca de senha: confirmação e nova diferente da atual
+[5/487] [unit] › e2e\unit\account-contracts.spec.ts:29:3 › contratos de conta (mesmo schema no cliente e no mock) › perfil: limites de tamanho
 [6/487] [unit] › e2e\unit\account-contracts.spec.ts:53:3 › busca das rotas de login/cadastro › redirect só aceita caminhos internos; motivo desconhecido é descartado
 [7/487] [unit] › e2e\unit\account-contracts.spec.ts:59:3 › busca das rotas de login/cadastro › rotas privadas não são destino ao fechar o login
-[8/487] [unit] › e2e\unit\catalog-search.spec.ts:10:3 › features/catalog/search (validação da URL) › aceita números vindos da URL e normaliza preços
-[9/487] [unit] › e2e\unit\catalog-search.spec.ts:5:3 › features/catalog/search (validação da URL) › descarta valores inválidos e mantém os válidos
-[10/487] [unit] › e2e\unit\catalog-search.spec.ts:18:3 › features/catalog/search (validação da URL) › parâmetros da API sempre têm página válida
-[11/487] [unit] › e2e\unit\catalog-search.spec.ts:14:3 › features/catalog/search (validação da URL) › faixa invertida é corrigida e padrões não aparecem
-[12/487] [unit] › e2e\unit\catalog-search.spec.ts:22:3 › features/catalog/search (validação da URL) › devolve as chaves inválidas como undefined (o Router mescla sobre a query crua)
-[13/487] [unit] › e2e\unit\cn.spec.ts:5:3 › lib/utils cn (tailwind-merge com tokens do KURIO) › tamanho de texto personalizado convive com cor
-[14/487] [unit] › e2e\unit\cn.spec.ts:10:3 › lib/utils cn (tailwind-merge com tokens do KURIO) › dois tamanhos de texto: vence o último
-[15/487] [unit] › e2e\unit\cn.spec.ts:15:3 › lib/utils cn (tailwind-merge com tokens do KURIO) › alinhamento não conflita com tamanho
-[16/487] [unit] › e2e\unit\commerce.spec.ts:17:3 › cotação (pricing.ts, wei/bigint) › sem ponto flutuante: 0.1 + 0.2 = 0.3 exatamente; 18 casas preservadas
-[17/487] [unit] › e2e\unit\commerce.spec.ts:9:3 › cotação (pricing.ts, wei/bigint) › carrinho do Figma: 2 × 1.19 + 6 × 1.39 + 9 × 1.79 = 26.83; total com taxa Ethereum = 26.846
+[8/487] [unit] › e2e\unit\catalog-search.spec.ts:5:3 › features/catalog/search (validação da URL) › descarta valores inválidos e mantém os válidos
+[9/487] [unit] › e2e\unit\catalog-search.spec.ts:14:3 › features/catalog/search (validação da URL) › faixa invertida é corrigida e padrões não aparecem
+[10/487] [unit] › e2e\unit\catalog-search.spec.ts:10:3 › features/catalog/search (validação da URL) › aceita números vindos da URL e normaliza preços
+[11/487] [unit] › e2e\unit\catalog-search.spec.ts:22:3 › features/catalog/search (validação da URL) › devolve as chaves inválidas como undefined (o Router mescla sobre a query crua)
+[12/487] [unit] › e2e\unit\catalog-search.spec.ts:18:3 › features/catalog/search (validação da URL) › parâmetros da API sempre têm página válida
+[13/487] [unit] › e2e\unit\cn.spec.ts:10:3 › lib/utils cn (tailwind-merge com tokens do KURIO) › dois tamanhos de texto: vence o último
+[14/487] [unit] › e2e\unit\cn.spec.ts:15:3 › lib/utils cn (tailwind-merge com tokens do KURIO) › alinhamento não conflita com tamanho
+[15/487] [unit] › e2e\unit\commerce.spec.ts:9:3 › cotação (pricing.ts, wei/bigint) › carrinho do Figma: 2 × 1.19 + 6 × 1.39 + 9 × 1.79 = 26.83; total com taxa Ethereum = 26.846
+[16/487] [unit] › e2e\unit\cn.spec.ts:5:3 › lib/utils cn (tailwind-merge com tokens do KURIO) › tamanho de texto personalizado convive com cor
+[17/487] [unit] › e2e\unit\commerce.spec.ts:17:3 › cotação (pricing.ts, wei/bigint) › sem ponto flutuante: 0.1 + 0.2 = 0.3 exatamente; 18 casas preservadas
 [18/487] [unit] › e2e\unit\commerce.spec.ts:23:3 › cotação (pricing.ts, wei/bigint) › desconto percentual em wei (piso) e taxa por rede
-[19/487] [unit] › e2e\unit\commerce.spec.ts:59:3 › merge do carrinho de visitante (cart-model.ts) › determinístico: mesma entrada, mesma saída; cupom do usuário prevalece
-[20/487] [unit] › e2e\unit\commerce.spec.ts:39:3 › merge do carrinho de visitante (cart-model.ts) › soma quantidades, mantém a ordem, limita ao estoque e remove o que esgotou
-[21/487] [unit] › e2e\unit\commerce.spec.ts:92:3 › contratos do checkout › rede compatível com o endereço
-[22/487] [unit] › e2e\unit\commerce.spec.ts:97:3 › contratos do checkout › carteira de pagamento: cadastrada ou externa validada pela rede
-[23/487] [unit] › e2e\unit\commerce.spec.ts:85:3 › contratos do checkout › sameQuoteValues: id e validade não importam; qualquer valor importa
+[19/487] [unit] › e2e\unit\commerce.spec.ts:85:3 › contratos do checkout › sameQuoteValues: id e validade não importam; qualquer valor importa
+[20/487] [unit] › e2e\unit\commerce.spec.ts:59:3 › merge do carrinho de visitante (cart-model.ts) › determinístico: mesma entrada, mesma saída; cupom do usuário prevalece
+[21/487] [unit] › e2e\unit\commerce.spec.ts:39:3 › merge do carrinho de visitante (cart-model.ts) › soma quantidades, mantém a ordem, limita ao estoque e remove o que esgotou
+[22/487] [unit] › e2e\unit\commerce.spec.ts:92:3 › contratos do checkout › rede compatível com o endereço
+[23/487] [unit] › e2e\unit\commerce.spec.ts:97:3 › contratos do checkout › carteira de pagamento: cadastrada ou externa validada pela rede
 [24/487] [unit] › e2e\unit\commerce.spec.ts:103:3 › contratos do checkout › cupom: normaliza para maiúsculas e exige código
-[25/487] [unit] › e2e\unit\eth.spec.ts:5:3 › lib/eth (bigint em wei) › soma exata onde number falha
-[26/487] [unit] › e2e\unit\eth.spec.ts:27:3 › lib/eth (bigint em wei) › rejeita entradas inválidas
-[27/487] [unit] › e2e\unit\eth.spec.ts:16:3 › lib/eth (bigint em wei) › 18 casas decimais preservadas
-[28/487] [unit] › e2e\unit\eth.spec.ts:10:3 › lib/eth (bigint em wei) › total do carrinho desktop do Figma fecha exatamente
-[29/487] [unit] › e2e\unit\eth.spec.ts:20:3 › lib/eth (bigint em wei) › formatação half-up para exibição
-[30/487] [unit] › e2e\unit\eventGuard.spec.ts:7:3 › realtime/EventGuard › aplica versões crescentes
-[31/487] [unit] › e2e\unit\eventGuard.spec.ts:31:3 › realtime/EventGuard › versões independentes por recurso
+[25/487] [unit] › e2e\unit\eth.spec.ts:20:3 › lib/eth (bigint em wei) › formatação half-up para exibição
+[26/487] [unit] › e2e\unit\eth.spec.ts:10:3 › lib/eth (bigint em wei) › total do carrinho desktop do Figma fecha exatamente
+[27/487] [unit] › e2e\unit\eth.spec.ts:5:3 › lib/eth (bigint em wei) › soma exata onde number falha
+[28/487] [unit] › e2e\unit\eth.spec.ts:16:3 › lib/eth (bigint em wei) › 18 casas decimais preservadas
+[29/487] [unit] › e2e\unit\eth.spec.ts:27:3 › lib/eth (bigint em wei) › rejeita entradas inválidas
+[30/487] [unit] › e2e\unit\eventGuard.spec.ts:13:3 › realtime/EventGuard › descarta duplicata pelo eventId
+[31/487] [unit] › e2e\unit\eventGuard.spec.ts:7:3 › realtime/EventGuard › aplica versões crescentes
 [32/487] [unit] › e2e\unit\eventGuard.spec.ts:19:3 › realtime/EventGuard › descarta evento antigo ou igual à versão do cache (ex.: após reconciliação REST)
 [33/487] [unit] › e2e\unit\eventGuard.spec.ts:25:3 › realtime/EventGuard › fora de ordem: v3 chega antes de v2 → v2 descartado
-[34/487] [unit] › e2e\unit\eventGuard.spec.ts:13:3 › realtime/EventGuard › descarta duplicata pelo eventId
+[34/487] [unit] › e2e\unit\eventGuard.spec.ts:31:3 › realtime/EventGuard › versões independentes por recurso
 [35/487] [unit] › e2e\unit\eventGuard.spec.ts:37:3 › realtime/EventGuard › memória limitada de eventIds
 [36/487] [unit] › e2e\unit\orders-events.spec.ts:39:3 › applyOrderUpdated (ciclo de vida do pedido no cliente) › aplica a versão nova com status, hash, data e motivo
-[37/487] [unit] › e2e\unit\orders-events.spec.ts:45:3 › applyOrderUpdated (ciclo de vida do pedido no cliente) › evento repetido (mesmo eventId) é descartado
-[38/487] [unit] › e2e\unit\orders-events.spec.ts:54:3 › applyOrderUpdated (ciclo de vida do pedido no cliente) › versão antiga ou igual não sobrescreve
-[39/487] [unit] › e2e\unit\orders-events.spec.ts:61:3 › applyOrderUpdated (ciclo de vida do pedido no cliente) › estado terminal não regride, nem com versão maior
-[40/487] [unit] › e2e\unit\rating.spec.ts:5:1 › formatRating = toLocaleString pt-BR com minimumFractionDigits 1 (notas 0–5)
-[41/487] [unit] › e2e\unit\tokens.spec.ts:49:5 › tokens de cor: contraste WCAG › foreground sobre background ≥ 4.5:1
-[42/487] [unit] › e2e\unit\tokens.spec.ts:49:5 › tokens de cor: contraste WCAG › foreground sobre surface-2 ≥ 4.5:1
-[43/487] [unit] › e2e\unit\seed-hashes.spec.ts:9:1 › hashes do seed correspondem às senhas de demonstração (PBKDF2, salt por usuário)
-[44/487] [unit] › e2e\unit\tokens.spec.ts:49:5 › tokens de cor: contraste WCAG › foreground sobre surface ≥ 4.5:1
+[37/487] [unit] › e2e\unit\orders-events.spec.ts:54:3 › applyOrderUpdated (ciclo de vida do pedido no cliente) › versão antiga ou igual não sobrescreve
+[38/487] [unit] › e2e\unit\orders-events.spec.ts:61:3 › applyOrderUpdated (ciclo de vida do pedido no cliente) › estado terminal não regride, nem com versão maior
+[39/487] [unit] › e2e\unit\orders-events.spec.ts:45:3 › applyOrderUpdated (ciclo de vida do pedido no cliente) › evento repetido (mesmo eventId) é descartado
+[40/487] [unit] › e2e\unit\seed-hashes.spec.ts:9:1 › hashes do seed correspondem às senhas de demonstração (PBKDF2, salt por usuário)
+[41/487] [unit] › e2e\unit\rating.spec.ts:5:1 › formatRating = toLocaleString pt-BR com minimumFractionDigits 1 (notas 0–5)
+[42/487] [unit] › e2e\unit\tokens.spec.ts:49:5 › tokens de cor: contraste WCAG › foreground sobre background ≥ 4.5:1
+[43/487] [unit] › e2e\unit\tokens.spec.ts:49:5 › tokens de cor: contraste WCAG › foreground sobre surface ≥ 4.5:1
+[44/487] [unit] › e2e\unit\tokens.spec.ts:49:5 › tokens de cor: contraste WCAG › foreground sobre surface-2 ≥ 4.5:1
 [45/487] [unit] › e2e\unit\tokens.spec.ts:49:5 › tokens de cor: contraste WCAG › muted-foreground sobre background ≥ 4.5:1
 [46/487] [unit] › e2e\unit\tokens.spec.ts:49:5 › tokens de cor: contraste WCAG › muted-foreground sobre surface ≥ 4.5:1
 [47/487] [unit] › e2e\unit\tokens.spec.ts:49:5 › tokens de cor: contraste WCAG › muted-foreground sobre band ≥ 4.5:1
@@ -52,21 +52,21 @@ Running 487 tests using 4 workers
 [49/487] [unit] › e2e\unit\tokens.spec.ts:49:5 › tokens de cor: contraste WCAG › placeholder sobre surface ≥ 4.5:1
 [50/487] [unit] › e2e\unit\tokens.spec.ts:49:5 › tokens de cor: contraste WCAG › price sobre background ≥ 4.5:1
 [51/487] [unit] › e2e\unit\tokens.spec.ts:49:5 › tokens de cor: contraste WCAG › price sobre surface ≥ 4.5:1
-[52/487] [unit] › e2e\unit\tokens.spec.ts:49:5 › tokens de cor: contraste WCAG › primary-foreground sobre primary-active ≥ 4.5:1
+[52/487] [unit] › e2e\unit\tokens.spec.ts:49:5 › tokens de cor: contraste WCAG › primary-foreground sobre primary ≥ 4.5:1
 [53/487] [unit] › e2e\unit\tokens.spec.ts:49:5 › tokens de cor: contraste WCAG › destructive sobre surface ≥ 4.5:1
 [54/487] [unit] › e2e\unit\tokens.spec.ts:49:5 › tokens de cor: contraste WCAG › destructive sobre destructive-surface ≥ 4.5:1
-[55/487] [unit] › e2e\unit\tokens.spec.ts:49:5 › tokens de cor: contraste WCAG › success sobre success-surface ≥ 4.5:1
-[56/487] [unit] › e2e\unit\tokens.spec.ts:49:5 › tokens de cor: contraste WCAG › primary-foreground sobre primary ≥ 4.5:1
-[57/487] [unit] › e2e\unit\tokens.spec.ts:49:5 › tokens de cor: contraste WCAG › input sobre background ≥ 3:1
-[58/487] [unit] › e2e\unit\tokens.spec.ts:49:5 › tokens de cor: contraste WCAG › input sobre surface ≥ 3:1
-[59/487] [unit] › e2e\unit\tokens.spec.ts:49:5 › tokens de cor: contraste WCAG › success sobre surface ≥ 4.5:1
+[55/487] [unit] › e2e\unit\tokens.spec.ts:49:5 › tokens de cor: contraste WCAG › success sobre surface ≥ 4.5:1
+[56/487] [unit] › e2e\unit\tokens.spec.ts:49:5 › tokens de cor: contraste WCAG › primary-foreground sobre primary-active ≥ 4.5:1
+[57/487] [unit] › e2e\unit\tokens.spec.ts:49:5 › tokens de cor: contraste WCAG › success sobre success-surface ≥ 4.5:1
+[58/487] [unit] › e2e\unit\tokens.spec.ts:49:5 › tokens de cor: contraste WCAG › input sobre background ≥ 3:1
+[59/487] [unit] › e2e\unit\tokens.spec.ts:49:5 › tokens de cor: contraste WCAG › input sobre surface ≥ 3:1
 [60/487] [unit] › e2e\unit\tokens.spec.ts:49:5 › tokens de cor: contraste WCAG › ring sobre background ≥ 3:1
 [61/487] [unit] › e2e\unit\tokens.spec.ts:56:3 › Pagination.pageWindow › janela com reticências
-[62/487] [unit] › e2e\unit\tough-cookie-lite.spec.ts:20:1 › persistência como o MSW faz (idx → toJSON → fromJSON)
-[63/487] [unit] › e2e\unit\tough-cookie-lite.spec.ts:8:1 › setCookie/getCookiesSync: domínio host-only, caminho e expiração
-[64/487] [desktop-chromium] › e2e\a11y.spec.ts:49:3 › auditoria das telas (axe WCAG 2.2 A/AA + estrutura) › públicas: Início, Mercado, Detalhe, Login, Cadastro
-[65/487] [desktop-chromium] › e2e\a11y.spec.ts:57:3 › auditoria das telas (axe WCAG 2.2 A/AA + estrutura) › privadas: Perfil, Carteiras, Favoritos, Carrinho, Pagamento
-[66/487] [desktop-chromium] › e2e\a11y.spec.ts:77:3 › auditoria das telas (axe WCAG 2.2 A/AA + estrutura) › Confirmação (pendente, confirmado, recusado) e Meus pedidos
+[62/487] [unit] › e2e\unit\tough-cookie-lite.spec.ts:8:1 › setCookie/getCookiesSync: domínio host-only, caminho e expiração
+[63/487] [unit] › e2e\unit\tough-cookie-lite.spec.ts:20:1 › persistência como o MSW faz (idx → toJSON → fromJSON)
+[64/487] [desktop-chromium] › e2e\a11y.spec.ts:57:3 › auditoria das telas (axe WCAG 2.2 A/AA + estrutura) › privadas: Perfil, Carteiras, Favoritos, Carrinho, Pagamento
+[65/487] [desktop-chromium] › e2e\a11y.spec.ts:77:3 › auditoria das telas (axe WCAG 2.2 A/AA + estrutura) › Confirmação (pendente, confirmado, recusado) e Meus pedidos
+[66/487] [desktop-chromium] › e2e\a11y.spec.ts:49:3 › auditoria das telas (axe WCAG 2.2 A/AA + estrutura) › públicas: Início, Mercado, Detalhe, Login, Cadastro
 [67/487] [desktop-chromium] › e2e\a11y.spec.ts:94:3 › toque, reflow e notificações › mobile: alvos de toque com pelo menos 24×24 px (WCAG 2.5.8) nas telas principais
 [68/487] [desktop-chromium] › e2e\a11y.spec.ts:136:3 › toque, reflow e notificações › reflow a 320 px (equivalente a 400% de zoom em 1280 px): sem rolagem horizontal
 [69/487] [desktop-chromium] › e2e\a11y.spec.ts:149:3 › toque, reflow e notificações › VIS-05: barra fixa do mobile não esconde o fim da página (detalhe, carrinho, pagamento)
@@ -85,8 +85,8 @@ Running 487 tests using 4 workers
 [82/487] [desktop-chromium] › e2e\account.spec.ts:186:3 › carteiras › endereço já cadastrado: conflito da API no campo
 [83/487] [desktop-chromium] › e2e\account.spec.ts:199:3 › carteiras › editar: muda apelido e rede; cancelar não altera nada
 [84/487] [desktop-chromium] › e2e\account.spec.ts:220:3 › carteiras › axe sem violações em perfil e carteiras (com erros visíveis)
-[85/487] [desktop-chromium] › e2e\auth.spec.ts:19:3 › login › credenciais inválidas: alerta acessível, sem revelar qual campo errou
-[86/487] [desktop-chromium] › e2e\auth.spec.ts:10:3 › login › credenciais válidas: entra, volta ao início e a sessão sobrevive ao refresh
+[85/487] [desktop-chromium] › e2e\auth.spec.ts:10:3 › login › credenciais válidas: entra, volta ao início e a sessão sobrevive ao refresh
+[86/487] [desktop-chromium] › e2e\auth.spec.ts:19:3 › login › credenciais inválidas: alerta acessível, sem revelar qual campo errou
 [87/487] [desktop-chromium] › e2e\auth.spec.ts:26:3 › login › validação no cliente: erros associados aos campos e foco no primeiro inválido
 [88/487] [desktop-chromium] › e2e\auth.spec.ts:37:3 › login › falha de conexão mostra mensagem de rede
 [89/487] [desktop-chromium] › e2e\auth.spec.ts:43:3 › login › envio duplicado é bloqueado enquanto a requisição está em andamento
@@ -94,8 +94,8 @@ Running 487 tests using 4 workers
 [91/487] [desktop-chromium] › e2e\auth.spec.ts:68:3 › login › login social visível, mas avisa que não está disponível na demonstração
 [92/487] [desktop-chromium] › e2e\auth.spec.ts:75:3 › login › redirect externo é ignorado (sem open redirect)
 [93/487] [desktop-chromium] › e2e\auth.spec.ts:83:3 › cadastro › conta nova: valida, cria, entra automaticamente e persiste
-[94/487] [desktop-chromium] › e2e\auth.spec.ts:122:3 › cadastro › requisitos de senha e confirmação
-[95/487] [desktop-chromium] › e2e\auth.spec.ts:109:3 › cadastro › e-mail e usuário já existentes: conflito da API no campo certo
+[94/487] [desktop-chromium] › e2e\auth.spec.ts:109:3 › cadastro › e-mail e usuário já existentes: conflito da API no campo certo
+[95/487] [desktop-chromium] › e2e\auth.spec.ts:122:3 › cadastro › requisitos de senha e confirmação
 [96/487] [desktop-chromium] › e2e\auth.spec.ts:141:5 › sessão e rotas protegidas › /perfil exige login e volta para a rota após entrar
 [97/487] [desktop-chromium] › e2e\auth.spec.ts:141:5 › sessão e rotas protegidas › /perfil/carteiras exige login e volta para a rota após entrar
 [98/487] [desktop-chromium] › e2e\auth.spec.ts:141:5 › sessão e rotas protegidas › /favoritos exige login e volta para a rota após entrar
@@ -145,88 +145,12 @@ Running 487 tests using 4 workers
 [142/487] [desktop-chromium] › e2e\catalog.spec.ts:295:3 › catálogo: teclado › drawer de filtros mobile: foco interno, aplicar fecha e devolve o foco
 [143/487] [desktop-chromium] › e2e\checkout.spec.ts:32:3 › fluxo principal › visitante: carrinho → login (merge) → pagamento → pedido pendente → confirmado pela rede simulada
 [144/487] [desktop-chromium] › e2e\checkout.spec.ts:75:3 › fluxo principal › pagamento recusado: nada de confirmação, carrinho preservado e estoque reservado devolvido
-  1) [desktop-chromium] › e2e\catalog.spec.ts:180:3 › catálogo: estados › erro HTTP mostra feedback e "Tentar novamente" recupera 
-
-    Error: expect(locator).toContainText(expected) failed
-
-    Locator: getByRole('alert').filter({ hasText: 'Não foi possível carregar' })
-    Expected substring: "HTTP 503"
-    Timeout: 15000ms
-    Error: element(s) not found
-
-    Call log:
-      - Expect "toContainText" getByRole('alert').filter({ hasText: 'Não foi possível carregar' }) with timeout 15000ms
-      - waiting for getByRole('alert').filter({ hasText: 'Não foi possível carregar' })
-
-
-      181 |     await openApp(page, '/', 'catalog-error')
-      182 |     const alert = page.getByRole('alert').filter({ hasText: 'Não foi possível carregar' })
-    > 183 |     await expect(alert).toContainText('HTTP 503', { timeout: 15_000 })
-          |                         ^
-      184 |     await alert.getByRole('button', { name: 'Tentar novamente' }).click()
-      185 |     await expect(cards(page)).toHaveCount(9)
-      186 |   })
-        at D:\emprego\e2e\catalog.spec.ts:183:25
-
-    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
-    test-results\catalog-catálogo-estados-e-e741c-e-Tentar-novamente-recupera-desktop-chromium\test-failed-1.png
-    ────────────────────────────────────────────────────────────────────────────────────────────────
-
-    Error Context: test-results\catalog-catálogo-estados-e-e741c-e-Tentar-novamente-recupera-desktop-chromium\error-context.md
-
-    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
-    test-results\catalog-catálogo-estados-e-e741c-e-Tentar-novamente-recupera-desktop-chromium\trace.zip
-    Usage:
-
-        npx playwright show-trace test-results\catalog-catálogo-estados-e-e741c-e-Tentar-novamente-recupera-desktop-chromium\trace.zip
-
-    ────────────────────────────────────────────────────────────────────────────────────────────────
-
-
-[145/487] [desktop-chromium] › e2e\checkout.spec.ts:113:3 › carteiras e redes › carteira Polygon usa a taxa da rede escolhida; rede compatível com o endereço
-[146/487] [desktop-chromium] › e2e\checkout.spec.ts:131:3 › carteiras e redes › conexão recusada, nova tentativa, desconexão e troca de carteira desconectando
-[147/487] [desktop-chromium] › e2e\checkout.spec.ts:89:3 › fluxo principal › validação: dados do colecionador, carteira externa e conexão obrigatória
-  2) [desktop-chromium] › e2e\catalog.spec.ts:188:3 › catálogo: estados › erro de conexão mostra feedback específico e recupera 
-
-    Error: expect(locator).toContainText(expected) failed
-
-    Locator: getByRole('alert').filter({ hasText: 'Não foi possível carregar' })
-    Expected substring: "Sem conexão"
-    Timeout: 15000ms
-    Error: element(s) not found
-
-    Call log:
-      - Expect "toContainText" getByRole('alert').filter({ hasText: 'Não foi possível carregar' }) with timeout 15000ms
-      - waiting for getByRole('alert').filter({ hasText: 'Não foi possível carregar' })
-
-
-      189 |     await openApp(page, '/', 'catalog-offline')
-      190 |     const alert = page.getByRole('alert').filter({ hasText: 'Não foi possível carregar' })
-    > 191 |     await expect(alert).toContainText('Sem conexão', { timeout: 15_000 })
-          |                         ^
-      192 |     await alert.getByRole('button', { name: 'Tentar novamente' }).click()
-      193 |     await expect(cards(page)).toHaveCount(9)
-      194 |   })
-        at D:\emprego\e2e\catalog.spec.ts:191:25
-
-    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
-    test-results\catalog-catálogo-estados-e-080a9-dback-específico-e-recupera-desktop-chromium\test-failed-1.png
-    ────────────────────────────────────────────────────────────────────────────────────────────────
-
-    Error Context: test-results\catalog-catálogo-estados-e-080a9-dback-específico-e-recupera-desktop-chromium\error-context.md
-
-    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
-    test-results\catalog-catálogo-estados-e-080a9-dback-específico-e-recupera-desktop-chromium\trace.zip
-    Usage:
-
-        npx playwright show-trace test-results\catalog-catálogo-estados-e-080a9-dback-específico-e-recupera-desktop-chromium\trace.zip
-
-    ────────────────────────────────────────────────────────────────────────────────────────────────
-
-
-[148/487] [desktop-chromium] › e2e\checkout.spec.ts:165:3 › consistência financeira em tempo real › mudança que o cliente não viu (socket offline): a API recusa a cotação antiga e exige nova confirmação
-[149/487] [desktop-chromium] › e2e\checkout.spec.ts:180:3 › consistência financeira em tempo real › estoque acaba durante a revisão: pagamento pede revisão do carrinho
-[150/487] [desktop-chromium] › e2e\checkout.spec.ts:145:3 › consistência financeira em tempo real › preço muda durante a revisão: alerta antes → depois, compra bloqueada até aceitar; pedido com o novo valor
+[145/487] [desktop-chromium] › e2e\checkout.spec.ts:89:3 › fluxo principal › validação: dados do colecionador, carteira externa e conexão obrigatória
+[146/487] [desktop-chromium] › e2e\checkout.spec.ts:113:3 › carteiras e redes › carteira Polygon usa a taxa da rede escolhida; rede compatível com o endereço
+[147/487] [desktop-chromium] › e2e\checkout.spec.ts:131:3 › carteiras e redes › conexão recusada, nova tentativa, desconexão e troca de carteira desconectando
+[148/487] [desktop-chromium] › e2e\checkout.spec.ts:145:3 › consistência financeira em tempo real › preço muda durante a revisão: alerta antes → depois, compra bloqueada até aceitar; pedido com o novo valor
+[149/487] [desktop-chromium] › e2e\checkout.spec.ts:165:3 › consistência financeira em tempo real › mudança que o cliente não viu (socket offline): a API recusa a cotação antiga e exige nova confirmação
+[150/487] [desktop-chromium] › e2e\checkout.spec.ts:180:3 › consistência financeira em tempo real › estoque acaba durante a revisão: pagamento pede revisão do carrinho
 [151/487] [desktop-chromium] › e2e\checkout.spec.ts:193:3 › consistência financeira em tempo real › cotação expirada: a API recusa, a cotação é renovada com os mesmos valores e a compra é confirmada de novo
 [152/487] [desktop-chromium] › e2e\checkout.spec.ts:208:3 › idempotência e falhas (PEND-01, PEND-02) › cliques repetidos criam um único pedido
 [153/487] [desktop-chromium] › e2e\checkout.spec.ts:217:3 › idempotência e falhas (PEND-01, PEND-02) › API: mesma chave + mesmo conteúdo = mesmo pedido; mesma chave + conteúdo diferente = 409
@@ -288,9 +212,47 @@ Running 487 tests using 4 workers
 [209/487] [desktop-chromium] › e2e\nft-detail.spec.ts:105:3 › detalhe do NFT › mobile: barra de compra fixa e sem navegação inferior; desktop: ações em linha
 [210/487] [desktop-chromium] › e2e\nft-detail.spec.ts:117:3 › detalhe do NFT › edições operáveis por teclado (setas)
 [211/487] [desktop-chromium] › e2e\orders.spec.ts:13:3 › compra completa até o recibo definitivo › pendente → confirmado pela rede: recibo com snapshot, hash, explorador simulado e histórico
-[212/487] [desktop-chromium] › e2e\orders.spec.ts:52:3 › compra completa até o recibo definitivo › recibo imutável: preço, estoque, carteira e perfil mudam depois e o recibo não
-[213/487] [desktop-chromium] › e2e\orders.spec.ts:76:3 › compra completa até o recibo definitivo › acessibilidade do recibo: axe sem violações
-[214/487] [desktop-chromium] › e2e\orders.spec.ts:87:3 › recusa e reserva de estoque (R-40) › recusa: sem confirmação, carrinho preservado, reserva liberada UMA vez
+  1) [desktop-chromium] › e2e\isolation.spec.ts:118:3 › isolamento entre usuários › expiração durante ação de favoritar: intenção é retomada após novo login 
+
+    Error: expect(page).toHaveURL(expected) failed
+
+    Expected pattern: /\/login\?.*motivo=expirada/
+    Received string:  "http://localhost:4173/"
+    Timeout: 5000ms
+
+    Call log:
+      - Expect "toHaveURL" with timeout 5000ms
+        13 × locator resolved to <html lang="pt-BR">…</html>
+           - unexpected value "http://localhost:4173/"
+
+
+      127 |       document.querySelector<HTMLButtonElement>('[aria-label="Favoritar Sage Nomad #009"]')!.click()
+      128 |     })
+    > 129 |     await expect(page).toHaveURL(/\/login\?.*motivo=expirada/)
+          |                        ^
+      130 |     // Otimista desfeito: nada ficou marcado como favorito sem a API confirmar.
+      131 |     await submitLogin(page, USERS.ana.email, USERS.ana.password)
+      132 |     await expect(page.getByRole('button', { name: 'Remover Sage Nomad #009 dos favoritos' })).toHaveAttribute('aria-pressed', 'true')
+        at D:\emprego\e2e\isolation.spec.ts:129:24
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\isolation-isolamento-entre-414ff--é-retomada-após-novo-login-desktop-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\isolation-isolamento-entre-414ff--é-retomada-após-novo-login-desktop-chromium\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\isolation-isolamento-entre-414ff--é-retomada-após-novo-login-desktop-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\isolation-isolamento-entre-414ff--é-retomada-após-novo-login-desktop-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[212/487] [desktop-chromium] › e2e\orders.spec.ts:76:3 › compra completa até o recibo definitivo › acessibilidade do recibo: axe sem violações
+[213/487] [desktop-chromium] › e2e\orders.spec.ts:87:3 › recusa e reserva de estoque (R-40) › recusa: sem confirmação, carrinho preservado, reserva liberada UMA vez
+[214/487] [desktop-chromium] › e2e\orders.spec.ts:52:3 › compra completa até o recibo definitivo › recibo imutável: preço, estoque, carteira e perfil mudam depois e o recibo não
 [215/487] [desktop-chromium] › e2e\orders.spec.ts:104:3 › recusa e reserva de estoque (R-40) › reserva vence: pedido recusado por prazo, estoque devolvido, confirmação atrasada não confirma
 [216/487] [desktop-chromium] › e2e\orders.spec.ts:122:3 › recusa e reserva de estoque (R-40) › confirmação que chega depois do prazo vira recusa mesmo antes de qualquer varredura
 [217/487] [desktop-chromium] › e2e\orders.spec.ts:133:3 › recusa e reserva de estoque (R-40) › itens adicionados depois do pedido permanecem após a confirmação
@@ -301,8 +263,8 @@ Running 487 tests using 4 workers
 [222/487] [desktop-chromium] › e2e\poc.spec.ts:21:3 › PoC CP1 — REST (Axios → MSW) + TanStack Query › 2. login (mutation) + criação de pedido (mutation idempotente) + consulta do pedido
 [223/487] [desktop-chromium] › e2e\poc.spec.ts:31:3 › PoC CP1 — REST (Axios → MSW) + TanStack Query › 2b. clique repetido não duplica o pedido (mesma Idempotency-Key)
 [224/487] [desktop-chromium] › e2e\poc.spec.ts:41:3 › PoC CP1 — Socket.IO (socket.io-client → MSW ws.link + @mswjs/socket.io-binding) › 3/4. nft.updated atualiza lista e detalhe; o REST reflete a mesma mudança após refresh
-[225/487] [desktop-chromium] › e2e\poc.spec.ts:59:3 › PoC CP1 — Socket.IO (socket.io-client → MSW ws.link + @mswjs/socket.io-binding) › 5. order.updated (privado) leva o pedido de pendente a confirmado, sem polling
-[226/487] [desktop-chromium] › e2e\poc.spec.ts:72:3 › PoC CP1 — Socket.IO (socket.io-client → MSW ws.link + @mswjs/socket.io-binding) › 5b. pedido recusado é terminal e não mostra confirmação
+[225/487] [desktop-chromium] › e2e\poc.spec.ts:72:3 › PoC CP1 — Socket.IO (socket.io-client → MSW ws.link + @mswjs/socket.io-binding) › 5b. pedido recusado é terminal e não mostra confirmação
+[226/487] [desktop-chromium] › e2e\poc.spec.ts:59:3 › PoC CP1 — Socket.IO (socket.io-client → MSW ws.link + @mswjs/socket.io-binding) › 5. order.updated (privado) leva o pedido de pendente a confirmado, sem polling
 [227/487] [desktop-chromium] › e2e\poc.spec.ts:83:3 › PoC CP1 — Socket.IO (socket.io-client → MSW ws.link + @mswjs/socket.io-binding) › 6. handshake autenticado e isolamento: eventos e dados de Ana não chegam a Bruno
 [228/487] [desktop-chromium] › e2e\poc.spec.ts:106:3 › PoC CP1 — Socket.IO (socket.io-client → MSW ws.link + @mswjs/socket.io-binding) › 6b. token inválido no handshake é recusado (CONNECT_ERROR) e a sessão cai para anônima
 [229/487] [desktop-chromium] › e2e\poc.spec.ts:125:3 › PoC CP1 — Socket.IO (socket.io-client → MSW ws.link + @mswjs/socket.io-binding) › 6c. protocolo: nenhum ACK nem evento antes de validar o CONNECT (sem corrida no handshake)
@@ -326,8 +288,8 @@ Running 487 tests using 4 workers
 [247/487] [desktop-chromium] › e2e\recovery.spec.ts:82:3 › sessão › sessão expira com o pedido pendente: login com aviso, volta ao pedido e acompanha a liquidação
 [248/487] [desktop-chromium] › e2e\tabs.spec.ts:21:3 › consistência entre abas › um único servidor lógico: catálogo e estoque sincronizados pelos sockets de cada aba
 [249/487] [desktop-chromium] › e2e\tabs.spec.ts:35:3 › consistência entre abas › carrinho do mesmo usuário: escritas concorrentes das duas abas sem perda; a outra aba atualiza ao voltar
-[250/487] [desktop-chromium] › e2e\tabs.spec.ts:81:3 › consistência entre abas › isolamento entre usuários em abas diferentes: pedido e eventos de Ana não chegam à aba de Bruno
-[251/487] [desktop-chromium] › e2e\tabs.spec.ts:56:3 › consistência entre abas › idempotência entre abas: a mesma tentativa enviada pelas duas abas cria UM pedido
+[250/487] [desktop-chromium] › e2e\tabs.spec.ts:56:3 › consistência entre abas › idempotência entre abas: a mesma tentativa enviada pelas duas abas cria UM pedido
+[251/487] [desktop-chromium] › e2e\tabs.spec.ts:81:3 › consistência entre abas › isolamento entre usuários em abas diferentes: pedido e eventos de Ana não chegam à aba de Bruno
 [252/487] [desktop-chromium] › e2e\tabs.spec.ts:93:3 › consistência entre abas › failover: a aba líder fecha, a outra assume o servidor e continua a liquidação
 [253/487] [desktop-chromium] › e2e\tabs.spec.ts:105:3 › consistência entre abas › aba desconectada perde eventos e reconcilia pelo REST ao reconectar
 [254/487] [desktop-chromium] › e2e\visual.spec.ts:67:3 › baseline visual: inicio
@@ -414,88 +376,17 @@ Running 487 tests using 4 workers
 [335/487] [mobile-chromium] › e2e\catalog.spec.ts:285:3 › catálogo: teclado › filtro de coleção operável por teclado
 [336/487] [mobile-chromium] › e2e\catalog.spec.ts:295:3 › catálogo: teclado › drawer de filtros mobile: foco interno, aplicar fecha e devolve o foco
 [337/487] [mobile-chromium] › e2e\checkout.spec.ts:32:3 › fluxo principal › visitante: carrinho → login (merge) → pagamento → pedido pendente → confirmado pela rede simulada
-[338/487] [mobile-chromium] › e2e\checkout.spec.ts:75:3 › fluxo principal › pagamento recusado: nada de confirmação, carrinho preservado e estoque reservado devolvido
-[339/487] [mobile-chromium] › e2e\checkout.spec.ts:89:3 › fluxo principal › validação: dados do colecionador, carteira externa e conexão obrigatória
-  3) [mobile-chromium] › e2e\catalog.spec.ts:180:3 › catálogo: estados › erro HTTP mostra feedback e "Tentar novamente" recupera 
-
-    Error: expect(locator).toContainText(expected) failed
-
-    Locator: getByRole('alert').filter({ hasText: 'Não foi possível carregar' })
-    Expected substring: "HTTP 503"
-    Timeout: 15000ms
-    Error: element(s) not found
-
-    Call log:
-      - Expect "toContainText" getByRole('alert').filter({ hasText: 'Não foi possível carregar' }) with timeout 15000ms
-      - waiting for getByRole('alert').filter({ hasText: 'Não foi possível carregar' })
-
-
-      181 |     await openApp(page, '/', 'catalog-error')
-      182 |     const alert = page.getByRole('alert').filter({ hasText: 'Não foi possível carregar' })
-    > 183 |     await expect(alert).toContainText('HTTP 503', { timeout: 15_000 })
-          |                         ^
-      184 |     await alert.getByRole('button', { name: 'Tentar novamente' }).click()
-      185 |     await expect(cards(page)).toHaveCount(9)
-      186 |   })
-        at D:\emprego\e2e\catalog.spec.ts:183:25
-
-    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
-    test-results\catalog-catálogo-estados-e-e741c-e-Tentar-novamente-recupera-mobile-chromium\test-failed-1.png
-    ────────────────────────────────────────────────────────────────────────────────────────────────
-
-    Error Context: test-results\catalog-catálogo-estados-e-e741c-e-Tentar-novamente-recupera-mobile-chromium\error-context.md
-
-    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
-    test-results\catalog-catálogo-estados-e-e741c-e-Tentar-novamente-recupera-mobile-chromium\trace.zip
-    Usage:
-
-        npx playwright show-trace test-results\catalog-catálogo-estados-e-e741c-e-Tentar-novamente-recupera-mobile-chromium\trace.zip
-
-    ────────────────────────────────────────────────────────────────────────────────────────────────
-
-
-[340/487] [mobile-chromium] › e2e\checkout.spec.ts:131:3 › carteiras e redes › conexão recusada, nova tentativa, desconexão e troca de carteira desconectando
-[341/487] [mobile-chromium] › e2e\checkout.spec.ts:113:3 › carteiras e redes › carteira Polygon usa a taxa da rede escolhida; rede compatível com o endereço
+[338/487] [mobile-chromium] › e2e\checkout.spec.ts:89:3 › fluxo principal › validação: dados do colecionador, carteira externa e conexão obrigatória
+[339/487] [mobile-chromium] › e2e\checkout.spec.ts:75:3 › fluxo principal › pagamento recusado: nada de confirmação, carrinho preservado e estoque reservado devolvido
+[340/487] [mobile-chromium] › e2e\checkout.spec.ts:113:3 › carteiras e redes › carteira Polygon usa a taxa da rede escolhida; rede compatível com o endereço
+[341/487] [mobile-chromium] › e2e\checkout.spec.ts:131:3 › carteiras e redes › conexão recusada, nova tentativa, desconexão e troca de carteira desconectando
 [342/487] [mobile-chromium] › e2e\checkout.spec.ts:145:3 › consistência financeira em tempo real › preço muda durante a revisão: alerta antes → depois, compra bloqueada até aceitar; pedido com o novo valor
 [343/487] [mobile-chromium] › e2e\checkout.spec.ts:165:3 › consistência financeira em tempo real › mudança que o cliente não viu (socket offline): a API recusa a cotação antiga e exige nova confirmação
 [344/487] [mobile-chromium] › e2e\checkout.spec.ts:180:3 › consistência financeira em tempo real › estoque acaba durante a revisão: pagamento pede revisão do carrinho
 [345/487] [mobile-chromium] › e2e\checkout.spec.ts:193:3 › consistência financeira em tempo real › cotação expirada: a API recusa, a cotação é renovada com os mesmos valores e a compra é confirmada de novo
 [346/487] [mobile-chromium] › e2e\checkout.spec.ts:208:3 › idempotência e falhas (PEND-01, PEND-02) › cliques repetidos criam um único pedido
-  4) [mobile-chromium] › e2e\catalog.spec.ts:188:3 › catálogo: estados › erro de conexão mostra feedback específico e recupera 
-
-    Test timeout of 30000ms exceeded.
-
-    Error: locator.click: Test timeout of 30000ms exceeded.
-    Call log:
-      - waiting for getByRole('alert').filter({ hasText: 'Não foi possível carregar' }).getByRole('button', { name: 'Tentar novamente' })
-
-
-      190 |     const alert = page.getByRole('alert').filter({ hasText: 'Não foi possível carregar' })
-      191 |     await expect(alert).toContainText('Sem conexão', { timeout: 15_000 })
-    > 192 |     await alert.getByRole('button', { name: 'Tentar novamente' }).click()
-          |                                                                   ^
-      193 |     await expect(cards(page)).toHaveCount(9)
-      194 |   })
-      195 |
-        at D:\emprego\e2e\catalog.spec.ts:192:67
-
-    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
-    test-results\catalog-catálogo-estados-e-080a9-dback-específico-e-recupera-mobile-chromium\test-failed-1.png
-    ────────────────────────────────────────────────────────────────────────────────────────────────
-
-    Error Context: test-results\catalog-catálogo-estados-e-080a9-dback-específico-e-recupera-mobile-chromium\error-context.md
-
-    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
-    test-results\catalog-catálogo-estados-e-080a9-dback-específico-e-recupera-mobile-chromium\trace.zip
-    Usage:
-
-        npx playwright show-trace test-results\catalog-catálogo-estados-e-080a9-dback-específico-e-recupera-mobile-chromium\trace.zip
-
-    ────────────────────────────────────────────────────────────────────────────────────────────────
-
-
-[347/487] [mobile-chromium] › e2e\checkout.spec.ts:240:3 › idempotência e falhas (PEND-01, PEND-02) › resposta perdida após a criação: retry com a mesma chave recupera o MESMO pedido
-[348/487] [mobile-chromium] › e2e\checkout.spec.ts:217:3 › idempotência e falhas (PEND-01, PEND-02) › API: mesma chave + mesmo conteúdo = mesmo pedido; mesma chave + conteúdo diferente = 409
+[347/487] [mobile-chromium] › e2e\checkout.spec.ts:217:3 › idempotência e falhas (PEND-01, PEND-02) › API: mesma chave + mesmo conteúdo = mesmo pedido; mesma chave + conteúdo diferente = 409
+[348/487] [mobile-chromium] › e2e\checkout.spec.ts:240:3 › idempotência e falhas (PEND-01, PEND-02) › resposta perdida após a criação: retry com a mesma chave recupera o MESMO pedido
 [349/487] [mobile-chromium] › e2e\checkout.spec.ts:253:3 › idempotência e falhas (PEND-01, PEND-02) › timeout após a criação: retry com a mesma chave recupera o MESMO pedido
 [350/487] [mobile-chromium] › e2e\checkout.spec.ts:269:3 › idempotência e falhas (PEND-01, PEND-02) › falha antes de gravar: dados preservados, carrinho intacto, nova tentativa cria o pedido
 [351/487] [mobile-chromium] › e2e\checkout.spec.ts:285:3 › sessão e acesso › expiração ao confirmar: login com aviso, volta ao pagamento com o rascunho e nada é enviado sozinho
@@ -552,8 +443,8 @@ Running 487 tests using 4 workers
 [402/487] [mobile-chromium] › e2e\nft-detail.spec.ts:95:3 › detalhe do NFT › do catálogo filtrado ao detalhe e de volta: filtros preservados
 [403/487] [mobile-chromium] › e2e\nft-detail.spec.ts:105:3 › detalhe do NFT › mobile: barra de compra fixa e sem navegação inferior; desktop: ações em linha
 [404/487] [mobile-chromium] › e2e\nft-detail.spec.ts:117:3 › detalhe do NFT › edições operáveis por teclado (setas)
-[405/487] [mobile-chromium] › e2e\orders.spec.ts:13:3 › compra completa até o recibo definitivo › pendente → confirmado pela rede: recibo com snapshot, hash, explorador simulado e histórico
-[406/487] [mobile-chromium] › e2e\orders.spec.ts:52:3 › compra completa até o recibo definitivo › recibo imutável: preço, estoque, carteira e perfil mudam depois e o recibo não
+[405/487] [mobile-chromium] › e2e\orders.spec.ts:52:3 › compra completa até o recibo definitivo › recibo imutável: preço, estoque, carteira e perfil mudam depois e o recibo não
+[406/487] [mobile-chromium] › e2e\orders.spec.ts:13:3 › compra completa até o recibo definitivo › pendente → confirmado pela rede: recibo com snapshot, hash, explorador simulado e histórico
 [407/487] [mobile-chromium] › e2e\orders.spec.ts:76:3 › compra completa até o recibo definitivo › acessibilidade do recibo: axe sem violações
 [408/487] [mobile-chromium] › e2e\orders.spec.ts:87:3 › recusa e reserva de estoque (R-40) › recusa: sem confirmação, carrinho preservado, reserva liberada UMA vez
 [409/487] [mobile-chromium] › e2e\orders.spec.ts:104:3 › recusa e reserva de estoque (R-40) › reserva vence: pedido recusado por prazo, estoque devolvido, confirmação atrasada não confirma
@@ -572,8 +463,8 @@ Running 487 tests using 4 workers
 [422/487] [mobile-chromium] › e2e\poc.spec.ts:106:3 › PoC CP1 — Socket.IO (socket.io-client → MSW ws.link + @mswjs/socket.io-binding) › 6b. token inválido no handshake é recusado (CONNECT_ERROR) e a sessão cai para anônima
 [423/487] [mobile-chromium] › e2e\poc.spec.ts:125:3 › PoC CP1 — Socket.IO (socket.io-client → MSW ws.link + @mswjs/socket.io-binding) › 6c. protocolo: nenhum ACK nem evento antes de validar o CONNECT (sem corrida no handshake)
 [424/487] [mobile-chromium] › e2e\poc.spec.ts:169:3 › PoC CP1 — Socket.IO (socket.io-client → MSW ws.link + @mswjs/socket.io-binding) › 7/8. desconexão com pedido pendente → reconexão → reconciliação pelo REST
-[425/487] [mobile-chromium] › e2e\poc.spec.ts:206:3 › PoC CP1 — Socket.IO (socket.io-client → MSW ws.link + @mswjs/socket.io-binding) › 9. eventos duplicados e antigos são descartados sem regredir o estado
-[426/487] [mobile-chromium] › e2e\poc.spec.ts:196:3 › PoC CP1 — Socket.IO (socket.io-client → MSW ws.link + @mswjs/socket.io-binding) › 7b. refresh com pedido pendente recupera o estado; liquidação automática persiste
+[425/487] [mobile-chromium] › e2e\poc.spec.ts:196:3 › PoC CP1 — Socket.IO (socket.io-client → MSW ws.link + @mswjs/socket.io-binding) › 7b. refresh com pedido pendente recupera o estado; liquidação automática persiste
+[426/487] [mobile-chromium] › e2e\poc.spec.ts:206:3 › PoC CP1 — Socket.IO (socket.io-client → MSW ws.link + @mswjs/socket.io-binding) › 9. eventos duplicados e antigos são descartados sem regredir o estado
 [427/487] [mobile-chromium] › e2e\poc.spec.ts:221:3 › PoC CP1 — Socket.IO (socket.io-client → MSW ws.link + @mswjs/socket.io-binding) › heartbeat: a conexão sobrevive além do ping timeout do binding (30 s)
 [428/487] [mobile-chromium] › e2e\poc.spec.ts:232:3 › PoC CP1 — cenários › reset integral: ?reset=1 restaura catálogo, pedidos e sessões do seed
 [429/487] [mobile-chromium] › e2e\poc.spec.ts:250:3 › PoC CP1 — rotas no build de produção › 11. acesso direto, refresh, NFT inexistente, rota inexistente e rota protegida
@@ -583,8 +474,8 @@ Running 487 tests using 4 workers
 [433/487] [mobile-chromium] › e2e\races.spec.ts:64:3 › eventos de pedido repetidos, antigos e terminais › evento antigo antes do terminal não regride um pendente; o terminal vence
 [434/487] [mobile-chromium] › e2e\races.spec.ts:77:3 › R-44: primeira adição do visitante › leitura do carrinho vazio retida, POST grava, leitura antiga liberada: o carrinho continua com o item
 [435/487] [mobile-chromium] › e2e\recovery.spec.ts:13:3 › refresh, nova aba e acesso direto › refresh durante o pedido pendente: continua pendente e recebe a confirmação depois
-[436/487] [mobile-chromium] › e2e\recovery.spec.ts:22:3 › refresh, nova aba e acesso direto › fechar a aba e reabrir pela URL: login (sessão é por aba) e o estado vem do REST
-[437/487] [mobile-chromium] › e2e\recovery.spec.ts:41:5 › desconexão e reconciliação › pedido confirmado enquanto o cliente está offline: reconcilia ao reconectar
+[436/487] [mobile-chromium] › e2e\recovery.spec.ts:41:5 › desconexão e reconciliação › pedido confirmado enquanto o cliente está offline: reconcilia ao reconectar
+[437/487] [mobile-chromium] › e2e\recovery.spec.ts:22:3 › refresh, nova aba e acesso direto › fechar a aba e reabrir pela URL: login (sessão é por aba) e o estado vem do REST
 [438/487] [mobile-chromium] › e2e\recovery.spec.ts:41:5 › desconexão e reconciliação › pedido recusado enquanto o cliente está offline: reconcilia ao reconectar
 [439/487] [mobile-chromium] › e2e\recovery.spec.ts:58:5 › falhas na criação até o recibo › timeout após a criação: retry recupera o mesmo pedido até o recibo
 [440/487] [mobile-chromium] › e2e\recovery.spec.ts:58:5 › falhas na criação até o recibo › resposta perdida após a criação: retry recupera o mesmo pedido até o recibo
@@ -597,10 +488,10 @@ Running 487 tests using 4 workers
 [447/487] [mobile-chromium] › e2e\tabs.spec.ts:105:3 › consistência entre abas › aba desconectada perde eventos e reconcilia pelo REST ao reconectar
 [448/487] [mobile-chromium] › e2e\visual.spec.ts:67:3 › baseline visual: inicio
 [449/487] [mobile-chromium] › e2e\visual.spec.ts:67:3 › baseline visual: detalhe
-[450/487] [mobile-chromium] › e2e\visual.spec.ts:67:3 › baseline visual: carrinho
-[451/487] [mobile-chromium] › e2e\visual.spec.ts:67:3 › baseline visual: pagamento
-[452/487] [responsive] › e2e\layout.responsive.spec.ts:34:3 › sem overflow horizontal em 360px
-[453/487] [responsive] › e2e\layout.responsive.spec.ts:34:3 › sem overflow horizontal em 390px
+[450/487] [mobile-chromium] › e2e\visual.spec.ts:67:3 › baseline visual: pagamento
+[451/487] [mobile-chromium] › e2e\visual.spec.ts:67:3 › baseline visual: carrinho
+[452/487] [responsive] › e2e\layout.responsive.spec.ts:34:3 › sem overflow horizontal em 390px
+[453/487] [responsive] › e2e\layout.responsive.spec.ts:34:3 › sem overflow horizontal em 360px
 [454/487] [responsive] › e2e\layout.responsive.spec.ts:34:3 › sem overflow horizontal em 600px
 [455/487] [responsive] › e2e\layout.responsive.spec.ts:34:3 › sem overflow horizontal em 768px
 [456/487] [responsive] › e2e\layout.responsive.spec.ts:34:3 › sem overflow horizontal em 900px
@@ -615,8 +506,8 @@ Running 487 tests using 4 workers
 [465/487] [responsive] › e2e\layout.responsive.spec.ts:50:3 › conta sem overflow e menu da conta utilizável em 1024px
 [466/487] [responsive] › e2e\layout.responsive.spec.ts:50:3 › conta sem overflow e menu da conta utilizável em 1280px
 [467/487] [responsive] › e2e\layout.responsive.spec.ts:50:3 › conta sem overflow e menu da conta utilizável em 1440px
-[468/487] [responsive] › e2e\layout.responsive.spec.ts:77:3 › carrinho e pagamento sem overflow em 390px
-[469/487] [responsive] › e2e\layout.responsive.spec.ts:77:3 › carrinho e pagamento sem overflow em 360px
+[468/487] [responsive] › e2e\layout.responsive.spec.ts:77:3 › carrinho e pagamento sem overflow em 360px
+[469/487] [responsive] › e2e\layout.responsive.spec.ts:77:3 › carrinho e pagamento sem overflow em 390px
 [470/487] [responsive] › e2e\layout.responsive.spec.ts:77:3 › carrinho e pagamento sem overflow em 600px
 [471/487] [responsive] › e2e\layout.responsive.spec.ts:77:3 › carrinho e pagamento sem overflow em 768px
 [472/487] [responsive] › e2e\layout.responsive.spec.ts:77:3 › carrinho e pagamento sem overflow em 900px
@@ -635,10 +526,7 @@ Running 487 tests using 4 workers
 [485/487] [responsive] › e2e\layout.responsive.spec.ts:143:5 › troca de navegação por breakpoint › 768px: navegação inferior visível, header desktop oculto
 [486/487] [responsive] › e2e\layout.responsive.spec.ts:154:5 › troca de navegação por breakpoint › 1024px: header desktop visível, navegação inferior oculta
 [487/487] [responsive] › e2e\layout.responsive.spec.ts:154:5 › troca de navegação por breakpoint › 1440px: header desktop visível, navegação inferior oculta
-  4 failed
-    [desktop-chromium] › e2e\catalog.spec.ts:180:3 › catálogo: estados › erro HTTP mostra feedback e "Tentar novamente" recupera 
-    [desktop-chromium] › e2e\catalog.spec.ts:188:3 › catálogo: estados › erro de conexão mostra feedback específico e recupera 
-    [mobile-chromium] › e2e\catalog.spec.ts:180:3 › catálogo: estados › erro HTTP mostra feedback e "Tentar novamente" recupera 
-    [mobile-chromium] › e2e\catalog.spec.ts:188:3 › catálogo: estados › erro de conexão mostra feedback específico e recupera 
+  1 failed
+    [desktop-chromium] › e2e\isolation.spec.ts:118:3 › isolamento entre usuários › expiração durante ação de favoritar: intenção é retomada após novo login 
   9 skipped
-  474 passed (11.6m)
+  477 passed (13.7m)
