@@ -1,0 +1,73 @@
+
+Running 36 tests using 4 workers
+
+[1/36] [desktop-chromium] › e2e\hardening.spec.ts:37:3 › carrinho em duas abas visíveis do mesmo usuário › a aba que está mostrando o carrinho atualiza sozinha quando a outra muda o carrinho
+[2/36] [desktop-chromium] › e2e\hardening.spec.ts:50:3 › carrinho em duas abas visíveis do mesmo usuário › cart.updated é privado: a aba de outro usuário não recebe
+[3/36] [desktop-chromium] › e2e\hardening.spec.ts:62:3 › tentativa idempotente após refresh ou fechamento da aba › timeout + refresh antes da resposta: o pagamento encontra o pedido pela chave, sem criar outro
+[4/36] [desktop-chromium] › e2e\hardening.spec.ts:74:3 › tentativa idempotente após refresh ou fechamento da aba › timeout + fechar a aba: nova aba, novo login, o pagamento recupera o mesmo pedido
+[5/36] [desktop-chromium] › e2e\hardening.spec.ts:85:3 › tentativa idempotente após refresh ou fechamento da aba › tentativa que NÃO chegou ao servidor é descartada: nada é recuperado nem criado
+[6/36] [desktop-chromium] › e2e\hardening.spec.ts:98:3 › troca de líder do cluster › durante uma requisição: a aba promovida desiste da RPC antiga na hora e o retry é atendido por ela
+[7/36] [desktop-chromium] › e2e\hardening.spec.ts:111:3 › troca de líder do cluster › durante a liquidação: a aba promovida retoma o agendamento e o pedido é confirmado
+[8/36] [desktop-chromium] › e2e\hardening.spec.ts:125:3 › compatibilidade › sem Web Locks a aplicação funciona como aba única (com aviso)
+[9/36] [desktop-chromium] › e2e\hardening.spec.ts:143:3 › explorador simulado › contrato público: só dados da transação, nenhum dado do comprador
+[10/36] [desktop-chromium] › e2e\hardening.spec.ts:37:3 › carrinho em duas abas visíveis do mesmo usuário › a aba que está mostrando o carrinho atualiza sozinha quando a outra muda o carrinho
+  1) [desktop-chromium] › e2e\hardening.spec.ts:111:3 › troca de líder do cluster › durante a liquidação: a aba promovida retoma o agendamento e o pedido é confirmado 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: "pending"
+    Received: "confirmed"
+
+      115 |     await page.close()
+      116 |     await expect.poll(() => mock(other).role()).toBe('leader')
+    > 117 |     expect((await mock(other).orders())[0]!.status).toBe('pending') // ainda não liquidado no fechamento
+          |                                                     ^
+      118 |     await expect(other.getByTestId('order-status')).toHaveAttribute('data-status', 'confirmed', { timeout: 8_000 })
+      119 |     expect((await mock(other).orders()).length).toBe(1)
+      120 |   })
+        at D:\emprego\e2e\hardening.spec.ts:117:53
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\hardening-troca-de-líder-d-afa81-nto-e-o-pedido-é-confirmado-desktop-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\hardening-troca-de-líder-d-afa81-nto-e-o-pedido-é-confirmado-desktop-chromium\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\hardening-troca-de-líder-d-afa81-nto-e-o-pedido-é-confirmado-desktop-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\hardening-troca-de-líder-d-afa81-nto-e-o-pedido-é-confirmado-desktop-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[11/36] [desktop-chromium] › e2e\hardening.spec.ts:50:3 › carrinho em duas abas visíveis do mesmo usuário › cart.updated é privado: a aba de outro usuário não recebe
+[12/36] [desktop-chromium] › e2e\hardening.spec.ts:62:3 › tentativa idempotente após refresh ou fechamento da aba › timeout + refresh antes da resposta: o pagamento encontra o pedido pela chave, sem criar outro
+[13/36] [desktop-chromium] › e2e\hardening.spec.ts:85:3 › tentativa idempotente após refresh ou fechamento da aba › tentativa que NÃO chegou ao servidor é descartada: nada é recuperado nem criado
+[14/36] [desktop-chromium] › e2e\hardening.spec.ts:74:3 › tentativa idempotente após refresh ou fechamento da aba › timeout + fechar a aba: nova aba, novo login, o pagamento recupera o mesmo pedido
+[15/36] [desktop-chromium] › e2e\hardening.spec.ts:98:3 › troca de líder do cluster › durante uma requisição: a aba promovida desiste da RPC antiga na hora e o retry é atendido por ela
+[16/36] [desktop-chromium] › e2e\hardening.spec.ts:111:3 › troca de líder do cluster › durante a liquidação: a aba promovida retoma o agendamento e o pedido é confirmado
+[17/36] [desktop-chromium] › e2e\hardening.spec.ts:125:3 › compatibilidade › sem Web Locks a aplicação funciona como aba única (com aviso)
+[18/36] [desktop-chromium] › e2e\hardening.spec.ts:143:3 › explorador simulado › contrato público: só dados da transação, nenhum dado do comprador
+[19/36] [mobile-chromium] › e2e\hardening.spec.ts:37:3 › carrinho em duas abas visíveis do mesmo usuário › a aba que está mostrando o carrinho atualiza sozinha quando a outra muda o carrinho
+[20/36] [mobile-chromium] › e2e\hardening.spec.ts:50:3 › carrinho em duas abas visíveis do mesmo usuário › cart.updated é privado: a aba de outro usuário não recebe
+[21/36] [mobile-chromium] › e2e\hardening.spec.ts:62:3 › tentativa idempotente após refresh ou fechamento da aba › timeout + refresh antes da resposta: o pagamento encontra o pedido pela chave, sem criar outro
+[22/36] [mobile-chromium] › e2e\hardening.spec.ts:74:3 › tentativa idempotente após refresh ou fechamento da aba › timeout + fechar a aba: nova aba, novo login, o pagamento recupera o mesmo pedido
+[23/36] [mobile-chromium] › e2e\hardening.spec.ts:85:3 › tentativa idempotente após refresh ou fechamento da aba › tentativa que NÃO chegou ao servidor é descartada: nada é recuperado nem criado
+[24/36] [mobile-chromium] › e2e\hardening.spec.ts:98:3 › troca de líder do cluster › durante uma requisição: a aba promovida desiste da RPC antiga na hora e o retry é atendido por ela
+[25/36] [mobile-chromium] › e2e\hardening.spec.ts:111:3 › troca de líder do cluster › durante a liquidação: a aba promovida retoma o agendamento e o pedido é confirmado
+[26/36] [mobile-chromium] › e2e\hardening.spec.ts:125:3 › compatibilidade › sem Web Locks a aplicação funciona como aba única (com aviso)
+[27/36] [mobile-chromium] › e2e\hardening.spec.ts:143:3 › explorador simulado › contrato público: só dados da transação, nenhum dado do comprador
+[28/36] [mobile-chromium] › e2e\hardening.spec.ts:37:3 › carrinho em duas abas visíveis do mesmo usuário › a aba que está mostrando o carrinho atualiza sozinha quando a outra muda o carrinho
+[29/36] [mobile-chromium] › e2e\hardening.spec.ts:50:3 › carrinho em duas abas visíveis do mesmo usuário › cart.updated é privado: a aba de outro usuário não recebe
+[30/36] [mobile-chromium] › e2e\hardening.spec.ts:62:3 › tentativa idempotente após refresh ou fechamento da aba › timeout + refresh antes da resposta: o pagamento encontra o pedido pela chave, sem criar outro
+[31/36] [mobile-chromium] › e2e\hardening.spec.ts:85:3 › tentativa idempotente após refresh ou fechamento da aba › tentativa que NÃO chegou ao servidor é descartada: nada é recuperado nem criado
+[32/36] [mobile-chromium] › e2e\hardening.spec.ts:74:3 › tentativa idempotente após refresh ou fechamento da aba › timeout + fechar a aba: nova aba, novo login, o pagamento recupera o mesmo pedido
+[33/36] [mobile-chromium] › e2e\hardening.spec.ts:98:3 › troca de líder do cluster › durante uma requisição: a aba promovida desiste da RPC antiga na hora e o retry é atendido por ela
+[34/36] [mobile-chromium] › e2e\hardening.spec.ts:111:3 › troca de líder do cluster › durante a liquidação: a aba promovida retoma o agendamento e o pedido é confirmado
+[35/36] [mobile-chromium] › e2e\hardening.spec.ts:125:3 › compatibilidade › sem Web Locks a aplicação funciona como aba única (com aviso)
+[36/36] [mobile-chromium] › e2e\hardening.spec.ts:143:3 › explorador simulado › contrato público: só dados da transação, nenhum dado do comprador
+  1 failed
+    [desktop-chromium] › e2e\hardening.spec.ts:111:3 › troca de líder do cluster › durante a liquidação: a aba promovida retoma o agendamento e o pedido é confirmado 
+  35 passed (2.1m)

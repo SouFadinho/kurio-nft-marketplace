@@ -1,0 +1,103 @@
+
+Running 18 tests using 4 workers
+
+[1/18] [desktop-chromium] › e2e\hardening.spec.ts:37:3 › carrinho em duas abas visíveis do mesmo usuário › a aba que está mostrando o carrinho atualiza sozinha quando a outra muda o carrinho
+[2/18] [desktop-chromium] › e2e\hardening.spec.ts:62:3 › tentativa idempotente após refresh ou fechamento da aba › timeout + refresh antes da resposta: o pagamento encontra o pedido pela chave, sem criar outro
+[3/18] [desktop-chromium] › e2e\hardening.spec.ts:74:3 › tentativa idempotente após refresh ou fechamento da aba › timeout + fechar a aba: nova aba, novo login, o pagamento recupera o mesmo pedido
+[4/18] [desktop-chromium] › e2e\hardening.spec.ts:50:3 › carrinho em duas abas visíveis do mesmo usuário › cart.updated é privado: a aba de outro usuário não recebe
+[5/18] [desktop-chromium] › e2e\hardening.spec.ts:85:3 › tentativa idempotente após refresh ou fechamento da aba › tentativa que NÃO chegou ao servidor é descartada: nada é recuperado nem criado
+[6/18] [desktop-chromium] › e2e\hardening.spec.ts:98:3 › troca de líder do cluster › durante uma requisição: a aba promovida desiste da RPC antiga na hora e o retry é atendido por ela
+[7/18] [desktop-chromium] › e2e\hardening.spec.ts:111:3 › troca de líder do cluster › durante a liquidação: a aba promovida retoma o agendamento e o pedido é confirmado
+  1) [desktop-chromium] › e2e\hardening.spec.ts:62:3 › tentativa idempotente após refresh ou fechamento da aba › timeout + refresh antes da resposta: o pagamento encontra o pedido pela chave, sem criar outro 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByText('Encontramos a compra que você já tinha enviado')
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" getByText('Encontramos a compra que você já tinha enviado') with timeout 5000ms
+      - waiting for getByText('Encontramos a compra que você já tinha enviado')
+
+
+      63 |     const orderId = await confirmWithTimeout(page)
+      64 |     await page.reload() // ainda em /pagamento, antes da resposta atrasada (que chegaria em 8 s)
+    > 65 |     await expect(page.getByText('Encontramos a compra que você já tinha enviado')).toBeVisible()
+         |                                                                                    ^
+      66 |     await expect(page).toHaveURL(new RegExp(`/pedidos/${orderId}$`))
+      67 |     expect((await mock(page).orders()).length).toBe(1)
+      68 |     // A tentativa foi encerrada: voltar ao pagamento não procura de novo.
+        at D:\emprego\e2e\hardening.spec.ts:65:84
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\hardening-tentativa-idempo-1e0ec--pela-chave-sem-criar-outro-desktop-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\hardening-tentativa-idempo-1e0ec--pela-chave-sem-criar-outro-desktop-chromium\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\hardening-tentativa-idempo-1e0ec--pela-chave-sem-criar-outro-desktop-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\hardening-tentativa-idempo-1e0ec--pela-chave-sem-criar-outro-desktop-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[8/18] [desktop-chromium] › e2e\hardening.spec.ts:125:3 › compatibilidade › sem Web Locks a aplicação funciona como aba única (com aviso)
+[9/18] [desktop-chromium] › e2e\hardening.spec.ts:143:3 › explorador simulado › contrato público: só dados da transação, nenhum dado do comprador
+  2) [desktop-chromium] › e2e\hardening.spec.ts:74:3 › tentativa idempotente após refresh ou fechamento da aba › timeout + fechar a aba: nova aba, novo login, o pagamento recupera o mesmo pedido 
+
+    Error: expect(page).toHaveURL(expected) failed
+
+    Expected pattern: /\/pedidos\/ord_000004$/
+    Received string:  "http://localhost:4173/pagamento"
+    Timeout: 5000ms
+
+    Call log:
+      - Expect "toHaveURL" with timeout 5000ms
+        3 × locator resolved to <html lang="pt-BR">…</html>
+          - unexpected value "http://localhost:4173/login?redirect=%2Fpagamento"
+        10 × locator resolved to <html lang="pt-BR">…</html>
+           - unexpected value "http://localhost:4173/pagamento"
+
+
+      79 |     await expect(reopened).toHaveURL(/\/login\?redirect=%2Fpagamento/)
+      80 |     await submitLogin(reopened, USERS.ana.email, USERS.ana.password)
+    > 81 |     await expect(reopened).toHaveURL(new RegExp(`/pedidos/${orderId}$`))
+         |                            ^
+      82 |     expect((await mock(reopened).orders()).length).toBe(1)
+      83 |   })
+      84 |
+        at D:\emprego\e2e\hardening.spec.ts:81:28
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\hardening-tentativa-idempo-4ed54-nto-recupera-o-mesmo-pedido-desktop-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\hardening-tentativa-idempo-4ed54-nto-recupera-o-mesmo-pedido-desktop-chromium\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\hardening-tentativa-idempo-4ed54-nto-recupera-o-mesmo-pedido-desktop-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\hardening-tentativa-idempo-4ed54-nto-recupera-o-mesmo-pedido-desktop-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[10/18] [mobile-chromium] › e2e\hardening.spec.ts:37:3 › carrinho em duas abas visíveis do mesmo usuário › a aba que está mostrando o carrinho atualiza sozinha quando a outra muda o carrinho
+[11/18] [mobile-chromium] › e2e\hardening.spec.ts:50:3 › carrinho em duas abas visíveis do mesmo usuário › cart.updated é privado: a aba de outro usuário não recebe
+[12/18] [mobile-chromium] › e2e\hardening.spec.ts:62:3 › tentativa idempotente após refresh ou fechamento da aba › timeout + refresh antes da resposta: o pagamento encontra o pedido pela chave, sem criar outro
+[13/18] [mobile-chromium] › e2e\hardening.spec.ts:74:3 › tentativa idempotente após refresh ou fechamento da aba › timeout + fechar a aba: nova aba, novo login, o pagamento recupera o mesmo pedido
+[14/18] [mobile-chromium] › e2e\hardening.spec.ts:98:3 › troca de líder do cluster › durante uma requisição: a aba promovida desiste da RPC antiga na hora e o retry é atendido por ela
+[15/18] [mobile-chromium] › e2e\hardening.spec.ts:111:3 › troca de líder do cluster › durante a liquidação: a aba promovida retoma o agendamento e o pedido é confirmado
+[16/18] [mobile-chromium] › e2e\hardening.spec.ts:85:3 › tentativa idempotente após refresh ou fechamento da aba › tentativa que NÃO chegou ao servidor é descartada: nada é recuperado nem criado
+[17/18] [mobile-chromium] › e2e\hardening.spec.ts:125:3 › compatibilidade › sem Web Locks a aplicação funciona como aba única (com aviso)
+[18/18] [mobile-chromium] › e2e\hardening.spec.ts:143:3 › explorador simulado › contrato público: só dados da transação, nenhum dado do comprador
+  2 failed
+    [desktop-chromium] › e2e\hardening.spec.ts:62:3 › tentativa idempotente após refresh ou fechamento da aba › timeout + refresh antes da resposta: o pagamento encontra o pedido pela chave, sem criar outro 
+    [desktop-chromium] › e2e\hardening.spec.ts:74:3 › tentativa idempotente após refresh ou fechamento da aba › timeout + fechar a aba: nova aba, novo login, o pagamento recupera o mesmo pedido 
+  16 passed (1.2m)

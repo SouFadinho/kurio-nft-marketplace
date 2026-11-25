@@ -36,7 +36,7 @@ import { db, now, type DbCart, type DbNft, type DbOrder, type DbState } from '..
 import { isHeld, maybeFail, routeDelay, takeAfterCommitFailure } from '../failures'
 import { priceCart, type Pricing } from '../pricing'
 import { mergeCartLines } from '../cart-model'
-import { RESERVATION_TTL_MS, scheduleSettlement, updateNft } from '../services'
+import { RESERVATION_TTL_MS, emitCartUpdated, scheduleSettlement, updateNft } from '../services'
 import { apiError, bearer, requireSession } from '../session'
 import type { DbSession } from '../db'
 
@@ -107,6 +107,7 @@ function mutateCart(owner: Owner, change: (cart: DbCart, s: DbState) => void) {
     cart.version += 1
     s.carts[owner.key] = cart
   })
+  emitCartUpdated(owner.key)
 }
 
 const outOfStock = (available: number, field = 'quantity') =>
@@ -277,6 +278,7 @@ export const commerceHandlers = [
     if (!body.success) return apiError(422, { code: 'VALIDATION_ERROR', message: 'Carrinho de visitante inválido.' })
     const owner: Owner = { key: `user:${session.userId}`, userId: session.userId, kind: 'user' }
     const result = db.commit((s) => mergeCarts(s, owner.key, `guest:${body.data.guestCartId}`))
+    emitCartUpdated(owner.key)
     return HttpResponse.json({ cart: publicCart(owner), ...result } satisfies MergeCartResponse)
   }),
 

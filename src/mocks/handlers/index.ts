@@ -115,6 +115,17 @@ export const restHandlers = [
     return HttpResponse.json({ items: items.map(publicOrder) })
   }),
 
+  // CP7: consulta pela chave de idempotência (recuperação após refresh/fechamento da aba).
+  // Só leitura: NUNCA cria pedido. Pedido de outro usuário responde 404, como os demais.
+  http.get('/api/orders/by-key/:key', async ({ request, params }) => {
+    await latency()
+    const session = requireSession(request)
+    if (session instanceof Response) return session
+    const order = db.get().orders.find((o) => o.idempotencyKey === params.key && o.userId === session.userId)
+    if (!order) return apiError(404, { code: 'NOT_FOUND', message: 'Nenhum pedido com esta tentativa.' })
+    return HttpResponse.json(publicOrder(order))
+  }),
+
   // Explorador SIMULADO (demonstração): só transações confirmadas, sem dados do comprador.
   http.get('/api/explorer/tx/:hash', async ({ params }) => {
     await latency()

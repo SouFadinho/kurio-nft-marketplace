@@ -1,0 +1,183 @@
+
+Running 18 tests using 4 workers
+
+[1/18] [desktop-chromium] › e2e\hardening.spec.ts:37:3 › carrinho em duas abas visíveis do mesmo usuário › a aba que está mostrando o carrinho atualiza sozinha quando a outra muda o carrinho
+[2/18] [desktop-chromium] › e2e\hardening.spec.ts:75:3 › tentativa idempotente após refresh ou fechamento da aba › timeout + fechar a aba: nova aba, novo login, o pagamento recupera o mesmo pedido
+[3/18] [desktop-chromium] › e2e\hardening.spec.ts:62:3 › tentativa idempotente após refresh ou fechamento da aba › timeout + refresh antes da resposta: o pagamento encontra o pedido pela chave, sem criar outro
+[4/18] [desktop-chromium] › e2e\hardening.spec.ts:50:3 › carrinho em duas abas visíveis do mesmo usuário › cart.updated é privado: a aba de outro usuário não recebe
+[5/18] [desktop-chromium] › e2e\hardening.spec.ts:86:3 › tentativa idempotente após refresh ou fechamento da aba › tentativa que NÃO chegou ao servidor é descartada: nada é recuperado nem criado
+[6/18] [desktop-chromium] › e2e\hardening.spec.ts:99:3 › troca de líder do cluster › durante uma requisição: a aba promovida desiste da RPC antiga na hora e o retry é atendido por ela
+[7/18] [desktop-chromium] › e2e\hardening.spec.ts:112:3 › troca de líder do cluster › durante a liquidação: a aba promovida retoma o agendamento e o pedido é confirmado
+[8/18] [desktop-chromium] › e2e\hardening.spec.ts:125:3 › compatibilidade › sem Web Locks e BroadcastChannel a aplicação funciona como aba única (com aviso)
+  1) [desktop-chromium] › e2e\hardening.spec.ts:62:3 › tentativa idempotente após refresh ou fechamento da aba › timeout + refresh antes da resposta: o pagamento encontra o pedido pela chave, sem criar outro 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByText('Encontramos a compra que você já tinha enviado')
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" getByText('Encontramos a compra que você já tinha enviado') with timeout 5000ms
+      - waiting for getByText('Encontramos a compra que você já tinha enviado')
+
+
+      64 |     await page.reload() // antes da resposta atrasada (que chegaria em 8 s)
+      65 |     await page.goto('/pagamento')
+    > 66 |     await expect(page.getByText('Encontramos a compra que você já tinha enviado')).toBeVisible()
+         |                                                                                    ^
+      67 |     await expect(page).toHaveURL(new RegExp(`/pedidos/${orderId}$`))
+      68 |     expect((await mock(page).orders()).length).toBe(1)
+      69 |     // A tentativa foi encerrada: voltar ao pagamento não procura de novo.
+        at D:\emprego\e2e\hardening.spec.ts:66:84
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\hardening-tentativa-idempo-1e0ec--pela-chave-sem-criar-outro-desktop-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\hardening-tentativa-idempo-1e0ec--pela-chave-sem-criar-outro-desktop-chromium\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\hardening-tentativa-idempo-1e0ec--pela-chave-sem-criar-outro-desktop-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\hardening-tentativa-idempo-1e0ec--pela-chave-sem-criar-outro-desktop-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[9/18] [desktop-chromium] › e2e\hardening.spec.ts:144:3 › explorador simulado › contrato público: só dados da transação, nenhum dado do comprador
+[10/18] [mobile-chromium] › e2e\hardening.spec.ts:37:3 › carrinho em duas abas visíveis do mesmo usuário › a aba que está mostrando o carrinho atualiza sozinha quando a outra muda o carrinho
+[11/18] [mobile-chromium] › e2e\hardening.spec.ts:50:3 › carrinho em duas abas visíveis do mesmo usuário › cart.updated é privado: a aba de outro usuário não recebe
+[12/18] [mobile-chromium] › e2e\hardening.spec.ts:62:3 › tentativa idempotente após refresh ou fechamento da aba › timeout + refresh antes da resposta: o pagamento encontra o pedido pela chave, sem criar outro
+[13/18] [mobile-chromium] › e2e\hardening.spec.ts:75:3 › tentativa idempotente após refresh ou fechamento da aba › timeout + fechar a aba: nova aba, novo login, o pagamento recupera o mesmo pedido
+[14/18] [mobile-chromium] › e2e\hardening.spec.ts:86:3 › tentativa idempotente após refresh ou fechamento da aba › tentativa que NÃO chegou ao servidor é descartada: nada é recuperado nem criado
+[15/18] [mobile-chromium] › e2e\hardening.spec.ts:99:3 › troca de líder do cluster › durante uma requisição: a aba promovida desiste da RPC antiga na hora e o retry é atendido por ela
+[16/18] [mobile-chromium] › e2e\hardening.spec.ts:112:3 › troca de líder do cluster › durante a liquidação: a aba promovida retoma o agendamento e o pedido é confirmado
+  2) [mobile-chromium] › e2e\hardening.spec.ts:62:3 › tentativa idempotente após refresh ou fechamento da aba › timeout + refresh antes da resposta: o pagamento encontra o pedido pela chave, sem criar outro 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByText('Encontramos a compra que você já tinha enviado')
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" getByText('Encontramos a compra que você já tinha enviado') with timeout 5000ms
+      - waiting for getByText('Encontramos a compra que você já tinha enviado')
+
+
+      64 |     await page.reload() // antes da resposta atrasada (que chegaria em 8 s)
+      65 |     await page.goto('/pagamento')
+    > 66 |     await expect(page.getByText('Encontramos a compra que você já tinha enviado')).toBeVisible()
+         |                                                                                    ^
+      67 |     await expect(page).toHaveURL(new RegExp(`/pedidos/${orderId}$`))
+      68 |     expect((await mock(page).orders()).length).toBe(1)
+      69 |     // A tentativa foi encerrada: voltar ao pagamento não procura de novo.
+        at D:\emprego\e2e\hardening.spec.ts:66:84
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\hardening-tentativa-idempo-1e0ec--pela-chave-sem-criar-outro-mobile-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\hardening-tentativa-idempo-1e0ec--pela-chave-sem-criar-outro-mobile-chromium\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\hardening-tentativa-idempo-1e0ec--pela-chave-sem-criar-outro-mobile-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\hardening-tentativa-idempo-1e0ec--pela-chave-sem-criar-outro-mobile-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[17/18] [mobile-chromium] › e2e\hardening.spec.ts:125:3 › compatibilidade › sem Web Locks e BroadcastChannel a aplicação funciona como aba única (com aviso)
+  3) [desktop-chromium] › e2e\hardening.spec.ts:125:3 › compatibilidade › sem Web Locks e BroadcastChannel a aplicação funciona como aba única (com aviso) 
+
+    Test timeout of 30000ms exceeded.
+
+    Error: page.waitForFunction: Test ended.
+
+       at support.ts:89
+
+      87 |   const sep = path.includes('?') ? '&' : '?'
+      88 |   await page.goto(`${path}${sep}scenario=${scenario}&reset=1`)
+    > 89 |   await page.waitForFunction(() => window.__kurioMock !== undefined)
+         |              ^
+      90 |   // O App é importado DEPOIS do MSW (main.tsx): espera a aplicação estar renderizada.
+      91 |   await page.locator('main#conteudo').waitFor()
+      92 |   if (path.startsWith(POC)) await expect(page.getByTestId('rt-state')).toHaveText('conectado')
+        at openApp (D:\emprego\e2e\support.ts:89:14)
+        at D:\emprego\e2e\hardening.spec.ts:134:5
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\hardening-compatibilidade--a4950-a-como-aba-única-com-aviso--desktop-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\hardening-compatibilidade--a4950-a-como-aba-única-com-aviso--desktop-chromium\test-failed-2.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\hardening-compatibilidade--a4950-a-como-aba-única-com-aviso--desktop-chromium\error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\hardening-compatibilidade--a4950-a-como-aba-única-com-aviso--desktop-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\hardening-compatibilidade--a4950-a-como-aba-única-com-aviso--desktop-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[18/18] [mobile-chromium] › e2e\hardening.spec.ts:144:3 › explorador simulado › contrato público: só dados da transação, nenhum dado do comprador
+  4) [mobile-chromium] › e2e\hardening.spec.ts:125:3 › compatibilidade › sem Web Locks e BroadcastChannel a aplicação funciona como aba única (com aviso) 
+
+    Test timeout of 30000ms exceeded.
+
+    Error: page.waitForFunction: Test ended.
+    Browser logs:
+
+    <launching> D:\emprego\.cache\ms-playwright\chromium_headless_shell-1255\chrome-headless-shell-win64\chrome-headless-shell.exe --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-edgeupdater --disable-extensions --disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,DestroyProfileOnBrowserClose,HttpsUpgrades,HttpsFirstBalancedModeAutoEnable,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,AvoidCorsURLLoaderRestartOnRedirect,TcpPortRandomizationWin,OptimizationHints,NetworkTimeServiceQuerying,AimEnabled,PreconnectToSearch,msForceBrowserSignIn,msEdgeUpdateLaunchServicesPreferredVersion --enable-features=CDPScreenshotNewSurface,SkipListAccountsWithoutGaiaCookies --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --disable-updater-scheduler --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --enable-unsafe-swiftshader --edge-skip-compat-layer-relaunch --disable-stack-profiler --disable-infobars --disable-sync --do-not-de-elevate --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --user-data-dir=D:\emprego\.cache\tmp\playwright_chromiumdev_profile-hnP5nP --remote-debugging-pipe --no-startup-window
+    <launched> pid=8096
+    [pid=8096][err] [1125/071614.890:INFO:CONSOLE:20] "Uncaught (in promise) TypeError: BroadcastChannel is not a constructor", source: http://localhost:4173/assets/browser-lbiD8vxd.js (20)
+    [pid=8096] <gracefully close start>
+
+       at support.ts:89
+
+      87 |   const sep = path.includes('?') ? '&' : '?'
+      88 |   await page.goto(`${path}${sep}scenario=${scenario}&reset=1`)
+    > 89 |   await page.waitForFunction(() => window.__kurioMock !== undefined)
+         |              ^
+      90 |   // O App é importado DEPOIS do MSW (main.tsx): espera a aplicação estar renderizada.
+      91 |   await page.locator('main#conteudo').waitFor()
+      92 |   if (path.startsWith(POC)) await expect(page.getByTestId('rt-state')).toHaveText('conectado')
+        at openApp (D:\emprego\e2e\support.ts:89:14)
+        at D:\emprego\e2e\hardening.spec.ts:134:5
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\hardening-compatibilidade--a4950-a-como-aba-única-com-aviso--mobile-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\hardening-compatibilidade--a4950-a-como-aba-única-com-aviso--mobile-chromium\test-failed-2.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\hardening-compatibilidade--a4950-a-como-aba-única-com-aviso--mobile-chromium\error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\hardening-compatibilidade--a4950-a-como-aba-única-com-aviso--mobile-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\hardening-compatibilidade--a4950-a-como-aba-única-com-aviso--mobile-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+  4 failed
+    [desktop-chromium] › e2e\hardening.spec.ts:62:3 › tentativa idempotente após refresh ou fechamento da aba › timeout + refresh antes da resposta: o pagamento encontra o pedido pela chave, sem criar outro 
+    [desktop-chromium] › e2e\hardening.spec.ts:125:3 › compatibilidade › sem Web Locks e BroadcastChannel a aplicação funciona como aba única (com aviso) 
+    [mobile-chromium] › e2e\hardening.spec.ts:62:3 › tentativa idempotente após refresh ou fechamento da aba › timeout + refresh antes da resposta: o pagamento encontra o pedido pela chave, sem criar outro 
+    [mobile-chromium] › e2e\hardening.spec.ts:125:3 › compatibilidade › sem Web Locks e BroadcastChannel a aplicação funciona como aba única (com aviso) 
+  14 passed (1.5m)

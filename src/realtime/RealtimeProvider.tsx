@@ -12,11 +12,11 @@
 import { useEffect, type ReactNode } from 'react'
 import { useQueryClient } from '@tanstack/react-query'
 import { io } from 'socket.io-client'
-import { NftUpdatedEvent, OrderUpdatedEvent, REALTIME_EVENTS } from '@/api/contracts'
+import { CartUpdatedEvent, NftUpdatedEvent, OrderUpdatedEvent, REALTIME_EVENTS } from '@/api/contracts'
 import { queryKeys } from '@/api/queryKeys'
 import { useClientSession } from '@/features/auth/queries'
 import { EventGuard, type GuardDecision } from './eventGuard'
-import { applyNftUpdated, applyOrderUpdated, reapplyNewerNftEvents, type LatestNftEvents } from './applyEvent'
+import { applyCartUpdated, applyNftUpdated, applyOrderUpdated, reapplyNewerNftEvents, type LatestNftEvents } from './applyEvent'
 import { diagnostics } from './diagnostics'
 
 function count(decision: GuardDecision, type: string) {
@@ -110,6 +110,12 @@ export function RealtimeProvider({ children }: { children: ReactNode }) {
         return
       }
       count(applyOrderUpdated(queryClient, guard, userId, parsed.data), parsed.data.type)
+    })
+
+    socket.on(REALTIME_EVENTS.cartUpdated, (raw: unknown) => {
+      const parsed = CartUpdatedEvent.safeParse(raw)
+      if (!parsed.success || !userId || parsed.data.userId !== userId) return
+      count(applyCartUpdated(queryClient, guard, userId, parsed.data), parsed.data.type)
     })
 
     // CP6 (PEND-03): aba suspensa ou em segundo plano pode ter perdido eventos (o navegador congela

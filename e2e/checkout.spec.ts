@@ -48,8 +48,15 @@ test.describe('fluxo principal', () => {
     await expect(summaryValue(page, 'quote-total')).toHaveAttribute('data-value', '1.206')
 
     await connect(page)
+    // CP7: a criação fica RETIDA no servidor; enquanto a API não responde, nada é criado nem
+    // confirmado e a tela não sai do pagamento (asserção determinística, sem janela de tempo).
+    await mock(page).hold('orders.create')
     await confirmButton(page).click()
     await expect(confirmButton(page)).toHaveText('Enviando pedido…')
+    await expect(page).toHaveURL(/\/pagamento$/)
+    expect((await mock(page).orders()).length).toBe(0)
+    await expect(page.getByText(/Compra confirmada|Pedido recebido/)).toHaveCount(0)
+    await mock(page).release('orders.create')
     await expect(page).toHaveURL(/\/pedidos\/ord_\d+$/)
     await expect(page.getByTestId('order-status')).toHaveAttribute('data-status', 'pending')
     await expect(page.getByRole('heading', { name: 'Pedido recebido' })).toBeVisible()

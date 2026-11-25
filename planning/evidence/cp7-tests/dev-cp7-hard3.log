@@ -1,0 +1,55 @@
+
+Running 9 tests using 4 workers
+
+[1/9] [desktop-chromium] › e2e\hardening.spec.ts:85:3 › tentativa idempotente após refresh ou fechamento da aba › tentativa que NÃO chegou ao servidor é descartada: nada é recuperado nem criado
+[2/9] [desktop-chromium] › e2e\hardening.spec.ts:62:3 › tentativa idempotente após refresh ou fechamento da aba › timeout + refresh antes da resposta: o pagamento encontra o pedido pela chave, sem criar outro
+[3/9] [desktop-chromium] › e2e\hardening.spec.ts:74:3 › tentativa idempotente após refresh ou fechamento da aba › timeout + fechar a aba: nova aba, novo login, o pagamento recupera o mesmo pedido
+[4/9] [desktop-chromium] › e2e\hardening.spec.ts:62:3 › tentativa idempotente após refresh ou fechamento da aba › timeout + refresh antes da resposta: o pagamento encontra o pedido pela chave, sem criar outro
+[5/9] [desktop-chromium] › e2e\hardening.spec.ts:74:3 › tentativa idempotente após refresh ou fechamento da aba › timeout + fechar a aba: nova aba, novo login, o pagamento recupera o mesmo pedido
+[6/9] [desktop-chromium] › e2e\hardening.spec.ts:85:3 › tentativa idempotente após refresh ou fechamento da aba › tentativa que NÃO chegou ao servidor é descartada: nada é recuperado nem criado
+[7/9] [desktop-chromium] › e2e\hardening.spec.ts:62:3 › tentativa idempotente após refresh ou fechamento da aba › timeout + refresh antes da resposta: o pagamento encontra o pedido pela chave, sem criar outro
+  1) [desktop-chromium] › e2e\hardening.spec.ts:74:3 › tentativa idempotente após refresh ou fechamento da aba › timeout + fechar a aba: nova aba, novo login, o pagamento recupera o mesmo pedido 
+
+    Error: expect(page).toHaveURL(expected) failed
+
+    Expected pattern: /\/pedidos\/ord_000004$/
+    Received string:  "http://localhost:4173/pagamento"
+    Timeout: 5000ms
+
+    Call log:
+      - Expect "toHaveURL" with timeout 5000ms
+        2 × locator resolved to <html lang="pt-BR">…</html>
+          - unexpected value "http://localhost:4173/login?redirect=%2Fpagamento"
+        11 × locator resolved to <html lang="pt-BR">…</html>
+           - unexpected value "http://localhost:4173/pagamento"
+
+
+      79 |     await expect(reopened).toHaveURL(/\/login\?redirect=%2Fpagamento/)
+      80 |     await submitLogin(reopened, USERS.ana.email, USERS.ana.password)
+    > 81 |     await expect(reopened).toHaveURL(new RegExp(`/pedidos/${orderId}$`))
+         |                            ^
+      82 |     expect((await mock(reopened).orders()).length).toBe(1)
+      83 |   })
+      84 |
+        at D:\emprego\e2e\hardening.spec.ts:81:28
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\hardening-tentativa-idempo-4ed54-nto-recupera-o-mesmo-pedido-desktop-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\hardening-tentativa-idempo-4ed54-nto-recupera-o-mesmo-pedido-desktop-chromium\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\hardening-tentativa-idempo-4ed54-nto-recupera-o-mesmo-pedido-desktop-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\hardening-tentativa-idempo-4ed54-nto-recupera-o-mesmo-pedido-desktop-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[8/9] [desktop-chromium] › e2e\hardening.spec.ts:74:3 › tentativa idempotente após refresh ou fechamento da aba › timeout + fechar a aba: nova aba, novo login, o pagamento recupera o mesmo pedido
+[9/9] [desktop-chromium] › e2e\hardening.spec.ts:85:3 › tentativa idempotente após refresh ou fechamento da aba › tentativa que NÃO chegou ao servidor é descartada: nada é recuperado nem criado
+  1 failed
+    [desktop-chromium] › e2e\hardening.spec.ts:74:3 › tentativa idempotente após refresh ou fechamento da aba › timeout + fechar a aba: nova aba, novo login, o pagamento recupera o mesmo pedido 
+  8 passed (42.7s)

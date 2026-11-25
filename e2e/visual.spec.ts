@@ -6,9 +6,20 @@
  * ao Figma; a fidelidade é avaliada nas comparações lado a lado (planning/evidence/cp3).
  * Dados estáveis: seed do mock com `?reset=1`. Fontes e imagens visíveis carregadas,
  * animações desligadas e movimento reduzido.
- * As baselines foram geradas no Windows (sufixo -win32). O CP7 gera baselines Linux em
- * container para a CI (renderização de fonte difere entre sistemas).
+ * Determinismo (CP7): relógio fixo (`page.clock.setFixedTime`: só a data; timers seguem reais,
+ * então MSW, latências e liquidações funcionam), fixtures do seed, fonte local carregada,
+ * imagens decodificadas, animações desligadas e NENHUM toast na tela (um toast transitório
+ * mudaria a captura). Tolerância `maxDiffPixelRatio: 0.01` (1% dos pixels): absorve
+ * antialiasing de fonte e de bordas entre execuções na MESMA plataforma; mudanças de layout
+ * ou conteúdo passam muito disso.
+ *
+ * Plataformas: as baselines versionadas são do Windows (`-win32`). Baselines Linux NÃO são
+ * derivadas das capturas do Windows (a renderização de fonte difere): são geradas no container
+ * oficial do Playwright (README / CP9, `npm run test:visual:update:linux`). Enquanto não
+ * existirem, o teste é IGNORADO no Linux com o motivo explícito, em vez de gravar uma baseline
+ * nova e passar sem comparar nada.
  */
+import fs from 'node:fs'
 import { type Page } from '@playwright/test'
 import { expect, test } from './fixtures'
 import { USERS, openApp, seedCart, signIn, summaryValue } from './support'
@@ -33,8 +44,13 @@ async function settle(page: Page) {
   await expect(page.locator('[aria-busy="true"]')).toHaveCount(0)
   await expect(page.locator('.skeleton:visible')).toHaveCount(0)
   await expect.poll(() => page.evaluate(() => document.getAnimations().filter((a) => a.playState === 'running').length)).toBe(0)
-  await page.waitForTimeout(150)
+  // Nenhum toast transitório na captura (duração padrão de 4 s).
+  await expect(page.locator('[data-sonner-toast]')).toHaveCount(0, { timeout: 8_000 })
+  await page.waitForTimeout(150) // um quadro extra após a última verificação de estabilidade
 }
+
+/** Data fixa da captura (America/Sao_Paulo): datas exibidas nunca variam entre execuções. */
+const FIXED_NOW = new Date('2026-11-20T12:00:00-03:00')
 
 const CART = [
   { nftId: 'nft-001', editionId: 'ed-10', quantity: 2 },
@@ -48,7 +64,13 @@ for (const [name, path] of [
   ['carrinho', '/carrinho'],
   ['pagamento', '/pagamento'],
 ] as const) {
-  test(`baseline visual: ${name}`, async ({ page }) => {
+  test(`baseline visual: ${name}`, async ({ page }, testInfo) => {
+    const baseline = testInfo.snapshotPath(`${name}.png`)
+    test.skip(
+      process.platform !== 'win32' && !fs.existsSync(baseline),
+      `baseline ${process.platform} ainda não gerada (gerar no container oficial do Playwright: npm run test:visual:update:linux)`,
+    )
+    await page.clock.setFixedTime(FIXED_NOW)
     if (name === 'carrinho' || name === 'pagamento') {
       // Mesmos 3 itens do Figma (Emerald Ape, Violet Nomad, Ivory Baron); pagamento com Ana logada.
       await openApp(page, '/')

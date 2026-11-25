@@ -1,0 +1,69 @@
+# CI do KURIO (CP7). Preparado e validado em sintaxe; ainda NÃO executado no GitHub
+# (repositório sem remoto até a autorização de publicação, CP9).
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  quality:
+    name: Typecheck, lint, build e testes
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    env:
+      CI: 'true'
+      # O mesmo build de demonstração da entrega: MSW ativo (VITE_ENABLE_MOCKS em .env).
+      PW_WORKERS: '2'
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - name: Instalar dependências (lockfile)
+        run: npm ci
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Build
+        run: npm run build
+
+      - name: Instalar o Chromium do Playwright
+        run: npx playwright install --with-deps chromium
+
+      - name: Testes unitários
+        run: npm run test:unit
+
+      - name: Testes E2E (desktop, mobile e responsivo)
+        # Regressão visual: sem baseline Linux versionada, o teste é ignorado com motivo
+        # explícito (as baselines Linux são geradas no container oficial: test:visual:update:linux).
+        run: npm run test:e2e:browsers
+
+      - name: Relatório HTML do Playwright
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 14
+
+      - name: Traces, capturas e diffs das falhas
+        if: ${{ failure() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results
+          path: test-results/
+          retention-days: 14

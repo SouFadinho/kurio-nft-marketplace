@@ -51,7 +51,7 @@ import { cartHasIssues, useCart, useQuote } from '@/features/cart/queries'
 import { CouponForm, SummaryRows } from '@/features/cart/QuoteSummary'
 import { formatEth } from '@/lib/eth'
 import { cn } from '@/lib/utils'
-import { clearDraft, loadDraft, saveDraft, useConnectWallet, useCreateCheckoutOrder, useDisconnectWallet, type CheckoutDraft } from './queries'
+import { clearAttempt, clearDraft, loadDraft, saveDraft, useConnectWallet, useCreateCheckoutOrder, useDisconnectWallet, useRecoverAttempt, type CheckoutDraft } from './queries'
 
 const CRUMBS = [{ label: 'Início', to: '/' as const }, { label: 'Mercado', to: '/mercado' as const }, { label: 'Pagamento' }]
 const TITLE = 'Pagamento com carteira'
@@ -62,9 +62,30 @@ export function CheckoutPage() {
   const profile = useProfile()
   const wallets = useWallets()
   const [started, setStarted] = useState(false)
+  const navigate = useNavigate()
+  // CP7: uma compra enviada antes (refresh ou aba fechada sem resposta) é procurada pela chave.
+  const recovery = useRecoverAttempt(session!.userId)
+  const recovered = recovery.data
+  useEffect(() => {
+    if (!recovered) return
+    clearAttempt(session!.userId)
+    clearDraft(session!.userId)
+    toast.info('Encontramos a compra que você já tinha enviado', { description: `Pedido ${recovered.id}. Nada foi enviado de novo.` })
+    void navigate({ to: '/pedidos/$orderId', params: { orderId: recovered.id }, replace: true })
+  }, [recovered, navigate, session])
 
   const shell = (main: React.ReactNode, summary: React.ReactNode = null) => <CheckoutLayout title={TITLE} crumbs={CRUMBS} backTo="/carrinho" main={main} summary={summary} />
 
+  if (recovery.isFetching || recovered) {
+    return shell(
+      <p role="status" aria-busy="true" className="rounded-sm bg-surface p-5 text-body">
+        Verificando uma compra enviada antes…
+      </p>,
+    )
+  }
+  if (recovery.isError) {
+    return shell(<ErrorState title="Não foi possível verificar a compra anterior" message={apiErrorMessage(recovery.error)} onRetry={() => void recovery.refetch()} retrying={recovery.isFetching} />)
+  }
   if (cart.isPending || profile.isPending || wallets.isPending) {
     return shell(
       <div className="flex flex-col gap-4" aria-busy="true" aria-label="Carregando pagamento">

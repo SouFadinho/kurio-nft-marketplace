@@ -547,9 +547,17 @@ export const OrderUpdatedEvent = EventEnvelope(
 )
 export type OrderUpdatedEvent = z.infer<typeof OrderUpdatedEvent>
 
-export type RealtimeEvent = NftUpdatedEvent | OrderUpdatedEvent
+/**
+ * CP7: o carrinho do usuário mudou (outra aba, merge, confirmação de pedido). Privado (só o dono);
+ * leva só a versão: o cliente revalida o carrinho pelo REST.
+ */
+export const CartUpdatedEvent = EventEnvelope('cart.updated', 'cart', z.object({ version: z.number().int().nonnegative() }))
+export type CartUpdatedEvent = z.infer<typeof CartUpdatedEvent>
+
+export type RealtimeEvent = NftUpdatedEvent | OrderUpdatedEvent | CartUpdatedEvent
 
 export const REALTIME_EVENTS = {
   nftUpdated: 'nft.updated',
   orderUpdated: 'order.updated',
+  cartUpdated: 'cart.updated',
 } as const

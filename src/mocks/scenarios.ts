@@ -109,6 +109,8 @@ export const SCENARIOS = {
   /** Criação lenta (1,5 s) e liquidação manual: estado "enviando" observável e cliques repetidos. */
   'slow-order': { ...base, settlement: 'manual', routeLatency: { 'orders.create': () => 1_500 } },
   // ---------- CP6: pedidos ----------
+  /** CP7: liquidação automática em 4 s (troca de líder do cluster DURANTE a liquidação). */
+  'slow-settlement': { ...base, settleDelayMs: 4_000 },
   /** Leitura do pedido retida até o teste liberar (carregamento da tela do pedido). */
   'hold-order-read': { ...base, settlement: 'manual', holdRoutes: ['orders.read'] },
   /** Leitura do pedido falha até `recover('orders.read')` (erro + recuperação). */

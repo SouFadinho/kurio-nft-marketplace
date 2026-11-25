@@ -14,7 +14,11 @@
     "lint": "eslint .",
     "test:e2e": "playwright test",
     "test:e2e:report": "playwright show-report",
-    "audit:lighthouse": "node scripts/lighthouse.mjs"
+    "audit:lighthouse": "node scripts/lighthouse.mjs",
+    "test:unit": "playwright test --project=unit",
+    "test:visual": "playwright test e2e/visual.spec.ts",
+    "test:visual:update:linux": "docker run --rm --ipc=host -v \"$PWD\":/work -w /work mcr.microsoft.com/playwright:v1.65.1-noble /bin/bash -c \"npm ci && npx playwright test e2e/visual.spec.ts --update-snapshots\"",
+    "test:e2e:browsers": "playwright test --project=desktop-chromium --project=mobile-chromium --project=responsive"
   },
   "dependencies": {
     "@fontsource-variable/roboto-mono": "5.3.0",

@@ -3,7 +3,7 @@
  * gera o evento Socket.IO correspondente AQUI, junto da escrita no db.
  * Assim, REST e tempo real nunca divergem (MOCK-10).
  */
-import type { NftUpdatedEvent, Order, OrderUpdatedEvent } from '@/api/contracts'
+import type { CartUpdatedEvent, NftUpdatedEvent, Order, OrderUpdatedEvent } from '@/api/contracts'
 import { db, now, type DbNft, type DbOrder } from './db'
 import { availableOf } from './catalog-model'
 import { broadcast, emitToUser, makeEvent } from './realtime/server'
@@ -67,6 +67,18 @@ export function emitStaleNftUpdate(id: string, fakePrice: string) {
   })
   broadcast(event)
   return event
+}
+
+/** CP7: avisa as conexões do DONO que o carrinho mudou (só carrinhos de usuário). */
+export function emitCartUpdated(ownerKey: string) {
+  if (!ownerKey.startsWith('user:')) return
+  const userId = ownerKey.slice(5)
+  const cart = db.get().carts[ownerKey]
+  if (!cart) return
+  emitToUser(
+    userId,
+    makeEvent<CartUpdatedEvent>({ type: 'cart.updated', resource: { type: 'cart', id: userId }, version: cart.version, userId, data: { version: cart.version } }),
+  )
 }
 
 export function orderEvent(order: Order) {
@@ -141,6 +153,7 @@ function applyCheckoutSettlement(order: DbOrder) {
       if (order.pricing && cart.couponCode === order.pricing.couponCode) cart.couponCode = null
       cart.version += 1
     })
+    emitCartUpdated(`user:${order.userId}`)
     return
   }
   for (const line of order.lines) {

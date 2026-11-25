@@ -8,6 +8,7 @@ import { queryKeys } from '@/api/queryKeys'
 import {
   TERMINAL_ORDER_STATUSES,
   type Cart,
+  type CartUpdatedEvent,
   type FavoriteList,
   type Highlights,
   type Nft,
@@ -137,4 +138,16 @@ export function invalidateCartsWith(qc: QueryClient, nftId: string) {
     const cart = query.state.data as Cart | undefined
     if (cart?.lines.some((l) => l.nftId === nftId)) void qc.invalidateQueries({ queryKey: query.queryKey })
   }
+}
+
+/**
+ * CP7: `cart.updated` (privado). O carrinho do usuário mudou em outra aba, no merge ou na
+ * confirmação de um pedido. Duplicado ou não mais novo que o cache: ignorado. Senão, o
+ * carrinho (e a cotação, que fica sob a mesma chave) é revalidado pelo REST.
+ */
+export function applyCartUpdated(qc: QueryClient, guard: EventGuard, userId: string, event: CartUpdatedEvent): GuardDecision {
+  const key = queryKeys.me.cart(userId)
+  const decision = guard.decide(event, qc.getQueryData<Cart>(key)?.version)
+  if (decision === 'apply') void qc.invalidateQueries({ queryKey: key })
+  return decision
 }

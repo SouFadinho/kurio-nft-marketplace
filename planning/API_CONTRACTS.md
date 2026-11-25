@@ -42,6 +42,7 @@ Merge determinístico (`src/mocks/cart-model.ts`): linhas do usuário mantêm a 
 | `POST /api/orders` | `CheckoutRequest` + `Idempotency-Key` | 201 `Order` (pendente) · 200 mesmo pedido (mesma chave e mesmo conteúdo) | 409 `IDEMPOTENCY_KEY_REUSED`, 409 `QUOTE_STALE`/`QUOTE_EXPIRED`, 409 `OUT_OF_STOCK`, 409 `WALLET_DISCONNECTED`, 422 |
 | `GET /api/orders` | Bearer | `OrderList` (do usuário, mais recentes primeiro) | 401 |
 | `GET /api/orders/:id` | Bearer | `Order` | 404 se não existir **ou for de outro usuário** |
+| `GET /api/orders/by-key/:key` (CP7) | Bearer | `Order` criado com essa chave de idempotência (só leitura; nunca cria) | 404 se não existir ou for de outro usuário |
 | `GET /api/explorer/tx/:hash` | — | `ExplorerTx` (`demo: true`; só dados públicos de transação confirmada) | 404 |
 
 Ordem de verificação em `POST /api/orders`:
@@ -76,6 +77,7 @@ Envelope comum: `{ eventId, type, resource: { type, id }, version, occurredAt, u
 |---|---|---|
 | `nft.updated` | todas as conexões aceitas | `{ price, available, editions[] }` |
 | `order.updated` | só as conexões autenticadas do dono | `{ status, txHash, settledAt?, failureReason? }` |
+| `cart.updated` (CP7) | só as conexões autenticadas do dono, em todas as abas | `{ version }`: o cliente revalida o carrinho pelo REST (escrita em outra aba, merge, confirmação de pedido) |
 
 Regras no cliente (`src/realtime/`):
 - **EventGuard:** descarta duplicatas pelo `eventId` e versões antigas ou iguais às do cache.
@@ -90,6 +92,7 @@ Regras no cliente (`src/realtime/`):
 | Fechar e reabrir a aba / acesso direto à URL | rota privada pede login (sessão é por aba) e volta ao pedido; o estado vem do REST |
 | Desconexão durante a liquidação | nada é presumido; ao reconectar, a reconciliação REST traz confirmado ou recusado |
 | Timeout ou resposta perdida após a criação | retry com a MESMA chave e o MESMO conteúdo devolve o pedido original |
+| Timeout + refresh ou fechamento da aba (CP7) | a tentativa fica em localStorage por usuário; ao entrar no pagamento, `GET /orders/by-key/:key` encontra o pedido e leva a ele; se não existir, a tentativa é descartada (nada foi gravado) |
 | Sessão expira com o pedido pendente | login com aviso e retorno ao pedido |
 
 Em nenhum caso a recuperação cria um novo pedido.

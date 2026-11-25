@@ -10,8 +10,9 @@
  * - A requisição carrega a intenção 'checkout': se a sessão expirar, o login volta para
  *   /pagamento (o rascunho é restaurado). A compra NUNCA é reenviada sozinha.
  */
-import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { http } from '@/api/http'
+import { useState } from 'react'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { ApiError, http } from '@/api/http'
 import { queryKeys } from '@/api/queryKeys'
 import { Order, WalletConnection, type CheckoutRequest, type Network, type WalletType } from '@/api/contracts'
 import { useClientSession } from '@/features/auth/queries'
@@ -19,23 +20,64 @@ import { useClientSession } from '@/features/auth/queries'
 /** Timeout do envio do pedido (o cenário `order-timeout` responde depois disso). */
 export const ORDER_CREATE_TIMEOUT_MS = 5_000
 
-const ATTEMPT_KEY = 'kurio:checkout-attempt'
+/**
+ * Tentativa de compra em andamento, POR USUÁRIO e em localStorage (CP7): sobrevive a refresh e ao
+ * fechamento da aba. Só sai daqui quando o desfecho é conhecido (pedido criado ou recusa
+ * definitiva da API). Ao voltar ao pagamento, `useRecoverAttempt` consulta o pedido pela chave.
+ */
+const attemptKey = (userId: string) => `kurio:checkout-attempt:${userId}`
+type StoredAttempt = { key: string; payload: string }
+
+export function readAttempt(userId: string): StoredAttempt | null {
+  try {
+    return JSON.parse(localStorage.getItem(attemptKey(userId)) ?? 'null') as StoredAttempt | null
+  } catch {
+    return null
+  }
+}
 
 /** Chave de idempotência da tentativa: mesma para o mesmo conteúdo, nova para conteúdo novo. */
-export function idempotencyKeyFor(body: CheckoutRequest): string {
+export function idempotencyKeyFor(userId: string, body: CheckoutRequest): string {
   const payload = JSON.stringify(body)
-  try {
-    const stored = JSON.parse(sessionStorage.getItem(ATTEMPT_KEY) ?? 'null') as { key: string; payload: string } | null
-    if (stored && stored.payload === payload) return stored.key
-  } catch {
-    // Valor corrompido: começa uma tentativa nova.
-  }
+  const stored = readAttempt(userId)
+  if (stored && stored.payload === payload) return stored.key
   const key = crypto.randomUUID()
-  sessionStorage.setItem(ATTEMPT_KEY, JSON.stringify({ key, payload }))
+  localStorage.setItem(attemptKey(userId), JSON.stringify({ key, payload }))
   return key
 }
 
-export const clearAttempt = () => sessionStorage.removeItem(ATTEMPT_KEY)
+export const clearAttempt = (userId: string) => localStorage.removeItem(attemptKey(userId))
+
+/**
+ * Recuperação segura (CP7): havendo uma tentativa sem desfecho conhecido, consulta a API pela
+ * chave (GET /orders/by-key/:key, NÃO cria nada). Se o pedido existe, devolve-o; se não existe,
+ * a tentativa é descartada (nada foi gravado) e a pessoa decide de novo.
+ *
+ * Só a tentativa que já existia AO ENTRAR na página é procurada (estado inicial). Uma tentativa
+ * criada agora por esta mesma página (envio em andamento) nunca é consultada nem apagada aqui:
+ * a consulta chegaria antes da gravação, receberia 404 e descartaria a chave (defeito do CP7).
+ */
+export function useRecoverAttempt(userId: string) {
+  const [stored] = useState(() => readAttempt(userId))
+  return useQuery({
+    queryKey: [...queryKeys.me.all(userId), 'attempt', stored?.key ?? 'none'],
+    enabled: !!stored,
+    retry: false,
+    gcTime: 0,
+    queryFn: async ({ signal }) => {
+      try {
+        return Order.parse((await http.get(`/orders/by-key/${encodeURIComponent(stored!.key)}`, { signal })).data)
+      } catch (error) {
+        if (error instanceof ApiError && error.code === 'NOT_FOUND') {
+          // Só apaga se ainda for a mesma tentativa (nunca uma mais nova).
+          if (readAttempt(userId)?.key === stored!.key) clearAttempt(userId)
+          return null
+        }
+        throw error
+      }
+    },
+  })
+}
 
 export function useCreateCheckoutOrder() {
   const qc = useQueryClient()
@@ -46,15 +88,15 @@ export function useCreateCheckoutOrder() {
       Order.parse(
         (
           await http.post('/orders', body, {
-            headers: { 'Idempotency-Key': idempotencyKeyFor(body) },
+            headers: { 'Idempotency-Key': idempotencyKeyFor(session!.userId, body) },
             timeout: ORDER_CREATE_TIMEOUT_MS,
             kurioIntent: { kind: 'checkout', path: '/pagamento' },
           })
         ).data,
       ),
     onSuccess: (order) => {
-      clearAttempt()
       if (!session) return
+      clearAttempt(session.userId)
       qc.setQueryData(queryKeys.me.order(session.userId, order.id), order)
       // O pedido reservou estoque (as linhas podem mudar de disponibilidade); os itens só saem
       // do carrinho na confirmação (PAY-07).

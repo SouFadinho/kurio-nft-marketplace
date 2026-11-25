@@ -143,11 +143,19 @@ test.describe('catálogo: busca, filtros, ordenação e paginação na URL', () 
     // Cenário: termos curtos respondem mais devagar ("g" ≈ 1,2 s; termo longo ≈ 0 s).
     await openApp(page, '/', 'out-of-order')
     const field = searchField(page)
+    // CP7: sem esperas arbitrárias. Espera a consulta lenta de "g" SAIR (após o debounce) e, no
+    // fim, o desfecho dela (resposta atrasada entregue ou requisição cancelada pelo Query).
+    const isSlowG = (url: string) => new URL(url).pathname === '/api/nfts' && new URL(url).searchParams.get('q') === 'g'
+    const slowSent = page.waitForRequest((r) => isSlowG(r.url()))
+    const slowSettled = Promise.race([
+      page.waitForResponse((r) => isSlowG(r.url())).then(() => 'entregue'),
+      page.waitForEvent('requestfailed', (r) => isSlowG(r.url())).then(() => 'cancelada'),
+    ])
     await field.fill('g')
-    await page.waitForTimeout(450) // debounce dispara a consulta lenta de "g"
+    await slowSent
     await field.fill('golden pulse')
     await expect(cardNames(page)).toHaveText(['Golden Pulse #120'])
-    await page.waitForTimeout(1_500) // a resposta atrasada de "g" chega depois
+    await slowSettled
     await expect(cardNames(page)).toHaveText(['Golden Pulse #120'])
     await expect(page).toHaveURL(/q=golden(\+|%20)pulse/)
   })

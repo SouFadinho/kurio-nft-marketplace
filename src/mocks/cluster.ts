@@ -38,6 +38,16 @@ const busHandlers = new Map<string, (payload: unknown) => void>()
 
 export const isLeader = () => role === 'leader'
 
+/**
+ * Compatibilidade (CP7): Web Locks e BroadcastChannel existem nos navegadores atuais (Chromium,
+ * Firefox, Safari 15.4+); Web Locks exige contexto seguro (HTTPS ou localhost). Sem eles, a aba
+ * roda SOZINHA como líder (aba única, sem sincronização entre abas), com aviso. Observação: o
+ * próprio MSW usa BroadcastChannel; sem ele a camada de mocks não funciona em nenhum modo.
+ */
+export const clusterSupported = () => typeof BroadcastChannel !== 'undefined' && typeof navigator !== 'undefined' && !!navigator.locks
+let standalone = false
+export const isStandalone = () => standalone
+
 function onMessage(event: MessageEvent<Message>) {
   const msg = event.data
   if (msg.type === 'rpc' && role === 'leader') {
@@ -88,6 +98,12 @@ export const onBus = (topic: string, handler: (payload: never) => void) => busHa
  * líder (a aba líder anterior fechou).
  */
 export function joinCluster(onPromoted: () => Promise<void>): Promise<Role> {
+  if (!clusterSupported()) {
+    standalone = true
+    role = 'leader'
+    console.warn('[KURIO mock] Web Locks/BroadcastChannel indisponíveis: simulação sem sincronização entre abas.')
+    return Promise.resolve('leader')
+  }
   channel = new BroadcastChannel(CHANNEL)
   channel.addEventListener('message', onMessage)
   // Encerramento: o canal e o lock são liberados quando a aba é descartada.
@@ -107,6 +123,13 @@ export function joinCluster(onPromoted: () => Promise<void>): Promise<Role> {
       void navigator.locks.request(LOCK, async () => {
         await onPromoted()
         role = 'leader'
+        // RPCs que esta aba enviou ao líder anterior nunca terão resposta: falham já (em vez de
+        // esperar o timeout de 20 s) e o cliente trata como erro de rede (retry idempotente).
+        for (const [id, waiting] of pending) {
+          window.clearTimeout(waiting.timer)
+          waiting.reject(new Error('O líder mudou durante a requisição.'))
+          pending.delete(id)
+        }
         return forever()
       })
       return undefined

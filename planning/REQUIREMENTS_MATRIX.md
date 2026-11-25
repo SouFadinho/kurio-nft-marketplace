@@ -36,12 +36,12 @@ Abreviação: `T<n>` = teste `<n>.` de `e2e/poc.spec.ts`.
 
 | ID | Critério | Como é garantido | Evidência | Status |
 |---|---|---|---|---|
-| ELIM-01 | Uso efetivo da stack | Cada tecnologia tem papel real (§1) | §1 abaixo | IMPLEMENTADO, NÃO VALIDADO (falta a solução final; a stack em si está VALIDADA na PoC) |
-| ELIM-02 | Fluxos principais não podem ser apenas visuais | Ações passam por Axios → MSW → db | PoC: login, pedido e reload persistem (T2, T3/4) | PENDENTE (fluxos finais) |
-| ELIM-03 | Compra confirmada só com resposta da simulação | A UI renderiza "confirmado" só com `status === 'confirmed'` vindo do REST/evento | T5, T5b, T7/8 | VALIDADO (PoC) · revalidar no CP6/CP7 |
-| ELIM-04 | Sem exposição de dados entre usuários | Query keys por `userId`; cache limpo no login/logout; socket por sessão; mock filtra por dono; cliente descarta evento alheio | T6, T6b, T6c; CP4: isolation.spec (respostas atrasadas, socket, API 404) | VALIDADO (CP4) · revalidar no CP7 com carrinho e pedidos |
-| ELIM-05 | Sem eventos simulados na UI | Eventos só nascem em `src/mocks`; lint proíbe importar `src/mocks` fora de `main.tsx` | `lint.log` + sonda de lint (relatório CP1 §4) + T3/4..T9 | VALIDADO |
-| ELIM-06 | Testes E2E executáveis | `npm run test:e2e` | `e2e-full-run-{1,2,3}.log` | VALIDADO (PoC) · a suíte completa é do CP7 |
+| ELIM-01 | Uso efetivo da stack | Cada tecnologia tem papel real (§1) | §1 abaixo | VALIDADO (CP7): ELIMINATORY_AUDIT.md §ELIM-01 |
+| ELIM-02 | Fluxos principais não podem ser apenas visuais | Ações passam por Axios → MSW → db | PoC: login, pedido e reload persistem (T2, T3/4) | VALIDADO (CP7): todos os fluxos com efeito conferido no servidor (ELIMINATORY_AUDIT.md) |
+| ELIM-03 | Compra confirmada só com resposta da simulação | A UI renderiza "confirmado" só com `status === 'confirmed'` vindo do REST/evento | T5, T5b, T7/8 | VALIDADO (CP7): criação retida sem confirmação; offline/terminal/recusa (ELIMINATORY_AUDIT.md) |
+| ELIM-04 | Sem exposição de dados entre usuários | Query keys por `userId`; cache limpo no login/logout; socket por sessão; mock filtra por dono; cliente descarta evento alheio | T6, T6b, T6c; CP4: isolation.spec (respostas atrasadas, socket, API 404) | VALIDADO (CP7): isolation, orders, tabs, hardening (ELIMINATORY_AUDIT.md) |
+| ELIM-05 | Sem eventos simulados na UI | Eventos só nascem em `src/mocks`; lint proíbe importar `src/mocks` fora de `main.tsx` | `lint.log` + sonda de lint (relatório CP1 §4) + T3/4..T9 | VALIDADO (CP7): eventos só pelo socket.io-client; barramento entre abas interno ao mock (ELIMINATORY_AUDIT.md) |
+| ELIM-06 | Testes E2E executáveis | `npm run test:e2e` | `e2e-full-run-{1,2,3}.log` | VALIDADO localmente (CP7, suíte completa); CI preparado, NÃO executado (sem remoto); checkout limpo final no CP9 |
 
 ## 1. Stack obrigatória
 
@@ -224,6 +224,9 @@ Todas `PENDENTE` (TELA-01..09). Desde o CP2:
 | VIS-11 | (registrado no CP6) Revisar a altura dos cards do carrinho mobile | revisão visual final |
 | VIS-12 | (registrado no CP6) Garantir que o CTA fixo do mobile não impeça a visualização do total | revisão visual final |
 | VIS-13 | (registrado no CP6) Preservar requisitos funcionais e de acessibilidade durante VIS-10..12 (rodar a suíte completa após os ajustes) | revisão visual final |
+| VIS-14 | (CP7) Hierarquia visual do recibo (título, total e hash; densidade da lista de dados no mobile) | CP8 |
+| VIS-15 | (CP7) Toasts não podem encobrir ações (CTA fixo do mobile, botões de quantidade) | CP8 |
+| VIS-16 | (CP7) Espaçamentos e tipografia: revisão geral contra as capturas do Figma na mesma escala | CP8 |
 
 ## 13. CP4: autenticação, perfil e carteiras (evidências em `planning/evidence/cp4/` e `planning/evidence/cp4-tests/`)
 
