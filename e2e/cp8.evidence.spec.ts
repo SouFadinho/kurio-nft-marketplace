@@ -6,7 +6,8 @@
 import { expect, test, type Page } from '@playwright/test'
 import { USERS, mock, openApp, placeOrder, seedCart, signIn, summaryValue } from './support'
 
-const OUT = 'planning/evidence/cp8'
+// CP9: `EVIDENCE_OUT` permite repetir a captura no código final sem sobrescrever as evidências do CP8.
+const OUT = process.env.EVIDENCE_OUT ?? 'planning/evidence/cp8'
 test.use({ reducedMotion: 'reduce' })
 test.setTimeout(120_000)
 

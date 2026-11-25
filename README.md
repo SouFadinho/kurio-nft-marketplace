@@ -136,7 +136,16 @@ As baselines visuais versionadas são do Windows. Baselines Linux não foram ger
 
 ## Resultados Lighthouse (build final, mediana de 3 execuções)
 
-<!-- LH:FINAL -->
+Rodada oficial de 25/11/2026 no commit `a5aff5b` (`planning/evidence/cp9-perf/oficial/`; Windows 11, Node 26.13.1, Lighthouse 13.6.0, HeadlessChrome 159, throttling padrão do Lighthouse).
+
+| Página | Perfil | Performance | Accessibility | Best Practices | SEO | LCP | CLS | TBT |
+|---|---|---|---|---|---|---|---|---|
+| Início | mobile | **55** ✗ | 100 | 96 | 92 | 4,93 s | 0,000 | 1492 ms |
+| Início | desktop | 97 | 100 | 96 | 92 | 1,27 s | 0,010 | 18 ms |
+| Detalhe | mobile | **64** ✗ | 100 | 96 | 92 | 4,74 s | 0,000 | 649 ms |
+| Detalhe | desktop | 98 | 100 | 96 | 92 | 1,08 s | 0,000 | 40 ms |
+
+Medições locais variam entre rodadas: com o mesmo código, uma repetição do CP8 deu 70 na Início mobile (todas as execuções publicadas, nenhuma descartada).
 
 Metas: Performance ≥ 90, Accessibility ≥ 95, Best Practices ≥ 95, SEO ≥ 90. **A meta de Performance no mobile não foi atingida.** O LCP mobile é a arte do NFT, que só pode ser pedida depois de o MSW (API simulada no navegador) iniciar sob 4G lento e CPU 4×. As causas, as hipóteses testadas e as que foram revertidas estão em `planning/CP8_REPORT.md` §5 e `planning/evidence/cp9-perf/LEIA-ME.md`. Relatórios HTML/JSON originais em `planning/evidence/`.
 

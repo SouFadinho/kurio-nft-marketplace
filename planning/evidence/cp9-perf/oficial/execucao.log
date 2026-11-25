@@ -1,0 +1,141 @@
+2026-11-25 09:53:46
+a5aff5b CP9: limpeza da entrega, documentação e preparação do deploy
+
+> kurio-nft-marketplace@0.1.0 audit:lighthouse
+> node scripts/lighthouse.mjs
+
+
+> kurio-nft-marketplace@0.1.0 build
+> tsc -b && vite build
+
+[36mvite v8.3.8 [32mbuilding client environment for production...[36m[39m
+transforming...
+✓ 2961 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                                                    2.62 kB │ gzip:   0.73 kB
+dist/assets/roboto-mono-vietnamese-wght-normal-DlC-zuDL.woff2     10.30 kB
+dist/assets/roboto-mono-greek-wght-normal-BJJTbwTT.woff2          14.04 kB
+dist/assets/roboto-mono-cyrillic-wght-normal-HUlVHixE.woff2       18.59 kB
+dist/assets/roboto-mono-latin-ext-wght-normal-QAYlOegK.woff2      22.91 kB
+dist/assets/roboto-mono-latin-wght-normal-CZtBPCCa.woff2          32.79 kB
+dist/assets/roboto-mono-cyrillic-ext-wght-normal-BUDPrIko.woff2   35.91 kB
+dist/assets/index-BbdUEg9x.css                                    78.60 kB │ gzip:  15.33 kB
+dist/assets/perfil-BVHIlBLN.js                                     0.06 kB │ gzip:   0.08 kB
+dist/assets/demo.poc.nft._nftId-DBh-jln0.js                        0.16 kB │ gzip:   0.16 kB
+dist/assets/useCanGoBack-DfTWGyWq.js                               0.18 kB │ gzip:   0.16 kB
+dist/assets/routes-BJLm0x1o.js                                     0.20 kB │ gzip:   0.17 kB
+dist/assets/useLocation-D1SC6m2w.js                                0.21 kB │ gzip:   0.16 kB
+dist/assets/pedidos._orderId-CAdmSHVu.js                           0.22 kB │ gzip:   0.18 kB
+dist/assets/cadastro-79gL2aTn.js                                   0.24 kB │ gzip:   0.19 kB
+dist/assets/login-CORLfF4v.js                                      0.27 kB │ gzip:   0.22 kB
+dist/assets/aprenda-D7vq23io.js                                    0.27 kB │ gzip:   0.23 kB
+dist/assets/criadores-CmLuTsOz.js                                  0.30 kB │ gzip:   0.25 kB
+dist/assets/wallet-DqtWBfko.js                                     0.32 kB │ gzip:   0.23 kB
+dist/assets/authSearch-DIbEBPTl.js                                 0.33 kB │ gzip:   0.25 kB
+dist/assets/demo.poc.nft._nftId-Bnh8iwhv.js                        0.38 kB │ gzip:   0.28 kB
+dist/assets/useNavigate-CPI6J_vj.js                                0.42 kB │ gzip:   0.29 kB
+dist/assets/NetworkBadge-3SYhnaoD.js                               0.51 kB │ gzip:   0.32 kB
+dist/assets/nft._nftId-FQkJirU-.js                                 0.56 kB │ gzip:   0.40 kB
+dist/assets/useMatch-eVANNRrB.js                                   0.58 kB │ gzip:   0.38 kB
+dist/assets/nft._nftId-CtxZC4y3.js                                 0.66 kB │ gzip:   0.41 kB
+dist/assets/demo-DVPy9tZ3.js                                       0.66 kB │ gzip:   0.44 kB
+dist/assets/dist-hra6F80o.js                                       0.70 kB │ gzip:   0.48 kB
+dist/assets/rolldown-runtime-XKyaHtl9.js                           0.72 kB │ gzip:   0.42 kB
+dist/assets/PriceDisplay-CF1JMS30.js                               0.73 kB │ gzip:   0.41 kB
+dist/assets/NFTGrid-B7kRBSDJ.js                                    0.76 kB │ gzip:   0.49 kB
+dist/assets/SectionHeading-uiq41SGZ.js                             0.77 kB │ gzip:   0.37 kB
+dist/assets/demo.index-q9-2aiR2.js                                 0.78 kB │ gzip:   0.38 kB
+dist/assets/queries-DRz_AL8v.js                                    0.79 kB │ gzip:   0.45 kB
+dist/assets/label-CEgxPYgg.js                                      0.80 kB │ gzip:   0.49 kB
+dist/assets/input-DJ0cHYQ6.js                                      0.82 kB │ gzip:   0.47 kB
+dist/assets/card-D2ntjCcu.js                                       0.85 kB │ gzip:   0.41 kB
+dist/assets/actions-UvdPxaH2.js                                    0.90 kB │ gzip:   0.53 kB
+dist/assets/demo.poc.nft._nftId-Br0HYaLP.js                        0.91 kB │ gzip:   0.48 kB
+dist/assets/pages-CC_1rPbH.js                                      0.99 kB │ gzip:   0.57 kB
+dist/assets/mercado-B-KmI9cs.js                                    1.09 kB │ gzip:   0.56 kB
+dist/assets/queries-oYDCl5v6.js                                    1.12 kB │ gzip:   0.54 kB
+dist/assets/search-BhQ0RTvx.js                                     1.30 kB │ gzip:   0.63 kB
+dist/assets/favoritos-DgEBD1zU.js                                  1.32 kB │ gzip:   0.75 kB
+dist/assets/NftImage-CZ-Z6tgz.js                                   1.32 kB │ gzip:   0.77 kB
+dist/assets/QuantitySelector-Bj9Lm_9X.js                           1.58 kB │ gzip:   0.80 kB
+dist/assets/CheckoutLayout-CmSutwij.js                             1.61 kB │ gzip:   0.76 kB
+dist/assets/demo.poc-DLbwRwWb.js                                   1.80 kB │ gzip:   0.84 kB
+dist/assets/queries-CDBTh11V.js                                    1.83 kB │ gzip:   0.66 kB
+dist/assets/demo.conta-DGdxsj1F.js                                 1.86 kB │ gzip:   0.80 kB
+dist/assets/states-DIDiGmuF.js                                     1.90 kB │ gzip:   0.87 kB
+dist/assets/useSelector-CZwuzmTm.js                                1.92 kB │ gzip:   0.85 kB
+dist/assets/demo.poc.pedidos._orderId-CWX6TCok.js                  2.05 kB │ gzip:   0.97 kB
+dist/assets/WalletCard-BkykurbJ.js                                 2.11 kB │ gzip:   1.00 kB
+dist/assets/dialog-DvpTqwSq.js                                     2.36 kB │ gzip:   0.92 kB
+dist/assets/pedidos.index-Dp74IsHv.js                              2.57 kB │ gzip:   1.15 kB
+dist/assets/demo.poc.index-Flvtf8xl.js                             2.93 kB │ gzip:   1.23 kB
+dist/assets/demo.checkout-C2JrgTW7.js                              3.09 kB │ gzip:   1.29 kB
+dist/assets/explorador.tx._hash-DPkNYz-o.js                        3.28 kB │ gzip:   1.40 kB
+dist/assets/chevron-left-CuHII_Bv.js                               3.39 kB │ gzip:   1.66 kB
+dist/assets/NFTCard-CR5XzOLV.js                                    3.66 kB │ gzip:   1.36 kB
+dist/assets/lazyRouteComponent-BHyzA5ax.js                         3.69 kB │ gzip:   1.33 kB
+dist/assets/form-D1QsX0TA.js                                       3.76 kB │ gzip:   1.85 kB
+dist/assets/link-C_2LTP_d.js                                       4.15 kB │ gzip:   2.15 kB
+dist/assets/tabs-CYH3ki--.js                                       4.31 kB │ gzip:   1.94 kB
+dist/assets/AccountLayout-DGzExoZ_.js                              4.53 kB │ gzip:   1.85 kB
+dist/assets/QuoteSummary-D8AjRJK3.js                               5.13 kB │ gzip:   2.01 kB
+dist/assets/button-Dd5zkaHU.js                                     5.57 kB │ gzip:   2.39 kB
+dist/assets/queries-u6rfkAtp.js                                    6.50 kB │ gzip:   2.14 kB
+dist/assets/perfil.carteiras-C_m4-ZGo.js                           7.43 kB │ gzip:   2.68 kB
+dist/assets/perfil.index-xrS-UZZ6.js                               7.56 kB │ gzip:   2.74 kB
+dist/assets/dist-0ajKzOU3.js                                       8.14 kB │ gzip:   3.10 kB
+dist/assets/carrinho-CBvCbNFd.js                                   8.42 kB │ gzip:   3.21 kB
+dist/assets/dist-0eaN9Km_.js                                       8.69 kB │ gzip:   3.06 kB
+dist/assets/AuthScreen-BXEL495W.js                                 8.93 kB │ gzip:   3.33 kB
+dist/assets/OrderStatusPage-BOt5OIhV.js                            9.29 kB │ gzip:   3.09 kB
+dist/assets/HomeContent-x5-zvTJY.js                                9.33 kB │ gzip:   3.20 kB
+dist/assets/dist-CV4OEGHK.js                                       9.67 kB │ gzip:   3.60 kB
+dist/assets/dist-DMi10zlW.js                                      10.20 kB │ gzip:   3.73 kB
+dist/assets/esm-B6DvIUmM.js                                       10.52 kB │ gzip:   3.82 kB
+dist/assets/MobileCatalogBar-ChVdOWYz.js                          11.98 kB │ gzip:   4.52 kB
+dist/assets/nft._nftId-D-4VagE3.js                                17.10 kB │ gzip:   5.50 kB
+dist/assets/dist-DyL6rTZb.js                                      18.63 kB │ gzip:   6.88 kB
+dist/assets/pagamento-B_hvMm0E.js                                 19.57 kB │ gzip:   6.77 kB
+dist/assets/dist-DWzsiiB1.js                                      27.06 kB │ gzip:  10.45 kB
+dist/assets/utils-CPbxnKle.js                                     29.92 kB │ gzip:   9.45 kB
+dist/assets/demo.componentes-Cd-PdaJr.js                          30.31 kB │ gzip:  10.04 kB
+dist/assets/esm-CYb1mJY5.js                                       30.77 kB │ gzip:   9.56 kB
+dist/assets/basics-Z6LqiDfy.js                                    34.46 kB │ gzip:   9.81 kB
+dist/assets/matchContext-BDj-Zsoo.js                              55.53 kB │ gzip:  19.74 kB
+dist/assets/drawer-0UaHJ29L.js                                    69.07 kB │ gzip:  21.05 kB
+dist/assets/App--OG2-hiD.js                                       70.39 kB │ gzip:  23.39 kB
+dist/assets/queryKeys-BPKA6KWe.js                                 83.76 kB │ gzip:  29.78 kB
+dist/assets/eth-CiCNfPkD.js                                      101.00 kB │ gzip:  29.34 kB
+dist/assets/index-Chi2b4W5.js                                    222.34 kB │ gzip:  69.83 kB
+dist/assets/browser-BqF7gCqK.js                                  497.84 kB │ gzip: 180.43 kB
+
+[32m✓ built in 2.01s[39m
+inicio-mobile-1: performance=53 accessibility=100 best-practices=96 seo=92
+inicio-mobile-2: performance=59 accessibility=100 best-practices=96 seo=92
+inicio-mobile-3: performance=55 accessibility=100 best-practices=96 seo=92
+inicio-desktop-1: performance=96 accessibility=100 best-practices=96 seo=92
+inicio-desktop-2: performance=97 accessibility=100 best-practices=96 seo=92
+inicio-desktop-3: performance=97 accessibility=100 best-practices=96 seo=92
+detalhe-mobile-1: performance=64 accessibility=100 best-practices=96 seo=92
+detalhe-mobile-2: performance=64 accessibility=100 best-practices=96 seo=92
+detalhe-mobile-3: performance=64 accessibility=100 best-practices=96 seo=92
+detalhe-desktop-1: performance=98 accessibility=100 best-practices=96 seo=92
+detalhe-desktop-2: performance=98 accessibility=100 best-practices=96 seo=92
+detalhe-desktop-3: performance=98 accessibility=100 best-practices=96 seo=92
+
+# Lighthouse — resumo
+
+Gerado em 2026-11-25T12:56:14.156Z. Node v26.13.1 · Windows_NT 10.0.26300 x64 · Lighthouse 13.6.0.
+Navegador: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/159.0.0.0 Safari/537.36.
+Medições por página e perfil: 3. Valores = mediana. Metas: Perf ≥ 90, A11y ≥ 95, BP ≥ 95, SEO ≥ 90.
+
+| Página | Perfil | Performance | Accessibility | Best Practices | SEO | LCP (ms) | CLS | TBT (ms) |
+|---|---|---|---|---|---|---|---|---|
+| inicio | mobile | **55** ⚠ | 100 | 96 | 92 | 4930 | 0.000 | 1492 |
+| inicio | desktop | 97 | 100 | 96 | 92 | 1266 | 0.010 | 18 |
+| detalhe | mobile | **64** ⚠ | 100 | 96 | 92 | 4736 | 0.000 | 649 |
+| detalhe | desktop | 98 | 100 | 96 | 92 | 1076 | 0.000 | 40 |
+
+Relatórios individuais em `lighthouse/reports/`.
+2026-11-25 09:56:16

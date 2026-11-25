@@ -1,0 +1,40 @@
+== 2026-11-25 09:39:34 clone a5aff5b
+fatal: repository '/d/emprego' does not exist
+== npm ci
+npm warn install-scripts   msw@2.15.0 (postinstall: node -e "import('./config/scripts/postinstall.js').catch(() => void 0)")
+npm warn install-scripts
+npm warn install-scripts Run `npm install-scripts ls` to review, or `npm install-scripts approve <pkg>` to allow.
+exit 0
+== typecheck
+> kurio-nft-marketplace@0.1.0 typecheck
+> tsc -b --noEmit
+
+exit 0
+== lint
+> kurio-nft-marketplace@0.1.0 lint
+> eslint .
+
+exit 0
+== build
+dist/assets/index-Chi2b4W5.js                                    222.34 kB │ gzip:  69.83 kB
+dist/assets/browser-BqF7gCqK.js                                  497.84 kB │ gzip: 180.43 kB
+
+[32m✓ built in 1.74s[39m
+exit 0
+== check:public-build
+OK   /demo → h1 "Página não encontrada"
+OK   /demo/poc → h1 "Página não encontrada"
+OK   /demo/componentes → h1 "Página não encontrada"
+OK   /mercado → HTTP 200 (deep link)
+OK   /nft/nft-001 → HTTP 200 (deep link)
+OK   /login → HTTP 200 (deep link)
+OK   /perfil → HTTP 200 (deep link)
+OK   /pedidos → HTTP 200 (deep link)
+OK   nenhum chunk demo.* requisitado
+exit 0
+== 2026-11-25 09:41:41 suite
+== 2026-11-25 09:41:41 fim
+== 2026-11-25 09:41:52 suite (reexecução do passo; preparação acima)
+== 2026-11-25 09:41:52 fim da suíte
+== 2026-11-25 09:42:03 suite em .cache/clean-cp9 (a5aff5b); as 2 tentativas anteriores não executaram testes (cd/PATH do script), ver acima
+== 2026-11-25 09:53:33 suíte concluída

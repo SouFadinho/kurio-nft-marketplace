@@ -197,12 +197,12 @@ As rotas internas `/demo/*` (PoC do CP1 e galeria do CP2) existem apenas no buil
 | TEST-03 (estado isolado) | VALIDADO: contexto novo + `?reset=1` por teste; 3 rodadas paralelas sem interferência |
 | TEST-04 (HTML + traces) | VALIDADO (configuração): `reporter` HTML e `trace: retain-on-failure`; relatórios gerados nas rodadas locais |
 | TEST-05 | VALIDADO (os testes acionam o servidor simulado; a UI muda via socket ou Axios) |
-| LH-01..06 | MEDIDO (CP8), METAS PARCIALMENTE ATINGIDAS: 12 auditorias oficiais (`planning/evidence/cp8-perf/oficial/`). A11y 100, BP 96, SEO 92 em todas (metas atingidas). Performance desktop 97–98 (atingida); mobile 54 (Início) e 64 (Detalhe), **abaixo de 90 (não atingida)**. Repetição completa registrada em `cp8-perf/repeticao/` (Início mobile 70). Ver CP8_REPORT §5 |
+| LH-01..06 | MEDIDO, METAS PARCIALMENTE ATINGIDAS. Rodada oficial final (CP9, `a5aff5b`, `cp9-perf/oficial/`): A11y 100, BP 96, SEO 92 nos 4 perfis (atingidas); Performance desktop 97/98 (atingida); **Performance mobile 55 (Início) e 64 (Detalhe), não atingida**. LCP, CLS e TBT registrados; ambiente, versões e condições em `summary.md`. Rodadas anteriores preservadas (`cp8-perf/`, `cp9-perf/`) |
 | DEL-01 (lockfile) | VALIDADO (`package-lock.json` gerado com `npm install`, sem force/legacy-peer-deps) |
 | DEL-02, 03 (deploy) | PREPARADO (CP9): `vercel.json` (rewrites de SPA, headers do Service Worker); **publicação aguarda autorização** |
 | DEL-04, 05 (README, ARCHITECTURE) | DOCUMENTADO (CP9) |
 | DEL-06 (scripts) | VALIDADO: `dev`, `build`, `preview`, `typecheck`, `lint`, `test:e2e`, `audit:lighthouse` (`dev` não exercitado por teste automatizado) |
-| DEL-07 (checkout limpo) | VALIDADO (CP1): `git clone` + `npm ci` + typecheck + lint + build + `test:e2e` = 43/43 (`clean-checkout.log`). Ressalva: os navegadores do Playwright vieram do cache em D: (`npx playwright install chromium` é um passo de setup a documentar no README) |
+| DEL-07 (checkout limpo) | VALIDADO (CP9, `a5aff5b`): `git clone` → `npm ci` → typecheck → lint → build → `check:public-build` → suíte completa (4 workers) = **473 passed, 0 failed, 9 skipped** (`cp9-tests/checkout-limpo-*.log`). Navegadores do Playwright vindos do cache local (`npx playwright install chromium` é passo de setup) |
 
 ## 11. CP3: catálogo e detalhe (evidências em `planning/evidence/cp3/` e `planning/evidence/cp3-tests/`)
 

@@ -75,3 +75,18 @@ Ações fora do escopo informam indisponibilidade sem simular sucesso (`design-s
 - CI preparado (`.github/workflows/ci.yml`), mas **não executado** (sem remoto).
 
 **Status: VALIDADO localmente; CI pendente de execução real.**
+
+## Reverificação final (CP9, commit `a5aff5b`, checkout limpo)
+
+Execução: `planning/evidence/cp9-tests/checkout-limpo-preparacao.log` e `checkout-limpo-suite.log` (`git clone` → `npm ci` → typecheck → lint → build → `check:public-build` → suíte completa, 4 workers, `retries: 0`): **473 passed, 0 failed, 9 skipped** (por dispositivo).
+
+| Critério | Verificação no código final | Resultado |
+|---|---|---|
+| ELIM-01 Stack | imports no código da aplicação: TanStack Router (53 arquivos), TanStack Query (17), Axios (cliente único), socket.io-client (1, sob demanda), radix-ui/shadcn (15/38), MSW na camada de mocks; Tailwind e Playwright/Lighthouse na configuração | MANTIDO |
+| ELIM-02 Fluxos funcionais | suíte completa no checkout limpo; os testes conferem o efeito no servidor simulado | MANTIDO |
+| ELIM-03 Confirmação só com resposta | orders, recovery e races no checkout limpo | MANTIDO |
+| ELIM-04 Isolamento | isolation, tabs, hardening no checkout limpo; ACC-08 agora também verifica a ausência de senha em claro no armazenamento | MANTIDO |
+| ELIM-05 Eventos pelo Socket.IO | busca estática fora de `src/mocks`: 0 imports de mocks, 0 usos de `__kurioMock`, 0 `fetch` direto, 0 `emit`/`publish`; regra de lint ativa (lint sem erros) | MANTIDO |
+| ELIM-06 E2E executáveis | suíte completa em checkout limpo; CI preparado e **não executado** (sem remoto) | MANTIDO localmente |
+
+As rotas internas `/demo/*` saíram do build público (CP9), mas continuam no build dos testes: a contagem de testes não mudou (482).
