@@ -121,4 +121,7 @@ TELA-06..09, ACC-01..07, ACC-08 (parcial), ELIM-04 (revalidado), E2E-03, E2E-04,
 - Baselines visuais de login/perfil: não adicionadas (TEST-02 pede Início, Detalhe, Carrinho e Pagamento).
 
 ## 12. Commit e checkout limpo
-COMMIT_INFO
+- Commit do código e das evidências: **`ea6f60b`** ("CP4: autenticação, perfil e carteiras"). Este relatório recebeu o resultado do checkout limpo num commit de documentação logo em seguida.
+- **Checkout limpo de `ea6f60b`** (`git clone` → `npm ci` → typecheck → lint → `npx playwright test`, que faz o build de produção): **295 aprovados · 0 reprovados · 5 ignorados (6,2 min)**. Log: `planning/evidence/cp4-tests/clean-checkout.log`.
+  - A primeira tentativa parou antes dos testes: o script encadeava `killport && …`, e `killport` retorna 1 quando a porta já está livre. Era um erro do meu comando, não do projeto; a segunda execução, no mesmo clone, está no mesmo log.
+- Nada foi publicado; não há repositório remoto.
