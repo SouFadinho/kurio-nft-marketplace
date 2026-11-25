@@ -225,8 +225,28 @@ test.describe('catálogo: tempo real e favoritos', () => {
     // Determinístico: a listagem é lida (1.69) e retida; o evento (2.05, v2) chega antes dela.
     await openApp(page, '/', 'stale-in-flight')
     await expect(page.getByTestId('nft-card-skeleton').first()).toBeVisible()
+    // Pré-condição (CP9.2): o evento precisa CHEGAR ao cliente, isto é, o socket (carregado sob
+    // demanda) já está conectado. Evento emitido antes da conexão é outro cenário (teste abaixo).
+    await expect.poll(async () => (await mock(page).connections()).length).toBeGreaterThan(0)
     await mock(page).updateNft('nft-002', { price: '2.05' })
     await mock(page).release('nfts.list')
+    const card = page.locator('[data-testid="nft-card"][data-nft-id="nft-002"]')
+    await expect(card.locator('[data-value]')).toHaveText('2.05 ETH')
+  })
+
+  test('evento emitido ANTES de o socket conectar, com a listagem em trânsito: o cliente reconcilia ao conectar', async ({ page }) => {
+    // CP9.2: corrida exposta quando o socket passou a conectar com a listagem em trânsito. O servidor
+    // recusa conexões (offline), a listagem fica retida e o evento (2.05) se perde: ninguém conectado.
+    await openApp(page, '/', 'stale-in-flight')
+    await mock(page).setOnline(false)
+    await expect(page.getByTestId('nft-card-skeleton').first()).toBeVisible()
+    await mock(page).updateNft('nft-002', { price: '2.05' })
+    expect(await mock(page).connections()).toHaveLength(0)
+    // Volta a aceitar conexões: a PRIMEIRA conexão acontece com a listagem ainda em trânsito.
+    await mock(page).setOnline(true)
+    await expect.poll(async () => (await mock(page).connections()).length).toBeGreaterThan(0)
+    await mock(page).release('nfts.list')
+    // A resposta antiga (1.69) entra; terminada a busca, o cliente reconcilia pelo REST.
     const card = page.locator('[data-testid="nft-card"][data-nft-id="nft-002"]')
     await expect(card.locator('[data-value]')).toHaveText('2.05 ETH')
   })

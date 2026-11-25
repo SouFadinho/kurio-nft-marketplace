@@ -1,0 +1,52 @@
+
+Running 48 tests using 4 workers
+
+[1/48] [desktop-chromium] › e2e\catalog.spec.ts:237:3 › catálogo: tempo real e favoritos › evento emitido ANTES de o socket conectar, com a listagem em trânsito: o cliente reconcilia ao conectar
+[2/48] [desktop-chromium] › e2e\catalog.spec.ts:224:3 › catálogo: tempo real e favoritos › resposta REST antiga que chega DEPOIS do evento não regride o preço
+[3/48] [desktop-chromium] › e2e\catalog.spec.ts:237:3 › catálogo: tempo real e favoritos › evento emitido ANTES de o socket conectar, com a listagem em trânsito: o cliente reconcilia ao conectar
+[4/48] [desktop-chromium] › e2e\catalog.spec.ts:224:3 › catálogo: tempo real e favoritos › resposta REST antiga que chega DEPOIS do evento não regride o preço
+[5/48] [desktop-chromium] › e2e\catalog.spec.ts:224:3 › catálogo: tempo real e favoritos › resposta REST antiga que chega DEPOIS do evento não regride o preço
+[6/48] [desktop-chromium] › e2e\catalog.spec.ts:237:3 › catálogo: tempo real e favoritos › evento emitido ANTES de o socket conectar, com a listagem em trânsito: o cliente reconcilia ao conectar
+[7/48] [desktop-chromium] › e2e\catalog.spec.ts:224:3 › catálogo: tempo real e favoritos › resposta REST antiga que chega DEPOIS do evento não regride o preço
+[8/48] [desktop-chromium] › e2e\catalog.spec.ts:237:3 › catálogo: tempo real e favoritos › evento emitido ANTES de o socket conectar, com a listagem em trânsito: o cliente reconcilia ao conectar
+[9/48] [desktop-chromium] › e2e\catalog.spec.ts:224:3 › catálogo: tempo real e favoritos › resposta REST antiga que chega DEPOIS do evento não regride o preço
+[10/48] [desktop-chromium] › e2e\catalog.spec.ts:237:3 › catálogo: tempo real e favoritos › evento emitido ANTES de o socket conectar, com a listagem em trânsito: o cliente reconcilia ao conectar
+[11/48] [desktop-chromium] › e2e\catalog.spec.ts:224:3 › catálogo: tempo real e favoritos › resposta REST antiga que chega DEPOIS do evento não regride o preço
+[12/48] [desktop-chromium] › e2e\catalog.spec.ts:237:3 › catálogo: tempo real e favoritos › evento emitido ANTES de o socket conectar, com a listagem em trânsito: o cliente reconcilia ao conectar
+[13/48] [desktop-chromium] › e2e\catalog.spec.ts:237:3 › catálogo: tempo real e favoritos › evento emitido ANTES de o socket conectar, com a listagem em trânsito: o cliente reconcilia ao conectar
+[14/48] [desktop-chromium] › e2e\catalog.spec.ts:224:3 › catálogo: tempo real e favoritos › resposta REST antiga que chega DEPOIS do evento não regride o preço
+[15/48] [desktop-chromium] › e2e\catalog.spec.ts:224:3 › catálogo: tempo real e favoritos › resposta REST antiga que chega DEPOIS do evento não regride o preço
+[16/48] [desktop-chromium] › e2e\catalog.spec.ts:237:3 › catálogo: tempo real e favoritos › evento emitido ANTES de o socket conectar, com a listagem em trânsito: o cliente reconcilia ao conectar
+[17/48] [desktop-chromium] › e2e\catalog.spec.ts:224:3 › catálogo: tempo real e favoritos › resposta REST antiga que chega DEPOIS do evento não regride o preço
+[18/48] [desktop-chromium] › e2e\catalog.spec.ts:237:3 › catálogo: tempo real e favoritos › evento emitido ANTES de o socket conectar, com a listagem em trânsito: o cliente reconcilia ao conectar
+[19/48] [desktop-chromium] › e2e\catalog.spec.ts:224:3 › catálogo: tempo real e favoritos › resposta REST antiga que chega DEPOIS do evento não regride o preço
+[20/48] [desktop-chromium] › e2e\catalog.spec.ts:237:3 › catálogo: tempo real e favoritos › evento emitido ANTES de o socket conectar, com a listagem em trânsito: o cliente reconcilia ao conectar
+[21/48] [desktop-chromium] › e2e\catalog.spec.ts:237:3 › catálogo: tempo real e favoritos › evento emitido ANTES de o socket conectar, com a listagem em trânsito: o cliente reconcilia ao conectar
+[22/48] [desktop-chromium] › e2e\catalog.spec.ts:224:3 › catálogo: tempo real e favoritos › resposta REST antiga que chega DEPOIS do evento não regride o preço
+[23/48] [desktop-chromium] › e2e\catalog.spec.ts:224:3 › catálogo: tempo real e favoritos › resposta REST antiga que chega DEPOIS do evento não regride o preço
+[24/48] [desktop-chromium] › e2e\catalog.spec.ts:237:3 › catálogo: tempo real e favoritos › evento emitido ANTES de o socket conectar, com a listagem em trânsito: o cliente reconcilia ao conectar
+[25/48] [mobile-chromium] › e2e\catalog.spec.ts:237:3 › catálogo: tempo real e favoritos › evento emitido ANTES de o socket conectar, com a listagem em trânsito: o cliente reconcilia ao conectar
+[26/48] [mobile-chromium] › e2e\catalog.spec.ts:224:3 › catálogo: tempo real e favoritos › resposta REST antiga que chega DEPOIS do evento não regride o preço
+[27/48] [mobile-chromium] › e2e\catalog.spec.ts:224:3 › catálogo: tempo real e favoritos › resposta REST antiga que chega DEPOIS do evento não regride o preço
+[28/48] [mobile-chromium] › e2e\catalog.spec.ts:237:3 › catálogo: tempo real e favoritos › evento emitido ANTES de o socket conectar, com a listagem em trânsito: o cliente reconcilia ao conectar
+[29/48] [mobile-chromium] › e2e\catalog.spec.ts:224:3 › catálogo: tempo real e favoritos › resposta REST antiga que chega DEPOIS do evento não regride o preço
+[30/48] [mobile-chromium] › e2e\catalog.spec.ts:224:3 › catálogo: tempo real e favoritos › resposta REST antiga que chega DEPOIS do evento não regride o preço
+[31/48] [mobile-chromium] › e2e\catalog.spec.ts:237:3 › catálogo: tempo real e favoritos › evento emitido ANTES de o socket conectar, com a listagem em trânsito: o cliente reconcilia ao conectar
+[32/48] [mobile-chromium] › e2e\catalog.spec.ts:237:3 › catálogo: tempo real e favoritos › evento emitido ANTES de o socket conectar, com a listagem em trânsito: o cliente reconcilia ao conectar
+[33/48] [mobile-chromium] › e2e\catalog.spec.ts:224:3 › catálogo: tempo real e favoritos › resposta REST antiga que chega DEPOIS do evento não regride o preço
+[34/48] [mobile-chromium] › e2e\catalog.spec.ts:237:3 › catálogo: tempo real e favoritos › evento emitido ANTES de o socket conectar, com a listagem em trânsito: o cliente reconcilia ao conectar
+[35/48] [mobile-chromium] › e2e\catalog.spec.ts:224:3 › catálogo: tempo real e favoritos › resposta REST antiga que chega DEPOIS do evento não regride o preço
+[36/48] [mobile-chromium] › e2e\catalog.spec.ts:237:3 › catálogo: tempo real e favoritos › evento emitido ANTES de o socket conectar, com a listagem em trânsito: o cliente reconcilia ao conectar
+[37/48] [mobile-chromium] › e2e\catalog.spec.ts:237:3 › catálogo: tempo real e favoritos › evento emitido ANTES de o socket conectar, com a listagem em trânsito: o cliente reconcilia ao conectar
+[38/48] [mobile-chromium] › e2e\catalog.spec.ts:224:3 › catálogo: tempo real e favoritos › resposta REST antiga que chega DEPOIS do evento não regride o preço
+[39/48] [mobile-chromium] › e2e\catalog.spec.ts:224:3 › catálogo: tempo real e favoritos › resposta REST antiga que chega DEPOIS do evento não regride o preço
+[40/48] [mobile-chromium] › e2e\catalog.spec.ts:237:3 › catálogo: tempo real e favoritos › evento emitido ANTES de o socket conectar, com a listagem em trânsito: o cliente reconcilia ao conectar
+[41/48] [mobile-chromium] › e2e\catalog.spec.ts:237:3 › catálogo: tempo real e favoritos › evento emitido ANTES de o socket conectar, com a listagem em trânsito: o cliente reconcilia ao conectar
+[42/48] [mobile-chromium] › e2e\catalog.spec.ts:224:3 › catálogo: tempo real e favoritos › resposta REST antiga que chega DEPOIS do evento não regride o preço
+[43/48] [mobile-chromium] › e2e\catalog.spec.ts:224:3 › catálogo: tempo real e favoritos › resposta REST antiga que chega DEPOIS do evento não regride o preço
+[44/48] [mobile-chromium] › e2e\catalog.spec.ts:237:3 › catálogo: tempo real e favoritos › evento emitido ANTES de o socket conectar, com a listagem em trânsito: o cliente reconcilia ao conectar
+[45/48] [mobile-chromium] › e2e\catalog.spec.ts:224:3 › catálogo: tempo real e favoritos › resposta REST antiga que chega DEPOIS do evento não regride o preço
+[46/48] [mobile-chromium] › e2e\catalog.spec.ts:237:3 › catálogo: tempo real e favoritos › evento emitido ANTES de o socket conectar, com a listagem em trânsito: o cliente reconcilia ao conectar
+[47/48] [mobile-chromium] › e2e\catalog.spec.ts:224:3 › catálogo: tempo real e favoritos › resposta REST antiga que chega DEPOIS do evento não regride o preço
+[48/48] [mobile-chromium] › e2e\catalog.spec.ts:237:3 › catálogo: tempo real e favoritos › evento emitido ANTES de o socket conectar, com a listagem em trânsito: o cliente reconcilia ao conectar
+  48 passed (1.7m)

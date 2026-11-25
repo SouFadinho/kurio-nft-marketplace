@@ -66,7 +66,33 @@ export function RealtimeProvider({ children }: { children: ReactNode }) {
 
     let connectedBefore = false
 
+    /** Consultas cobertas pela reconciliação: catálogo/NFTs, dados do usuário e do visitante. */
+    const reconcilable = (key: readonly unknown[]) => key[0] === 'nfts' || key[0] === 'guest' || (!!userId && key[0] === 'me' && key[1] === userId)
+
+    /**
+     * CP9.2: uma consulta na PRIMEIRA busca (sem dados) quando a reconciliação roda não é refeita
+     * pelo `invalidateQueries` do TanStack Query v5: sem dados, o `cancelRefetch` não se aplica, a
+     * chamada só se junta à requisição em andamento e o "invalidado" é limpo quando ela termina. Se
+     * essa requisição começou antes de um evento perdido, o dado antigo ficaria. Estas consultas são
+     * refeitas quando a busca em andamento termina. (Corrida exposta no CP9.2: catalog.spec ›
+     * "evento emitido ANTES de o socket conectar".)
+     */
+    const refetchWhenSettled = (queries: ReturnType<ReturnType<typeof queryClient.getQueryCache>['getAll']>) => {
+      if (queries.length === 0) return
+      const cache = queryClient.getQueryCache()
+      const unsubscribe = cache.subscribe(() => {
+        if (queries.some((q) => q.state.fetchStatus === 'fetching')) return
+        unsubscribe()
+        if (socket.connected) void queryClient.invalidateQueries({ predicate: (q) => queries.includes(q) })
+      })
+    }
+
     const reconcile = async () => {
+      const firstFetchInFlight = queryClient
+        .getQueryCache()
+        .getAll()
+        .filter((q) => q.state.fetchStatus === 'fetching' && q.state.data === undefined && reconcilable(q.queryKey))
+      refetchWhenSettled(firstFetchInFlight)
       // Só as queries ativas (montadas) são refeitas; as demais ficam marcadas como stale.
       await Promise.all([
         queryClient.invalidateQueries({ queryKey: queryKeys.nfts.all }),
@@ -86,7 +112,10 @@ export function RealtimeProvider({ children }: { children: ReactNode }) {
       }))
       // Reconciliação também na PRIMEIRA conexão: dados buscados antes de o socket se autenticar
       // podem ter perdido eventos emitidos nesse intervalo (corrida encontrada no CP3, teste 7b).
-      if (isReconnect || queryClient.getQueryCache().getAll().some((q) => q.state.dataUpdatedAt > 0)) void reconcile()
+      // CP9.2: também quando há consultas em trânsito (começaram antes do socket e podem ter
+      // perdido eventos emitidos antes da conexão); `reconcile` refaz essas ao terminarem.
+      const cache = queryClient.getQueryCache()
+      if (isReconnect || cache.getAll().some((q) => q.state.dataUpdatedAt > 0 || (q.state.fetchStatus === 'fetching' && reconcilable(q.queryKey)))) void reconcile()
     })
     socket.on('disconnect', () => diagnostics.update({ state: 'disconnected' }))
     socket.on('connect_error', (error) => {

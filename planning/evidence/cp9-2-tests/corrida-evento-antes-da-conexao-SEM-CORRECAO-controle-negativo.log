@@ -1,0 +1,1012 @@
+
+Running 24 tests using 4 workers
+
+[1/24] [desktop-chromium] › e2e\catalog.spec.ts:237:3 › catálogo: tempo real e favoritos › evento emitido ANTES de o socket conectar, com a listagem em trânsito: o cliente reconcilia ao conectar
+[2/24] [desktop-chromium] › e2e\catalog.spec.ts:237:3 › catálogo: tempo real e favoritos › evento emitido ANTES de o socket conectar, com a listagem em trânsito: o cliente reconcilia ao conectar
+[3/24] [desktop-chromium] › e2e\catalog.spec.ts:237:3 › catálogo: tempo real e favoritos › evento emitido ANTES de o socket conectar, com a listagem em trânsito: o cliente reconcilia ao conectar
+[4/24] [desktop-chromium] › e2e\catalog.spec.ts:237:3 › catálogo: tempo real e favoritos › evento emitido ANTES de o socket conectar, com a listagem em trânsito: o cliente reconcilia ao conectar
+  1) [desktop-chromium] › e2e\catalog.spec.ts:237:3 › catálogo: tempo real e favoritos › evento emitido ANTES de o socket conectar, com a listagem em trânsito: o cliente reconcilia ao conectar 
+
+    Error: expect(locator).toHaveText(expected) failed
+
+    Locator:  locator('[data-testid="nft-card"][data-nft-id="nft-002"]').locator('[data-value]')
+    Expected: "2.05 ETH"
+    Received: "1.69 ETH"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveText" locator('[data-testid="nft-card"][data-nft-id="nft-002"]').locator('[data-value]') with timeout 5000ms
+      - waiting for locator('[data-testid="nft-card"][data-nft-id="nft-002"]').locator('[data-value]')
+        11 × locator resolved to <span data-value="1.69" class="font-bold text-price tabular-nums text-body">1.69 ETH</span>
+           - unexpected value "1.69 ETH"
+
+
+      249 |     // A resposta antiga (1.69) entra; terminada a busca, o cliente reconcilia pelo REST.
+      250 |     const card = page.locator('[data-testid="nft-card"][data-nft-id="nft-002"]')
+    > 251 |     await expect(card.locator('[data-value]')).toHaveText('2.05 ETH')
+          |                                                ^
+      252 |   })
+      253 |
+      254 |   // CP4: a intenção de favoritar é retomada automaticamente após o login (não é preciso clicar de novo).
+        at D:\emprego\e2e\catalog.spec.ts:251:48
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\catalog-catálogo-tempo-rea-9044f-ente-reconcilia-ao-conectar-desktop-chromium-repeat3\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\catalog-catálogo-tempo-rea-9044f-ente-reconcilia-ao-conectar-desktop-chromium-repeat3\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\catalog-catálogo-tempo-rea-9044f-ente-reconcilia-ao-conectar-desktop-chromium-repeat3\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\catalog-catálogo-tempo-rea-9044f-ente-reconcilia-ao-conectar-desktop-chromium-repeat3\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[5/24] [desktop-chromium] › e2e\catalog.spec.ts:237:3 › catálogo: tempo real e favoritos › evento emitido ANTES de o socket conectar, com a listagem em trânsito: o cliente reconcilia ao conectar
+  2) [desktop-chromium] › e2e\catalog.spec.ts:237:3 › catálogo: tempo real e favoritos › evento emitido ANTES de o socket conectar, com a listagem em trânsito: o cliente reconcilia ao conectar 
+
+    Error: expect(locator).toHaveText(expected) failed
+
+    Locator:  locator('[data-testid="nft-card"][data-nft-id="nft-002"]').locator('[data-value]')
+    Expected: "2.05 ETH"
+    Received: "1.69 ETH"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveText" locator('[data-testid="nft-card"][data-nft-id="nft-002"]').locator('[data-value]') with timeout 5000ms
+      - waiting for locator('[data-testid="nft-card"][data-nft-id="nft-002"]').locator('[data-value]')
+        13 × locator resolved to <span data-value="1.69" class="font-bold text-price tabular-nums text-body">1.69 ETH</span>
+           - unexpected value "1.69 ETH"
+
+
+      249 |     // A resposta antiga (1.69) entra; terminada a busca, o cliente reconcilia pelo REST.
+      250 |     const card = page.locator('[data-testid="nft-card"][data-nft-id="nft-002"]')
+    > 251 |     await expect(card.locator('[data-value]')).toHaveText('2.05 ETH')
+          |                                                ^
+      252 |   })
+      253 |
+      254 |   // CP4: a intenção de favoritar é retomada automaticamente após o login (não é preciso clicar de novo).
+        at D:\emprego\e2e\catalog.spec.ts:251:48
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\catalog-catálogo-tempo-rea-9044f-ente-reconcilia-ao-conectar-desktop-chromium-repeat2\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\catalog-catálogo-tempo-rea-9044f-ente-reconcilia-ao-conectar-desktop-chromium-repeat2\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\catalog-catálogo-tempo-rea-9044f-ente-reconcilia-ao-conectar-desktop-chromium-repeat2\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\catalog-catálogo-tempo-rea-9044f-ente-reconcilia-ao-conectar-desktop-chromium-repeat2\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+  3) [desktop-chromium] › e2e\catalog.spec.ts:237:3 › catálogo: tempo real e favoritos › evento emitido ANTES de o socket conectar, com a listagem em trânsito: o cliente reconcilia ao conectar 
+
+    Error: expect(locator).toHaveText(expected) failed
+
+    Locator:  locator('[data-testid="nft-card"][data-nft-id="nft-002"]').locator('[data-value]')
+    Expected: "2.05 ETH"
+    Received: "1.69 ETH"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveText" locator('[data-testid="nft-card"][data-nft-id="nft-002"]').locator('[data-value]') with timeout 5000ms
+      - waiting for locator('[data-testid="nft-card"][data-nft-id="nft-002"]').locator('[data-value]')
+        13 × locator resolved to <span data-value="1.69" class="font-bold text-price tabular-nums text-body">1.69 ETH</span>
+           - unexpected value "1.69 ETH"
+
+
+      249 |     // A resposta antiga (1.69) entra; terminada a busca, o cliente reconcilia pelo REST.
+      250 |     const card = page.locator('[data-testid="nft-card"][data-nft-id="nft-002"]')
+    > 251 |     await expect(card.locator('[data-value]')).toHaveText('2.05 ETH')
+          |                                                ^
+      252 |   })
+      253 |
+      254 |   // CP4: a intenção de favoritar é retomada automaticamente após o login (não é preciso clicar de novo).
+        at D:\emprego\e2e\catalog.spec.ts:251:48
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\catalog-catálogo-tempo-rea-9044f-ente-reconcilia-ao-conectar-desktop-chromium-repeat1\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\catalog-catálogo-tempo-rea-9044f-ente-reconcilia-ao-conectar-desktop-chromium-repeat1\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\catalog-catálogo-tempo-rea-9044f-ente-reconcilia-ao-conectar-desktop-chromium-repeat1\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\catalog-catálogo-tempo-rea-9044f-ente-reconcilia-ao-conectar-desktop-chromium-repeat1\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+  4) [desktop-chromium] › e2e\catalog.spec.ts:237:3 › catálogo: tempo real e favoritos › evento emitido ANTES de o socket conectar, com a listagem em trânsito: o cliente reconcilia ao conectar 
+
+    Error: expect(locator).toHaveText(expected) failed
+
+    Locator:  locator('[data-testid="nft-card"][data-nft-id="nft-002"]').locator('[data-value]')
+    Expected: "2.05 ETH"
+    Received: "1.69 ETH"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveText" locator('[data-testid="nft-card"][data-nft-id="nft-002"]').locator('[data-value]') with timeout 5000ms
+      - waiting for locator('[data-testid="nft-card"][data-nft-id="nft-002"]').locator('[data-value]')
+        13 × locator resolved to <span data-value="1.69" class="font-bold text-price tabular-nums text-body">1.69 ETH</span>
+           - unexpected value "1.69 ETH"
+
+
+      249 |     // A resposta antiga (1.69) entra; terminada a busca, o cliente reconcilia pelo REST.
+      250 |     const card = page.locator('[data-testid="nft-card"][data-nft-id="nft-002"]')
+    > 251 |     await expect(card.locator('[data-value]')).toHaveText('2.05 ETH')
+          |                                                ^
+      252 |   })
+      253 |
+      254 |   // CP4: a intenção de favoritar é retomada automaticamente após o login (não é preciso clicar de novo).
+        at D:\emprego\e2e\catalog.spec.ts:251:48
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\catalog-catálogo-tempo-rea-9044f-ente-reconcilia-ao-conectar-desktop-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\catalog-catálogo-tempo-rea-9044f-ente-reconcilia-ao-conectar-desktop-chromium\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\catalog-catálogo-tempo-rea-9044f-ente-reconcilia-ao-conectar-desktop-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\catalog-catálogo-tempo-rea-9044f-ente-reconcilia-ao-conectar-desktop-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[6/24] [desktop-chromium] › e2e\catalog.spec.ts:237:3 › catálogo: tempo real e favoritos › evento emitido ANTES de o socket conectar, com a listagem em trânsito: o cliente reconcilia ao conectar
+[7/24] [desktop-chromium] › e2e\catalog.spec.ts:237:3 › catálogo: tempo real e favoritos › evento emitido ANTES de o socket conectar, com a listagem em trânsito: o cliente reconcilia ao conectar
+[8/24] [desktop-chromium] › e2e\catalog.spec.ts:237:3 › catálogo: tempo real e favoritos › evento emitido ANTES de o socket conectar, com a listagem em trânsito: o cliente reconcilia ao conectar
+  5) [desktop-chromium] › e2e\catalog.spec.ts:237:3 › catálogo: tempo real e favoritos › evento emitido ANTES de o socket conectar, com a listagem em trânsito: o cliente reconcilia ao conectar 
+
+    Error: expect(locator).toHaveText(expected) failed
+
+    Locator:  locator('[data-testid="nft-card"][data-nft-id="nft-002"]').locator('[data-value]')
+    Expected: "2.05 ETH"
+    Received: "1.69 ETH"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveText" locator('[data-testid="nft-card"][data-nft-id="nft-002"]').locator('[data-value]') with timeout 5000ms
+      - waiting for locator('[data-testid="nft-card"][data-nft-id="nft-002"]').locator('[data-value]')
+        11 × locator resolved to <span data-value="1.69" class="font-bold text-price tabular-nums text-body">1.69 ETH</span>
+           - unexpected value "1.69 ETH"
+
+
+      249 |     // A resposta antiga (1.69) entra; terminada a busca, o cliente reconcilia pelo REST.
+      250 |     const card = page.locator('[data-testid="nft-card"][data-nft-id="nft-002"]')
+    > 251 |     await expect(card.locator('[data-value]')).toHaveText('2.05 ETH')
+          |                                                ^
+      252 |   })
+      253 |
+      254 |   // CP4: a intenção de favoritar é retomada automaticamente após o login (não é preciso clicar de novo).
+        at D:\emprego\e2e\catalog.spec.ts:251:48
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\catalog-catálogo-tempo-rea-9044f-ente-reconcilia-ao-conectar-desktop-chromium-repeat4\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\catalog-catálogo-tempo-rea-9044f-ente-reconcilia-ao-conectar-desktop-chromium-repeat4\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\catalog-catálogo-tempo-rea-9044f-ente-reconcilia-ao-conectar-desktop-chromium-repeat4\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\catalog-catálogo-tempo-rea-9044f-ente-reconcilia-ao-conectar-desktop-chromium-repeat4\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[9/24] [desktop-chromium] › e2e\catalog.spec.ts:237:3 › catálogo: tempo real e favoritos › evento emitido ANTES de o socket conectar, com a listagem em trânsito: o cliente reconcilia ao conectar
+  6) [desktop-chromium] › e2e\catalog.spec.ts:237:3 › catálogo: tempo real e favoritos › evento emitido ANTES de o socket conectar, com a listagem em trânsito: o cliente reconcilia ao conectar 
+
+    Error: expect(locator).toHaveText(expected) failed
+
+    Locator:  locator('[data-testid="nft-card"][data-nft-id="nft-002"]').locator('[data-value]')
+    Expected: "2.05 ETH"
+    Received: "1.69 ETH"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveText" locator('[data-testid="nft-card"][data-nft-id="nft-002"]').locator('[data-value]') with timeout 5000ms
+      - waiting for locator('[data-testid="nft-card"][data-nft-id="nft-002"]').locator('[data-value]')
+        13 × locator resolved to <span data-value="1.69" class="font-bold text-price tabular-nums text-body">1.69 ETH</span>
+           - unexpected value "1.69 ETH"
+
+
+      249 |     // A resposta antiga (1.69) entra; terminada a busca, o cliente reconcilia pelo REST.
+      250 |     const card = page.locator('[data-testid="nft-card"][data-nft-id="nft-002"]')
+    > 251 |     await expect(card.locator('[data-value]')).toHaveText('2.05 ETH')
+          |                                                ^
+      252 |   })
+      253 |
+      254 |   // CP4: a intenção de favoritar é retomada automaticamente após o login (não é preciso clicar de novo).
+        at D:\emprego\e2e\catalog.spec.ts:251:48
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\catalog-catálogo-tempo-rea-9044f-ente-reconcilia-ao-conectar-desktop-chromium-repeat5\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\catalog-catálogo-tempo-rea-9044f-ente-reconcilia-ao-conectar-desktop-chromium-repeat5\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\catalog-catálogo-tempo-rea-9044f-ente-reconcilia-ao-conectar-desktop-chromium-repeat5\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\catalog-catálogo-tempo-rea-9044f-ente-reconcilia-ao-conectar-desktop-chromium-repeat5\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[10/24] [desktop-chromium] › e2e\catalog.spec.ts:237:3 › catálogo: tempo real e favoritos › evento emitido ANTES de o socket conectar, com a listagem em trânsito: o cliente reconcilia ao conectar
+  7) [desktop-chromium] › e2e\catalog.spec.ts:237:3 › catálogo: tempo real e favoritos › evento emitido ANTES de o socket conectar, com a listagem em trânsito: o cliente reconcilia ao conectar 
+
+    Error: expect(locator).toHaveText(expected) failed
+
+    Locator:  locator('[data-testid="nft-card"][data-nft-id="nft-002"]').locator('[data-value]')
+    Expected: "2.05 ETH"
+    Received: "1.69 ETH"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveText" locator('[data-testid="nft-card"][data-nft-id="nft-002"]').locator('[data-value]') with timeout 5000ms
+      - waiting for locator('[data-testid="nft-card"][data-nft-id="nft-002"]').locator('[data-value]')
+        13 × locator resolved to <span data-value="1.69" class="font-bold text-price tabular-nums text-body">1.69 ETH</span>
+           - unexpected value "1.69 ETH"
+
+
+      249 |     // A resposta antiga (1.69) entra; terminada a busca, o cliente reconcilia pelo REST.
+      250 |     const card = page.locator('[data-testid="nft-card"][data-nft-id="nft-002"]')
+    > 251 |     await expect(card.locator('[data-value]')).toHaveText('2.05 ETH')
+          |                                                ^
+      252 |   })
+      253 |
+      254 |   // CP4: a intenção de favoritar é retomada automaticamente após o login (não é preciso clicar de novo).
+        at D:\emprego\e2e\catalog.spec.ts:251:48
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\catalog-catálogo-tempo-rea-9044f-ente-reconcilia-ao-conectar-desktop-chromium-repeat6\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\catalog-catálogo-tempo-rea-9044f-ente-reconcilia-ao-conectar-desktop-chromium-repeat6\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\catalog-catálogo-tempo-rea-9044f-ente-reconcilia-ao-conectar-desktop-chromium-repeat6\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\catalog-catálogo-tempo-rea-9044f-ente-reconcilia-ao-conectar-desktop-chromium-repeat6\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+  8) [desktop-chromium] › e2e\catalog.spec.ts:237:3 › catálogo: tempo real e favoritos › evento emitido ANTES de o socket conectar, com a listagem em trânsito: o cliente reconcilia ao conectar 
+
+    Error: expect(locator).toHaveText(expected) failed
+
+    Locator:  locator('[data-testid="nft-card"][data-nft-id="nft-002"]').locator('[data-value]')
+    Expected: "2.05 ETH"
+    Received: "1.69 ETH"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveText" locator('[data-testid="nft-card"][data-nft-id="nft-002"]').locator('[data-value]') with timeout 5000ms
+      - waiting for locator('[data-testid="nft-card"][data-nft-id="nft-002"]').locator('[data-value]')
+        13 × locator resolved to <span data-value="1.69" class="font-bold text-price tabular-nums text-body">1.69 ETH</span>
+           - unexpected value "1.69 ETH"
+
+
+      249 |     // A resposta antiga (1.69) entra; terminada a busca, o cliente reconcilia pelo REST.
+      250 |     const card = page.locator('[data-testid="nft-card"][data-nft-id="nft-002"]')
+    > 251 |     await expect(card.locator('[data-value]')).toHaveText('2.05 ETH')
+          |                                                ^
+      252 |   })
+      253 |
+      254 |   // CP4: a intenção de favoritar é retomada automaticamente após o login (não é preciso clicar de novo).
+        at D:\emprego\e2e\catalog.spec.ts:251:48
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\catalog-catálogo-tempo-rea-9044f-ente-reconcilia-ao-conectar-desktop-chromium-repeat7\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\catalog-catálogo-tempo-rea-9044f-ente-reconcilia-ao-conectar-desktop-chromium-repeat7\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\catalog-catálogo-tempo-rea-9044f-ente-reconcilia-ao-conectar-desktop-chromium-repeat7\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\catalog-catálogo-tempo-rea-9044f-ente-reconcilia-ao-conectar-desktop-chromium-repeat7\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[11/24] [desktop-chromium] › e2e\catalog.spec.ts:237:3 › catálogo: tempo real e favoritos › evento emitido ANTES de o socket conectar, com a listagem em trânsito: o cliente reconcilia ao conectar
+[12/24] [desktop-chromium] › e2e\catalog.spec.ts:237:3 › catálogo: tempo real e favoritos › evento emitido ANTES de o socket conectar, com a listagem em trânsito: o cliente reconcilia ao conectar
+  9) [desktop-chromium] › e2e\catalog.spec.ts:237:3 › catálogo: tempo real e favoritos › evento emitido ANTES de o socket conectar, com a listagem em trânsito: o cliente reconcilia ao conectar 
+
+    Error: expect(locator).toHaveText(expected) failed
+
+    Locator:  locator('[data-testid="nft-card"][data-nft-id="nft-002"]').locator('[data-value]')
+    Expected: "2.05 ETH"
+    Received: "1.69 ETH"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveText" locator('[data-testid="nft-card"][data-nft-id="nft-002"]').locator('[data-value]') with timeout 5000ms
+      - waiting for locator('[data-testid="nft-card"][data-nft-id="nft-002"]').locator('[data-value]')
+        11 × locator resolved to <span data-value="1.69" class="font-bold text-price tabular-nums text-body">1.69 ETH</span>
+           - unexpected value "1.69 ETH"
+
+
+      249 |     // A resposta antiga (1.69) entra; terminada a busca, o cliente reconcilia pelo REST.
+      250 |     const card = page.locator('[data-testid="nft-card"][data-nft-id="nft-002"]')
+    > 251 |     await expect(card.locator('[data-value]')).toHaveText('2.05 ETH')
+          |                                                ^
+      252 |   })
+      253 |
+      254 |   // CP4: a intenção de favoritar é retomada automaticamente após o login (não é preciso clicar de novo).
+        at D:\emprego\e2e\catalog.spec.ts:251:48
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\catalog-catálogo-tempo-rea-9044f-ente-reconcilia-ao-conectar-desktop-chromium-repeat8\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\catalog-catálogo-tempo-rea-9044f-ente-reconcilia-ao-conectar-desktop-chromium-repeat8\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\catalog-catálogo-tempo-rea-9044f-ente-reconcilia-ao-conectar-desktop-chromium-repeat8\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\catalog-catálogo-tempo-rea-9044f-ente-reconcilia-ao-conectar-desktop-chromium-repeat8\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[13/24] [mobile-chromium] › e2e\catalog.spec.ts:237:3 › catálogo: tempo real e favoritos › evento emitido ANTES de o socket conectar, com a listagem em trânsito: o cliente reconcilia ao conectar
+  10) [desktop-chromium] › e2e\catalog.spec.ts:237:3 › catálogo: tempo real e favoritos › evento emitido ANTES de o socket conectar, com a listagem em trânsito: o cliente reconcilia ao conectar 
+
+    Error: expect(locator).toHaveText(expected) failed
+
+    Locator:  locator('[data-testid="nft-card"][data-nft-id="nft-002"]').locator('[data-value]')
+    Expected: "2.05 ETH"
+    Received: "1.69 ETH"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveText" locator('[data-testid="nft-card"][data-nft-id="nft-002"]').locator('[data-value]') with timeout 5000ms
+      - waiting for locator('[data-testid="nft-card"][data-nft-id="nft-002"]').locator('[data-value]')
+        11 × locator resolved to <span data-value="1.69" class="font-bold text-price tabular-nums text-body">1.69 ETH</span>
+           - unexpected value "1.69 ETH"
+
+
+      249 |     // A resposta antiga (1.69) entra; terminada a busca, o cliente reconcilia pelo REST.
+      250 |     const card = page.locator('[data-testid="nft-card"][data-nft-id="nft-002"]')
+    > 251 |     await expect(card.locator('[data-value]')).toHaveText('2.05 ETH')
+          |                                                ^
+      252 |   })
+      253 |
+      254 |   // CP4: a intenção de favoritar é retomada automaticamente após o login (não é preciso clicar de novo).
+        at D:\emprego\e2e\catalog.spec.ts:251:48
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\catalog-catálogo-tempo-rea-9044f-ente-reconcilia-ao-conectar-desktop-chromium-repeat9\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\catalog-catálogo-tempo-rea-9044f-ente-reconcilia-ao-conectar-desktop-chromium-repeat9\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\catalog-catálogo-tempo-rea-9044f-ente-reconcilia-ao-conectar-desktop-chromium-repeat9\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\catalog-catálogo-tempo-rea-9044f-ente-reconcilia-ao-conectar-desktop-chromium-repeat9\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[14/24] [mobile-chromium] › e2e\catalog.spec.ts:237:3 › catálogo: tempo real e favoritos › evento emitido ANTES de o socket conectar, com a listagem em trânsito: o cliente reconcilia ao conectar
+  11) [desktop-chromium] › e2e\catalog.spec.ts:237:3 › catálogo: tempo real e favoritos › evento emitido ANTES de o socket conectar, com a listagem em trânsito: o cliente reconcilia ao conectar 
+
+    Error: expect(locator).toHaveText(expected) failed
+
+    Locator:  locator('[data-testid="nft-card"][data-nft-id="nft-002"]').locator('[data-value]')
+    Expected: "2.05 ETH"
+    Received: "1.69 ETH"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveText" locator('[data-testid="nft-card"][data-nft-id="nft-002"]').locator('[data-value]') with timeout 5000ms
+      - waiting for locator('[data-testid="nft-card"][data-nft-id="nft-002"]').locator('[data-value]')
+        12 × locator resolved to <span data-value="1.69" class="font-bold text-price tabular-nums text-body">1.69 ETH</span>
+           - unexpected value "1.69 ETH"
+
+
+      249 |     // A resposta antiga (1.69) entra; terminada a busca, o cliente reconcilia pelo REST.
+      250 |     const card = page.locator('[data-testid="nft-card"][data-nft-id="nft-002"]')
+    > 251 |     await expect(card.locator('[data-value]')).toHaveText('2.05 ETH')
+          |                                                ^
+      252 |   })
+      253 |
+      254 |   // CP4: a intenção de favoritar é retomada automaticamente após o login (não é preciso clicar de novo).
+        at D:\emprego\e2e\catalog.spec.ts:251:48
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\catalog-catálogo-tempo-rea-9044f-ente-reconcilia-ao-conectar-desktop-chromium-repeat10\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\catalog-catálogo-tempo-rea-9044f-ente-reconcilia-ao-conectar-desktop-chromium-repeat10\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\catalog-catálogo-tempo-rea-9044f-ente-reconcilia-ao-conectar-desktop-chromium-repeat10\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\catalog-catálogo-tempo-rea-9044f-ente-reconcilia-ao-conectar-desktop-chromium-repeat10\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[15/24] [mobile-chromium] › e2e\catalog.spec.ts:237:3 › catálogo: tempo real e favoritos › evento emitido ANTES de o socket conectar, com a listagem em trânsito: o cliente reconcilia ao conectar
+  12) [desktop-chromium] › e2e\catalog.spec.ts:237:3 › catálogo: tempo real e favoritos › evento emitido ANTES de o socket conectar, com a listagem em trânsito: o cliente reconcilia ao conectar 
+
+    Error: expect(locator).toHaveText(expected) failed
+
+    Locator:  locator('[data-testid="nft-card"][data-nft-id="nft-002"]').locator('[data-value]')
+    Expected: "2.05 ETH"
+    Received: "1.69 ETH"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveText" locator('[data-testid="nft-card"][data-nft-id="nft-002"]').locator('[data-value]') with timeout 5000ms
+      - waiting for locator('[data-testid="nft-card"][data-nft-id="nft-002"]').locator('[data-value]')
+        11 × locator resolved to <span data-value="1.69" class="font-bold text-price tabular-nums text-body">1.69 ETH</span>
+           - unexpected value "1.69 ETH"
+
+
+      249 |     // A resposta antiga (1.69) entra; terminada a busca, o cliente reconcilia pelo REST.
+      250 |     const card = page.locator('[data-testid="nft-card"][data-nft-id="nft-002"]')
+    > 251 |     await expect(card.locator('[data-value]')).toHaveText('2.05 ETH')
+          |                                                ^
+      252 |   })
+      253 |
+      254 |   // CP4: a intenção de favoritar é retomada automaticamente após o login (não é preciso clicar de novo).
+        at D:\emprego\e2e\catalog.spec.ts:251:48
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\catalog-catálogo-tempo-rea-9044f-ente-reconcilia-ao-conectar-desktop-chromium-repeat11\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\catalog-catálogo-tempo-rea-9044f-ente-reconcilia-ao-conectar-desktop-chromium-repeat11\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\catalog-catálogo-tempo-rea-9044f-ente-reconcilia-ao-conectar-desktop-chromium-repeat11\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\catalog-catálogo-tempo-rea-9044f-ente-reconcilia-ao-conectar-desktop-chromium-repeat11\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[16/24] [mobile-chromium] › e2e\catalog.spec.ts:237:3 › catálogo: tempo real e favoritos › evento emitido ANTES de o socket conectar, com a listagem em trânsito: o cliente reconcilia ao conectar
+  13) [mobile-chromium] › e2e\catalog.spec.ts:237:3 › catálogo: tempo real e favoritos › evento emitido ANTES de o socket conectar, com a listagem em trânsito: o cliente reconcilia ao conectar 
+
+    Error: expect(locator).toHaveText(expected) failed
+
+    Locator:  locator('[data-testid="nft-card"][data-nft-id="nft-002"]').locator('[data-value]')
+    Expected: "2.05 ETH"
+    Received: "1.69 ETH"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveText" locator('[data-testid="nft-card"][data-nft-id="nft-002"]').locator('[data-value]') with timeout 5000ms
+      - waiting for locator('[data-testid="nft-card"][data-nft-id="nft-002"]').locator('[data-value]')
+        11 × locator resolved to <span data-value="1.69" class="font-bold text-price tabular-nums text-body">1.69 ETH</span>
+           - unexpected value "1.69 ETH"
+
+
+      249 |     // A resposta antiga (1.69) entra; terminada a busca, o cliente reconcilia pelo REST.
+      250 |     const card = page.locator('[data-testid="nft-card"][data-nft-id="nft-002"]')
+    > 251 |     await expect(card.locator('[data-value]')).toHaveText('2.05 ETH')
+          |                                                ^
+      252 |   })
+      253 |
+      254 |   // CP4: a intenção de favoritar é retomada automaticamente após o login (não é preciso clicar de novo).
+        at D:\emprego\e2e\catalog.spec.ts:251:48
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\catalog-catálogo-tempo-rea-9044f-ente-reconcilia-ao-conectar-mobile-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\catalog-catálogo-tempo-rea-9044f-ente-reconcilia-ao-conectar-mobile-chromium\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\catalog-catálogo-tempo-rea-9044f-ente-reconcilia-ao-conectar-mobile-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\catalog-catálogo-tempo-rea-9044f-ente-reconcilia-ao-conectar-mobile-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[17/24] [mobile-chromium] › e2e\catalog.spec.ts:237:3 › catálogo: tempo real e favoritos › evento emitido ANTES de o socket conectar, com a listagem em trânsito: o cliente reconcilia ao conectar
+  14) [mobile-chromium] › e2e\catalog.spec.ts:237:3 › catálogo: tempo real e favoritos › evento emitido ANTES de o socket conectar, com a listagem em trânsito: o cliente reconcilia ao conectar 
+
+    Error: expect(locator).toHaveText(expected) failed
+
+    Locator:  locator('[data-testid="nft-card"][data-nft-id="nft-002"]').locator('[data-value]')
+    Expected: "2.05 ETH"
+    Received: "1.69 ETH"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveText" locator('[data-testid="nft-card"][data-nft-id="nft-002"]').locator('[data-value]') with timeout 5000ms
+      - waiting for locator('[data-testid="nft-card"][data-nft-id="nft-002"]').locator('[data-value]')
+        11 × locator resolved to <span data-value="1.69" class="font-bold text-price tabular-nums text-body">1.69 ETH</span>
+           - unexpected value "1.69 ETH"
+
+
+      249 |     // A resposta antiga (1.69) entra; terminada a busca, o cliente reconcilia pelo REST.
+      250 |     const card = page.locator('[data-testid="nft-card"][data-nft-id="nft-002"]')
+    > 251 |     await expect(card.locator('[data-value]')).toHaveText('2.05 ETH')
+          |                                                ^
+      252 |   })
+      253 |
+      254 |   // CP4: a intenção de favoritar é retomada automaticamente após o login (não é preciso clicar de novo).
+        at D:\emprego\e2e\catalog.spec.ts:251:48
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\catalog-catálogo-tempo-rea-9044f-ente-reconcilia-ao-conectar-mobile-chromium-repeat1\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\catalog-catálogo-tempo-rea-9044f-ente-reconcilia-ao-conectar-mobile-chromium-repeat1\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\catalog-catálogo-tempo-rea-9044f-ente-reconcilia-ao-conectar-mobile-chromium-repeat1\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\catalog-catálogo-tempo-rea-9044f-ente-reconcilia-ao-conectar-mobile-chromium-repeat1\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[18/24] [mobile-chromium] › e2e\catalog.spec.ts:237:3 › catálogo: tempo real e favoritos › evento emitido ANTES de o socket conectar, com a listagem em trânsito: o cliente reconcilia ao conectar
+  15) [mobile-chromium] › e2e\catalog.spec.ts:237:3 › catálogo: tempo real e favoritos › evento emitido ANTES de o socket conectar, com a listagem em trânsito: o cliente reconcilia ao conectar 
+
+    Error: expect(locator).toHaveText(expected) failed
+
+    Locator:  locator('[data-testid="nft-card"][data-nft-id="nft-002"]').locator('[data-value]')
+    Expected: "2.05 ETH"
+    Received: "1.69 ETH"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveText" locator('[data-testid="nft-card"][data-nft-id="nft-002"]').locator('[data-value]') with timeout 5000ms
+      - waiting for locator('[data-testid="nft-card"][data-nft-id="nft-002"]').locator('[data-value]')
+        11 × locator resolved to <span data-value="1.69" class="font-bold text-price tabular-nums text-body">1.69 ETH</span>
+           - unexpected value "1.69 ETH"
+
+
+      249 |     // A resposta antiga (1.69) entra; terminada a busca, o cliente reconcilia pelo REST.
+      250 |     const card = page.locator('[data-testid="nft-card"][data-nft-id="nft-002"]')
+    > 251 |     await expect(card.locator('[data-value]')).toHaveText('2.05 ETH')
+          |                                                ^
+      252 |   })
+      253 |
+      254 |   // CP4: a intenção de favoritar é retomada automaticamente após o login (não é preciso clicar de novo).
+        at D:\emprego\e2e\catalog.spec.ts:251:48
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\catalog-catálogo-tempo-rea-9044f-ente-reconcilia-ao-conectar-mobile-chromium-repeat2\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\catalog-catálogo-tempo-rea-9044f-ente-reconcilia-ao-conectar-mobile-chromium-repeat2\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\catalog-catálogo-tempo-rea-9044f-ente-reconcilia-ao-conectar-mobile-chromium-repeat2\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\catalog-catálogo-tempo-rea-9044f-ente-reconcilia-ao-conectar-mobile-chromium-repeat2\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[19/24] [mobile-chromium] › e2e\catalog.spec.ts:237:3 › catálogo: tempo real e favoritos › evento emitido ANTES de o socket conectar, com a listagem em trânsito: o cliente reconcilia ao conectar
+  16) [mobile-chromium] › e2e\catalog.spec.ts:237:3 › catálogo: tempo real e favoritos › evento emitido ANTES de o socket conectar, com a listagem em trânsito: o cliente reconcilia ao conectar 
+
+    Error: expect(locator).toHaveText(expected) failed
+
+    Locator:  locator('[data-testid="nft-card"][data-nft-id="nft-002"]').locator('[data-value]')
+    Expected: "2.05 ETH"
+    Received: "1.69 ETH"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveText" locator('[data-testid="nft-card"][data-nft-id="nft-002"]').locator('[data-value]') with timeout 5000ms
+      - waiting for locator('[data-testid="nft-card"][data-nft-id="nft-002"]').locator('[data-value]')
+        11 × locator resolved to <span data-value="1.69" class="font-bold text-price tabular-nums text-body">1.69 ETH</span>
+           - unexpected value "1.69 ETH"
+
+
+      249 |     // A resposta antiga (1.69) entra; terminada a busca, o cliente reconcilia pelo REST.
+      250 |     const card = page.locator('[data-testid="nft-card"][data-nft-id="nft-002"]')
+    > 251 |     await expect(card.locator('[data-value]')).toHaveText('2.05 ETH')
+          |                                                ^
+      252 |   })
+      253 |
+      254 |   // CP4: a intenção de favoritar é retomada automaticamente após o login (não é preciso clicar de novo).
+        at D:\emprego\e2e\catalog.spec.ts:251:48
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\catalog-catálogo-tempo-rea-9044f-ente-reconcilia-ao-conectar-mobile-chromium-repeat3\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\catalog-catálogo-tempo-rea-9044f-ente-reconcilia-ao-conectar-mobile-chromium-repeat3\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\catalog-catálogo-tempo-rea-9044f-ente-reconcilia-ao-conectar-mobile-chromium-repeat3\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\catalog-catálogo-tempo-rea-9044f-ente-reconcilia-ao-conectar-mobile-chromium-repeat3\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[20/24] [mobile-chromium] › e2e\catalog.spec.ts:237:3 › catálogo: tempo real e favoritos › evento emitido ANTES de o socket conectar, com a listagem em trânsito: o cliente reconcilia ao conectar
+  17) [mobile-chromium] › e2e\catalog.spec.ts:237:3 › catálogo: tempo real e favoritos › evento emitido ANTES de o socket conectar, com a listagem em trânsito: o cliente reconcilia ao conectar 
+
+    Error: expect(locator).toHaveText(expected) failed
+
+    Locator:  locator('[data-testid="nft-card"][data-nft-id="nft-002"]').locator('[data-value]')
+    Expected: "2.05 ETH"
+    Received: "1.69 ETH"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveText" locator('[data-testid="nft-card"][data-nft-id="nft-002"]').locator('[data-value]') with timeout 5000ms
+      - waiting for locator('[data-testid="nft-card"][data-nft-id="nft-002"]').locator('[data-value]')
+        12 × locator resolved to <span data-value="1.69" class="font-bold text-price tabular-nums text-body">1.69 ETH</span>
+           - unexpected value "1.69 ETH"
+
+
+      249 |     // A resposta antiga (1.69) entra; terminada a busca, o cliente reconcilia pelo REST.
+      250 |     const card = page.locator('[data-testid="nft-card"][data-nft-id="nft-002"]')
+    > 251 |     await expect(card.locator('[data-value]')).toHaveText('2.05 ETH')
+          |                                                ^
+      252 |   })
+      253 |
+      254 |   // CP4: a intenção de favoritar é retomada automaticamente após o login (não é preciso clicar de novo).
+        at D:\emprego\e2e\catalog.spec.ts:251:48
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\catalog-catálogo-tempo-rea-9044f-ente-reconcilia-ao-conectar-mobile-chromium-repeat4\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\catalog-catálogo-tempo-rea-9044f-ente-reconcilia-ao-conectar-mobile-chromium-repeat4\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\catalog-catálogo-tempo-rea-9044f-ente-reconcilia-ao-conectar-mobile-chromium-repeat4\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\catalog-catálogo-tempo-rea-9044f-ente-reconcilia-ao-conectar-mobile-chromium-repeat4\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[21/24] [mobile-chromium] › e2e\catalog.spec.ts:237:3 › catálogo: tempo real e favoritos › evento emitido ANTES de o socket conectar, com a listagem em trânsito: o cliente reconcilia ao conectar
+  18) [mobile-chromium] › e2e\catalog.spec.ts:237:3 › catálogo: tempo real e favoritos › evento emitido ANTES de o socket conectar, com a listagem em trânsito: o cliente reconcilia ao conectar 
+
+    Error: expect(locator).toHaveText(expected) failed
+
+    Locator:  locator('[data-testid="nft-card"][data-nft-id="nft-002"]').locator('[data-value]')
+    Expected: "2.05 ETH"
+    Received: "1.69 ETH"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveText" locator('[data-testid="nft-card"][data-nft-id="nft-002"]').locator('[data-value]') with timeout 5000ms
+      - waiting for locator('[data-testid="nft-card"][data-nft-id="nft-002"]').locator('[data-value]')
+        11 × locator resolved to <span data-value="1.69" class="font-bold text-price tabular-nums text-body">1.69 ETH</span>
+           - unexpected value "1.69 ETH"
+
+
+      249 |     // A resposta antiga (1.69) entra; terminada a busca, o cliente reconcilia pelo REST.
+      250 |     const card = page.locator('[data-testid="nft-card"][data-nft-id="nft-002"]')
+    > 251 |     await expect(card.locator('[data-value]')).toHaveText('2.05 ETH')
+          |                                                ^
+      252 |   })
+      253 |
+      254 |   // CP4: a intenção de favoritar é retomada automaticamente após o login (não é preciso clicar de novo).
+        at D:\emprego\e2e\catalog.spec.ts:251:48
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\catalog-catálogo-tempo-rea-9044f-ente-reconcilia-ao-conectar-mobile-chromium-repeat5\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\catalog-catálogo-tempo-rea-9044f-ente-reconcilia-ao-conectar-mobile-chromium-repeat5\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\catalog-catálogo-tempo-rea-9044f-ente-reconcilia-ao-conectar-mobile-chromium-repeat5\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\catalog-catálogo-tempo-rea-9044f-ente-reconcilia-ao-conectar-mobile-chromium-repeat5\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[22/24] [mobile-chromium] › e2e\catalog.spec.ts:237:3 › catálogo: tempo real e favoritos › evento emitido ANTES de o socket conectar, com a listagem em trânsito: o cliente reconcilia ao conectar
+  19) [mobile-chromium] › e2e\catalog.spec.ts:237:3 › catálogo: tempo real e favoritos › evento emitido ANTES de o socket conectar, com a listagem em trânsito: o cliente reconcilia ao conectar 
+
+    Error: expect(locator).toHaveText(expected) failed
+
+    Locator:  locator('[data-testid="nft-card"][data-nft-id="nft-002"]').locator('[data-value]')
+    Expected: "2.05 ETH"
+    Received: "1.69 ETH"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveText" locator('[data-testid="nft-card"][data-nft-id="nft-002"]').locator('[data-value]') with timeout 5000ms
+      - waiting for locator('[data-testid="nft-card"][data-nft-id="nft-002"]').locator('[data-value]')
+        11 × locator resolved to <span data-value="1.69" class="font-bold text-price tabular-nums text-body">1.69 ETH</span>
+           - unexpected value "1.69 ETH"
+
+
+      249 |     // A resposta antiga (1.69) entra; terminada a busca, o cliente reconcilia pelo REST.
+      250 |     const card = page.locator('[data-testid="nft-card"][data-nft-id="nft-002"]')
+    > 251 |     await expect(card.locator('[data-value]')).toHaveText('2.05 ETH')
+          |                                                ^
+      252 |   })
+      253 |
+      254 |   // CP4: a intenção de favoritar é retomada automaticamente após o login (não é preciso clicar de novo).
+        at D:\emprego\e2e\catalog.spec.ts:251:48
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\catalog-catálogo-tempo-rea-9044f-ente-reconcilia-ao-conectar-mobile-chromium-repeat6\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\catalog-catálogo-tempo-rea-9044f-ente-reconcilia-ao-conectar-mobile-chromium-repeat6\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\catalog-catálogo-tempo-rea-9044f-ente-reconcilia-ao-conectar-mobile-chromium-repeat6\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\catalog-catálogo-tempo-rea-9044f-ente-reconcilia-ao-conectar-mobile-chromium-repeat6\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[23/24] [mobile-chromium] › e2e\catalog.spec.ts:237:3 › catálogo: tempo real e favoritos › evento emitido ANTES de o socket conectar, com a listagem em trânsito: o cliente reconcilia ao conectar
+  20) [mobile-chromium] › e2e\catalog.spec.ts:237:3 › catálogo: tempo real e favoritos › evento emitido ANTES de o socket conectar, com a listagem em trânsito: o cliente reconcilia ao conectar 
+
+    Error: expect(locator).toHaveText(expected) failed
+
+    Locator:  locator('[data-testid="nft-card"][data-nft-id="nft-002"]').locator('[data-value]')
+    Expected: "2.05 ETH"
+    Received: "1.69 ETH"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveText" locator('[data-testid="nft-card"][data-nft-id="nft-002"]').locator('[data-value]') with timeout 5000ms
+      - waiting for locator('[data-testid="nft-card"][data-nft-id="nft-002"]').locator('[data-value]')
+        12 × locator resolved to <span data-value="1.69" class="font-bold text-price tabular-nums text-body">1.69 ETH</span>
+           - unexpected value "1.69 ETH"
+
+
+      249 |     // A resposta antiga (1.69) entra; terminada a busca, o cliente reconcilia pelo REST.
+      250 |     const card = page.locator('[data-testid="nft-card"][data-nft-id="nft-002"]')
+    > 251 |     await expect(card.locator('[data-value]')).toHaveText('2.05 ETH')
+          |                                                ^
+      252 |   })
+      253 |
+      254 |   // CP4: a intenção de favoritar é retomada automaticamente após o login (não é preciso clicar de novo).
+        at D:\emprego\e2e\catalog.spec.ts:251:48
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\catalog-catálogo-tempo-rea-9044f-ente-reconcilia-ao-conectar-mobile-chromium-repeat7\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\catalog-catálogo-tempo-rea-9044f-ente-reconcilia-ao-conectar-mobile-chromium-repeat7\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\catalog-catálogo-tempo-rea-9044f-ente-reconcilia-ao-conectar-mobile-chromium-repeat7\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\catalog-catálogo-tempo-rea-9044f-ente-reconcilia-ao-conectar-mobile-chromium-repeat7\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[24/24] [mobile-chromium] › e2e\catalog.spec.ts:237:3 › catálogo: tempo real e favoritos › evento emitido ANTES de o socket conectar, com a listagem em trânsito: o cliente reconcilia ao conectar
+  21) [mobile-chromium] › e2e\catalog.spec.ts:237:3 › catálogo: tempo real e favoritos › evento emitido ANTES de o socket conectar, com a listagem em trânsito: o cliente reconcilia ao conectar 
+
+    Error: expect(locator).toHaveText(expected) failed
+
+    Locator:  locator('[data-testid="nft-card"][data-nft-id="nft-002"]').locator('[data-value]')
+    Expected: "2.05 ETH"
+    Received: "1.69 ETH"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveText" locator('[data-testid="nft-card"][data-nft-id="nft-002"]').locator('[data-value]') with timeout 5000ms
+      - waiting for locator('[data-testid="nft-card"][data-nft-id="nft-002"]').locator('[data-value]')
+        11 × locator resolved to <span data-value="1.69" class="font-bold text-price tabular-nums text-body">1.69 ETH</span>
+           - unexpected value "1.69 ETH"
+
+
+      249 |     // A resposta antiga (1.69) entra; terminada a busca, o cliente reconcilia pelo REST.
+      250 |     const card = page.locator('[data-testid="nft-card"][data-nft-id="nft-002"]')
+    > 251 |     await expect(card.locator('[data-value]')).toHaveText('2.05 ETH')
+          |                                                ^
+      252 |   })
+      253 |
+      254 |   // CP4: a intenção de favoritar é retomada automaticamente após o login (não é preciso clicar de novo).
+        at D:\emprego\e2e\catalog.spec.ts:251:48
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\catalog-catálogo-tempo-rea-9044f-ente-reconcilia-ao-conectar-mobile-chromium-repeat8\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\catalog-catálogo-tempo-rea-9044f-ente-reconcilia-ao-conectar-mobile-chromium-repeat8\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\catalog-catálogo-tempo-rea-9044f-ente-reconcilia-ao-conectar-mobile-chromium-repeat8\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\catalog-catálogo-tempo-rea-9044f-ente-reconcilia-ao-conectar-mobile-chromium-repeat8\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+  22) [mobile-chromium] › e2e\catalog.spec.ts:237:3 › catálogo: tempo real e favoritos › evento emitido ANTES de o socket conectar, com a listagem em trânsito: o cliente reconcilia ao conectar 
+
+    Error: expect(locator).toHaveText(expected) failed
+
+    Locator:  locator('[data-testid="nft-card"][data-nft-id="nft-002"]').locator('[data-value]')
+    Expected: "2.05 ETH"
+    Received: "1.69 ETH"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveText" locator('[data-testid="nft-card"][data-nft-id="nft-002"]').locator('[data-value]') with timeout 5000ms
+      - waiting for locator('[data-testid="nft-card"][data-nft-id="nft-002"]').locator('[data-value]')
+        12 × locator resolved to <span data-value="1.69" class="font-bold text-price tabular-nums text-body">1.69 ETH</span>
+           - unexpected value "1.69 ETH"
+
+
+      249 |     // A resposta antiga (1.69) entra; terminada a busca, o cliente reconcilia pelo REST.
+      250 |     const card = page.locator('[data-testid="nft-card"][data-nft-id="nft-002"]')
+    > 251 |     await expect(card.locator('[data-value]')).toHaveText('2.05 ETH')
+          |                                                ^
+      252 |   })
+      253 |
+      254 |   // CP4: a intenção de favoritar é retomada automaticamente após o login (não é preciso clicar de novo).
+        at D:\emprego\e2e\catalog.spec.ts:251:48
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\catalog-catálogo-tempo-rea-9044f-ente-reconcilia-ao-conectar-mobile-chromium-repeat9\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\catalog-catálogo-tempo-rea-9044f-ente-reconcilia-ao-conectar-mobile-chromium-repeat9\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\catalog-catálogo-tempo-rea-9044f-ente-reconcilia-ao-conectar-mobile-chromium-repeat9\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\catalog-catálogo-tempo-rea-9044f-ente-reconcilia-ao-conectar-mobile-chromium-repeat9\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+  23) [mobile-chromium] › e2e\catalog.spec.ts:237:3 › catálogo: tempo real e favoritos › evento emitido ANTES de o socket conectar, com a listagem em trânsito: o cliente reconcilia ao conectar 
+
+    Error: expect(locator).toHaveText(expected) failed
+
+    Locator:  locator('[data-testid="nft-card"][data-nft-id="nft-002"]').locator('[data-value]')
+    Expected: "2.05 ETH"
+    Received: "1.69 ETH"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveText" locator('[data-testid="nft-card"][data-nft-id="nft-002"]').locator('[data-value]') with timeout 5000ms
+      - waiting for locator('[data-testid="nft-card"][data-nft-id="nft-002"]').locator('[data-value]')
+        11 × locator resolved to <span data-value="1.69" class="font-bold text-price tabular-nums text-body">1.69 ETH</span>
+           - unexpected value "1.69 ETH"
+
+
+      249 |     // A resposta antiga (1.69) entra; terminada a busca, o cliente reconcilia pelo REST.
+      250 |     const card = page.locator('[data-testid="nft-card"][data-nft-id="nft-002"]')
+    > 251 |     await expect(card.locator('[data-value]')).toHaveText('2.05 ETH')
+          |                                                ^
+      252 |   })
+      253 |
+      254 |   // CP4: a intenção de favoritar é retomada automaticamente após o login (não é preciso clicar de novo).
+        at D:\emprego\e2e\catalog.spec.ts:251:48
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\catalog-catálogo-tempo-rea-9044f-ente-reconcilia-ao-conectar-mobile-chromium-repeat10\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\catalog-catálogo-tempo-rea-9044f-ente-reconcilia-ao-conectar-mobile-chromium-repeat10\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\catalog-catálogo-tempo-rea-9044f-ente-reconcilia-ao-conectar-mobile-chromium-repeat10\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\catalog-catálogo-tempo-rea-9044f-ente-reconcilia-ao-conectar-mobile-chromium-repeat10\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+  24) [mobile-chromium] › e2e\catalog.spec.ts:237:3 › catálogo: tempo real e favoritos › evento emitido ANTES de o socket conectar, com a listagem em trânsito: o cliente reconcilia ao conectar 
+
+    Error: expect(locator).toHaveText(expected) failed
+
+    Locator:  locator('[data-testid="nft-card"][data-nft-id="nft-002"]').locator('[data-value]')
+    Expected: "2.05 ETH"
+    Received: "1.69 ETH"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveText" locator('[data-testid="nft-card"][data-nft-id="nft-002"]').locator('[data-value]') with timeout 5000ms
+      - waiting for locator('[data-testid="nft-card"][data-nft-id="nft-002"]').locator('[data-value]')
+        11 × locator resolved to <span data-value="1.69" class="font-bold text-price tabular-nums text-body">1.69 ETH</span>
+           - unexpected value "1.69 ETH"
+
+
+      249 |     // A resposta antiga (1.69) entra; terminada a busca, o cliente reconcilia pelo REST.
+      250 |     const card = page.locator('[data-testid="nft-card"][data-nft-id="nft-002"]')
+    > 251 |     await expect(card.locator('[data-value]')).toHaveText('2.05 ETH')
+          |                                                ^
+      252 |   })
+      253 |
+      254 |   // CP4: a intenção de favoritar é retomada automaticamente após o login (não é preciso clicar de novo).
+        at D:\emprego\e2e\catalog.spec.ts:251:48
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\catalog-catálogo-tempo-rea-9044f-ente-reconcilia-ao-conectar-mobile-chromium-repeat11\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\catalog-catálogo-tempo-rea-9044f-ente-reconcilia-ao-conectar-mobile-chromium-repeat11\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\catalog-catálogo-tempo-rea-9044f-ente-reconcilia-ao-conectar-mobile-chromium-repeat11\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\catalog-catálogo-tempo-rea-9044f-ente-reconcilia-ao-conectar-mobile-chromium-repeat11\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+  24 failed
+    [desktop-chromium] › e2e\catalog.spec.ts:237:3 › catálogo: tempo real e favoritos › evento emitido ANTES de o socket conectar, com a listagem em trânsito: o cliente reconcilia ao conectar 
+    [desktop-chromium] › e2e\catalog.spec.ts:237:3 › catálogo: tempo real e favoritos › evento emitido ANTES de o socket conectar, com a listagem em trânsito: o cliente reconcilia ao conectar 
+    [desktop-chromium] › e2e\catalog.spec.ts:237:3 › catálogo: tempo real e favoritos › evento emitido ANTES de o socket conectar, com a listagem em trânsito: o cliente reconcilia ao conectar 
+    [desktop-chromium] › e2e\catalog.spec.ts:237:3 › catálogo: tempo real e favoritos › evento emitido ANTES de o socket conectar, com a listagem em trânsito: o cliente reconcilia ao conectar 
+    [desktop-chromium] › e2e\catalog.spec.ts:237:3 › catálogo: tempo real e favoritos › evento emitido ANTES de o socket conectar, com a listagem em trânsito: o cliente reconcilia ao conectar 
+    [desktop-chromium] › e2e\catalog.spec.ts:237:3 › catálogo: tempo real e favoritos › evento emitido ANTES de o socket conectar, com a listagem em trânsito: o cliente reconcilia ao conectar 
+    [desktop-chromium] › e2e\catalog.spec.ts:237:3 › catálogo: tempo real e favoritos › evento emitido ANTES de o socket conectar, com a listagem em trânsito: o cliente reconcilia ao conectar 
+    [desktop-chromium] › e2e\catalog.spec.ts:237:3 › catálogo: tempo real e favoritos › evento emitido ANTES de o socket conectar, com a listagem em trânsito: o cliente reconcilia ao conectar 
+    [desktop-chromium] › e2e\catalog.spec.ts:237:3 › catálogo: tempo real e favoritos › evento emitido ANTES de o socket conectar, com a listagem em trânsito: o cliente reconcilia ao conectar 
+    [desktop-chromium] › e2e\catalog.spec.ts:237:3 › catálogo: tempo real e favoritos › evento emitido ANTES de o socket conectar, com a listagem em trânsito: o cliente reconcilia ao conectar 
+    [desktop-chromium] › e2e\catalog.spec.ts:237:3 › catálogo: tempo real e favoritos › evento emitido ANTES de o socket conectar, com a listagem em trânsito: o cliente reconcilia ao conectar 
+    [desktop-chromium] › e2e\catalog.spec.ts:237:3 › catálogo: tempo real e favoritos › evento emitido ANTES de o socket conectar, com a listagem em trânsito: o cliente reconcilia ao conectar 
+    [mobile-chromium] › e2e\catalog.spec.ts:237:3 › catálogo: tempo real e favoritos › evento emitido ANTES de o socket conectar, com a listagem em trânsito: o cliente reconcilia ao conectar 
+    [mobile-chromium] › e2e\catalog.spec.ts:237:3 › catálogo: tempo real e favoritos › evento emitido ANTES de o socket conectar, com a listagem em trânsito: o cliente reconcilia ao conectar 
+    [mobile-chromium] › e2e\catalog.spec.ts:237:3 › catálogo: tempo real e favoritos › evento emitido ANTES de o socket conectar, com a listagem em trânsito: o cliente reconcilia ao conectar 
+    [mobile-chromium] › e2e\catalog.spec.ts:237:3 › catálogo: tempo real e favoritos › evento emitido ANTES de o socket conectar, com a listagem em trânsito: o cliente reconcilia ao conectar 
+    [mobile-chromium] › e2e\catalog.spec.ts:237:3 › catálogo: tempo real e favoritos › evento emitido ANTES de o socket conectar, com a listagem em trânsito: o cliente reconcilia ao conectar 
+    [mobile-chromium] › e2e\catalog.spec.ts:237:3 › catálogo: tempo real e favoritos › evento emitido ANTES de o socket conectar, com a listagem em trânsito: o cliente reconcilia ao conectar 
+    [mobile-chromium] › e2e\catalog.spec.ts:237:3 › catálogo: tempo real e favoritos › evento emitido ANTES de o socket conectar, com a listagem em trânsito: o cliente reconcilia ao conectar 
+    [mobile-chromium] › e2e\catalog.spec.ts:237:3 › catálogo: tempo real e favoritos › evento emitido ANTES de o socket conectar, com a listagem em trânsito: o cliente reconcilia ao conectar 
+    [mobile-chromium] › e2e\catalog.spec.ts:237:3 › catálogo: tempo real e favoritos › evento emitido ANTES de o socket conectar, com a listagem em trânsito: o cliente reconcilia ao conectar 
+    [mobile-chromium] › e2e\catalog.spec.ts:237:3 › catálogo: tempo real e favoritos › evento emitido ANTES de o socket conectar, com a listagem em trânsito: o cliente reconcilia ao conectar 
+    [mobile-chromium] › e2e\catalog.spec.ts:237:3 › catálogo: tempo real e favoritos › evento emitido ANTES de o socket conectar, com a listagem em trânsito: o cliente reconcilia ao conectar 
+    [mobile-chromium] › e2e\catalog.spec.ts:237:3 › catálogo: tempo real e favoritos › evento emitido ANTES de o socket conectar, com a listagem em trânsito: o cliente reconcilia ao conectar 
