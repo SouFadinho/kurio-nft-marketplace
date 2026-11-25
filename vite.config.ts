@@ -46,7 +46,12 @@ export default defineConfig({
     preloadEntryChunks(['src/mocks/browser.ts', 'src/app/App.tsx']),
   ],
   resolve: {
-    alias: { '@': path.resolve(import.meta.dirname, './src') },
+    alias: [
+      { find: '@', replacement: path.resolve(import.meta.dirname, './src') },
+      // CP9.2: a Public Suffix List do `tldts` (251 kB, só para o cookie jar emulado do MSW, que o
+      // KURIO não usa) sai do chunk do MSW. Justificativa e limites em src/mocks/vendor/tldts-lite.ts.
+      { find: /^tldts$/, replacement: path.resolve(import.meta.dirname, './src/mocks/vendor/tldts-lite.ts') },
+    ],
   },
   preview: { port: 4173, strictPort: true },
 })
