@@ -10,7 +10,7 @@
  */
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { useLocation, useNavigate } from '@tanstack/react-router'
-import { toast } from 'sonner'
+import { toast } from '@/lib/toast'
 import { http } from '@/api/http'
 import { queryKeys } from '@/api/queryKeys'
 import { FavoriteList } from '@/api/contracts'

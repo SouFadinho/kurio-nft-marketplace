@@ -10,7 +10,7 @@
  *   indicação) neste formulário; foram omitidos porque pertencem ao Perfil (desvio documentado).
  */
 import { useRef, useState, type FormEvent } from 'react'
-import { toast } from 'sonner'
+import { toast } from '@/lib/toast'
 import { MAX_WALLETS, Network, WALLET_TYPE_LABEL, WalletInput, WalletType, type Wallet } from '@/api/contracts'
 import { ApiError } from '@/api/http'
 import { Badge } from '@/components/ui/badge'

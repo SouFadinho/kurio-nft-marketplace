@@ -10,7 +10,7 @@
  * - Sucesso só depois da resposta da API (toast + aviso no formulário).
  */
 import { useRef, useState, type ChangeEvent, type FormEvent } from 'react'
-import { toast } from 'sonner'
+import { toast } from '@/lib/toast'
 import { AVATAR_MAX_BYTES, AVATAR_TYPES, PASSWORD_HINT, PasswordChange, ProfileUpdate, type Profile } from '@/api/contracts'
 import { ApiError } from '@/api/http'
 import { Button } from '@/components/ui/button'

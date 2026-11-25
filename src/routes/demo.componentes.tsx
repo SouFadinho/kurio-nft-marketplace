@@ -8,7 +8,7 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { useState, type ReactNode } from 'react'
 import { EllipsisVertical, SlidersHorizontal, Star } from 'lucide-react'
-import { toast } from 'sonner'
+import { toast } from '@/lib/toast'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Checkbox } from '@/components/ui/checkbox'

@@ -15,7 +15,7 @@
  */
 import { Link } from '@tanstack/react-router'
 import { memo, useId, useState, type FormEvent } from 'react'
-import { toast } from 'sonner'
+import { toast } from '@/lib/toast'
 import { Button } from '@/components/ui/button'
 import { Container, UnavailableAction, UNAVAILABLE_MESSAGE } from '@/components/kurio/basics'
 import { FacebookIcon, InstagramIcon, LinkedinIcon, XSocialIcon, YoutubeIcon } from '@/components/icons/brand'

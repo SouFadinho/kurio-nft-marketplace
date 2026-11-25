@@ -3,7 +3,8 @@ import { createRouter, RouterProvider } from '@tanstack/react-router'
 import { routeTree } from '@/routeTree.gen'
 import { RealtimeProvider } from '@/realtime/RealtimeProvider'
 import { ApiError } from '@/api/http'
-import { Toaster } from '@/components/ui/sonner'
+import { lazy, Suspense, useEffect } from 'react'
+import { requestToaster, useToasterRequested } from '@/lib/toast'
 
 /**
  * Política de cache (INT-12, versão inicial):
@@ -45,7 +46,34 @@ export function App() {
       <RealtimeProvider>
         <RouterProvider router={router} />
       </RealtimeProvider>
-      <Toaster />
+      <DeferredToaster />
     </QueryClientProvider>
   )
+}
+
+const Toaster = lazy(() => import('@/components/ui/sonner').then((m) => ({ default: m.Toaster })))
+
+/**
+ * CP9.2: o Toaster (sonner) monta na primeira interação ou após 4 s, o que vier primeiro, e
+ * imediatamente se um toast for pedido antes. Fica fora do carregamento inicial e a região
+ * aria-live existe antes da primeira mensagem (src/lib/toast.ts).
+ */
+function DeferredToaster() {
+  const requested = useToasterRequested()
+  useEffect(() => {
+    const request = () => requestToaster()
+    const timer = window.setTimeout(request, 4_000)
+    window.addEventListener('pointerdown', request, { once: true, capture: true })
+    window.addEventListener('keydown', request, { once: true, capture: true })
+    return () => {
+      window.clearTimeout(timer)
+      window.removeEventListener('pointerdown', request, { capture: true })
+      window.removeEventListener('keydown', request, { capture: true })
+    }
+  }, [])
+  return requested ? (
+    <Suspense fallback={null}>
+      <Toaster />
+    </Suspense>
+  ) : null
 }

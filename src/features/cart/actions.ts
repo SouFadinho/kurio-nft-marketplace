@@ -8,7 +8,7 @@
  * `mutateAsync`: o resultado chega mesmo se o componente desmontar (ex.: navegação).
  */
 import { useNavigate } from '@tanstack/react-router'
-import { toast } from 'sonner'
+import { toast } from '@/lib/toast'
 import { ApiError } from '@/api/http'
 import { apiErrorMessage } from '@/components/kurio/form'
 import { useAddToCart } from './queries'

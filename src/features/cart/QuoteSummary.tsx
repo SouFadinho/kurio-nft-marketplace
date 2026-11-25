@@ -6,7 +6,7 @@
  * soma acontece no cliente.
  */
 import { useState, type FormEvent, type ReactNode } from 'react'
-import { toast } from 'sonner'
+import { toast } from '@/lib/toast'
 import { ApplyCoupon, type Cart, type Quote } from '@/api/contracts'
 import { ApiError } from '@/api/http'
 import { Button } from '@/components/ui/button'

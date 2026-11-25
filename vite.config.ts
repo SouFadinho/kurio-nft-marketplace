@@ -111,7 +111,8 @@ export default defineConfig({
         codeSplitting: {
           groups: [
             { name: 'react', test: /node_modules[\\/](react|react-dom|scheduler)[\\/]/ },
-            { name: 'vendor', test: /node_modules[\\/](@tanstack|axios|zod|sonner|tailwind-merge|clsx|class-variance-authority)[\\/]/ },
+            // sonner fica fora: é carregado sob demanda (src/lib/toast.ts).
+            { name: 'vendor', test: /node_modules[\\/](@tanstack|axios|zod|tailwind-merge|clsx|class-variance-authority)[\\/]/ },
             // Slot do Radix (Button e Badge, usados no shell) e os ícones. Os demais primitivos
             // (Tooltip, diálogos, drawers, Select…) ficam com os componentes que os usam, sob demanda.
             {

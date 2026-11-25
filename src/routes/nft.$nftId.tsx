@@ -95,7 +95,9 @@ function DetailError({ reset }: { reset: () => void }) {
 /** Mesmo layout da página carregada (sem deslocamento quando os dados chegam). */
 function DetailSkeleton() {
   return (
-    <Container className="pb-10 lg:pt-6" aria-busy="true">
+    // min-h-dvh: enquanto carrega, o rodapé fica abaixo da dobra; sem isso, no desktop o skeleton é
+    // mais baixo que a tela e o rodapé visível era empurrado quando a página entrava (CLS 0,15).
+    <Container className="min-h-dvh pb-10 lg:pt-6" aria-busy="true">
       <p role="status" className="sr-only">
         Carregando NFT…
       </p>

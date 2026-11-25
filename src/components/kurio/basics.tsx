@@ -3,7 +3,7 @@
  */
 import type { ComponentProps, ReactNode } from 'react'
 import { Link } from '@tanstack/react-router'
-import { toast } from 'sonner'
+import { toast } from '@/lib/toast'
 import { cn } from '@/lib/utils'
 
 /** Logotipo textual (Figma: "KURIO" em caixa alta, monoespaçado, espaçado). */

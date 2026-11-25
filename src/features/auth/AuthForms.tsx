@@ -9,7 +9,7 @@
  */
 import { useRef, useState, type FormEvent } from 'react'
 import { Link } from '@tanstack/react-router'
-import { toast } from 'sonner'
+import { toast } from '@/lib/toast'
 import { LoginRequest, PASSWORD_HINT, RegisterRequest } from '@/api/contracts'
 import { ApiError } from '@/api/http'
 import { Button } from '@/components/ui/button'

@@ -12,7 +12,7 @@
 import { useQuery } from '@tanstack/react-query'
 import { Link, useNavigate } from '@tanstack/react-router'
 import { AlertTriangle, Trash2 } from 'lucide-react'
-import { toast } from 'sonner'
+import { toast } from '@/lib/toast'
 import type { Cart, CartLine, Quote } from '@/api/contracts'
 import { ApiError } from '@/api/http'
 import { Button } from '@/components/ui/button'

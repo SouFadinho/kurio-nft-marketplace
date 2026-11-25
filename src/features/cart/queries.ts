@@ -11,7 +11,7 @@
  */
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { useSyncExternalStore } from 'react'
-import { toast } from 'sonner'
+import { toast } from '@/lib/toast'
 import { http, ApiError } from '@/api/http'
 import { queryKeys, quoteKey } from '@/api/queryKeys'
 import { Cart, MergeCartResponse, Quote, type AddCartItem, type Network } from '@/api/contracts'

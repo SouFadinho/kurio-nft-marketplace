@@ -18,7 +18,7 @@
 import { useEffect, useRef, useState, type FormEvent } from 'react'
 import { Link, useNavigate } from '@tanstack/react-router'
 import { AlertTriangle, CheckCircle2, Wallet as WalletIcon } from 'lucide-react'
-import { toast } from 'sonner'
+import { toast } from '@/lib/toast'
 import {
   CheckoutBuyer,
   PaymentWallet,
