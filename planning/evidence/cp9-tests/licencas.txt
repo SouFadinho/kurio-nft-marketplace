@@ -1,0 +1,30 @@
+Produção: 119 pacotes
+  MIT: 115
+  OFL-1.1: 1
+  Unlicense: 1
+  Apache-2.0: 1
+  ISC: 1
+Total (com desenvolvimento): 319 pacotes
+  MIT: 260
+  Apache-2.0: 19
+  ISC: 9
+  BSD-3-Clause: 7
+  BlueOak-1.0.0: 5
+  ?: 5
+  MPL-2.0: 4
+  0BSD: 2
+  BSD-2-Clause: 2
+  OFL-1.1: 1
+  Unlicense: 1
+  CC-BY-4.0: 1
+  FSL-1.1-Apache-2.0: 1
+  (MIT OR CC0-1.0): 1
+  Apache-2.0 AND LGPL-3.0-or-later: 1
+Revisar manualmente:
+  @emnapi/core@1.11.3: ?
+  @emnapi/wasi-threads@1.2.3: ?
+  @emnapi/runtime@1.11.3: ?
+  @napi-rs/wasm-runtime@1.2.2: ?
+  @tybys/wasm-util@0.10.3: ?
+  sentry@0.50.0: FSL-1.1-Apache-2.0
+  @img/sharp-win32-x64@0.35.5: Apache-2.0 AND LGPL-3.0-or-later

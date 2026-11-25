@@ -27,8 +27,8 @@ import path from 'node:path'
 import sharp from 'sharp'
 
 const SRC = {
-  mobileHomeDetail: 'Imagem do ChatGPT 24 de nov. de 2026, 13_10_47.png',
-  mobileCartPayLogin: 'Imagem do ChatGPT 24 de nov. de 2026, 13_10_51.png',
+  mobileHomeDetail: 'planning/referencias-figma/Imagem do ChatGPT 24 de nov. de 2026, 13_10_47.png',
+  mobileCartPayLogin: 'planning/referencias-figma/Imagem do ChatGPT 24 de nov. de 2026, 13_10_51.png',
 }
 const OUT = path.resolve('public/assets/nfts')
 const WORK = path.resolve('.cache/upscale')

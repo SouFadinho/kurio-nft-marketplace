@@ -10,10 +10,10 @@ import sharp from 'sharp'
 
 const EV = 'planning/evidence/cp2'
 const REF = {
-  homeDesk: 'Imagem do ChatGPT 24 de nov. de 2026, 13_10_32.png',
-  mobile: 'Imagem do ChatGPT 24 de nov. de 2026, 13_10_47.png',
-  mobileCart: 'Imagem do ChatGPT 24 de nov. de 2026, 13_10_51.png',
-  profile: 'Imagem do ChatGPT 24 de nov. de 2026, 13_10_56.png',
+  homeDesk: 'planning/referencias-figma/Imagem do ChatGPT 24 de nov. de 2026, 13_10_32.png',
+  mobile: 'planning/referencias-figma/Imagem do ChatGPT 24 de nov. de 2026, 13_10_47.png',
+  mobileCart: 'planning/referencias-figma/Imagem do ChatGPT 24 de nov. de 2026, 13_10_51.png',
+  profile: 'planning/referencias-figma/Imagem do ChatGPT 24 de nov. de 2026, 13_10_56.png',
 }
 const PAIRS = [
   { name: 'header-desktop', ref: REF.homeDesk, region: { left: 29, top: 74, width: 372, height: 26 }, ours: 'el-header-desktop.png', height: 160 },

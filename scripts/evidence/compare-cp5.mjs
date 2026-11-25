@@ -11,11 +11,11 @@ import sharp from 'sharp'
 const EV = 'planning/evidence/cp5'
 const PAIRS = [
   // Desktop / Carrinho e Pagamento: frames de ~381 px (= 1440 reais) na captura 13_10_59.
-  {"name":"carrinho-desktop","ref":"Imagem do ChatGPT 24 de nov. de 2026, 13_10_59.png","frame":{"left":459,"top":79,"width":381,"height":470},"realWidth":1440,"ours":"carrinho-1440.png","out":0.45},
-  {"name":"pagamento-desktop","ref":"Imagem do ChatGPT 24 de nov. de 2026, 13_10_59.png","frame":{"left":893,"top":79,"width":382,"height":445},"realWidth":1440,"ours":"pagamento-1440.png","out":0.45},
+  {"name":"carrinho-desktop","ref":"planning/referencias-figma/Imagem do ChatGPT 24 de nov. de 2026, 13_10_59.png","frame":{"left":459,"top":79,"width":381,"height":470},"realWidth":1440,"ours":"carrinho-1440.png","out":0.45},
+  {"name":"pagamento-desktop","ref":"planning/referencias-figma/Imagem do ChatGPT 24 de nov. de 2026, 13_10_59.png","frame":{"left":893,"top":79,"width":382,"height":445},"realWidth":1440,"ours":"pagamento-1440.png","out":0.45},
   // Mobile / Carrinho e Pagamento: frames de 328 px (= 390 reais) na captura 13_10_51.
-  {"name":"carrinho-mobile","ref":"Imagem do ChatGPT 24 de nov. de 2026, 13_10_51.png","frame":{"left":33,"top":44,"width":328,"height":710},"realWidth":390,"ours":"carrinho-390.png","out":1},
-  {"name":"pagamento-mobile","ref":"Imagem do ChatGPT 24 de nov. de 2026, 13_10_51.png","frame":{"left":473,"top":44,"width":328,"height":710},"realWidth":390,"ours":"pagamento-conectado-390.png","out":1},
+  {"name":"carrinho-mobile","ref":"planning/referencias-figma/Imagem do ChatGPT 24 de nov. de 2026, 13_10_51.png","frame":{"left":33,"top":44,"width":328,"height":710},"realWidth":390,"ours":"carrinho-390.png","out":1},
+  {"name":"pagamento-mobile","ref":"planning/referencias-figma/Imagem do ChatGPT 24 de nov. de 2026, 13_10_51.png","frame":{"left":473,"top":44,"width":328,"height":710},"realWidth":390,"ours":"pagamento-conectado-390.png","out":1},
 ]
 
 const label = (text, width) =>

@@ -11,12 +11,12 @@ import sharp from 'sharp'
 const EV = 'planning/evidence/cp3'
 const PAIRS = [
   // Desktop / Início: frame de 1440 ocupa x 29–401 (372 px) na captura 13_10_32.
-  { name: 'inicio-desktop', ref: 'Imagem do ChatGPT 24 de nov. de 2026, 13_10_32.png', frame: { left: 29, top: 74, width: 372, height: 692 }, realWidth: 1440, ours: 'inicio-1440-pagina.png', out: 0.45 },
+  { name: 'inicio-desktop', ref: 'planning/referencias-figma/Imagem do ChatGPT 24 de nov. de 2026, 13_10_32.png', frame: { left: 29, top: 74, width: 372, height: 692 }, realWidth: 1440, ours: 'inicio-1440-pagina.png', out: 0.45 },
   // Desktop / Detalhes: frame x 452–796 (344 px) na mesma captura.
-  { name: 'detalhe-desktop', ref: 'Imagem do ChatGPT 24 de nov. de 2026, 13_10_32.png', frame: { left: 452, top: 75, width: 344, height: 580 }, realWidth: 1440, ours: 'detalhe-1440-pagina.png', out: 0.45 },
+  { name: 'detalhe-desktop', ref: 'planning/referencias-figma/Imagem do ChatGPT 24 de nov. de 2026, 13_10_32.png', frame: { left: 452, top: 75, width: 344, height: 580 }, realWidth: 1440, ours: 'detalhe-1440-pagina.png', out: 0.45 },
   // Mobile / Início e Detalhes: frames de 328 px (= 390 px reais) na captura 13_10_47.
-  { name: 'inicio-mobile', ref: 'Imagem do ChatGPT 24 de nov. de 2026, 13_10_47.png', frame: { left: 50, top: 37, width: 328, height: 710 }, realWidth: 390, ours: 'inicio-390-pagina.png', out: 1 },
-  { name: 'detalhe-mobile', ref: 'Imagem do ChatGPT 24 de nov. de 2026, 13_10_47.png', frame: { left: 489, top: 37, width: 328, height: 710 }, realWidth: 390, ours: 'detalhe-390-pagina.png', out: 1 },
+  { name: 'inicio-mobile', ref: 'planning/referencias-figma/Imagem do ChatGPT 24 de nov. de 2026, 13_10_47.png', frame: { left: 50, top: 37, width: 328, height: 710 }, realWidth: 390, ours: 'inicio-390-pagina.png', out: 1 },
+  { name: 'detalhe-mobile', ref: 'planning/referencias-figma/Imagem do ChatGPT 24 de nov. de 2026, 13_10_47.png', frame: { left: 489, top: 37, width: 328, height: 710 }, realWidth: 390, ours: 'detalhe-390-pagina.png', out: 1 },
 ]
 
 const label = (text, width) =>

@@ -14,7 +14,7 @@ import sharp from 'sharp'
 
 const OUT = 'planning/evidence/cp8'
 const B = 'planning/evidence/cp8-baselines/antes'
-const REF = (t) => `Imagem do ChatGPT 24 de nov. de 2026, ${t}.png`
+const REF = (t) => `planning/referencias-figma/Imagem do ChatGPT 24 de nov. de 2026, ${t}.png`
 const PAIRS = [
   { name: 'inicio-desktop', ref: REF('13_10_32'), frame: { left: 29, top: 74, width: 372, height: 692 }, realWidth: 1440, before: `${B}/inicio-desktop-chromium-win32.png`, beforeLabel: 'Antes (baseline CP7)', after: `${OUT}/inicio-1440.png`, out: 0.4 },
   { name: 'inicio-mobile', ref: REF('13_10_47'), frame: { left: 50, top: 37, width: 328, height: 710 }, realWidth: 390, before: `${B}/inicio-mobile-chromium-win32.png`, beforeLabel: 'Antes (baseline CP7)', after: `${OUT}/inicio-390.png`, out: 1 },

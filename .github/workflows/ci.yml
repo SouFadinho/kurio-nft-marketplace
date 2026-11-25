@@ -1,5 +1,11 @@
-# CI do KURIO (CP7). Preparado e validado em sintaxe; ainda NÃO executado no GitHub
-# (repositório sem remoto até a autorização de publicação, CP9).
+# CI do KURIO (CP7, revisado no CP9). Preparado; ainda NÃO executado no GitHub
+# (repositório sem remoto até a autorização de publicação). Não declarar aprovado antes de rodar.
+#
+# Jobs:
+# - quality: typecheck, lint, build, verificação do build público, unitários e E2E.
+# - visual-baselines-linux (manual): gera as baselines visuais Linux no container oficial do
+#   Playwright e as publica como artefato para REVISÃO. Nada é commitado automaticamente:
+#   as imagens são inspecionadas e versionadas por uma pessoa.
 name: CI
 
 on:
@@ -44,6 +50,9 @@ jobs:
       - name: Instalar o Chromium do Playwright
         run: npx playwright install --with-deps chromium
 
+      - name: Build público sem rotas internas (/demo/* em 404, deep links)
+        run: npm run check:public-build
+
       - name: Testes unitários
         run: npm run test:unit
 
@@ -67,3 +76,37 @@ jobs:
           name: test-results
           path: test-results/
           retention-days: 14
+
+  visual-baselines-linux:
+    name: Gerar baselines visuais Linux (manual)
+    if: ${{ github.event_name == 'workflow_dispatch' }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    # Mesma imagem do script test:visual:update:linux (mesma versão do Playwright do lockfile).
+    container:
+      image: mcr.microsoft.com/playwright:v1.65.1-noble
+      options: --ipc=host
+    env:
+      CI: 'true'
+      PW_WORKERS: '2'
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - name: Instalar dependências (lockfile)
+        run: npm ci
+
+      - name: Gerar baselines Linux (somente regressão visual)
+        run: npx playwright test e2e/visual.spec.ts --project=desktop-chromium --project=mobile-chromium --update-snapshots
+
+      - name: Publicar as baselines para revisão
+        uses: actions/upload-artifact@v4
+        with:
+          name: visual-baselines-linux
+          path: e2e/visual.spec.ts-snapshots/*-linux.png
+          if-no-files-found: error
+          retention-days: 30

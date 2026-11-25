@@ -18,7 +18,8 @@
     "test:unit": "playwright test --project=unit",
     "test:visual": "playwright test e2e/visual.spec.ts",
     "test:visual:update:linux": "docker run --rm --ipc=host -v \"$PWD\":/work -w /work mcr.microsoft.com/playwright:v1.65.1-noble /bin/bash -c \"npm ci && npx playwright test e2e/visual.spec.ts --update-snapshots\"",
-    "test:e2e:browsers": "playwright test --project=desktop-chromium --project=mobile-chromium --project=responsive"
+    "test:e2e:browsers": "playwright test --project=desktop-chromium --project=mobile-chromium --project=responsive",
+    "check:public-build": "node scripts/check-public-build.mjs --serve"
   },
   "dependencies": {
     "@fontsource-variable/roboto-mono": "5.3.0",

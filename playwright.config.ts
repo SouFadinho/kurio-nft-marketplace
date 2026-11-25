@@ -61,5 +61,8 @@ export default defineConfig({
     // Sempre um build novo: a evidência dos testes corresponde ao código atual.
     reuseExistingServer: false,
     timeout: 180_000,
+    // CP9: as rotas internas /demo/* (PoC do CP1, galeria do CP2) só existem no build dos testes.
+    // O build público (Vercel, `npm run audit:lighthouse`) não as inclui (src/routes/demo.tsx).
+    env: { VITE_DEMO_ROUTES: 'true' },
   },
 })

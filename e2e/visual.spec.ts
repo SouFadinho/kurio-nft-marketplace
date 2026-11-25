@@ -66,8 +66,12 @@ for (const [name, path] of [
 ] as const) {
   test(`baseline visual: ${name}`, async ({ page }, testInfo) => {
     const baseline = testInfo.snapshotPath(`${name}.png`)
+    // Sem baseline da plataforma: ignora, EXCETO quando a atualização foi pedida explicitamente
+    // (`--update-snapshots`, usado no container oficial). O modo padrão ('missing') gravaria uma
+    // baseline nova e passaria sem comparar nada.
+    const explicitUpdate = testInfo.config.updateSnapshots === 'all' || testInfo.config.updateSnapshots === 'changed'
     test.skip(
-      process.platform !== 'win32' && !fs.existsSync(baseline),
+      process.platform !== 'win32' && !fs.existsSync(baseline) && !explicitUpdate,
       `baseline ${process.platform} ainda não gerada (gerar no container oficial do Playwright: npm run test:visual:update:linux)`,
     )
     await page.clock.setFixedTime(FIXED_NOW)

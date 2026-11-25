@@ -90,6 +90,14 @@ test.describe('cadastro', () => {
     await expect(page.getByText('Conta criada. Boas-vindas à Kurio!')).toBeVisible()
     await expect(page).toHaveURL(/\/$/)
 
+    // ACC-08 (CP9): nenhuma senha em claro no armazenamento do navegador (db simulado em
+    // localStorage, sessão em sessionStorage): nem a da conta nova, nem as do seed.
+    const storage = await page.evaluate(() =>
+      [localStorage, sessionStorage].flatMap((s) => Object.keys(s).map((k) => `${k}=${s.getItem(k)}`)).join('\n'),
+    )
+    expect(storage).toContain('carla@kurio.test')
+    for (const password of ['Carla#2026', USERS.ana.password, USERS.bruno.password]) expect(storage).not.toContain(password)
+
     // Persistida: sai e entra de novo com as mesmas credenciais.
     await page.goto('/perfil')
     await expect(page.getByLabel('Nome de usuário')).toHaveValue('carla.nova')

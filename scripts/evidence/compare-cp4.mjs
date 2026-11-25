@@ -11,14 +11,14 @@ import sharp from 'sharp'
 const EV = 'planning/evidence/cp4'
 const PAIRS = [
   // Desktop / Login e Cadastro: frames de 371 px (= 1440 reais) na captura 13_10_43.
-  {"name":"login-desktop","ref":"Imagem do ChatGPT 24 de nov. de 2026, 13_10_43.png","frame":{"left":63,"top":40,"width":371,"height":510},"realWidth":1440,"ours":"login-1440.png","out":0.45},
-  {"name":"cadastro-desktop","ref":"Imagem do ChatGPT 24 de nov. de 2026, 13_10_43.png","frame":{"left":486,"top":40,"width":371,"height":510},"realWidth":1440,"ours":"cadastro-1440.png","out":0.45},
+  {"name":"login-desktop","ref":"planning/referencias-figma/Imagem do ChatGPT 24 de nov. de 2026, 13_10_43.png","frame":{"left":63,"top":40,"width":371,"height":510},"realWidth":1440,"ours":"login-1440.png","out":0.45},
+  {"name":"cadastro-desktop","ref":"planning/referencias-figma/Imagem do ChatGPT 24 de nov. de 2026, 13_10_43.png","frame":{"left":486,"top":40,"width":371,"height":510},"realWidth":1440,"ours":"cadastro-1440.png","out":0.45},
   // Mobile / Login (13_10_51) e Cadastro (13_10_54): frames de 328 px (= 390 reais).
-  {"name":"login-mobile","ref":"Imagem do ChatGPT 24 de nov. de 2026, 13_10_51.png","frame":{"left":912,"top":44,"width":328,"height":710},"realWidth":390,"ours":"login-390.png","out":1},
-  {"name":"cadastro-mobile","ref":"Imagem do ChatGPT 24 de nov. de 2026, 13_10_54.png","frame":{"left":55,"top":36,"width":328,"height":710},"realWidth":390,"ours":"cadastro-390.png","out":1},
+  {"name":"login-mobile","ref":"planning/referencias-figma/Imagem do ChatGPT 24 de nov. de 2026, 13_10_51.png","frame":{"left":912,"top":44,"width":328,"height":710},"realWidth":390,"ours":"login-390.png","out":1},
+  {"name":"cadastro-mobile","ref":"planning/referencias-figma/Imagem do ChatGPT 24 de nov. de 2026, 13_10_54.png","frame":{"left":55,"top":36,"width":328,"height":710},"realWidth":390,"ours":"cadastro-390.png","out":1},
   // Desktop / Perfil e Carteiras: frames de 381 px (= 1440 reais) na captura 13_10_56.
-  {"name":"perfil-desktop","ref":"Imagem do ChatGPT 24 de nov. de 2026, 13_10_56.png","frame":{"left":467,"top":62,"width":381,"height":286},"realWidth":1440,"ours":"perfil-1440.png","out":0.45},
-  {"name":"carteiras-desktop","ref":"Imagem do ChatGPT 24 de nov. de 2026, 13_10_56.png","frame":{"left":901,"top":62,"width":381,"height":286},"realWidth":1440,"ours":"carteiras-1440.png","out":0.45},
+  {"name":"perfil-desktop","ref":"planning/referencias-figma/Imagem do ChatGPT 24 de nov. de 2026, 13_10_56.png","frame":{"left":467,"top":62,"width":381,"height":286},"realWidth":1440,"ours":"perfil-1440.png","out":0.45},
+  {"name":"carteiras-desktop","ref":"planning/referencias-figma/Imagem do ChatGPT 24 de nov. de 2026, 13_10_56.png","frame":{"left":901,"top":62,"width":381,"height":286},"realWidth":1440,"ours":"carteiras-1440.png","out":0.45},
 ]
 
 const label = (text, width) =>

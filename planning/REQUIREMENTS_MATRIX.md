@@ -13,6 +13,8 @@ IDs definidos em `CHALLENGE_REQUIREMENTS.md`. `D` = decisão do candidato ou té
 
 **Escopo da validação no CP1:** mecanismos provados na **prova de conceito**, cuja interface é temporária. Quando as telas definitivas forem construídas, a validação é repetida pelos testes do CP7 (coluna "Revalidar").
 
+**Revisão integral no CP9 (25/11/2026):** cada requisito de `CHALLENGE.md` foi confrontado com o código e as evidências; os status antigos (§1, §3, §4, §5, §6) foram atualizados. Evidência final: `planning/evidence/cp9-tests/` (checkout limpo, suíte completa, auditoria de dependências) e `planning/evidence/cp9-perf/` (Lighthouse final). "VALIDADO" significa teste executado e aprovado; não significa conformidade plena com o Figma nem com a WCAG.
+
 **Evidências do CP1** (`planning/evidence/cp1/`):
 - `e2e-full-run-{1,2,3}.log`: 3 rodadas completas, 43/43 cada (11 unitários + 16 desktop + 16 mobile).
 - `negative-controls.log`: portão do handshake e heartbeat desligados → os testes falham, como esperado.
@@ -28,8 +30,8 @@ Abreviação: `T<n>` = teste `<n>.` de `e2e/poc.spec.ts`.
 | PEND-01 | ~~Idempotência com a mesma chave e payload diferente~~ **RESOLVIDO (CP5)**: checkout.spec › API mesma chave + mesmo conteúdo = mesmo pedido (200); conteúdo diferente = 409 `IDEMPOTENCY_KEY_REUSED` | — |
 | PEND-02 | ~~Timeout após a criação do pedido e recuperação por retry~~ **RESOLVIDO (CP5)**: cenários `order-timeout` e `order-lost-response`; o retry (inclusive pelo botão principal) recupera o MESMO pedido, 1 pedido no servidor | — |
 | PEND-03 | ~~Consistência da persistência do mock entre abas~~ **RESOLVIDO (CP6)**: cluster de abas com líder único (Web Lock), RPC por BroadcastChannel e eventos entregues pelo Socket.IO de cada aba (tabs.spec, 6 casos × 2) | — |
-| PEND-04 | Impacto do MSW na performance inicial (R-25) | CP8 |
-| PEND-05 | Revalidação integral do HEAD a cada checkpoint. CP1: `91380dc`. **CP2: `6ad49e0` validado em checkout limpo (126/126)** · **CP3: `2b2aa83` validado em checkout limpo (199 passed / 2 skipped)** · **CP4: `ea6f60b` validado em checkout limpo (295 passed / 5 skipped)** · **CP5: `18291bf` validado em checkout limpo (376 passed / 5 skipped)** | todo CP · CP9 |
+| PEND-04 | Impacto do MSW na performance inicial (R-25): **MEDIDO no CP8 e no CP9, NÃO RESOLVIDO**. Performance mobile abaixo de 90; ver R-25 e `CP9_REPORT.md` | encerrado como limitação |
+| PEND-05 | Revalidação integral do HEAD a cada checkpoint. CP1: `91380dc`. **CP2: `6ad49e0` validado em checkout limpo (126/126)** · **CP3: `2b2aa83` (199 passed / 2 skipped)** · **CP4: `ea6f60b` (295 / 5)** · **CP5: `18291bf` (376 / 5)** · CP6–CP8: suíte completa no diretório de trabalho · **CP9: checkout limpo final (`CP9_REPORT.md` §6)** | encerrado no CP9 |
 | PEND-06 | Disco C: sem espaço; caches e temporários seguem em `D:\emprego\.cache` (R-23) | candidato |
 
 ## 0. Critérios eliminatórios
@@ -41,24 +43,24 @@ Abreviação: `T<n>` = teste `<n>.` de `e2e/poc.spec.ts`.
 | ELIM-03 | Compra confirmada só com resposta da simulação | A UI renderiza "confirmado" só com `status === 'confirmed'` vindo do REST/evento | T5, T5b, T7/8 | VALIDADO (CP7): criação retida sem confirmação; offline/terminal/recusa (ELIMINATORY_AUDIT.md) |
 | ELIM-04 | Sem exposição de dados entre usuários | Query keys por `userId`; cache limpo no login/logout; socket por sessão; mock filtra por dono; cliente descarta evento alheio | T6, T6b, T6c; CP4: isolation.spec (respostas atrasadas, socket, API 404) | VALIDADO (CP7): isolation, orders, tabs, hardening (ELIMINATORY_AUDIT.md) |
 | ELIM-05 | Sem eventos simulados na UI | Eventos só nascem em `src/mocks`; lint proíbe importar `src/mocks` fora de `main.tsx` | `lint.log` + sonda de lint (relatório CP1 §4) + T3/4..T9 | VALIDADO (CP7): eventos só pelo socket.io-client; barramento entre abas interno ao mock (ELIMINATORY_AUDIT.md) |
-| ELIM-06 | Testes E2E executáveis | `npm run test:e2e` | `e2e-full-run-{1,2,3}.log` | VALIDADO localmente (CP7, suíte completa); CI preparado, NÃO executado (sem remoto); checkout limpo final no CP9 |
+| ELIM-06 | Testes E2E executáveis | `npm run test:e2e` | `cp9-tests/checkout-limpo-*.log` | VALIDADO localmente em checkout limpo (CP9). CI (GitHub Actions) preparado, **não executado** (sem repositório remoto) |
 
 ## 1. Stack obrigatória
 
 | Tecnologia | Papel efetivo | Evidência | Status |
 |---|---|---|---|
-| React 19.3.1 | UI | build + E2E | VALIDADO |
-| TypeScript 5.9.3 (strict) | contratos tipados | `typecheck.log` | VALIDADO |
-| TanStack Router 1.170.46 | rotas file-based, `validateSearch`, `beforeLoad`, `notFound`, loader | T11 (acesso direto, refresh, 404, guard + redirect) | VALIDADO |
-| TanStack Query 5.108.4 | queries, mutations, cache, reconciliação | T1, T2, T3/4, T7/8 | VALIDADO |
-| Axios 1.21.1 | cliente HTTP único + interceptors | T1 (`fromServiceWorker`), login com erro (401 mapeado) | VALIDADO |
-| REST | contratos em `src/api/contracts.ts` | T1, T2, T11 | VALIDADO (recursos da PoC) |
+| React 19.3.1 | UI de todas as telas | build + suíte completa | VALIDADO |
+| TypeScript 5.9.3 (strict) | contratos tipados (zod → tipos) entre transporte, estado e UI | `typecheck` sem erros (CP9) | VALIDADO |
+| TanStack Router 1.170.46 | rotas file-based com code splitting, `validateSearch` (catálogo na URL), `beforeLoad` (rotas privadas + retorno), `notFound`, 404 | catalog.spec (URL/histórico), auth.spec (guarda + redirect), nft-detail.spec (inexistente), design-system (404) | VALIDADO |
+| TanStack Query 5.108.4 | queries, mutations, otimista com rollback, invalidação por evento, cancelamento, chaves por usuário | catalog, cart, checkout, races, isolation | VALIDADO |
+| Axios 1.21.1 | cliente HTTP único (sessão, época da sessão, mapeamento de erros) | toda chamada REST; isolation (resposta de sessão anterior descartada) | VALIDADO |
+| REST | contratos em `src/api/contracts.ts`, documentados em `API_CONTRACTS.md` | todos os recursos do §5 do enunciado exercitados pelos E2E | VALIDADO |
 | socket.io-client 4.8.4 | tempo real | T3/4, T5, T6, T6b, T6c, T7/8, T9, heartbeat | VALIDADO |
-| Tailwind CSS 4.3.5 | tokens `@theme` | build | VALIDADO (configuração) |
-| shadcn/ui (CLI 4.23.0, radix-ui 1.8.1) | Button, Card | build + uso na PoC | VALIDADO (configuração) |
+| Tailwind CSS 4.3.5 | tokens `@theme` medidos do Figma, toda a estilização | build; contraste por teste; comparações com o Figma | VALIDADO |
+| shadcn/ui (CLI 4.23.0, radix-ui 1.8.1) | Button, Dialog, Drawer, RadioGroup, Select, Tabs, Skeleton, Sonner… adaptados à identidade | design-system.spec (foco, drawer, axe) e telas | VALIDADO |
 | MSW 2.15.0 + @mswjs/socket.io-binding 0.2.0 | REST + Socket.IO | toda a suíte, contra o build de produção | VALIDADO |
 | Playwright 1.65.1 | E2E | `e2e-full-run-*.log` | VALIDADO |
-| Lighthouse 13.6.0 | auditoria | `lighthouse-smoke-*-NAO-OFICIAL.*` (script) | IMPLEMENTADO, NÃO VALIDADO (auditoria oficial no CP8) |
+| Lighthouse 13.6.0 | auditoria versionada (`scripts/lighthouse.mjs`) | 12 auditorias oficiais no CP8 e no CP9 (`cp8-perf/`, `cp9-perf/`) | VALIDADO (ferramenta). Meta de Performance mobile **não atingida** |
 
 ## 2. Validações críticas pedidas no CP1
 
@@ -83,24 +85,35 @@ Abreviação: `T<n>` = teste `<n>.` de `e2e/poc.spec.ts`.
 
 | ID | Critério | Pts | Status |
 |---|---|---|---|
-| AV-1 | Fidelidade visual e responsividade | 20 | IMPLEMENTADO, NÃO VALIDADO (design system e estrutura global prontos e comparados; telas no CP3–CP6) |
-| AV-2 | Fluxos e experiência | 20 | VALIDADO funcionalmente (CP3–CP6: catálogo, detalhe, conta, carrinho, pagamento, pedido e recibo); revisão visual final pendente |
-| AV-3 | Integração e estado | 15 | IMPLEMENTADO, NÃO VALIDADO (base validada na PoC) |
-| AV-4 | Tempo real | 10 | VALIDADO (CP5): catálogo, detalhe, carrinho e pagamento; RT-08 coberto |
-| AV-5 | Mocking | 10 | IMPLEMENTADO, NÃO VALIDADO (3 de 21 cenários) |
-| AV-6 | Testes | 10 | IMPLEMENTADO: 12 grupos E2E cobertos (ver §6); baselines Linux e CI no CP7 |
-| AV-7 | Acessibilidade | 5 | IMPLEMENTADO, NÃO VALIDADO (base validada no CP2; revalidar nas telas e no CP8) |
-| AV-8 | Performance | 5 | PENDENTE |
-| AV-9 | Arquitetura e documentação | 5 | IMPLEMENTADO, NÃO VALIDADO |
+| AV-1 | Fidelidade visual e responsividade | 20 | EVIDENCIADO, COM LIMITAÇÕES: comparações na mesma escala (CP2–CP8), 8 baselines visuais, 3 larguras + 8 larguras sem overflow. Limitações: artes substitutas (VIS-03/06), galeria com 2 vistas (VIS-04), VIS-09/16 parciais |
+| AV-2 | Fluxos e experiência | 20 | VALIDADO: compra e conta completas, validações e recuperação de erros (cart, checkout, orders, recovery, auth, account) |
+| AV-3 | Integração e estado | 15 | VALIDADO: Router, Query, Axios e contratos (§1, §5); política de cache documentada em `ARCHITECTURE.md` |
+| AV-4 | Tempo real | 10 | VALIDADO: eventos, duplicatas/antigos, reconexão e reconciliação, várias abas (races, recovery, tabs) |
+| AV-5 | Mocking | 10 | VALIDADO: 29 cenários determinísticos em `src/mocks/scenarios.ts`, persistência, reset integral, controle do servidor simulado |
+| AV-6 | Testes | 10 | VALIDADO localmente: 12 grupos E2E + regressão visual + a11y; CI preparado e não executado; baselines Linux não geradas |
+| AV-7 | Acessibilidade | 5 | VALIDADO por testes automatizados (axe em 12 telas × 2 viewports, teclado, foco, reflow, alvos de toque). Sem leitor de tela real; sem declaração de conformidade WCAG |
+| AV-8 | Performance | 5 | MEDIDO: desktop ≥ 90; **mobile abaixo de 90** (causas medidas e documentadas: CP8_REPORT §5, CP9_REPORT) |
+| AV-9 | Arquitetura e documentação | 5 | DOCUMENTADO (CP9): `README.md`, `ARCHITECTURE.md`, `API_CONTRACTS.md`, `TECHNICAL_HANDOFF.md`; checkout limpo reproduzível |
 
 ## 4. Telas (§3)
-Todas `PENDENTE` (TELA-01..09). Desde o CP2:
-- A PoC do CP1 foi movida para `/demo/poc` (fora da navegação), sem mudar o código validado; os 43 testes do CP1 continuam passando.
-- Rotas públicas (`/`, `/mercado`, `/carrinho`, `/favoritos`, `/nft/$nftId`, `/perfil`, `/perfil/carteiras`) existem como **placeholders temporários** dentro da estrutura global.
-- `/criadores` e `/aprenda` são páginas **definitivas** "fora desta demonstração" (TELA-X → IMPLEMENTADO, VALIDADO por teste).
-- TELA-404 continua VALIDADO.
 
-**Evidências do CP2** (`planning/evidence/cp2/`): 18 capturas de viewport (PNG), 18 de página inteira (WebP), 6 recortes por elemento e 6 comparações com o Figma. Testes em `planning/evidence/cp2-tests/`.
+Situação final (CP9). Detalhes por checkpoint nas seções 11, 13, 14 e 15.
+
+| ID | Tela | Testes | Evidência visual | Status |
+|---|---|---|---|---|
+| TELA-01 | Início | catalog.spec, layout.responsive, visual (inicio) | `cp8/comparacao-inicio-*`, `cp8/inicio-{390,768,1440}` | VALIDADO |
+| TELA-02 | Detalhes do NFT | nft-detail.spec, visual (detalhe) | `cp3/comparacao-detalhe-*`, `cp8/detalhe-*` | VALIDADO (galeria com 2 vistas: VIS-04) |
+| TELA-03 | Carrinho | cart.spec, visual (carrinho) | `cp8/comparacao-carrinho-mobile` | VALIDADO |
+| TELA-04 | Pagamento | checkout.spec, visual (pagamento) | `cp8/comparacao-pagamento-desktop` | VALIDADO |
+| TELA-05 | Confirmação (sem frame no Figma) | orders.spec, recovery.spec, races.spec | `cp8/comparacao-recibo-desktop`, `cp8/confirmacao-*` | VALIDADO |
+| TELA-06 | Login | auth.spec | `cp8/comparacao-login-desktop` | VALIDADO |
+| TELA-07 | Cadastro | auth.spec | `cp4/comparacao-cadastro-*` | VALIDADO |
+| TELA-08 | Perfil (mobile sem frame) | account.spec | `cp4/comparacao-perfil-desktop`, `cp8/perfil-*` | VALIDADO |
+| TELA-09 | Carteiras (mobile sem frame) | account.spec | `cp8/comparacao-carteiras-desktop`, `cp8/carteiras-*` | VALIDADO |
+| TELA-X | Páginas fora do escopo (Criadores, Aprenda, ações auxiliares) | design-system.spec (página "fora desta demonstração", ações indisponíveis sem aparentar sucesso) | — | VALIDADO |
+| TELA-404 | Rota inexistente, NFT e pedido inexistentes | design-system, nft-detail, orders | — | VALIDADO |
+
+As rotas internas `/demo/*` (PoC do CP1 e galeria do CP2) existem apenas no build dos testes (`VITE_DEMO_ROUTES=true`); no build público respondem 404 (`scripts/check-public-build.mjs`).
 
 ## 5. Requisitos funcionais, integração, API, mocking e tempo real
 
@@ -128,27 +141,27 @@ Todas `PENDENTE` (TELA-01..09). Desde o CP2:
 | ACC-05 (limpeza na troca) | VALIDADO (CP4) | isolation.spec › respostas retidas + MutationObserver; socket de Ana encerrado |
 | ACC-06 (perfil) | VALIDADO (CP4) | account.spec › perfil, avatar, senha |
 | ACC-07 (carteiras) | VALIDADO (CP4) | account.spec › carteiras |
-| ACC-08 (senha não em claro) | VALIDADO (CP4, parcial) | PBKDF2 + sal aleatório no mock; troca de senha testada (a antiga deixa de funcionar). Não há teste que inspecione o storage em busca de texto puro |
-| INT-01, 02, 03, 04, 08, 10 | VALIDADO (PoC) | T1, T2, T11, lint |
-| INT-05 (estados) | VALIDADO (catálogo e detalhe, CP3) | §11 |
+| ACC-08 (senha não em claro) | VALIDADO (CP9) | PBKDF2 (100 mil iterações, sal) no mock; seed com hashes pré-calculados conferidos (unit › seed-hashes); auth.spec › conta nova: nenhuma senha (nova ou do seed) aparece em localStorage/sessionStorage; troca de senha invalida a antiga |
+| INT-01, 02, 03, 04, 08, 10 | VALIDADO | PoC (T1, T2, T11) e telas finais (catalog, auth, checkout); lint impede importar `src/mocks` na aplicação |
+| INT-05 (estados) | VALIDADO | carregamento (skeletons), vazio, erro + retry, sucesso e atualização em segundo plano: catalog, cart, checkout, account, orders |
 | INT-07 (respostas obsoletas) | VALIDADO (CP3) | `out-of-order` + `stale-in-flight` (§11) |
 | INT-11 (otimista + rollback) | VALIDADO (favoritos, CP3) | `favorite-fail` |
 | INT-09 (idempotência) | VALIDADO (CP5) | checkout.spec › idempotência e falhas |
-| INT-12 | IMPLEMENTADO, NÃO VALIDADO | documentação de cache no CP9 |
-| INT-06 (invalidação após eventos) | VALIDADO (PoC) | T3/4, T7/8 |
-| API-01 | IMPLEMENTADO, NÃO VALIDADO (parcial) | auth (login, cadastro, sessão, logout), nfts, orders, favoritos, perfil, avatar, senha e carteiras (CP4, exercitados pelos E2E); carrinho, cupom, merge, cotação, conexão de carteira e pedido do checkout (CP5) |
-| API-02 | IMPLEMENTADO, NÃO VALIDADO (parcial) | 401, 404, 409, 422 nos handlers |
+| INT-12 | DOCUMENTADO (CP9) | política de cache, retries e sincronização em `ARCHITECTURE.md` §Cache |
+| INT-06 (invalidação após eventos) | VALIDADO | T3/4, T7/8; cart.spec e checkout.spec (nft.updated → cotação); orders.spec (order.updated) |
+| API-01 | VALIDADO | todos os recursos mínimos (sessão e conta, NFTs, favoritos, carrinho, cotação, pedidos, perfil, carteiras) exercitados pelos E2E; contratos em `API_CONTRACTS.md` |
+| API-02 | VALIDADO | 422 `VALIDATION_ERROR` (auth, account), 401 `UNAUTHORIZED`/sessão expirada (auth, isolation), 404 `NOT_FOUND` (isolation › API de outro usuário, nft-detail, orders), 409 (`CONFLICT`, `OUT_OF_STOCK`, `QUOTE_STALE`, `IDEMPOTENCY_KEY_REUSED`), 5xx/`TRANSIENT` e offline (catalog-error, cart-error, order-fail) |
 | API-03 | VALIDADO (CP5) | mesma tentativa → mesmo pedido; mesma chave + outro conteúdo → 409 |
 | MOCK-01, 02, 07, 08, 09, 10 | VALIDADO | lint, T3/4 (REST e evento coerentes após reload), suíte no build de produção |
-| MOCK-03 (persistência e reset) | VALIDADO (PoC) | T3/4 (reload), T "reset integral" |
-| MOCK-04, 06 | VALIDADO parcialmente (19 cenários; CP4: `auth-offline`, `avatar-fail`, `profile-save-fail`, `slow-private` + `expireSessions()`; conflitos e senha errada vêm dos dados; CP5: `cart-error`, `cart-write-fail`, `hold-quote`, `wallet-refused`, `order-fail`, `order-lost-response`, `order-timeout`, `slow-order` + `expireQuotes()` e `recover(rota)`; cupons inválido/expirado vêm dos dados) | `slow`, `hold-catalog`, `out-of-order`, `stale-in-flight`, `catalog-error`, `catalog-offline`, `detail-error`, `empty`, `broken-images`, `favorite-fail`… |
+| MOCK-03 (persistência e reset) | VALIDADO | refresh em todas as áreas (cart, account, orders); `?reset=1` e `__kurioMock.reset()` restauram o cenário (T "reset integral", cada teste parte de reset) |
+| MOCK-04, 06 | VALIDADO | 29 cenários em `src/mocks/scenarios.ts` (lista no README), mais controles determinísticos (`hold`/`release`/`recover`, `expireSessions`, `expireQuotes`, `advanceClock`, `updateNft`, `settleOrder`); cobrem todos os casos do §6 do enunciado | ver README §Cenários |
 | MOCK-05 (2 usuários) | VALIDADO | T6 |
 | RT-01 (nft.updated) | VALIDADO (catálogo, detalhe, carrinho e pagamento) | T3/4 + §11 + cart.spec/checkout.spec (§14) |
 | RT-02 (order.updated) | VALIDADO | T5, T5b |
 | RT-03, RT-04 | VALIDADO | T9 + unitários |
 | RT-05 | VALIDADO | T7/8 |
 | RT-06 | VALIDADO | T6, T6b, T6c |
-| RT-07 (listeners liberados) | VALIDADO (PoC) | T6: a conexão de Ana desaparece do servidor após logout |
+| RT-07 (listeners liberados) | VALIDADO | isolation › logout encerra o socket; tabs.spec; races (assinaturas por pedido liberadas) |
 | RT-08 | VALIDADO (CP5) | checkout.spec › preço muda durante a revisão; estoque acaba; mudança não vista (socket offline) recusada pela API |
 | RT-09 | VALIDADO (CP6, fluxo real) | races.spec (duplicado, antigo, terminal); unit › orders-events (4 casos) |
 
@@ -156,16 +169,16 @@ Todas `PENDENTE` (TELA-01..09). Desde o CP2:
 
 | ID | Status |
 |---|---|
-| UI-01 (tipografia, cores, espaçamentos, composição; shadcn adaptado) | IMPLEMENTADO, NÃO VALIDADO para as telas (CP3–CP6). Design system VALIDADO: tokens medidos, contraste por teste, comparações lado a lado com o Figma (`evidence/cp2/comparacao-*.png`) |
-| UI-02 (390/768/1440 e intermediárias) | VALIDADO para a estrutura global e os layouts: 8 larguras sem overflow + troca de navegação por breakpoint (`layout.responsive.spec.ts`, 12 testes) e capturas `evidence/cp2/*-{390,768,1440}-*`. Revalidar com as telas finais |
+| UI-01 (tipografia, cores, espaçamentos, composição; shadcn adaptado) | EVIDENCIADO, COM LIMITAÇÕES: tokens medidos, comparações na mesma escala com o Figma (CP2–CP8), baselines visuais; desvios em `ARCHITECTURE.md` §Desvios do Figma |
+| UI-02 (390/768/1440 e intermediárias) | VALIDADO: `layout.responsive.spec.ts` (8 larguras, todas as telas), reflow a 320 px (a11y.spec), capturas CP8 em 390/768/1440 |
 | UI-03 (skeleton com shimmer, sem CLS, movimento reduzido) | VALIDADO (componente): mesmas dimensões do card (Δ ≤ 2 px), `aria-busy`, shimmer desligado com `reduced-motion`. Uso real em catálogo, detalhe e resumo: CP3/CP5 |
-| UI-04 (assets do arquivo; substituições documentadas) | IMPLEMENTADO, NÃO VALIDADO: originais indisponíveis (Figma sem login); placeholders documentados em `ASSETS_MANIFEST.md` |
-| A11Y-01 (teclado, foco visível) | VALIDADO (estrutura e componentes): skip link, nav com `aria-current`, slider por teclado, rádio por setas |
+| UI-04 (assets do arquivo; substituições documentadas) | DOCUMENTADO: originais não exportáveis (Figma só visualização); artes substitutas derivadas das capturas, registradas em `ASSETS_MANIFEST.md` e `ARCHITECTURE.md` |
+| A11Y-01 (teclado, foco visível) | VALIDADO: skip link, ordem de foco, teclado em filtros, galeria, carrinho, pagamento e diálogos |
 | A11Y-02 (foco em diálogos e drawers) | VALIDADO: foco preso, Esc fecha e devolve o foco (Dialog e Drawer). **Defeito corrigido:** o vaul deixava o foco fora do drawer |
 | A11Y-03 (semântica, labels, erros associados) | VALIDADO: axe WCAG 2.2 A/AA sem violações nas 12 telas (9 obrigatórias + Mercado, Favoritos, Meus pedidos; pedido pendente, confirmado e recusado) × desktop e mobile, + um `h1` por tela, títulos sem saltos, controles nomeados (`a11y.spec`, CP8). Defeitos corrigidos no CP8: `label-content-name-mismatch` em "Tornar principal" e modal de login sem `h1` |
-| A11Y-04 (alternativas textuais) | VALIDADO (cards): `alt` descritivo vindo da API; axe `image-alt` |
+| A11Y-04 (alternativas textuais) | VALIDADO: `alt` descritivo vindo da API; a11y.spec verifica `alt` em todas as imagens das 12 telas |
 | A11Y-05 (contraste e não depender só de cor) | VALIDADO: 19 pares de token por teste + axe `color-contrast`; estados com indicador extra |
-| A11Y-06 (feedback acessível) | VALIDADO para as mutations da conta (CP4): erros em `role=alert` e associados ao campo, sucesso após a API (toast `aria-live` + `role=status`) |
+| A11Y-06 (feedback acessível) | VALIDADO: erros em `role=alert`, toasts com `aria-live`, estado do pedido em `aria-live`, alterações de preço anunciadas (cart/checkout) |
 | A11Y-07 (sem overflow, zoom) | VALIDADO (CP8): reflow a 320 px (equivale a 400% de zoom em 1280 px) sem rolagem horizontal em 8 rotas; alvos de toque ≥ 24 px (WCAG 2.5.8, com a exceção de espaçamento) no mobile · `a11y.spec`. Zoom de texto isolado (200% só de fonte) não testado |
 | E2E-01 | VALIDADO (CP3) |
 | E2E-02 | VALIDADO (CP3) |
@@ -182,12 +195,12 @@ Todas `PENDENTE` (TELA-01..09). Desde o CP2:
 | TEST-01 (Chromium desktop + mobile) | VALIDADO (configuração) |
 | TEST-02 (visual) | VALIDADO no Windows: 8 baselines; CP8 atualizou 6 (Início ×2, Carrinho mobile, Pagamento ×2, Detalhe mobile) após inspeção, com antes/depois/diff em `evidence/cp8-baselines/`. Baselines Linux ainda não geradas (teste ignorado no Linux com motivo). Limitação de sensibilidade: R-47 |
 | TEST-03 (estado isolado) | VALIDADO: contexto novo + `?reset=1` por teste; 3 rodadas paralelas sem interferência |
-| TEST-04 (HTML + traces) | IMPLEMENTADO, NÃO VALIDADO (`trace: retain-on-failure`; relatório HTML gerado) |
+| TEST-04 (HTML + traces) | VALIDADO (configuração): `reporter` HTML e `trace: retain-on-failure`; relatórios gerados nas rodadas locais |
 | TEST-05 | VALIDADO (os testes acionam o servidor simulado; a UI muda via socket ou Axios) |
 | LH-01..06 | MEDIDO (CP8), METAS PARCIALMENTE ATINGIDAS: 12 auditorias oficiais (`planning/evidence/cp8-perf/oficial/`). A11y 100, BP 96, SEO 92 em todas (metas atingidas). Performance desktop 97–98 (atingida); mobile 54 (Início) e 64 (Detalhe), **abaixo de 90 (não atingida)**. Repetição completa registrada em `cp8-perf/repeticao/` (Início mobile 70). Ver CP8_REPORT §5 |
 | DEL-01 (lockfile) | VALIDADO (`package-lock.json` gerado com `npm install`, sem force/legacy-peer-deps) |
-| DEL-02, 03 (deploy) | PENDENTE (requer autorização) |
-| DEL-04, 05 (README, ARCHITECTURE) | PENDENTE |
+| DEL-02, 03 (deploy) | PREPARADO (CP9): `vercel.json` (rewrites de SPA, headers do Service Worker); **publicação aguarda autorização** |
+| DEL-04, 05 (README, ARCHITECTURE) | DOCUMENTADO (CP9) |
 | DEL-06 (scripts) | VALIDADO: `dev`, `build`, `preview`, `typecheck`, `lint`, `test:e2e`, `audit:lighthouse` (`dev` não exercitado por teste automatizado) |
 | DEL-07 (checkout limpo) | VALIDADO (CP1): `git clone` + `npm ci` + typecheck + lint + build + `test:e2e` = 43/43 (`clean-checkout.log`). Ressalva: os navegadores do Playwright vieram do cache em D: (`npx playwright install chromium` é um passo de setup a documentar no README) |
 
