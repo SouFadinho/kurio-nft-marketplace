@@ -23,7 +23,10 @@ export default defineConfig({
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
   retries: 0,
-  workers: process.env.CI ? 2 : undefined,
+  // CP4: o padrão (50% dos 12 núcleos = 6) abria 6 Chromium ao mesmo tempo com ~4 GB de RAM livre;
+  // os 6 primeiros testes de navegador estouravam o tempo no arranque a frio (R-36). Limitar o
+  // paralelismo trata a causa (recursos) sem aumentar timeouts. `PW_WORKERS` sobrescreve.
+  workers: Number(process.env.PW_WORKERS) || (process.env.CI ? 2 : 4),
   reporter: [['list'], ['html', { open: 'never' }]],
   use: {
     baseURL: BASE_URL,

@@ -9,8 +9,8 @@ import { expect, type Page } from '@playwright/test'
  * observado na UI precisa atravessar o socket.io-client ou o Axios (TEST-05).
  */
 export const USERS = {
-  ana: { email: 'ana@kurio.test', password: 'Kurio#Ana2026', id: 'usr_ana', name: 'Ana Colecionadora' },
-  bruno: { email: 'bruno@kurio.test', password: 'Kurio#Bruno2026', id: 'usr_bruno', name: 'Bruno Curador' },
+  ana: { email: 'ana@kurio.test', password: 'Kurio#Ana2026', id: 'usr_ana', name: 'Ana Colecionadora', username: 'ana.coleciona' },
+  bruno: { email: 'bruno@kurio.test', password: 'Kurio#Bruno2026', id: 'usr_bruno', name: 'Bruno Curador', username: 'bruno.curador' },
 } as const
 
 type OrderStatus = 'confirmed' | 'rejected'
@@ -19,6 +19,7 @@ export type NftPatch = { price?: string; available?: number; editions?: Array<{ 
 interface MockControl {
   scenario(): string
   release(route: string): void
+  expireSessions(): number
   updateNft(id: string, patch: NftPatch): unknown
   emitStaleNftUpdate(id: string, price: string): unknown
   settleOrder(id: string, status: OrderStatus): unknown
@@ -48,6 +49,7 @@ export function mock(page: Page) {
       (await ready(), page.evaluate(([i, p]) => window.__kurioMock.emitStaleNftUpdate(i, p), [id, price] as const)),
     settleOrder: async (id: string, status: OrderStatus) =>
       (await ready(), page.evaluate(([i, s]) => window.__kurioMock.settleOrder(i, s), [id, status] as const)),
+    expireSessions: async () => (await ready(), page.evaluate(() => window.__kurioMock.expireSessions())),
     release: async (route: string) => (await ready(), page.evaluate((r) => window.__kurioMock.release(r), route)),
     orders: async () => (await ready(), page.evaluate(() => window.__kurioMock.orders())),
     connections: async () => (await ready(), page.evaluate(() => window.__kurioMock.realtime.connections())),
@@ -91,4 +93,34 @@ export async function createOrder(page: Page): Promise<string> {
   const id = /ord_\d+/.exec((await link.textContent()) ?? '')?.[0]
   if (!id) throw new Error('id do pedido não encontrado')
   return id
+}
+
+/** Desktop = header + modais (≥ 1024px); abaixo disso, telas cheias e bottom nav. */
+export const isDesktop = (page: Page) => (page.viewportSize()?.width ?? 0) >= 1024
+
+/** Preenche e envia o formulário de login aberto (modal no desktop, tela no mobile). */
+export async function submitLogin(page: Page, email: string, password: string) {
+  await page.getByLabel('E-mail', { exact: true }).fill(email)
+  await page.getByLabel('Senha', { exact: true }).fill(password)
+  await page.getByRole('button', { name: 'Entrar', exact: true }).click()
+}
+
+/** Entra pela rota de login e espera voltar ao destino. */
+export async function signIn(page: Page, user: { email: string; password: string }, redirect = '/') {
+  await page.goto(`/login?redirect=${encodeURIComponent(redirect)}`)
+  await submitLogin(page, user.email, user.password)
+  await expect(page).not.toHaveURL(/\/login/)
+}
+
+/** Vai para a conta pela navegação da aplicação (sem recarregar a página). */
+export async function openAccount(page: Page) {
+  if (isDesktop(page)) await page.getByRole('banner').getByRole('link', { name: 'Minha conta' }).click()
+  else await page.getByRole('navigation', { name: 'Navegação principal' }).getByRole('link', { name: 'Perfil' }).click()
+  await expect(page).toHaveURL(/\/perfil/)
+}
+
+/** "Sair" no menu da conta. */
+export async function signOut(page: Page) {
+  await page.getByRole('navigation', { name: 'Conta' }).getByRole('button', { name: 'Sair' }).click()
+  await expect(page).toHaveURL(/\/$|\/\?/)
 }

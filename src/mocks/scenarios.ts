@@ -6,7 +6,20 @@
  */
 
 /** Rotas que podem receber falhas ou latência específicas. */
-export type RouteKey = 'nfts.list' | 'nfts.detail' | 'highlights' | 'favorites.read' | 'favorites.write'
+export type RouteKey =
+  | 'nfts.list'
+  | 'nfts.detail'
+  | 'highlights'
+  | 'favorites.read'
+  | 'favorites.write'
+  | 'auth.login'
+  | 'auth.register'
+  | 'me.profile.read'
+  | 'me.profile.write'
+  | 'me.avatar'
+  | 'me.password'
+  | 'me.wallets.read'
+  | 'me.wallets.write'
 
 export interface FailureRule {
   kind: 'http-503' | 'http-500' | 'network'
@@ -60,6 +73,13 @@ export const SCENARIOS = {
   empty: { ...base, emptyCatalog: true },
   'broken-images': { ...base, brokenImages: true },
   'favorite-fail': { ...base, failures: { 'favorites.write': { kind: 'http-503', times: Infinity } } },
+  // ---------- CP4: conta e sessão ----------
+  /** Falha de conexão no login (mutations não repetem: o erro aparece na primeira tentativa). */
+  'auth-offline': { ...base, failures: { 'auth.login': { kind: 'network', times: Infinity } } },
+  'avatar-fail': { ...base, failures: { 'me.avatar': { kind: 'http-503', times: Infinity } } },
+  'profile-save-fail': { ...base, failures: { 'me.profile.write': { kind: 'http-503', times: Infinity } } },
+  /** Leituras privadas ficam retidas até o teste liberar: respostas atrasadas após logout/troca de usuário. */
+  'slow-private': { ...base, holdRoutes: ['favorites.read', 'me.wallets.read'] },
 } satisfies Record<string, ScenarioConfig>
 
 export type ScenarioName = keyof typeof SCENARIOS

@@ -5,13 +5,8 @@
  * refresh já chegam com dados (e as mesmas query keys evitam requisições duplicadas).
  */
 import { createFileRoute } from '@tanstack/react-router'
-import { Container } from '@/components/kurio/basics'
-import { CatalogSection, useCatalogQuery } from '@/features/catalog/CatalogSection'
-import { useCatalogController } from '@/features/catalog/controller'
-import { MobileCatalogBar } from '@/features/catalog/MobileCatalogBar'
 import { toCatalogParams, validateCatalogSearch } from '@/features/catalog/search'
-import { Hero } from '@/features/home/Hero'
-import { MintDiary, PromoBanners } from '@/features/home/HomeSections'
+import { HomeContent } from '@/features/home/HomeContent'
 import { highlightsQuery, nftListQuery } from '@/features/nfts/queries'
 
 export const Route = createFileRoute('/')({
@@ -26,16 +21,5 @@ export const Route = createFileRoute('/')({
 })
 
 function HomePage() {
-  const search = Route.useSearch()
-  const controller = useCatalogController('/', search)
-  const { data } = useCatalogQuery(search)
-  return (
-    <Container className="flex flex-col gap-6 pt-4 pb-4 lg:gap-14 lg:pt-0">
-      <MobileCatalogBar controller={controller} data={data} />
-      <Hero />
-      <CatalogSection controller={controller} />
-      <PromoBanners />
-      <MintDiary />
-    </Container>
-  )
+  return <HomeContent search={Route.useSearch()} />
 }

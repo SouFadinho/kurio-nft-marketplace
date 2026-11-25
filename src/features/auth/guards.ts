@@ -8,3 +8,4 @@ import { sessionStore } from './sessionStore'
 export function requireAuth({ location }: { location: ParsedLocation }) {
   if (!sessionStore.get()) throw redirect({ to: '/login', search: { redirect: location.href } })
 }
+

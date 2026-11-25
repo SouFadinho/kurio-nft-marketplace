@@ -147,3 +147,14 @@ As cores de status (sucesso, erro, aviso) **não aparecem nas referências**. Se
 
 ## 11. Telas e estados sem referência
 Lista e detalhe de **pedidos** e status em tempo real; páginas Mercado, Criadores e Aprenda; abas do perfil além de Dados e Carteiras; perfil mobile; sheet de filtros mobile; busca; favoritos; carrinho vazio; loading/skeleton; estados de erro; toasts; confirmação de compra concluída; 404. Esses itens serão derivados dos tokens e componentes acima e marcados como "derivado — sem referência" no código e na documentação.
+
+## 12. Desvios do Figma no CP4 (conta)
+
+1. **Rótulos visíveis** em login, cadastro, perfil e carteiras (o Figma usa só placeholder). Motivo: CHALLENGE §8 pede labels e erros associados; o placeholder some ao digitar. O asterisco laranja de obrigatório é mantido, fora do `<label>`.
+2. **Modal de login/cadastro centralizado** sobre a Início (no Figma ele fica ancorado perto do topo do hero). Largura (≈ 416 px), borda inferior laranja e abas "Entrar | Criar conta" seguem o Figma.
+3. **Perfil com três formulários** (foto, dados, senha) em vez de um único "Salvar": a senha não é enviada junto com o perfil, e cada falha aparece no lugar certo.
+4. **Carteiras sem os campos de perfil** que o Figma repete (nome de exibição, nome de perfil, e-mail, código de indicação): pertencem ao Perfil. Os campos de carteira (apelido, rede, tipo, endereço, ENS com sufixo `.eth`) seguem o Figma. O atalho "Igual à carteira principal" não foi implementado (duplicaria o endereço, que a API recusa por conflito).
+5. **Foto de perfil**: o Figma não mostra o controle de upload; derivado (avatar circular com iniciais, "Enviar foto", "Remover").
+6. **Carteiras em modo de leitura primeiro**: o Figma mostra a carteira principal já como formulário; aqui cada carteira aparece resumida (apelido, tipo, rede, endereço abreviado, ENS) com "Editar" e "Tornar principal", e o formulário abre sob demanda. Evita edição acidental e deixa claro qual carteira é a principal.
+7. **Perfil e carteiras no mobile e no tablet**: sem frame no Figma; derivados do layout de conta do CP2.
+8. Google e Facebook: glifos simplificados, não os logotipos oficiais; os botões avisam que a integração não existe na demonstração.

@@ -22,5 +22,7 @@ export const queryKeys = {
     orders: (userId: string) => ['me', userId, 'orders'] as const,
     order: (userId: string, orderId: string) => ['me', userId, 'orders', orderId] as const,
     favorites: (userId: string) => ['me', userId, 'favorites'] as const,
+    profile: (userId: string) => ['me', userId, 'profile'] as const,
+    wallets: (userId: string) => ['me', userId, 'wallets'] as const,
   },
 }

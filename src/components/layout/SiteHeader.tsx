@@ -59,7 +59,7 @@ export function SiteHeader({ cartCount = 0 }: { cartCount?: number }) {
             </Button>
           ) : (
             <Button asChild size="sm">
-              <Link to="/login">
+              <Link to="/login" data-auth-trigger>
                 <LogIn aria-hidden />
                 Entrar
               </Link>

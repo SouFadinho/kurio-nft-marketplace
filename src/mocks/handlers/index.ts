@@ -4,17 +4,15 @@
  * autorização são decididos aqui.
  */
 import { delay, http, HttpResponse } from 'msw'
-import { CreateOrderRequest, LoginRequest, type Order, type SessionResponse } from '@/api/contracts'
+import { CreateOrderRequest, type Order } from '@/api/contracts'
 import { addEth, mulEth, parseEth, toEthString } from '@/lib/eth'
 import { db, type DbOrder } from '../db'
-import { digest, hashPassword, randomHex } from '../crypto'
-import { apiError, bearer, requireSession } from '../session'
-import { realtimeControl } from '../realtime/server'
+import { digest } from '../crypto'
+import { apiError, requireSession } from '../session'
 import { scheduleSettlement } from '../services'
 import { availableOf } from '../catalog-model'
 import { catalogHandlers } from './catalog'
-
-const SESSION_TTL_MS = 2 * 60 * 60 * 1000
+import { accountHandlers } from './account'
 
 const latency = () => delay(db.scenario().latencyMs)
 
@@ -26,49 +24,7 @@ function publicOrder(order: DbOrder): Order {
 
 export const restHandlers = [
   ...catalogHandlers,
-  // ---------- Sessão ----------
-  http.post('/api/auth/login', async ({ request }) => {
-    await latency()
-    const body = LoginRequest.safeParse(await request.json().catch(() => null))
-    if (!body.success) return apiError(422, { code: 'VALIDATION_ERROR', message: 'Dados inválidos.' })
-
-    const user = db.get().users.find((u) => u.email === body.data.email.toLowerCase())
-    const ok = user && (await hashPassword(body.data.password, user.salt)) === user.passwordHash
-    if (!user || !ok) return apiError(401, { code: 'UNAUTHORIZED', message: 'E-mail ou senha inválidos.' })
-
-    const session = db.commit((s) => {
-      const created = { token: randomHex(24), userId: user.id, expiresAt: new Date(Date.now() + SESSION_TTL_MS).toISOString() }
-      s.sessions.push(created)
-      return created
-    })
-    const response: SessionResponse = {
-      token: session.token,
-      expiresAt: session.expiresAt,
-      user: { id: user.id, email: user.email, displayName: user.displayName },
-    }
-    return HttpResponse.json(response)
-  }),
-
-  http.get('/api/auth/session', async ({ request }) => {
-    await latency()
-    const session = requireSession(request)
-    if (session instanceof Response) return session
-    const user = db.get().users.find((u) => u.id === session.userId)!
-    return HttpResponse.json({ user: { id: user.id, email: user.email, displayName: user.displayName } })
-  }),
-
-  http.post('/api/auth/logout', async ({ request }) => {
-    await latency()
-    const token = bearer(request)
-    if (token) {
-      db.commit((s) => {
-        s.sessions = s.sessions.filter((x) => x.token !== token)
-      })
-      realtimeControl.dropToken(token)
-    }
-    return new HttpResponse(null, { status: 204 })
-  }),
-
+  ...accountHandlers,
   // ---------- Pedidos ----------
   http.post('/api/orders', async ({ request }) => {
     await latency()

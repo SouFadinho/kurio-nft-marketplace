@@ -1,8 +1,12 @@
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+/**
+ * Sessão e autenticação (TanStack Query + Axios → MSW).
+ * A limpeza do cache privado na troca de sessão é centralizada em SessionEffects.
+ */
+import { useMutation, useQuery } from '@tanstack/react-query'
 import { useSyncExternalStore } from 'react'
 import { http } from '@/api/http'
 import { queryKeys } from '@/api/queryKeys'
-import { SessionResponse, User, type LoginRequest } from '@/api/contracts'
+import { SessionResponse, User, type LoginRequest, type RegisterRequest } from '@/api/contracts'
 import { sessionStore } from './sessionStore'
 
 export function useClientSession() {
@@ -21,27 +25,26 @@ export function useSessionUser() {
 }
 
 export function useLogin() {
-  const queryClient = useQueryClient()
   return useMutation({
     mutationFn: async (body: LoginRequest) => SessionResponse.parse((await http.post('/auth/login', body)).data),
-    onSuccess: (data) => {
-      // Troca de usuário: nada da sessão anterior pode sobreviver no cache (ACC-05).
-      queryClient.removeQueries({ queryKey: ['me'] })
-      sessionStore.set(data)
-    },
+    onSuccess: (data) => sessionStore.set(data),
+  })
+}
+
+/** Cadastro: a API cria a conta e já devolve a sessão (a pessoa segue de onde parou). */
+export function useRegister() {
+  return useMutation({
+    mutationFn: async (body: RegisterRequest) => SessionResponse.parse((await http.post('/auth/register', body)).data),
+    onSuccess: (data) => sessionStore.set(data),
   })
 }
 
 export function useLogout() {
-  const queryClient = useQueryClient()
   return useMutation({
     mutationFn: async () => {
       await http.post('/auth/logout')
     },
-    onSettled: () => {
-      sessionStore.clear()
-      queryClient.removeQueries({ queryKey: ['me'] })
-      queryClient.removeQueries({ queryKey: queryKeys.session })
-    },
+    // Mesmo se a rede falhar, a sessão local termina (o token deixa de ser usado).
+    onSettled: () => sessionStore.clear(),
   })
 }

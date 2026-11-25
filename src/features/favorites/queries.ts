@@ -14,7 +14,9 @@ import { toast } from 'sonner'
 import { http } from '@/api/http'
 import { queryKeys } from '@/api/queryKeys'
 import { FavoriteList } from '@/api/contracts'
+import { ApiError } from '@/api/http'
 import { useClientSession } from '@/features/auth/queries'
+import { saveIntent } from '@/features/auth/intent'
 
 export function useFavorites() {
   const session = useClientSession()
@@ -32,9 +34,11 @@ export function useToggleFavorite() {
 
   return useMutation({
     scope: { id: 'favorites' },
-    mutationFn: async ({ nftId, next }: { nftId: string; next: boolean; name: string }) => {
-      if (next) await http.put(`/favorites/${encodeURIComponent(nftId)}`)
-      else await http.delete(`/favorites/${encodeURIComponent(nftId)}`)
+    mutationFn: async ({ nftId, next, name }: { nftId: string; next: boolean; name: string }) => {
+      // A requisição carrega a intenção: se a sessão expirou, o interceptor a guarda para retomar.
+      const config = { kurioIntent: { kind: 'favorite' as const, nftId, name, next } }
+      if (next) await http.put(`/favorites/${encodeURIComponent(nftId)}`, undefined, config)
+      else await http.delete(`/favorites/${encodeURIComponent(nftId)}`, config)
     },
     onMutate: async ({ nftId, next }) => {
       await qc.cancelQueries({ queryKey: key })
@@ -45,8 +49,10 @@ export function useToggleFavorite() {
       })
       return { previous }
     },
-    onError: (_error, { name, next }, context) => {
+    onError: (error, { name, next }, context) => {
       qc.setQueryData(key, context?.previous)
+      // Sessão expirada (a intenção já foi guardada pelo interceptor) ou sessão trocada: sem toast.
+      if (error instanceof ApiError && ['SESSION_EXPIRED', 'UNAUTHORIZED', 'STALE_SESSION'].includes(error.code)) return
       toast.error(next ? `Não foi possível favoritar ${name}` : `Não foi possível remover ${name} dos favoritos`, {
         description: 'O estado anterior foi restaurado. Tente novamente.',
       })
@@ -74,6 +80,8 @@ export function useFavoriteAction() {
     pendingId: toggle.isPending ? toggle.variables?.nftId : undefined,
     toggle: (nft: { id: string; name: string }, next: boolean) => {
       if (!session) {
+        // Guarda a intenção: depois do login, o favorito é aplicado automaticamente.
+        saveIntent({ kind: 'favorite', nftId: nft.id, name: nft.name, next })
         void navigate({ to: '/login', search: { redirect: location.href } })
         return
       }

@@ -40,6 +40,12 @@ const control = {
   scenario: () => db.get().scenario,
   /** Libera respostas retidas pelo cenário (ex.: 'nfts.list' em hold-catalog). */
   release: releaseRoute,
+  /** Expira todas as sessões ativas: a próxima requisição privada recebe 401 SESSION_EXPIRED. */
+  expireSessions: () =>
+    db.commit((s) => {
+      for (const x of s.sessions) x.expiresAt = new Date(0).toISOString()
+      return s.sessions.length
+    }),
   updateNft,
   emitStaleNftUpdate,
   settleOrder,

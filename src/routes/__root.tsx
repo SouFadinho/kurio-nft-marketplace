@@ -1,6 +1,7 @@
 import { createRootRouteWithContext, Link, Outlet } from '@tanstack/react-router'
 import type { QueryClient } from '@tanstack/react-query'
 import { AppShell } from '@/components/layout/AppShell'
+import { SessionEffects } from '@/features/auth/SessionEffects'
 import { Container } from '@/components/kurio/basics'
 import { MobileTopBar } from '@/components/layout/MobileTopBar'
 
@@ -11,6 +12,7 @@ export interface RouterContext {
 export const Route = createRootRouteWithContext<RouterContext>()({
   component: () => (
     <AppShell>
+      <SessionEffects />
       <Outlet />
     </AppShell>
   ),

@@ -219,7 +219,8 @@ test.describe('catálogo: tempo real e favoritos', () => {
     await expect(card.locator('[data-value]')).toHaveText('2.05 ETH')
   })
 
-  test('visitante ao favoritar vai ao login e volta; favorito persiste após refresh', async ({ page }) => {
+  // CP4: a intenção de favoritar é retomada automaticamente após o login (não é preciso clicar de novo).
+  test('visitante ao favoritar vai ao login, volta e o favorito é aplicado; persiste após refresh', async ({ page }) => {
     await openApp(page, '/')
     await page.getByRole('button', { name: 'Favoritar Sage Nomad #009' }).click()
     await expect(page).toHaveURL(/\/login\?redirect=/)
@@ -228,7 +229,6 @@ test.describe('catálogo: tempo real e favoritos', () => {
     await page.getByRole('button', { name: 'Entrar' }).click()
     await expect(page).toHaveURL(/\/(\?|$)/)
 
-    await page.getByRole('button', { name: 'Favoritar Sage Nomad #009' }).click()
     await expect(page.getByRole('button', { name: 'Remover Sage Nomad #009 dos favoritos' })).toHaveAttribute('aria-pressed', 'true')
     await expect(page.getByText('Sage Nomad #009 adicionado aos favoritos')).toBeVisible()
     await page.reload()

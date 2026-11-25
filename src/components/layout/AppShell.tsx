@@ -20,6 +20,8 @@ declare module '@tanstack/react-router' {
     hideBottomNav?: boolean
     /** 'minimal' = sem header e sem rodapé (tela cheia). */
     chrome?: 'full' | 'minimal'
+    /** 'minimal' só abaixo de lg: sem rodapé no mobile (login/cadastro em tela cheia). */
+    mobileChrome?: 'full' | 'minimal'
   }
 }
 
@@ -27,6 +29,7 @@ export function AppShell({ children }: { children: ReactNode }) {
   const matches = useMatches()
   const hideBottomNav = matches.some((m) => m.staticData?.hideBottomNav)
   const minimal = matches.some((m) => m.staticData?.chrome === 'minimal')
+  const mobileMinimal = matches.some((m) => m.staticData?.mobileChrome === 'minimal')
 
   return (
     <div className="flex min-h-dvh flex-col">
@@ -40,7 +43,14 @@ export function AppShell({ children }: { children: ReactNode }) {
       <main id="conteudo" tabIndex={-1} className="flex-1 outline-none">
         {children}
       </main>
-      {!minimal && <SiteFooter />}
+      {!minimal &&
+        (mobileMinimal ? (
+          <div className="hidden lg:block">
+            <SiteFooter />
+          </div>
+        ) : (
+          <SiteFooter />
+        ))}
       {!minimal && !hideBottomNav && <BottomNav />}
     </div>
   )

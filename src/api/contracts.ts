@@ -12,19 +12,79 @@ import { z } from 'zod'
 export const EthAmount = z.string().regex(/^\d+(\.\d{1,18})?$/, 'Valor ETH inválido')
 export type EthAmount = z.infer<typeof EthAmount>
 
+// ---------- Regras de validação compartilhadas (formulários e mock usam as MESMAS) ----------
+export const EmailField = z.string().trim().min(1, 'Informe o e-mail').email('Informe um e-mail válido').max(120, 'E-mail muito longo')
+export const UsernameField = z
+  .string()
+  .trim()
+  .min(3, 'Use pelo menos 3 caracteres')
+  .max(24, 'Use no máximo 24 caracteres')
+  .regex(/^[a-z0-9._]+$/, 'Use apenas letras minúsculas, números, ponto e sublinhado')
+/** Requisitos de senha: 8+ caracteres, com letra e número. */
+export const PasswordField = z
+  .string()
+  .min(8, 'A senha precisa ter pelo menos 8 caracteres')
+  .max(72, 'A senha pode ter no máximo 72 caracteres')
+  .regex(/[A-Za-z]/, 'A senha precisa ter pelo menos uma letra')
+  .regex(/\d/, 'A senha precisa ter pelo menos um número')
+export const PASSWORD_HINT = 'Mínimo de 8 caracteres, com pelo menos uma letra e um número.'
+export const DisplayNameField = z.string().trim().min(2, 'Informe pelo menos 2 caracteres').max(40, 'Use no máximo 40 caracteres')
+export const WalletNicknameField = z.string().trim().min(2, 'Informe pelo menos 2 caracteres').max(30, 'Use no máximo 30 caracteres')
+
 // ---------- Sessão ----------
 export const User = z.object({
   id: z.string(),
   email: z.string().email(),
   displayName: z.string(),
+  username: z.string(),
+  /** Data URL da imagem (upload simulado) ou null. */
+  avatarUrl: z.string().nullable(),
 })
 export type User = z.infer<typeof User>
 
 export const LoginRequest = z.object({
-  email: z.string().email('Informe um e-mail válido'),
+  email: EmailField,
   password: z.string().min(1, 'Informe a senha'),
 })
 export type LoginRequest = z.infer<typeof LoginRequest>
+
+export const RegisterRequest = z
+  .object({
+    username: UsernameField,
+    email: EmailField,
+    password: PasswordField,
+    confirmPassword: z.string().min(1, 'Confirme a senha'),
+  })
+  .refine((v) => v.password === v.confirmPassword, { path: ['confirmPassword'], message: 'As senhas não conferem' })
+export type RegisterRequest = z.infer<typeof RegisterRequest>
+
+// ---------- Perfil ----------
+export const Profile = User.extend({ walletNickname: z.string(), version: z.number().int().positive() })
+export type Profile = z.infer<typeof Profile>
+
+export const ProfileUpdate = z.object({
+  displayName: DisplayNameField,
+  username: UsernameField,
+  email: EmailField,
+  walletNickname: WalletNicknameField,
+})
+export type ProfileUpdate = z.infer<typeof ProfileUpdate>
+
+export const AVATAR_MAX_BYTES = 512 * 1024
+export const AVATAR_TYPES = ['image/png', 'image/jpeg', 'image/webp'] as const
+export const AvatarUpload = z.object({
+  dataUrl: z.string().regex(/^data:image\/(png|jpeg|webp);base64,[A-Za-z0-9+/=]+$/, 'Formato de imagem não suportado (use PNG, JPEG ou WebP)'),
+})
+
+export const PasswordChange = z
+  .object({
+    currentPassword: z.string().min(1, 'Informe a senha atual'),
+    newPassword: PasswordField,
+    confirmPassword: z.string().min(1, 'Confirme a nova senha'),
+  })
+  .refine((v) => v.newPassword === v.confirmPassword, { path: ['confirmPassword'], message: 'As senhas não conferem' })
+  .refine((v) => v.newPassword !== v.currentPassword, { path: ['newPassword'], message: 'A nova senha precisa ser diferente da atual' })
+export type PasswordChange = z.infer<typeof PasswordChange>
 
 export const SessionResponse = z.object({ user: User, token: z.string(), expiresAt: z.string() })
 export type SessionResponse = z.infer<typeof SessionResponse>
@@ -131,6 +191,56 @@ export type Highlights = z.infer<typeof Highlights>
 // ---------- Favoritos ----------
 export const FavoriteList = z.object({ ids: z.array(z.string()), items: z.array(Nft) })
 export type FavoriteList = z.infer<typeof FavoriteList>
+
+// ---------- Carteiras (principal e secundária) ----------
+export const WalletType = z.enum(['metamask', 'walletconnect', 'coinbase'])
+export type WalletType = z.infer<typeof WalletType>
+export const WALLET_TYPE_LABEL: Record<WalletType, string> = { metamask: 'MetaMask', walletconnect: 'WalletConnect', coinbase: 'Coinbase Wallet' }
+/** Limite do enunciado: uma carteira principal e uma secundária. */
+export const MAX_WALLETS = 2
+
+/** Endereço válido por rede: EVM (Ethereum/Polygon) = 0x + 40 hex; Solana = base58 com 32–44 caracteres. */
+export function isValidAddress(network: Network, address: string) {
+  return network === 'solana' ? /^[1-9A-HJ-NP-Za-km-z]{32,44}$/.test(address) : /^0x[a-fA-F0-9]{40}$/.test(address)
+}
+
+export const Wallet = z.object({
+  id: z.string(),
+  nickname: z.string(),
+  network: Network,
+  type: WalletType,
+  address: z.string(),
+  ens: z.string().nullable(),
+  primary: z.boolean(),
+  version: z.number().int().positive(),
+})
+export type Wallet = z.infer<typeof Wallet>
+export const WalletList = z.object({ items: z.array(Wallet) })
+
+export const WalletInput = z
+  .object({
+    nickname: WalletNicknameField,
+    network: Network,
+    type: WalletType,
+    address: z.string().trim().min(1, 'Informe o endereço da carteira'),
+    /** Sem o sufixo ".eth" (o campo mostra o sufixo fixo, como no Figma). */
+    ens: z
+      .string()
+      .trim()
+      .max(40, 'Use no máximo 40 caracteres')
+      .regex(/^([a-z0-9-]{2,}(\.[a-z0-9-]{2,})*)?$/, 'Use letras minúsculas, números, hífen e ponto (ex.: nova.kurio)')
+      .optional(),
+  })
+  .superRefine((v, ctx) => {
+    if (v.address && !isValidAddress(v.network, v.address)) {
+      ctx.addIssue({
+        code: 'custom',
+        path: ['address'],
+        message: v.network === 'solana' ? 'Endereço Solana inválido (base58, 32 a 44 caracteres)' : 'Endereço inválido: use 0x seguido de 40 caracteres hexadecimais',
+      })
+    }
+  })
+export type WalletInput = z.infer<typeof WalletInput>
 
 // ---------- Pedidos ----------
 export const OrderStatus = z.enum(['pending', 'confirmed', 'rejected'])

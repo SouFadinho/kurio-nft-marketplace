@@ -39,7 +39,7 @@ Abreviação: `T<n>` = teste `<n>.` de `e2e/poc.spec.ts`.
 | ELIM-01 | Uso efetivo da stack | Cada tecnologia tem papel real (§1) | §1 abaixo | IMPLEMENTADO, NÃO VALIDADO (falta a solução final; a stack em si está VALIDADA na PoC) |
 | ELIM-02 | Fluxos principais não podem ser apenas visuais | Ações passam por Axios → MSW → db | PoC: login, pedido e reload persistem (T2, T3/4) | PENDENTE (fluxos finais) |
 | ELIM-03 | Compra confirmada só com resposta da simulação | A UI renderiza "confirmado" só com `status === 'confirmed'` vindo do REST/evento | T5, T5b, T7/8 | VALIDADO (PoC) · revalidar no CP6/CP7 |
-| ELIM-04 | Sem exposição de dados entre usuários | Query keys por `userId`; cache limpo no login/logout; socket por sessão; mock filtra por dono; cliente descarta evento alheio | T6, T6b, T6c | VALIDADO (PoC) · revalidar no CP4/CP7 |
+| ELIM-04 | Sem exposição de dados entre usuários | Query keys por `userId`; cache limpo no login/logout; socket por sessão; mock filtra por dono; cliente descarta evento alheio | T6, T6b, T6c; CP4: isolation.spec (respostas atrasadas, socket, API 404) | VALIDADO (CP4) · revalidar no CP7 com carrinho e pedidos |
 | ELIM-05 | Sem eventos simulados na UI | Eventos só nascem em `src/mocks`; lint proíbe importar `src/mocks` fora de `main.tsx` | `lint.log` + sonda de lint (relatório CP1 §4) + T3/4..T9 | VALIDADO |
 | ELIM-06 | Testes E2E executáveis | `npm run test:e2e` | `e2e-full-run-{1,2,3}.log` | VALIDADO (PoC) · a suíte completa é do CP7 |
 
@@ -114,25 +114,26 @@ Todas `PENDENTE` (TELA-01..09). Desde o CP2:
 | PAY-05 (pendente/confirmado/recusado + recuperação) | VALIDADO (PoC) | T5, T5b, T7/8, T7b |
 | PAY-06 (confirmação só se confirmada) | VALIDADO (PoC) | T5b |
 | PAY-08 (snapshot + tx simulado) | IMPLEMENTADO, NÃO VALIDADO | as linhas do pedido são gravadas na criação; a mudança de preço posterior ainda não foi testada |
-| ACC-01 (login/logout/sessão) | VALIDADO (login/logout) · cadastro PENDENTE | T2, T6, login inválido |
-| ACC-02 (rotas privadas) | VALIDADO (PoC) | T11 |
-| ACC-03 (sessão após refresh) | VALIDADO (PoC) | T7b (reload mantém a sessão) |
-| ACC-04 (expiração) | IMPLEMENTADO, NÃO VALIDADO | 401 → sessão limpa (T6b cobre token inválido, não expiração) |
-| ACC-05 (limpeza na troca) | VALIDADO (PoC) | T6 |
-| ACC-06, ACC-07 | PENDENTE | — |
-| ACC-08 (senha não em claro) | IMPLEMENTADO, NÃO VALIDADO | PBKDF2 no mock; sem teste automatizado |
+| ACC-01 (login/logout/sessão/cadastro) | VALIDADO (CP4) | auth.spec › login, cadastro, logout (§13) |
+| ACC-02 (rotas privadas) | VALIDADO (CP4) | auth.spec › /perfil, /perfil/carteiras, /favoritos com retorno |
+| ACC-03 (sessão após refresh) | VALIDADO (CP4) | auth.spec › sessão sobrevive ao refresh |
+| ACC-04 (expiração) | VALIDADO (CP4) | auth.spec › expiração (rota privada e página pública); isolation › intenção de favoritar retomada |
+| ACC-05 (limpeza na troca) | VALIDADO (CP4) | isolation.spec › respostas retidas + MutationObserver; socket de Ana encerrado |
+| ACC-06 (perfil) | VALIDADO (CP4) | account.spec › perfil, avatar, senha |
+| ACC-07 (carteiras) | VALIDADO (CP4) | account.spec › carteiras |
+| ACC-08 (senha não em claro) | VALIDADO (CP4, parcial) | PBKDF2 + sal aleatório no mock; troca de senha testada (a antiga deixa de funcionar). Não há teste que inspecione o storage em busca de texto puro |
 | INT-01, 02, 03, 04, 08, 10 | VALIDADO (PoC) | T1, T2, T11, lint |
 | INT-05 (estados) | VALIDADO (catálogo e detalhe, CP3) | §11 |
 | INT-07 (respostas obsoletas) | VALIDADO (CP3) | `out-of-order` + `stale-in-flight` (§11) |
 | INT-11 (otimista + rollback) | VALIDADO (favoritos, CP3) | `favorite-fail` |
 | INT-09, INT-12 | PENDENTE / IMPLEMENTADO, NÃO VALIDADO | idempotência no CP5; documentação de cache no CP9 |
 | INT-06 (invalidação após eventos) | VALIDADO (PoC) | T3/4, T7/8 |
-| API-01 | IMPLEMENTADO, NÃO VALIDADO (parcial) | auth, nfts, orders; faltam favoritos, carrinho, cotação, perfil, carteiras |
+| API-01 | IMPLEMENTADO, NÃO VALIDADO (parcial) | auth (login, cadastro, sessão, logout), nfts, orders, favoritos, perfil, avatar, senha e carteiras (CP4, exercitados pelos E2E); faltam carrinho e cotação |
 | API-02 | IMPLEMENTADO, NÃO VALIDADO (parcial) | 401, 404, 409, 422 nos handlers |
 | API-03 | VALIDADO (mesma tentativa) / IMPLEMENTADO, NÃO VALIDADO (conflito) | T2b |
 | MOCK-01, 02, 07, 08, 09, 10 | VALIDADO | lint, T3/4 (REST e evento coerentes após reload), suíte no build de produção |
 | MOCK-03 (persistência e reset) | VALIDADO (PoC) | T3/4 (reload), T "reset integral" |
-| MOCK-04, 06 | VALIDADO parcialmente (15 cenários; faltam os de cupom, cadastro, sessão expirada e pagamento) | `slow`, `hold-catalog`, `out-of-order`, `stale-in-flight`, `catalog-error`, `catalog-offline`, `detail-error`, `empty`, `broken-images`, `favorite-fail`… |
+| MOCK-04, 06 | VALIDADO parcialmente (19 cenários; CP4: `auth-offline`, `avatar-fail`, `profile-save-fail`, `slow-private` + `expireSessions()`; conflitos e senha errada vêm dos dados; faltam cupom e pagamento) | `slow`, `hold-catalog`, `out-of-order`, `stale-in-flight`, `catalog-error`, `catalog-offline`, `detail-error`, `empty`, `broken-images`, `favorite-fail`… |
 | MOCK-05 (2 usuários) | VALIDADO | T6 |
 | RT-01 (nft.updated) | VALIDADO (catálogo, detalhe com edições e estoque) · carrinho PENDENTE (CP5) | T3/4 + §11 |
 | RT-02 (order.updated) | VALIDADO | T5, T5b |
@@ -156,13 +157,16 @@ Todas `PENDENTE` (TELA-01..09). Desde o CP2:
 | A11Y-03 (semântica, labels, erros associados) | VALIDADO (componentes): axe sem violações em 6 rotas × 2 viewports, com controle negativo |
 | A11Y-04 (alternativas textuais) | VALIDADO (cards): `alt` descritivo vindo da API; axe `image-alt` |
 | A11Y-05 (contraste e não depender só de cor) | VALIDADO: 19 pares de token por teste + axe `color-contrast`; estados com indicador extra |
-| A11Y-06 (feedback acessível) | IMPLEMENTADO, NÃO VALIDADO para mutations reais (toast em região `aria-live` validado no componente) |
+| A11Y-06 (feedback acessível) | VALIDADO para as mutations da conta (CP4): erros em `role=alert` e associados ao campo, sucesso após a API (toast `aria-live` + `role=status`) |
 | A11Y-07 (sem overflow, zoom) | VALIDADO para overflow (8 larguras). Zoom de 200% não testado ainda (CP8) |
 | E2E-01 | VALIDADO (CP3) |
 | E2E-02 | VALIDADO (CP3) |
-| E2E-04 | VALIDADO parcialmente (favoritos, falha e rollback; troca de usuário no CP4) |
+| E2E-03 | VALIDADO (CP4): auth.spec |
+| E2E-04 | VALIDADO (CP3 + CP4: troca de usuário, expiração e retomada da intenção) |
+| E2E-08 | VALIDADO (CP4): account.spec |
+| E2E-11 | VALIDADO parcialmente (CP4: modal de login com foco preso/Esc/retorno do foco, validação de formulários; diálogos de checkout no CP5) |
 | E2E-12 | VALIDADO parcialmente (skeleton, erro, retry no catálogo e detalhe; carrinho no CP5) |
-| E2E-03, 05–11 | PENDENTE (CP4–CP7) |
+| E2E-05–07, 09, 10 | PENDENTE (CP5–CP7) |
 | TEST-01 (Chromium desktop + mobile) | VALIDADO (configuração) |
 | TEST-02 (visual) | IMPLEMENTADO: baselines de Início e Detalhe (desktop+mobile, Windows). Carrinho e Pagamento no CP5; baselines Linux no CP7 |
 | TEST-03 (estado isolado) | VALIDADO: contexto novo + `?reset=1` por teste; 3 rodadas paralelas sem interferência |
@@ -191,3 +195,40 @@ Todas `PENDENTE` (TELA-01..09). Desde o CP2:
 | — | Teclado (filtros, drawer, edições) | catalog › teclado; nft-detail › setas | VALIDADO |
 | — | Responsividade (8 larguras, novas rotas) | layout.responsive | VALIDADO |
 | — | Acessibilidade (axe, novas rotas) | design-system › axe em /, /mercado, /nft/nft-001, /nft/nao-existe | VALIDADO |
+
+## 12. Revisão visual final (registrada na aprovação do CP3; executar antes da entrega)
+| ID | Item | Destino |
+|---|---|---|
+| VIS-01 | Reduzir a altura do hero mobile para aproximá-lo do Figma (~235 px → ~180 px) | revisão visual final |
+| VIS-02 | Revisar o espaçamento entre hero e catálogo no desktop | revisão visual final |
+| VIS-03 | Melhorar a variedade visual das artes | revisão visual final |
+| VIS-04 | Revisar as miniaturas da galeria (hoje 2 vistas; Figma mostra 4) | revisão visual final |
+| VIS-05 | Garantir que a barra fixa de compra (mobile) não oculte conteúdo | revisão visual final |
+| VIS-06 | Melhorar a variedade visual dos NFTs relacionados | revisão visual final |
+
+## 13. CP4: autenticação, perfil e carteiras (evidências em `planning/evidence/cp4/` e `planning/evidence/cp4-tests/`)
+
+Todos os casos rodam em `desktop-chromium` (1440) e `mobile-chromium` (390), salvo os marcados como específicos de dispositivo.
+
+| ID | Requisito | Teste (arquivo › caso) | Status |
+|---|---|---|---|
+| TELA-06 | Login: modal no desktop, tela cheia no mobile; e-mail e senha; mostrar/ocultar; social indisponível | auth › login (8 casos) + apresentação; `comparacao-login-*` | VALIDADO |
+| TELA-07 | Cadastro: campos do Figma, obrigatórios, e-mail, requisitos de senha, confirmação, conflitos, entra após criar | auth › cadastro (3 casos); `comparacao-cadastro-*` | VALIDADO |
+| TELA-08 | Perfil: avatar, nome de exibição, usuário, e-mail, apelido da carteira, senha | account › perfil, avatar, senha (9 casos); `comparacao-perfil-desktop` | VALIDADO |
+| TELA-09 | Carteiras: principal/secundária, adicionar, editar, rede, validação, conflito, trocar principal | account › carteiras (5 casos); `comparacao-carteiras-desktop` | VALIDADO |
+| — | Credenciais inválidas, falha de conexão, envio duplicado | auth › credenciais inválidas; falha de conexão (`auth-offline`); envio duplicado (`slow`, 1 POST) | VALIDADO |
+| — | Redirecionamento seguro (sem open redirect) | auth › redirect externo ignorado; unit › AuthSearch | VALIDADO |
+| — | Rotas protegidas + retorno à rota | auth › /perfil, /perfil/carteiras, /favoritos | VALIDADO |
+| — | Expiração: rota privada → login com aviso e retorno; página pública → visitante com aviso; ação → retomada | auth › expiração (2 casos); isolation › intenção retomada | VALIDADO |
+| — | Logout limpa sessão e armazenamento; troca de usuário | auth › logout; troca de usuário | VALIDADO |
+| — | Resposta privada atrasada após logout/troca (favoritos e carteiras) | isolation › `slow-private` + MutationObserver (nenhum dado de Ana renderizado em nenhum instante) + requisição de Ana abortada | VALIDADO |
+| — | Isolamento na API (carteira de outro usuário) | isolation › PUT/primary em carteira de Ana → 404 | VALIDADO |
+| — | Socket.IO: conexão de Ana encerrada no logout; nova para Bruno | isolation › socket | VALIDADO |
+| — | Sucesso só após a API; dados temporários × persistidos | account › "Salvando…" sem toast antes da resposta; falha mantém o digitado sem persistir; "Descartar" volta ao salvo | VALIDADO |
+| — | Upload simulado de avatar (tipo, tamanho, falha) | account › avatar (3 casos) | VALIDADO |
+| — | Contratos (mesmo schema no cliente e no mock) | unit › account-contracts (7 casos) | VALIDADO |
+| — | Modal: foco preso, Esc, retorno do foco; abas preservam destino | auth › apresentação (desktop) | VALIDADO |
+| — | Mobile: tela cheia sem rodapé/bottom nav | auth › apresentação (mobile) | VALIDADO |
+| — | Acessibilidade (axe, com erros visíveis) | auth › axe /login, /cadastro; account › axe perfil e carteiras | VALIDADO |
+| — | Responsividade (8 larguras; menu da conta sem corte no tablet) | layout.responsive › /login, /cadastro; conta sem overflow e menu utilizável | VALIDADO |
+| — | Contrato de carteiras para o checkout (CP5) | `useWallets` + `sortWallets` (principal primeiro); `PendingIntent.checkout` | IMPLEMENTADO, NÃO VALIDADO (uso real no CP5) |
