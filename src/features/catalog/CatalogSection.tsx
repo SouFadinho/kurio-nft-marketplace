@@ -31,6 +31,7 @@ import { cn } from '@/lib/utils'
 import { type CatalogController } from './controller'
 import { FiltersPanel } from './FiltersPanel'
 import { CatalogSearchField } from './CatalogSearchField'
+import { DESKTOP_QUERY, useMediaQuery } from '@/lib/useMediaQuery'
 import { hasActiveFilters, SORT_LABEL, TAB_LABEL, toCatalogParams, type CatalogSearch } from './search'
 
 export function useCatalogQuery(search: CatalogSearch) {
@@ -155,6 +156,7 @@ export function CatalogSection({ controller, title }: { controller: CatalogContr
   const favorites = useFavoriteAction()
   const cart = useCartActions()
   const sectionRef = useRef<HTMLElement>(null)
+  const desktop = useMediaQuery(DESKTOP_QUERY)
   const page = search.page ?? 1
   const data = query.data
 
@@ -218,20 +220,27 @@ export function CatalogSection({ controller, title }: { controller: CatalogContr
       <h2 id="catalog-title" className="sr-only">
         {title ?? 'Catálogo de NFTs'}
       </h2>
-      <aside aria-label="Filtros do catálogo" className="hidden lg:flex lg:flex-col lg:gap-6">
-        <div className="rounded-sm bg-surface p-4">
-          <FiltersPanel data={data} controller={controller} />
-        </div>
-        <LimitedOfferCard />
-      </aside>
+      {/* CP9.2: variantes desktop só são MONTADAS no desktop (antes: montadas e escondidas por CSS
+          no mobile; o Slider media o próprio tamanho e forçava um layout síncrono da página
+          inteira antes da primeira pintura). No mobile, filtros e ordenação ficam no drawer. */}
+      {desktop && (
+        <aside aria-label="Filtros do catálogo" className="hidden lg:flex lg:flex-col lg:gap-6">
+          <div className="rounded-sm bg-surface p-4">
+            <FiltersPanel data={data} controller={controller} />
+          </div>
+          <LimitedOfferCard />
+        </aside>
+      )}
 
       <div className="flex min-w-0 flex-col gap-4">
         <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
           <CatalogTabs controller={controller} />
-          <div className="hidden items-center gap-3 lg:flex">
-            <CatalogSearchField controller={controller} variant="outline" className="w-56" />
-            <SortSelect controller={controller} />
-          </div>
+          {desktop && (
+            <div className="hidden items-center gap-3 lg:flex">
+              <CatalogSearchField controller={controller} variant="outline" className="w-56" />
+              <SortSelect controller={controller} />
+            </div>
+          )}
         </div>
         <ActiveFilters data={data} controller={controller} />
         <p role="status" className="sr-only">
