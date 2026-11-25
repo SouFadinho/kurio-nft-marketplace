@@ -53,5 +53,48 @@ export default defineConfig({
       { find: /^tldts$/, replacement: path.resolve(import.meta.dirname, './src/mocks/vendor/tldts-lite.ts') },
     ],
   },
+  build: {
+    rolldownOptions: {
+      output: {
+        // CP9.2 (medido com o Lantern do Lighthouse): a divisão automática gerava ~30 chunks de
+        // 0,3–3 kB no carregamento inicial. Em HTTP/1.1 (6 conexões por origem), cada um ocupa uma
+        // conexão por um RTT e o chunk do MSW (necessário antes de qualquer dado) entrava na fila
+        // atrás deles. Os grupos abaixo juntam SÓ as dependências da inicialização; bibliotecas
+        // carregadas sob demanda (drawer, diálogos, Socket.IO, MSW) continuam separadas.
+        codeSplitting: {
+          groups: [
+            { name: 'react', test: /node_modules[\\/](react|react-dom|scheduler)[\\/]/ },
+            { name: 'vendor', test: /node_modules[\\/](@tanstack|axios|zod|sonner|tailwind-merge|clsx|class-variance-authority)[\\/]/ },
+            // Primitivos do Radix usados pelo Tooltip e pelo Button do App (os de diálogos e
+            // drawers, carregados sob demanda, ficam de fora), floating-ui e os ícones.
+            {
+              name: 'ui',
+              test: /node_modules[\\/](@radix-ui[\\/](primitive|react-(slot|compose-refs|primitive|presence|context|use-[a-z-]+|popper|portal|dismissable-layer|visually-hidden|arrow|id|tooltip))|@floating-ui|lucide-react)[\\/]/,
+            },
+            // Código compartilhado da inicialização: contratos, cliente HTTP, chaves, consultas,
+            // sessão e componentes básicos (antes: ~10 chunks de 0,2–3 kB).
+            {
+              name: 'app',
+              test: /src[\\/](api|lib)[\\/]|src[\\/]features[\\/][a-z-]+[\\/](queries|search|authSearch|sessionStore|guards|intent)\.tsx?$|src[\\/]components[\\/]kurio[\\/]basics\.tsx$|src[\\/]components[\\/]ui[\\/](button|badge|skeleton)\.tsx$/,
+            },
+            // Componentes de exibição compartilhados pelas telas (cards, preço, imagem, estados,
+            // formulários). Antes, cada um era um chunk e as telas os descobriam em cascata.
+            {
+              name: 'kit',
+              test: /src[\\/]components[\\/]kurio[\\/](NFTCard|NFTGrid|NetworkBadge|NftImage|Pagination|PriceDisplay|QuantitySelector|RatingStars|SearchInput|SectionHeading|form|states|pages)\.tsx$|src[\\/]components[\\/]ui[\\/](input|card|label|separator|breadcrumb)\.tsx$|src[\\/]components[\\/]layout[\\/]MobileTopBar\.tsx$/,
+            },
+            // Início e Mercado (inclui os módulos de componente separados pelo TanStack Router). O
+            // drawer e o painel de filtros (Select/Slider do Radix) continuam sob demanda.
+            {
+              name: 'catalog',
+              test: (id) =>
+                (/src[\\/]features[\\/](home|catalog|nfts)[\\/]/.test(id) && !/(FiltersDrawer|FiltersPanel)\.tsx$/.test(id)) ||
+                /src[\\/]routes[\\/](index|mercado)\.tsx\?tsr-split/.test(id),
+            },
+          ],
+        },
+      },
+    },
+  },
   preview: { port: 4173, strictPort: true },
 })
