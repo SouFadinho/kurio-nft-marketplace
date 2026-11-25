@@ -29,7 +29,7 @@ Abreviação: `T<n>` = teste `<n>.` de `e2e/poc.spec.ts`.
 | PEND-02 | ~~Timeout após a criação do pedido e recuperação por retry~~ **RESOLVIDO (CP5)**: cenários `order-timeout` e `order-lost-response`; o retry (inclusive pelo botão principal) recupera o MESMO pedido, 1 pedido no servidor | — |
 | PEND-03 | Consistência da persistência do mock entre abas | CP6 |
 | PEND-04 | Impacto do MSW na performance inicial (R-25) | CP8 |
-| PEND-05 | Revalidação integral do HEAD a cada checkpoint. CP1: `91380dc`. **CP2: `6ad49e0` validado em checkout limpo (126/126)** · **CP3: `2b2aa83` validado em checkout limpo (199 passed / 2 skipped)** · **CP4: `ea6f60b` validado em checkout limpo (295 passed / 5 skipped)** | todo CP · CP9 |
+| PEND-05 | Revalidação integral do HEAD a cada checkpoint. CP1: `91380dc`. **CP2: `6ad49e0` validado em checkout limpo (126/126)** · **CP3: `2b2aa83` validado em checkout limpo (199 passed / 2 skipped)** · **CP4: `ea6f60b` validado em checkout limpo (295 passed / 5 skipped)** · **CP5: `18291bf` validado em checkout limpo (376 passed / 5 skipped)** | todo CP · CP9 |
 | PEND-06 | Disco C: sem espaço; caches e temporários seguem em `D:\emprego\.cache` (R-23) | candidato |
 
 ## 0. Critérios eliminatórios

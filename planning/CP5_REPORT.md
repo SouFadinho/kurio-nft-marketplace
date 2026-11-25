@@ -204,4 +204,6 @@ Todas com 5 ignorados.
 - Baselines Linux (CP7) e Lighthouse oficial (CP8).
 
 ## 12. Commit e validação
-COMMIT_INFO
+- Commit do código, testes e evidências: **`18291bf`** ("CP5: carrinho e checkout"). Este relatório recebeu o resultado do checkout limpo num commit de documentação logo em seguida.
+- **Checkout limpo de `18291bf`** (`git clone` → `npm ci` → typecheck → lint → `npx playwright test`, que faz o build de produção): **376 aprovados · 0 reprovados · 5 ignorados (8,7 min)**. Log: `planning/evidence/cp5-tests/clean-checkout.log`.
+- Nada foi publicado; não há repositório remoto.
