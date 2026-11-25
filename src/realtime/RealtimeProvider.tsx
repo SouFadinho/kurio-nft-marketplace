@@ -83,7 +83,13 @@ export function RealtimeProvider({ children }: { children: ReactNode }) {
       const unsubscribe = cache.subscribe(() => {
         if (queries.some((q) => q.state.fetchStatus === 'fetching')) return
         unsubscribe()
-        if (socket.connected) void queryClient.invalidateQueries({ predicate: (q) => queries.includes(q) })
+        // Em tempo ocioso (no máximo 2 s): a busca extra não disputa a thread com a renderização
+        // do primeiro conteúdo (medido no A/B do CP9.2). A convergência continua garantida.
+        const run = () => {
+          if (socket.connected) void queryClient.invalidateQueries({ predicate: (q) => queries.includes(q) })
+        }
+        if (typeof window.requestIdleCallback === 'function') window.requestIdleCallback(run, { timeout: 2_000 })
+        else window.setTimeout(run, 200)
       })
     }
 
